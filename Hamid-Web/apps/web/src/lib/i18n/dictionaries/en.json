@@ -1,0 +1,188 @@
+{
+  "nav": {
+    "home": "Home",
+    "menu": "Menu",
+    "store": "Store",
+    "coffee": "Coffee",
+    "about": "About",
+    "branches": "Branches",
+    "cart": "Cart",
+    "account": "Account",
+    "login": "Log in",
+    "logout": "Log out",
+    "register": "Sign up",
+    "dashboard": "Dashboard",
+    "orderNow": "Order Now",
+    "myOrders": "My Orders"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "followUs": "Follow us",
+    "tagline": "Bringing people together through the rich tradition of Egyptian coffee. From our roastery in Taksem Khattab to your cup.",
+    "experienceTitle": "Experience",
+    "experienceLinks": ["Sourcing", "Brewing Guides", "Wholesale", "Careers"],
+    "careTitle": "Customer Care",
+    "careLinks": ["Contact Us", "Shipping & Returns", "Store Locator", "FAQ"],
+    "ourBranch": "Our Branch",
+    "branchHint": "Visit us at Taksem Khattab, Mansoura for a premium coffee experience.",
+    "openDaily": "Open Daily",
+    "privacyPolicy": "Privacy Policy"
+  },
+  "auth": {
+    "loginTitle": "Welcome back",
+    "loginSubtitle": "Sign in to your account",
+    "registerTitle": "Create your account",
+    "registerSubtitle": "Join Hamid Afandi",
+    "email": "Email",
+    "password": "Password",
+    "fullName": "Full name",
+    "phone": "Phone (optional)",
+    "confirmPassword": "Confirm password",
+    "submitLogin": "Sign in",
+    "submitRegister": "Create account",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?",
+    "signUpLink": "Sign up",
+    "signInLink": "Sign in",
+    "forgotPassword": "Forgot password?",
+    "forgotTitle": "Reset your password",
+    "forgotSubtitle": "Enter your email and we'll send you a reset link.",
+    "forgotSubmit": "Send reset link",
+    "forgotSent": "If an account exists for that email, a reset link is on its way. Please check your inbox.",
+    "backToLogin": "Back to sign in",
+    "resetTitle": "Choose a new password",
+    "resetSubtitle": "Enter a new password for your account.",
+    "newPassword": "New password",
+    "resetSubmit": "Update password",
+    "resetSuccess": "Your password has been updated. You can now sign in.",
+    "resetInvalid": "This reset link is invalid or has expired."
+  },
+  "cart": {
+    "title": "Your Cart",
+    "empty": "Your cart is empty.",
+    "checkout": "Checkout",
+    "subtotal": "Subtotal",
+    "remove": "Remove",
+    "quantity": "Quantity",
+    "continueShopping": "Continue shopping",
+    "addToCart": "Add to cart"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "fulfillment": "Fulfillment",
+    "delivery": "Delivery",
+    "pickup": "Pickup",
+    "contactInfo": "Contact information",
+    "deliveryAddress": "Delivery address",
+    "paymentMethod": "Payment method",
+    "cashOnDelivery": "Cash on Delivery",
+    "instapay": "InstaPay",
+    "instapayUploadHint": "Upload a screenshot of your InstaPay transfer — we'll confirm your order once reviewed.",
+    "discountCode": "Discount code",
+    "placeOrder": "Place order",
+    "orderSummary": "Order summary",
+    "deliveryFee": "Delivery fee",
+    "discount": "Discount",
+    "total": "Total"
+  },
+  "product": {
+    "addToCart": "Add to Cart",
+    "added": "Added ✓",
+    "outOfStock": "Out of stock"
+  },
+  "store": {
+    "title": "Our Store",
+    "subtitle": "Every product is a story of craftsmanship, origin, and passion.",
+    "all": "All",
+    "empty": "No products in this category yet."
+  },
+  "home": {
+    "hero": {
+      "title": "A Taste of Egyptian Heritage in Every Cup",
+      "subtitle": "Premium coffee, deeply rooted in tradition, crafted for modern coffee lovers. Experience the rich soul of Cairo's coffee culture.",
+      "shopCoffee": "Shop Coffee",
+      "ourStory": "Our Story"
+    },
+    "categories": {
+      "title": "Shop by Category",
+      "coffeeBeansTitle": "Coffee Beans",
+      "coffeeBeansDesc": "Explore our world-class origins and signature blends.",
+      "coffeeBeansDescLong": "Explore our world-class origins and signature house blends.",
+      "explore": "Explore",
+      "exploreCollection": "Explore Collection",
+      "turkishCoffee": "Turkish Coffee",
+      "espresso": "Espresso",
+      "viewMore": "View More"
+    },
+    "about": {
+      "kicker": "Our Legacy",
+      "title": "Heritage in Every Single Detail",
+      "p1": "From the vibrant heart of Cairo, Hamid Afandi brings the timeless coffee tradition to life with passion, craftsmanship, and authenticity. Our story began with a simple vision: to honor the complex rituals of Egyptian brewing while embracing the refinements of modern roasting.",
+      "p2": "We source only the finest beans from ethical farmers across the coffee belt, ensuring every bag tells a story of origin, resilience, and unparalleled flavor.",
+      "cta": "Discover Our Story"
+    },
+    "immersive": {
+      "title": "The Coffee Experience",
+      "subtitle": "More than just a drink, it's a sensory journey. We source the finest beans, roast with care, and craft each cup to deliver a rich and unforgettable experience.",
+      "stat1Label": "Ethically Sourced",
+      "stat1Sub": "Directly from the farm to our roastery.",
+      "stat2Label": "Artisan Roasted",
+      "stat2Sub": "Small batches for maximum flavor profile.",
+      "stat3Label": "Heritage Brewed",
+      "stat3Sub": "Combining old-world techniques with new technology."
+    },
+    "bestSellers": {
+      "title": "Best Sellers",
+      "swipeHint": "Swipe to see more →"
+    },
+    "featured": {
+      "title": "Featured Coffee",
+      "subtitle": "Handpicked blends, roasted to perfection.",
+      "viewAll": "View All"
+    },
+    "testimonials": {
+      "title": "What Our Guests Say"
+    },
+    "instagram": {
+      "title": "From Our Instagram",
+      "followUs": "Follow Us @hamidafandi.coffee"
+    },
+    "locations": {
+      "title": "Our Location",
+      "subtitle": "Experience the heritage in person. Visit our branch in the heart of Mansoura.",
+      "branchName": "Mansoura Branch",
+      "openDailyHours": "Open Daily — Morning to Late Evening",
+      "getDirections": "Get Directions"
+    },
+    "newsletter": {
+      "title": "Join Our Coffee Circle",
+      "subtitle": "Be the first to know about new blends, offers, and stories.",
+      "placeholder": "Your email address",
+      "subscribe": "Subscribe"
+    },
+    "heritage": {
+      "exploreHeritage": "Explore Our Heritage",
+      "ourStory": "Our Story",
+      "storyTitle": "From Mansoura to the World",
+      "storyP1": "Since 1920, Hamid Afandi has been a beacon of Egyptian coffee culture. Our journey began in the bustling heart of Mansoura, bringing together the finest ethically sourced beans with time-honored roasting techniques, crafting a legacy of rich, aromatic blends.",
+      "storyP2": "We invite you to experience the tradition.",
+      "readFullStory": "Read Full Story",
+      "coffeeBeans": "Coffee Beans",
+      "turkishCoffee": "Turkish Coffee",
+      "espresso": "Espresso",
+      "accessories": "Accessories"
+    }
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search",
+    "loading": "Loading…",
+    "active": "Active",
+    "inactive": "Inactive",
+    "language": "Language"
+  }
+}

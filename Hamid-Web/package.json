@@ -1,26 +1,29 @@
 {
-  "name": "hamid-nextjs",
+  "name": "hamid-afandi",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+  "engines": {
+    "node": ">=20"
   },
-  "dependencies": {
-    "next": "16.2.9",
-    "react": "19.2.4",
-    "react-dom": "19.2.4"
+  "scripts": {
+    "dev": "pnpm --filter @hamid/web dev",
+    "build": "pnpm --filter @hamid/web build",
+    "start": "pnpm --filter @hamid/web start",
+    "lint": "pnpm --filter @hamid/web lint",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "db:generate": "pnpm --filter @hamid/db generate",
+    "db:migrate": "pnpm --filter @hamid/db migrate",
+    "db:seed": "pnpm --filter @hamid/db seed",
+    "db:studio": "pnpm --filter @hamid/db studio"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.2.9",
-    "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "unrs-resolver"
+    ]
   }
 }
