@@ -1,59 +1,166 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { eq } from "drizzle-orm";
-import { PackageSearch, MapPin } from "lucide-react";
-import { db, users } from "@hamid/db";
+import { PackageSearch, MapPin, ChevronRight, LogOut } from "lucide-react";
+import { formatMoney, toCents } from "@hamid/core";
+import { db, users, type OrderStatus } from "@hamid/db";
 import { getSessionUser } from "@/lib/auth/rbac";
 import { getOrCreateCustomer, getCustomerOrders } from "@/lib/account/queries";
-import { Card, CardContent } from "@/components/ui/card";
+import { logoutAction } from "@/lib/auth/actions";
+import { getLocale } from "@/lib/i18n";
 import { VerifyEmailBanner } from "@/components/auth/verify-email-banner";
+
+const STATUS_LABEL: Record<OrderStatus, string> = {
+  pending: "Pending",
+  confirmed: "Confirmed",
+  preparing: "Preparing",
+  out_for_delivery: "Out for delivery",
+  ready_for_pickup: "Ready for pickup",
+  completed: "Completed",
+  cancelled: "Cancelled",
+};
+
+const ACTIVE_STATUSES: OrderStatus[] = ["pending", "confirmed", "preparing", "out_for_delivery", "ready_for_pickup"];
 
 export default async function AccountPage() {
   const user = await getSessionUser();
   if (!user) redirect("/login?callbackUrl=/account");
 
-  const customer = await getOrCreateCustomer(Number(user.id));
+  const [locale, customer] = await Promise.all([getLocale(), getOrCreateCustomer(Number(user.id))]);
   const [orders, [dbUser]] = await Promise.all([
     getCustomerOrders(customer.id),
-    db.select({ emailVerifiedAt: users.emailVerifiedAt }).from(users).where(eq(users.id, Number(user.id))).limit(1),
+    db.select({ emailVerifiedAt: users.emailVerifiedAt, createdAt: users.createdAt }).from(users).where(eq(users.id, Number(user.id))).limit(1),
   ]);
 
+  const activeOrders = orders.filter((o) => ACTIVE_STATUSES.includes(o.status));
+  const recentOrders = orders.slice(0, 3);
+  const initial = (user.name ?? user.email ?? "?").trim().charAt(0).toUpperCase();
+  const memberSince = dbUser?.createdAt ? new Date(dbUser.createdAt).getFullYear() : null;
+
   return (
-    <div className="mx-auto max-w-3xl px-5 py-12 md:px-16 md:py-16">
-      <h1 className="mb-1 font-display text-3xl font-bold text-on-surface">My Account</h1>
-      <p className="mb-8 text-sm text-on-surface-variant">
-        {user.name ?? user.email} {user.email && user.name ? `· ${user.email}` : ""}
-      </p>
+    <div className="min-h-screen bg-[#fff8f4]">
+      {/* ── Profile header ── */}
+      <div className="bg-[#271908] px-5 py-10 md:px-16 md:py-14">
+        <div className="mx-auto flex max-w-3xl items-center gap-5">
+          <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[#7b5800] font-[family-name:var(--font-plus-jakarta)] text-2xl font-bold text-white md:h-20 md:w-20 md:text-3xl">
+            {initial}
+          </div>
+          <div className="min-w-0 flex-1">
+            <h1 className="truncate font-[family-name:var(--font-plus-jakarta)] text-2xl font-bold text-white md:text-3xl">
+              {user.name ?? "My Account"}
+            </h1>
+            <p className="mt-0.5 truncate text-sm text-white/70">{user.email}</p>
+            {memberSince && (
+              <p className="mt-1 text-xs font-semibold uppercase tracking-widest text-[#c8a97a]">
+                Member since {memberSince}
+              </p>
+            )}
+          </div>
+          <form action={logoutAction}>
+            <button
+              type="submit"
+              className="flex items-center gap-2 rounded-full border border-white/25 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-[#271908]"
+            >
+              <LogOut size={14} aria-hidden="true" />
+              <span className="hidden sm:inline">Log out</span>
+            </button>
+          </form>
+        </div>
+      </div>
 
-      {!dbUser?.emailVerifiedAt && <VerifyEmailBanner />}
+      <div className="mx-auto max-w-3xl px-5 py-8 md:py-10">
+        {!dbUser?.emailVerifiedAt && (
+          <div className="mb-6">
+            <VerifyEmailBanner />
+          </div>
+        )}
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Link href="/account/orders">
-          <Card className="transition-colors hover:bg-surface-container">
-            <CardContent className="flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-secondary-container text-secondary">
-                <PackageSearch size={20} />
-              </div>
-              <div>
-                <p className="font-semibold text-on-surface">My Orders</p>
-                <p className="text-sm text-on-surface-variant">{orders.length} order{orders.length === 1 ? "" : "s"}</p>
-              </div>
-            </CardContent>
-          </Card>
-        </Link>
-        <Link href="/account/addresses">
-          <Card className="transition-colors hover:bg-surface-container">
-            <CardContent className="flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-secondary-container text-secondary">
-                <MapPin size={20} />
-              </div>
-              <div>
-                <p className="font-semibold text-on-surface">Saved Addresses</p>
-                <p className="text-sm text-on-surface-variant">Manage delivery addresses</p>
-              </div>
-            </CardContent>
-          </Card>
-        </Link>
+        {/* ── Quick stats / links ── */}
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Link
+            href="/account/orders"
+            className="group flex items-center gap-4 rounded-2xl border border-[#e8d5bc]/60 bg-white p-5 transition-all hover:-translate-y-0.5 hover:border-[#c8a97a] hover:shadow-[0_10px_24px_-12px_rgba(39,25,8,0.25)]"
+          >
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#7b5800]/10 text-[#7b5800]">
+              <PackageSearch size={20} aria-hidden="true" />
+            </div>
+            <div className="flex-1">
+              <p className="font-semibold text-[#271908]">My Orders</p>
+              <p className="text-sm text-[#817570]">
+                {orders.length} total{activeOrders.length > 0 ? ` · ${activeOrders.length} active` : ""}
+              </p>
+            </div>
+            <ChevronRight size={18} className="text-[#c8a97a] transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+          </Link>
+          <Link
+            href="/account/addresses"
+            className="group flex items-center gap-4 rounded-2xl border border-[#e8d5bc]/60 bg-white p-5 transition-all hover:-translate-y-0.5 hover:border-[#c8a97a] hover:shadow-[0_10px_24px_-12px_rgba(39,25,8,0.25)]"
+          >
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#7b5800]/10 text-[#7b5800]">
+              <MapPin size={20} aria-hidden="true" />
+            </div>
+            <div className="flex-1">
+              <p className="font-semibold text-[#271908]">Saved Addresses</p>
+              <p className="text-sm text-[#817570]">Manage delivery addresses</p>
+            </div>
+            <ChevronRight size={18} className="text-[#c8a97a] transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+          </Link>
+        </div>
+
+        {/* ── Recent orders ── */}
+        <div className="mt-8">
+          <div className="mb-3 flex items-center justify-between">
+            <h2 className="font-[family-name:var(--font-plus-jakarta)] text-lg font-bold text-[#271908]">Recent orders</h2>
+            {orders.length > 3 && (
+              <Link href="/account/orders" className="text-sm font-semibold text-[#7b5800] hover:underline">
+                View all
+              </Link>
+            )}
+          </div>
+          {recentOrders.length === 0 ? (
+            <div className="rounded-2xl border border-dashed border-[#e8d5bc] bg-white/60 p-10 text-center">
+              <p className="text-sm text-[#817570]">You haven&apos;t placed any orders yet.</p>
+              <Link
+                href="/store"
+                className="mt-4 inline-block rounded-full bg-[#7b5800] px-8 py-3 text-xs font-semibold uppercase tracking-widest text-white transition-colors hover:bg-[#765400]"
+              >
+                Start shopping
+              </Link>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {recentOrders.map((o) => {
+                const active = ACTIVE_STATUSES.includes(o.status);
+                return (
+                  <Link
+                    key={o.id}
+                    href={`/order/${o.orderNumber}`}
+                    className="flex items-center justify-between gap-3 rounded-2xl border border-[#e8d5bc]/60 bg-white p-4 transition-colors hover:border-[#c8a97a]"
+                  >
+                    <div className="min-w-0">
+                      <p className="truncate font-mono text-sm font-semibold text-[#271908]">{o.orderNumber}</p>
+                      <p className="text-xs text-[#817570]">{new Date(o.placedAt).toLocaleDateString()}</p>
+                    </div>
+                    <div className="shrink-0 text-end">
+                      <p className="text-sm font-bold text-[#271908]">{formatMoney(toCents(o.grandTotal), o.currency, locale)}</p>
+                      <span
+                        className={`mt-0.5 inline-block rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${
+                          o.status === "cancelled"
+                            ? "bg-red-50 text-red-700"
+                            : active
+                              ? "bg-[#7b5800]/10 text-[#7b5800]"
+                              : "bg-emerald-50 text-emerald-700"
+                        }`}
+                      >
+                        {STATUS_LABEL[o.status]}
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

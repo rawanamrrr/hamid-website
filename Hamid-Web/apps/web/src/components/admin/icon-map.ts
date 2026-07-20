@@ -12,6 +12,7 @@ import {
   Settings,
   History,
   UserCog,
+  MapPin,
   type LucideIcon,
 } from "lucide-react";
 
@@ -29,4 +30,5 @@ export const ICON_MAP: Record<string, LucideIcon> = {
   Settings,
   History,
   UserCog,
+  MapPin,
 };

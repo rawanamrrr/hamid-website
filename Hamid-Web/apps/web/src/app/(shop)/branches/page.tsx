@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
+import { asc } from "drizzle-orm";
+import { db, branchLocations } from "@hamid/db";
+import { withDbTimeout } from "@/lib/db-timeout";
 
 export const metadata: Metadata = {
-  title: "Our Branch | Hamid Afandi",
-  description: "Visit Hamid Afandi Coffee at Taksem Khattab, Mansoura for a premium coffee experience.",
+  title: "Our Branches | Hamid Afandi",
+  description: "Visit Hamid Afandi Coffee — find our branches, opening hours, and directions.",
 };
 
 const highlights = [
@@ -12,7 +15,27 @@ const highlights = [
   { icon: "shopping_bag", title: "Retail Corner", desc: "Take home your favourite beans, grinders, and gift sets." },
 ];
 
-export default function BranchesPage() {
+/** Shown if no branch has been configured in the dashboard yet (or the DB is briefly unreachable). */
+const FALLBACK_BRANCH = {
+  id: 0,
+  name: "Mansoura Branch",
+  address: "Taksem Khattab, Mansoura",
+  hours: "Open Daily",
+  mapUrl: "https://maps.google.com/?q=Taksem+Khattab+Mansoura",
+};
+
+export default async function BranchesPage() {
+  const rows = await withDbTimeout(
+    db
+      .select({ id: branchLocations.id, name: branchLocations.name, address: branchLocations.address, hours: branchLocations.hours, mapUrl: branchLocations.mapUrl })
+      .from(branchLocations)
+      .orderBy(asc(branchLocations.id)),
+  ).catch(() => []);
+
+  const list = rows.length > 0 ? rows : [FALLBACK_BRANCH];
+  const single = list.length === 1;
+  const primaryMapUrl = list[0]?.mapUrl ?? FALLBACK_BRANCH.mapUrl;
+
   return (
     <div>
       {/* Hero banner */}
@@ -27,48 +50,62 @@ export default function BranchesPage() {
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
         <div className="relative z-10 px-5 md:px-16 pb-12 max-w-[1280px] mx-auto w-full">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#fdca68] mb-3 block">Our Location</span>
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#fdca68] mb-3 block">
+            {single ? "Our Location" : "Our Locations"}
+          </span>
           <h1 className="font-[family-name:var(--font-plus-jakarta)] text-3xl md:text-6xl font-bold text-white leading-tight">
-            Mansoura Branch
+            {single ? list[0].name : "Find a Branch"}
           </h1>
         </div>
       </section>
 
-      {/* Address card — overlaps hero */}
+      {/* Branch cards — overlap the hero */}
       <div className="px-5 md:px-16 max-w-[1280px] mx-auto">
-        <div
-          className="relative -mt-8 z-10 rounded-3xl p-6 md:p-10 luxury-shadow flex flex-col md:flex-row md:items-center gap-6 md:gap-16"
-          style={{ background: "#fff8f4" }}
-        >
-          <div className="flex items-start gap-4 flex-1">
-            <div className="w-12 h-12 rounded-full bg-[#7b5800] flex items-center justify-center flex-shrink-0">
-              <span className="material-symbols-outlined text-white text-xl">location_on</span>
-            </div>
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#7b5800] mb-1">Address</p>
-              <p className="font-[family-name:var(--font-plus-jakarta)] text-xl font-bold text-black">Taksem Khattab, Mansoura</p>
-            </div>
-          </div>
+        <div className={`relative -mt-8 z-10 grid gap-4 md:gap-6 ${single ? "" : "md:grid-cols-2"}`}>
+          {list.map((b) => (
+            <div key={b.id} className="rounded-3xl p-6 md:p-8 luxury-shadow" style={{ background: "#fff8f4" }}>
+              {!single && (
+                <h2 className="font-[family-name:var(--font-plus-jakarta)] text-xl font-bold text-black mb-4">{b.name}</h2>
+              )}
+              <div className="flex flex-col gap-5 md:flex-row md:items-center md:gap-10">
+                <div className="flex items-start gap-4 flex-1">
+                  <div className="w-11 h-11 md:w-12 md:h-12 rounded-full bg-[#7b5800] flex items-center justify-center flex-shrink-0">
+                    <span aria-hidden="true" className="material-symbols-outlined text-white text-xl">location_on</span>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-widest text-[#7b5800] mb-1">Address</p>
+                    <p className="font-[family-name:var(--font-plus-jakarta)] text-lg md:text-xl font-bold text-black">
+                      {b.address ?? "—"}
+                    </p>
+                  </div>
+                </div>
 
-          <div className="flex items-start gap-4 flex-1">
-            <div className="w-12 h-12 rounded-full bg-[#7b5800] flex items-center justify-center flex-shrink-0">
-              <span className="material-symbols-outlined text-white text-xl">schedule</span>
-            </div>
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#7b5800] mb-1">Hours</p>
-              <p className="font-[family-name:var(--font-plus-jakarta)] text-xl font-bold text-black">Open Daily</p>
-            </div>
-          </div>
+                <div className="flex items-start gap-4 flex-1">
+                  <div className="w-11 h-11 md:w-12 md:h-12 rounded-full bg-[#7b5800] flex items-center justify-center flex-shrink-0">
+                    <span aria-hidden="true" className="material-symbols-outlined text-white text-xl">schedule</span>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-widest text-[#7b5800] mb-1">Hours</p>
+                    <p className="font-[family-name:var(--font-plus-jakarta)] text-lg md:text-xl font-bold text-black">
+                      {b.hours ?? "Open Daily"}
+                    </p>
+                  </div>
+                </div>
 
-          <a
-            href="https://maps.google.com/?q=Taksem+Khattab+Mansoura"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex-shrink-0 bg-[#7b5800] text-white px-8 py-4 rounded-full text-xs font-semibold uppercase tracking-widest hover:bg-[#765400] transition-colors flex items-center gap-2"
-          >
-            <span className="material-symbols-outlined text-[18px]">directions</span>
-            Get Directions
-          </a>
+                {b.mapUrl && (
+                  <a
+                    href={b.mapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-shrink-0 bg-[#7b5800] text-white px-7 py-3.5 rounded-full text-xs font-semibold uppercase tracking-widest hover:bg-[#765400] transition-colors inline-flex items-center justify-center gap-2"
+                  >
+                    <span aria-hidden="true" className="material-symbols-outlined text-[18px]">directions</span>
+                    Get Directions
+                  </a>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -84,7 +121,7 @@ export default function BranchesPage() {
               className="bg-[#fff1e6] rounded-2xl p-5 md:p-8 text-center space-y-2.5 md:space-y-4 luxury-shadow hover:-translate-y-1 transition-transform duration-300"
             >
               <div className="w-11 h-11 md:w-14 md:h-14 rounded-full bg-[#7b5800] flex items-center justify-center mx-auto">
-                <span className="material-symbols-outlined text-white text-xl md:text-2xl">{icon}</span>
+                <span aria-hidden="true" className="material-symbols-outlined text-white text-xl md:text-2xl">{icon}</span>
               </div>
               <h3 className="font-[family-name:var(--font-plus-jakarta)] text-base md:text-lg font-semibold text-black">{title}</h3>
               <p className="text-[#4f4541] text-xs md:text-sm leading-relaxed">{desc}</p>
@@ -99,10 +136,11 @@ export default function BranchesPage() {
           <div className="md:w-1/2 space-y-4 md:space-y-6">
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#fdca68]">The Experience</span>
             <h2 className="font-[family-name:var(--font-plus-jakarta)] text-2xl md:text-4xl font-bold text-white leading-snug">
-              Cairo&apos;s Heritage, Right Here in Mansoura
+              Cairo&apos;s Heritage, In Every Branch
             </h2>
             <p className="text-[#D9C1AA] leading-relaxed">
-              Step inside and feel the warmth of Egyptian coffee culture. Our Mansoura branch is designed to be a home away from home — rich interiors, the scent of freshly roasted beans, and the sound of quiet conversation.
+              Step inside and feel the warmth of Egyptian coffee culture. Every branch is designed to be a home away from
+              home — rich interiors, the scent of freshly roasted beans, and the sound of quiet conversation.
             </p>
             <div className="flex flex-wrap gap-3 pt-2">
               {["Dine In", "Takeaway", "Free Wi-Fi", "Retail Corner"].map((tag) => (
@@ -132,12 +170,12 @@ export default function BranchesPage() {
           Come experience the tradition in person. No reservation needed — just follow the scent of freshly roasted coffee.
         </p>
         <a
-          href="https://maps.google.com/?q=Taksem+Khattab+Mansoura"
+          href={primaryMapUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 bg-[#7b5800] text-white px-10 py-4 rounded-full text-xs font-semibold uppercase tracking-widest hover:bg-[#765400] transition-colors"
         >
-          <span className="material-symbols-outlined text-[18px]">map</span>
+          <span aria-hidden="true" className="material-symbols-outlined text-[18px]">map</span>
           Find Us on the Map
         </a>
       </section>

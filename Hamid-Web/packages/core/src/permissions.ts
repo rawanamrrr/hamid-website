@@ -26,6 +26,8 @@ export const PERMISSION_SLUGS = [
   "users.view",
   "users.manage",
   "roles.manage",
+  "branches.view",
+  "branches.manage",
   "settings.manage",
   "activity.view",
 ] as const;
@@ -74,6 +76,7 @@ export const ROLE_DEFINITIONS: RoleDefinition[] = [
       "media.manage",
       "content.view",
       "content.manage",
+      "branches.view",
       "activity.view",
     ],
   },

@@ -20,6 +20,7 @@ export function CheckoutForm({
   locale,
   cartLines,
   initialSubtotalCents,
+  governorates = [],
 }: {
   isLoggedIn: boolean;
   paymentMethods: { code: string; name: string }[];
@@ -27,6 +28,8 @@ export function CheckoutForm({
   locale: Locale;
   cartLines: CartLineView[];
   initialSubtotalCents: number;
+  /** Governorates with a configured delivery fee (Admin → Settings). Empty = free-text input. */
+  governorates?: string[];
 }) {
   const router = useRouter();
   const [serverError, setServerError] = useState<string | null>(null);
@@ -54,6 +57,7 @@ export function CheckoutForm({
 
   const fulfillmentType = watch("fulfillmentType");
   const discountCode = watch("discountCode");
+  const governorate = watch("newAddress.governorate");
 
   // Debounced live recompute — reuses the exact same pricing logic placeOrderAction
   // commits with, so what's shown here can never drift from what's actually charged.
@@ -62,7 +66,7 @@ export function CheckoutForm({
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
       setPreviewPending(true);
-      previewOrderTotalsAction(fulfillmentType, discountCode)
+      previewOrderTotalsAction(fulfillmentType, discountCode, governorate)
         .then((result) => {
           if ("error" in result) return;
           setPreview(result.data);
@@ -72,7 +76,7 @@ export function CheckoutForm({
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
-  }, [fulfillmentType, discountCode]);
+  }, [fulfillmentType, discountCode, governorate]);
 
   async function onSubmit(values: CheckoutInput) {
     setServerError(null);
@@ -193,7 +197,25 @@ export function CheckoutForm({
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <div>
                   <Label htmlFor="newAddress.governorate">Governorate</Label>
-                  <Input id="newAddress.governorate" {...register("newAddress.governorate")} />
+                  {governorates.length > 0 ? (
+                    <select
+                      id="newAddress.governorate"
+                      {...register("newAddress.governorate")}
+                      defaultValue=""
+                      className="flex h-11 w-full rounded-xl border border-outline-variant bg-surface-container-lowest px-3 text-sm text-on-surface"
+                    >
+                      <option value="" disabled>
+                        Select…
+                      </option>
+                      {governorates.map((g) => (
+                        <option key={g} value={g}>
+                          {g}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <Input id="newAddress.governorate" {...register("newAddress.governorate")} />
+                  )}
                 </div>
                 <div>
                   <Label htmlFor="newAddress.city">City</Label>

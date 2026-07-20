@@ -41,7 +41,7 @@ export function StoreSearchInput({ placeholder }: { placeholder: string }) {
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         aria-label={placeholder}
-        className="w-full rounded-full border border-[#e8d5bc]/60 bg-white py-2.5 ps-11 pe-11 text-sm text-[#271908] placeholder:text-[#817570] focus:border-[#7b5800] focus:outline-none"
+        className="w-full rounded-full border border-[#e8d5bc]/60 bg-white py-2.5 ps-11 pe-11 text-sm text-[#271908] placeholder:text-[#817570] focus:border-[#7b5800] focus:outline-none [&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden"
       />
       {value && (
         <button

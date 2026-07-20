@@ -34,9 +34,20 @@ import { getAutoDiscounts, getDiscountByCode } from "@/lib/discounts/resolve";
 import { getGuestCartToken, clearGuestCartCookie } from "@/lib/cart/guest-token";
 import type { ActionResult } from "@/lib/auth/rbac";
 import { sendEmail } from "@/lib/email/mailer";
+import { getGovernorateFees, getNotificationEmail } from "@/lib/settings/queries";
 import { formatMoney } from "@hamid/core";
 
-async function getDeliveryFeeCents(): Promise<number> {
+/**
+ * Delivery fee for a governorate: the per-governorate table from Admin →
+ * Settings wins; the flat delivery_fee setting is the fallback for
+ * unconfigured governorates (and when no table exists at all).
+ */
+async function getDeliveryFeeCents(governorate?: string | null): Promise<number> {
+  if (governorate?.trim()) {
+    const fees = await getGovernorateFees();
+    const match = fees.find((g) => g.name.trim().toLowerCase() === governorate.trim().toLowerCase());
+    if (match) return toCents(match.fee);
+  }
   const [row] = await db.select().from(settings).where(and(eq(settings.group, "checkout"), eq(settings.key, "delivery_fee"))).limit(1);
   return toCents((row?.value as string) ?? "30.00");
 }
@@ -46,7 +57,11 @@ async function getDeliveryFeeCents(): Promise<number> {
  * powers the checkout page's live totals) so pricing logic can't drift between
  * what the customer sees and what they're actually charged.
  */
-async function computeCheckoutPricing(fulfillmentType: "delivery" | "pickup", discountCode: string | undefined) {
+async function computeCheckoutPricing(
+  fulfillmentType: "delivery" | "pickup",
+  discountCode: string | undefined,
+  governorate?: string | null,
+) {
   const session = await auth();
   const userId = session?.user ? Number(session.user.id) : null;
 
@@ -80,7 +95,7 @@ async function computeCheckoutPricing(fulfillmentType: "delivery" | "pickup", di
     codeDiscount ? { discount: codeDiscount, userRedemptionCount } : null,
   );
 
-  const deliveryFeeCents = fulfillmentType === "delivery" ? await getDeliveryFeeCents() : 0;
+  const deliveryFeeCents = fulfillmentType === "delivery" ? await getDeliveryFeeCents(governorate) : 0;
   const totals = computeOrderTotals({
     subtotalCents: discountResult.subtotalCents,
     discountTotalCents: discountResult.discountTotalCents,
@@ -103,6 +118,7 @@ export interface CheckoutTotalsPreview {
 export async function previewOrderTotalsAction(
   fulfillmentType: "delivery" | "pickup",
   discountCode: string | undefined,
+  governorate?: string | null,
 ): Promise<ActionResult<CheckoutTotalsPreview>> {
   const cart = await getCart();
   if (cart.lines.length === 0) {
@@ -110,7 +126,7 @@ export async function previewOrderTotalsAction(
   }
 
   const code = discountCode?.trim() || undefined;
-  const { discountResult, totals } = await computeCheckoutPricing(fulfillmentType, code);
+  const { discountResult, totals } = await computeCheckoutPricing(fulfillmentType, code, governorate);
   const discountError = code && discountResult.codeError ? discountResult.codeError : undefined;
 
   return {
@@ -131,9 +147,17 @@ export async function placeOrderAction(input: CheckoutInput): Promise<ActionResu
   if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? "Invalid checkout details." };
   const data = parsed.data;
 
+  // Resolve the delivery governorate first — it determines the delivery fee.
+  let governorate: string | null = data.newAddress?.governorate ?? null;
+  if (data.fulfillmentType === "delivery" && !governorate && data.addressId) {
+    const [saved] = await db.select({ governorate: addresses.governorate }).from(addresses).where(eq(addresses.id, data.addressId)).limit(1);
+    governorate = saved?.governorate ?? null;
+  }
+
   const { cart, userId, codeDiscount, discountResult, totals } = await computeCheckoutPricing(
     data.fulfillmentType,
     data.discountCode,
+    governorate,
   );
   if (cart.lines.length === 0) return { error: "Your cart is empty." };
 
@@ -283,6 +307,26 @@ export async function placeOrderAction(input: CheckoutInput): Promise<ActionResu
       text: `Hello ${recipientName},\n\nThanks for your order! Your order ${orderNumber} has been received.\n\n${itemsText}\n\nTotal: ${formatMoney(toCents(totals.grandTotal))}\n\nTrack it at: ${(process.env.AUTH_URL ?? "http://localhost:3000").replace(/\/$/, "")}/order/${orderNumber}`,
       html: `<p>Hello ${recipientName},</p><p>Thanks for your order! Your order <strong>${orderNumber}</strong> has been received.</p><ul>${itemsHtml}</ul><p>Total: <strong>${formatMoney(toCents(totals.grandTotal))}</strong></p><p><a href="${(process.env.AUTH_URL ?? "http://localhost:3000").replace(/\/$/, "")}/order/${orderNumber}">Track your order</a></p>`,
     });
+  }
+
+  // Admin alert — configurable address in Admin → Settings. Never let a mail
+  // failure affect the customer's already-committed order.
+  try {
+    const adminEmail = await getNotificationEmail();
+    if (adminEmail) {
+      const summaryText = cart.lines.map((l) => `- ${l.name} x${l.quantity} — ${formatMoney(l.lineTotalCents)}`).join("\n");
+      const summaryHtml = cart.lines.map((l) => `<li>${l.name} × ${l.quantity} — ${formatMoney(l.lineTotalCents)}</li>`).join("");
+      const adminUrl = `${(process.env.AUTH_URL ?? "http://localhost:3000").replace(/\/$/, "")}/admin/orders`;
+      const who = recipientName !== "there" ? recipientName : recipientEmail ?? "Guest";
+      await sendEmail({
+        to: adminEmail,
+        subject: `New order ${orderNumber} — ${formatMoney(toCents(totals.grandTotal))}`,
+        text: `New ${data.fulfillmentType} order ${orderNumber} from ${who}.\n\n${summaryText}\n\nTotal: ${formatMoney(toCents(totals.grandTotal))}\n\nManage: ${adminUrl}`,
+        html: `<p>New <strong>${data.fulfillmentType}</strong> order <strong>${orderNumber}</strong> from ${who}.</p><ul>${summaryHtml}</ul><p>Total: <strong>${formatMoney(toCents(totals.grandTotal))}</strong></p><p><a href="${adminUrl}">Open the orders dashboard</a></p>`,
+      });
+    }
+  } catch (err) {
+    console.error("Admin order notification failed:", err);
   }
 
   return { success: true, data: { orderNumber } };

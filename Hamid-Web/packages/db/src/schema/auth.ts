@@ -60,6 +60,24 @@ export const rolePermissions = mysqlTable(
   (t) => [primaryKey({ columns: [t.roleId, t.permissionId] })],
 );
 
+/**
+ * Per-user permission overrides, additive on top of role permissions.
+ * Powers the "granular staff access" admin UI: a staff member's effective
+ * permission set = union(role permissions, rows here).
+ */
+export const userPermissions = mysqlTable(
+  "user_permissions",
+  {
+    userId: fk("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    permissionId: fk("permission_id")
+      .notNull()
+      .references(() => permissions.id, { onDelete: "cascade" }),
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.permissionId] })],
+);
+
 /** branchId nullable = role applies to all branches; kept out of the PK since MySQL forces PK columns NOT NULL. */
 export const userRoles = mysqlTable(
   "user_roles",

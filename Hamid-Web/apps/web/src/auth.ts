@@ -2,8 +2,47 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { eq } from "drizzle-orm";
-import { db, users, userRoles, roles, rolePermissions, permissions } from "@hamid/db";
+import { db, users, userRoles, roles, rolePermissions, permissions, userPermissions } from "@hamid/db";
 import { loginSchema } from "@hamid/core";
+import { withDbTimeout } from "@/lib/db-timeout";
+
+/**
+ * Resolves a user's current roles + effective permissions straight from the
+ * database. Effective permissions = union(role permissions, per-user
+ * overrides). Returns null for a missing or non-active account so callers can
+ * revoke access (e.g. a suspended user loses dashboard access on next sync).
+ */
+async function loadUserAccess(userId: number): Promise<{ roles: string[]; permissions: string[] } | null> {
+  const [user] = await db.select({ status: users.status }).from(users).where(eq(users.id, userId)).limit(1);
+  if (!user || user.status !== "active") return null;
+
+  const [roleRows, permRows, overrideRows] = await Promise.all([
+    db.select({ slug: roles.slug }).from(userRoles).innerJoin(roles, eq(userRoles.roleId, roles.id)).where(eq(userRoles.userId, userId)),
+    db
+      .select({ slug: permissions.slug })
+      .from(userRoles)
+      .innerJoin(rolePermissions, eq(userRoles.roleId, rolePermissions.roleId))
+      .innerJoin(permissions, eq(rolePermissions.permissionId, permissions.id))
+      .where(eq(userRoles.userId, userId)),
+    db
+      .select({ slug: permissions.slug })
+      .from(userPermissions)
+      .innerJoin(permissions, eq(userPermissions.permissionId, permissions.id))
+      .where(eq(userPermissions.userId, userId)),
+  ]);
+
+  return {
+    roles: roleRows.map((r) => r.slug),
+    permissions: [...new Set([...permRows.map((p) => p.slug), ...overrideRows.map((p) => p.slug)])],
+  };
+}
+
+// How long a signed-in session may keep stale roles/permissions before the
+// jwt callback re-syncs them from the DB. This is what makes an admin's
+// role/permission edits (and account suspensions) take effect without forcing
+// the affected user to log out and back in — while avoiding a DB round-trip on
+// every single request.
+const ACCESS_REFRESH_MS = 30_000;
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   session: { strategy: "jwt", maxAge: 30 * 24 * 60 * 60 },
@@ -22,25 +61,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const valid = await bcrypt.compare(password, user.passwordHash);
         if (!valid) return null;
 
-        const roleRows = await db
-          .select({ slug: roles.slug })
-          .from(userRoles)
-          .innerJoin(roles, eq(userRoles.roleId, roles.id))
-          .where(eq(userRoles.userId, user.id));
-
-        const permRows = await db
-          .select({ slug: permissions.slug })
-          .from(userRoles)
-          .innerJoin(rolePermissions, eq(userRoles.roleId, rolePermissions.roleId))
-          .innerJoin(permissions, eq(rolePermissions.permissionId, permissions.id))
-          .where(eq(userRoles.userId, user.id));
-
+        const access = await loadUserAccess(user.id);
         return {
           id: String(user.id),
           email: user.email,
           name: user.fullName,
-          roles: roleRows.map((r) => r.slug),
-          permissions: [...new Set(permRows.map((p) => p.slug))],
+          roles: access?.roles ?? [],
+          permissions: access?.permissions ?? [],
         };
       },
     }),
@@ -51,6 +78,24 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.uid = user.id as string;
         token.roles = (user as { roles?: string[] }).roles ?? [];
         token.permissions = (user as { permissions?: string[] }).permissions ?? [];
+        token.accessSyncedAt = Date.now();
+        return token;
+      }
+
+      // Periodically re-sync from the DB so role/permission edits and account
+      // suspensions propagate to already-signed-in users. A DB blip leaves the
+      // existing (stale) values in place rather than logging anyone out.
+      const t = token as { uid?: string; accessSyncedAt?: number };
+      const last = t.accessSyncedAt ?? 0;
+      if (t.uid && Date.now() - last > ACCESS_REFRESH_MS) {
+        try {
+          const access = await withDbTimeout(loadUserAccess(Number(t.uid)), 8000);
+          token.roles = access?.roles ?? [];
+          token.permissions = access?.permissions ?? [];
+          token.accessSyncedAt = Date.now();
+        } catch {
+          // Keep existing token values; try again on the next request.
+        }
       }
       return token;
     },

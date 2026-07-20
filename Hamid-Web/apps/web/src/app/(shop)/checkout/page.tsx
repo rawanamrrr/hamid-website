@@ -4,15 +4,17 @@ import { db, paymentMethods } from "@hamid/db";
 import { getCart } from "@/lib/cart/queries";
 import { getSessionUser } from "@/lib/auth/rbac";
 import { getDict, getLocale } from "@/lib/i18n";
+import { getGovernorateFees } from "@/lib/settings/queries";
 import { CheckoutForm } from "@/components/checkout/checkout-form";
 
 export default async function CheckoutPage() {
   const locale = await getLocale();
-  const [cart, user, methods, dict] = await Promise.all([
+  const [cart, user, methods, dict, governorateFees] = await Promise.all([
     getCart(locale),
     getSessionUser(),
     db.select().from(paymentMethods).where(eq(paymentMethods.isActive, true)),
     getDict(),
+    getGovernorateFees(),
   ]);
 
   if (cart.lines.length === 0) redirect("/cart");
@@ -27,6 +29,7 @@ export default async function CheckoutPage() {
         locale={locale}
         cartLines={cart.lines}
         initialSubtotalCents={cart.subtotalCents}
+        governorates={governorateFees.map((g) => g.name)}
       />
     </div>
   );

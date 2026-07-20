@@ -15,6 +15,20 @@
       "when": 1784210817848,
       "tag": "0001_shocking_mattie_franklin",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1784549473903,
+      "tag": "0002_worthless_nomad",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1784564531729,
+      "tag": "0003_overrated_susan_delgado",
+      "breakpoints": true
     }
   ]
 }
