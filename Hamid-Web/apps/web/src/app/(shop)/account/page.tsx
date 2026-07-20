@@ -1,16 +1,22 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { eq } from "drizzle-orm";
 import { PackageSearch, MapPin } from "lucide-react";
+import { db, users } from "@hamid/db";
 import { getSessionUser } from "@/lib/auth/rbac";
 import { getOrCreateCustomer, getCustomerOrders } from "@/lib/account/queries";
 import { Card, CardContent } from "@/components/ui/card";
+import { VerifyEmailBanner } from "@/components/auth/verify-email-banner";
 
 export default async function AccountPage() {
   const user = await getSessionUser();
   if (!user) redirect("/login?callbackUrl=/account");
 
   const customer = await getOrCreateCustomer(Number(user.id));
-  const orders = await getCustomerOrders(customer.id);
+  const [orders, [dbUser]] = await Promise.all([
+    getCustomerOrders(customer.id),
+    db.select({ emailVerifiedAt: users.emailVerifiedAt }).from(users).where(eq(users.id, Number(user.id))).limit(1),
+  ]);
 
   return (
     <div className="mx-auto max-w-3xl px-5 py-12 md:px-16 md:py-16">
@@ -18,6 +24,8 @@ export default async function AccountPage() {
       <p className="mb-8 text-sm text-on-surface-variant">
         {user.name ?? user.email} {user.email && user.name ? `· ${user.email}` : ""}
       </p>
+
+      {!dbUser?.emailVerifiedAt && <VerifyEmailBanner />}
 
       <div className="grid gap-4 sm:grid-cols-2">
         <Link href="/account/orders">

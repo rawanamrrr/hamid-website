@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans, Cairo } from "next/font/google";
 import "./globals.css";
 import { getLocale, dir } from "@/lib/i18n";
@@ -23,6 +23,15 @@ export const metadata: Metadata = {
     "Premium coffee, deeply rooted in tradition, crafted for modern coffee lovers.",
 };
 
+// Declared via the Viewport API (not manual <head> JSX) so Next guarantees it
+// on every render path — error pages, streamed responses, etc. Without it,
+// real phones render at ~980px virtual width and the desktop layout shows.
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#fff8f4",
+};
+
 export default async function RootLayout({
   children,
 }: {
@@ -32,20 +41,20 @@ export default async function RootLayout({
   const direction = dir(locale);
 
   return (
-    <html lang={locale} dir={direction} className="scroll-smooth">
+    <html lang={locale} dir={direction} className="scroll-smooth" data-scroll-behavior="smooth">
       <head>
-        {/* CRITICAL: without this, real mobile browsers render at ~980px virtual width,
-            causing Tailwind md: breakpoints to always be active — hamburger gets hidden,
-            desktop nav shows instead. Chrome DevTools emulation sets this automatically,
-            which is why it works there but not on real devices. */}
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#fff8f4" />
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
           rel="stylesheet"
         />
       </head>
       <body className={`${inter.variable} ${plusJakarta.variable} ${cairo.variable} ${direction === "rtl" ? "font-arabic" : ""}`}>
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:start-2 focus:z-[100] focus:rounded-lg focus:bg-black focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+        >
+          Skip to content
+        </a>
         {children}
       </body>
     </html>

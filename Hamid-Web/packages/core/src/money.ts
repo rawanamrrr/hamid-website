@@ -16,11 +16,13 @@ export function fromCents(cents: number): string {
 }
 
 export function formatMoney(cents: number, currency = "EGP", locale = "en"): string {
-  return new Intl.NumberFormat(locale === "ar" ? "ar-EG" : "en-EG", {
-    style: "currency",
-    currency,
-    currencyDisplay: "code",
+  // Whole amounts render without decimals ("250 EGP"); fractional amounts keep
+  // up to 2 digits ("250.5 EGP"). Currency code always trails the number.
+  const amount = new Intl.NumberFormat(locale === "ar" ? "ar-EG" : "en-EG", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
   }).format(cents / 100);
+  return `${amount} ${currency}`;
 }
 
 export function addCents(...values: number[]): number {

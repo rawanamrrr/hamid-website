@@ -51,7 +51,10 @@ export const menuItems = mysqlTable(
       .notNull()
       .references(() => menuCategories.id),
     slug: varchar("slug", { length: 150 }).notNull().unique(),
-    price: decimal("price", { precision: 12, scale: 2 }).notNull(),
+    // Deprecated: pricing now lives in menuItemSizes (a product can have
+    // multiple size/price pairs). Kept nullable for backward compatibility
+    // with any external reads — the app no longer writes to it.
+    price: decimal("price", { precision: 12, scale: 2 }),
     currency: char("currency", { length: 3 }).notNull().default("EGP"),
     imageMediaId: fk("image_media_id").references(() => media.id),
     badge: varchar("badge", { length: 50 }), // e.g. "Popular" | "Heritage" | "Seasonal"
@@ -78,4 +81,25 @@ export const menuItemTranslations = mysqlTable(
     notes: varchar("notes", { length: 255 }),
   },
   (t) => [uniqueIndex("menu_item_translations_unique").on(t.itemId, t.locale)],
+);
+
+/**
+ * A menu item can have one or more sizes (Single/Double/Medium/Large, or a
+ * free-text label for items that don't fit those — e.g. a dessert slice),
+ * each with its own price. `size` is a free varchar rather than a DB enum so
+ * new labels never require a migration.
+ */
+export const menuItemSizes = mysqlTable(
+  "menu_item_sizes",
+  {
+    id: id(),
+    itemId: fk("item_id")
+      .notNull()
+      .references(() => menuItems.id, { onDelete: "cascade" }),
+    size: varchar("size", { length: 32 }).notNull(),
+    price: decimal("price", { precision: 12, scale: 2 }).notNull(),
+    sortOrder: int("sort_order").notNull().default(0),
+    ...timestamps,
+  },
+  (t) => [index("menu_item_sizes_item_idx").on(t.itemId)],
 );

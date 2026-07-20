@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { getMenuSections } from "@/lib/menu/queries";
-import { getLocale } from "@/lib/i18n";
+import { getDict, getLocale } from "@/lib/i18n";
 import MenuPageClient from "./MenuPageClient";
+import { LoadErrorBand } from "@/components/LoadErrorBand";
+import { withDbTimeout } from "@/lib/db-timeout";
 
 export const metadata: Metadata = {
   title: "Menu | Hamid Afandi",
@@ -15,6 +17,10 @@ export const metadata: Metadata = {
 
 export default async function MenuPage() {
   const locale = await getLocale();
-  const sections = await getMenuSections(locale);
+  const sections = await withDbTimeout(getMenuSections(locale)).catch(() => null);
+  if (sections === null) {
+    const dict = await getDict();
+    return <LoadErrorBand message={dict.common.loadError} retryLabel={dict.common.retry} href="/menu" />;
+  }
   return <MenuPageClient sections={sections} />;
 }

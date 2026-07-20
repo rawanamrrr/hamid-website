@@ -1,4 +1,4 @@
-import { and, asc, eq } from "drizzle-orm";
+import { and, asc, eq, isNull } from "drizzle-orm";
 import { db, storeProducts, storeProductTranslations, storeCategories, storeCategoryTranslations } from "@hamid/db";
 import { DiscountForm } from "@/components/admin/discounts/discount-form";
 
@@ -8,6 +8,7 @@ export default async function NewDiscountPage() {
       .select({ id: storeProducts.id, name: storeProductTranslations.name })
       .from(storeProducts)
       .leftJoin(storeProductTranslations, and(eq(storeProductTranslations.productId, storeProducts.id), eq(storeProductTranslations.locale, "en")))
+      .where(isNull(storeProducts.deletedAt))
       .orderBy(asc(storeProducts.sortOrder)),
     db
       .select({ id: storeCategories.id, name: storeCategoryTranslations.name })

@@ -2,7 +2,7 @@ import { relations } from "drizzle-orm";
 import { users, roles, permissions, rolePermissions, userRoles } from "./auth";
 import { customers, addresses } from "./customers";
 import { media } from "./media";
-import { menuCategories, menuCategoryTranslations, menuItems, menuItemTranslations } from "./menu";
+import { menuCategories, menuCategoryTranslations, menuItems, menuItemTranslations, menuItemSizes } from "./menu";
 import {
   storeCategories,
   storeCategoryTranslations,
@@ -62,10 +62,15 @@ export const menuItemsRelations = relations(menuItems, ({ one, many }) => ({
   category: one(menuCategories, { fields: [menuItems.categoryId], references: [menuCategories.id] }),
   image: one(media, { fields: [menuItems.imageMediaId], references: [media.id] }),
   translations: many(menuItemTranslations),
+  sizes: many(menuItemSizes),
 }));
 
 export const menuItemTranslationsRelations = relations(menuItemTranslations, ({ one }) => ({
   item: one(menuItems, { fields: [menuItemTranslations.itemId], references: [menuItems.id] }),
+}));
+
+export const menuItemSizesRelations = relations(menuItemSizes, ({ one }) => ({
+  item: one(menuItems, { fields: [menuItemSizes.itemId], references: [menuItems.id] }),
 }));
 
 export const storeCategoriesRelations = relations(storeCategories, ({ many }) => ({

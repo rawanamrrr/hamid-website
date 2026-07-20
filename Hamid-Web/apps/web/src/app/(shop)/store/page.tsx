@@ -1,5 +1,9 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import ProductCard from "@/components/ProductCard";
+import { StoreSearchInput } from "@/components/store/search-input";
+import { LoadErrorBand } from "@/components/LoadErrorBand";
+import { withDbTimeout } from "@/lib/db-timeout";
 import { getStoreCategories, getStoreProducts } from "@/lib/store/queries";
 import { getLocale, getDict } from "@/lib/i18n";
 
@@ -7,17 +11,23 @@ import { getLocale, getDict } from "@/lib/i18n";
 // which force dynamic (per-request) rendering — an ISR `revalidate` export
 // here would be a no-op, so it's intentionally omitted.
 
+export const metadata: Metadata = {
+  title: "Our Store | Hamid Afandi",
+  description: "Shop coffee beans, Turkish coffee, espresso, and accessories from Hamid Afandi Coffee.",
+};
+
 export default async function StorePage({
   searchParams,
 }: {
-  searchParams: Promise<{ category?: string }>;
+  searchParams: Promise<{ category?: string; q?: string }>;
 }) {
   const [locale, dict, params] = await Promise.all([getLocale(), getDict(), searchParams]);
   const activeCategory = params.category;
+  const search = params.q;
 
   const [categories, products] = await Promise.all([
-    getStoreCategories(locale),
-    getStoreProducts(locale, activeCategory),
+    withDbTimeout(getStoreCategories(locale)).catch(() => null),
+    withDbTimeout(getStoreProducts(locale, { categorySlug: activeCategory, search })).catch(() => null),
   ]);
 
   return (
@@ -27,10 +37,15 @@ export default async function StorePage({
         <h1 className="font-[family-name:var(--font-plus-jakarta)] text-3xl md:text-5xl font-bold text-white mb-4">
           {dict.store.title}
         </h1>
-        <p className="text-white/60 text-sm md:text-lg max-w-xl mx-auto">{dict.store.subtitle}</p>
+        <p className="text-white/80 text-sm md:text-lg max-w-xl mx-auto">{dict.store.subtitle}</p>
       </div>
 
+      {categories === null || products === null ? (
+        <LoadErrorBand message={dict.common.loadError} retryLabel={dict.common.retry} href="/store" />
+      ) : (
       <div className="py-10 md:py-16 px-5 md:px-16 max-w-[1280px] mx-auto">
+        <StoreSearchInput placeholder={dict.store.searchPlaceholder} />
+
         <div className="flex gap-2 md:gap-4 overflow-x-auto no-scrollbar pb-2 mb-8 md:mb-12 md:flex-wrap md:justify-center">
           <Link
             href="/store"
@@ -75,9 +90,10 @@ export default async function StorePage({
         </div>
 
         {products.length === 0 && (
-          <p className="text-center text-[#4f4541] py-16">{dict.store.empty}</p>
+          <p className="text-center text-[#4f4541] py-16">{search ? dict.store.searchEmpty : dict.store.empty}</p>
         )}
       </div>
+      )}
     </div>
   );
 }

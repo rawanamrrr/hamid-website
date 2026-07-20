@@ -14,7 +14,8 @@
     "db:generate": "pnpm --filter @hamid/db generate",
     "db:migrate": "pnpm --filter @hamid/db migrate",
     "db:seed": "pnpm --filter @hamid/db seed",
-    "db:studio": "pnpm --filter @hamid/db studio"
+    "db:studio": "pnpm --filter @hamid/db studio",
+    "db:dump": "pnpm --filter @hamid/db dump"
   },
   "devDependencies": {
     "typescript": "^5"

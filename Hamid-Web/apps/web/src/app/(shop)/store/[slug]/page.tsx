@@ -1,9 +1,26 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { ChevronLeft } from "lucide-react";
 import { getStoreProductBySlug } from "@/lib/store/queries";
 import { getLocale, getDict } from "@/lib/i18n";
 import { ProductDetail } from "@/components/ProductDetail";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const locale = await getLocale();
+  const product = await getStoreProductBySlug(slug, locale);
+  if (!product) return { title: "Product not found | Hamid Afandi" };
+  return {
+    title: `${product.name} | Hamid Afandi`,
+    description: product.description ?? `Shop ${product.name} from Hamid Afandi Coffee.`,
+    openGraph: {
+      title: product.name,
+      description: product.description ?? undefined,
+      images: product.image ? [{ url: product.image }] : undefined,
+    },
+  };
+}
 
 export default async function StoreProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

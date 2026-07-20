@@ -28,23 +28,30 @@ export async function addToCartAction(storeProductId: number, quantity = 1): Pro
   const parsed = cartItemInputSchema.safeParse({ storeProductId, quantity });
   if (!parsed.success) return { error: "Invalid request." };
 
-  const [product] = await db.select().from(storeProducts).where(eq(storeProducts.id, storeProductId)).limit(1);
-  if (!product || !product.isActive) return { error: "This product is not available." };
-  if (product.stockQty < quantity) return { error: "Not enough stock available." };
+  // A thrown DB error here would surface as an unhandled client-side failure
+  // with no feedback — translate everything into an { error } the UI can show.
+  try {
+    const [product] = await db.select().from(storeProducts).where(eq(storeProducts.id, storeProductId)).limit(1);
+    if (!product || !product.isActive || product.deletedAt) return { error: "This product is not available." };
+    if (product.stockQty < quantity) return { error: "Not enough stock available." };
 
-  const cartId = await resolveCartId();
-  const [existingLine] = await db
-    .select()
-    .from(cartItems)
-    .where(and(eq(cartItems.cartId, cartId), eq(cartItems.storeProductId, storeProductId)))
-    .limit(1);
+    const cartId = await resolveCartId();
+    const [existingLine] = await db
+      .select()
+      .from(cartItems)
+      .where(and(eq(cartItems.cartId, cartId), eq(cartItems.storeProductId, storeProductId)))
+      .limit(1);
 
-  if (existingLine) {
-    const newQty = existingLine.quantity + quantity;
-    if (newQty > product.stockQty) return { error: "Not enough stock available." };
-    await db.update(cartItems).set({ quantity: newQty }).where(eq(cartItems.id, existingLine.id));
-  } else {
-    await db.insert(cartItems).values({ cartId, storeProductId, quantity, unitPriceSnapshot: product.price });
+    if (existingLine) {
+      const newQty = existingLine.quantity + quantity;
+      if (newQty > product.stockQty) return { error: "Not enough stock available." };
+      await db.update(cartItems).set({ quantity: newQty }).where(eq(cartItems.id, existingLine.id));
+    } else {
+      await db.insert(cartItems).values({ cartId, storeProductId, quantity, unitPriceSnapshot: product.price });
+    }
+  } catch (err) {
+    console.error("addToCartAction failed:", err);
+    return { error: "Couldn't add to cart — please try again." };
   }
 
   revalidatePath("/cart");
@@ -59,7 +66,8 @@ export async function updateCartItemQuantityAction(cartItemId: number, quantity:
   if (!line) return { error: "Item not found." };
 
   const [product] = await db.select().from(storeProducts).where(eq(storeProducts.id, line.storeProductId)).limit(1);
-  if (product && quantity > product.stockQty) return { error: "Not enough stock available." };
+  if (!product || product.deletedAt) return { error: "This product is no longer available." };
+  if (quantity > product.stockQty) return { error: "Not enough stock available." };
 
   await db.update(cartItems).set({ quantity }).where(eq(cartItems.id, cartItemId));
   revalidatePath("/cart");

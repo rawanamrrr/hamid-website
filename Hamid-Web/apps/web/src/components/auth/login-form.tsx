@@ -5,6 +5,7 @@ import Link from "next/link";
 import { loginAction } from "@/lib/auth/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, FormError } from "@/components/ui/card";
 import type { Dictionary } from "@/lib/i18n";
@@ -33,7 +34,7 @@ export function LoginForm({ dict, callbackUrl }: { dict: Dictionary; callbackUrl
                 {dict.auth.forgotPassword}
               </Link>
             </div>
-            <Input id="password" name="password" type="password" required autoComplete="current-password" />
+            <PasswordInput id="password" name="password" required autoComplete="current-password" />
           </div>
           <Button type="submit" className="w-full" disabled={pending}>
             {pending ? "…" : dict.auth.submitLogin}

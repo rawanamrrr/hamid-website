@@ -1,6 +1,6 @@
 import "server-only";
 import { unstable_cache } from "next/cache";
-import { and, asc, eq, inArray } from "drizzle-orm";
+import { and, asc, eq, inArray, isNull, like } from "drizzle-orm";
 import {
   db,
   storeCategories,
@@ -81,24 +81,37 @@ export interface StoreProductFilter {
   onlyFeaturedHome?: boolean;
   onlyBestSeller?: boolean;
   limit?: number;
+  /** Matches against product name/description translations (any locale). */
+  search?: string;
 }
 
 async function getStoreProductsImpl(locale: Locale = "en", filter: string | StoreProductFilter = {}): Promise<StoreProductView[]> {
   // Back-compat: a bare string is still treated as categorySlug (existing callers pass a string).
-  const { categorySlug, onlyFeaturedHome, onlyBestSeller, limit } = typeof filter === "string" ? { categorySlug: filter } as StoreProductFilter : filter;
+  const { categorySlug, onlyFeaturedHome, onlyBestSeller, limit, search } = typeof filter === "string" ? { categorySlug: filter } as StoreProductFilter : filter;
 
   const categoryRows = await db.select().from(storeCategories).where(eq(storeCategories.isActive, true));
   const categoryBySlug = new Map(categoryRows.map((c) => [c.slug, c]));
   const categoryById = new Map(categoryRows.map((c) => [c.id, c]));
+
+  let searchProductIds: number[] | null = null;
+  if (search && search.trim()) {
+    const matches = await db
+      .selectDistinct({ productId: storeProductTranslations.productId })
+      .from(storeProductTranslations)
+      .where(like(storeProductTranslations.name, `%${search.trim()}%`));
+    searchProductIds = matches.map((m) => m.productId);
+    if (searchProductIds.length === 0) return [];
+  }
 
   const categoryIds = categorySlug && categoryBySlug.has(categorySlug)
     ? [categoryBySlug.get(categorySlug)!.id]
     : categoryRows.map((c) => c.id);
   if (categoryIds.length === 0) return [];
 
-  const conditions = [eq(storeProducts.isActive, true), inArray(storeProducts.categoryId, categoryIds)];
+  const conditions = [eq(storeProducts.isActive, true), isNull(storeProducts.deletedAt), inArray(storeProducts.categoryId, categoryIds)];
   if (onlyFeaturedHome) conditions.push(eq(storeProducts.isFeaturedHome, true));
   if (onlyBestSeller) conditions.push(eq(storeProducts.isBestSeller, true));
+  if (searchProductIds) conditions.push(inArray(storeProducts.id, searchProductIds));
 
   let query = db
     .select()
@@ -155,7 +168,11 @@ export interface StoreProductDetailView extends StoreProductView {
 }
 
 async function getStoreProductBySlugImpl(slug: string, locale: Locale = "en"): Promise<StoreProductDetailView | null> {
-  const [product] = await db.select().from(storeProducts).where(and(eq(storeProducts.slug, slug), eq(storeProducts.isActive, true))).limit(1);
+  const [product] = await db
+    .select()
+    .from(storeProducts)
+    .where(and(eq(storeProducts.slug, slug), eq(storeProducts.isActive, true), isNull(storeProducts.deletedAt)))
+    .limit(1);
   if (!product) return null;
 
   const [category, translations, mediaRows] = await Promise.all([

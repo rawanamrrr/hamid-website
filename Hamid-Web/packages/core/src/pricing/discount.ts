@@ -83,10 +83,17 @@ export function validateDiscount(
   return { valid: true };
 }
 
+export interface AppliedDiscount {
+  discountId: number;
+  amountCents: number;
+  isCode: boolean;
+}
+
 export interface ApplyDiscountsResult {
   subtotalCents: number;
   discountTotalCents: number;
-  appliedDiscountIds: number[];
+  /** Per-discount breakdown — each entry's amountCents is that discount's own share, not the order total. */
+  appliedDiscounts: AppliedDiscount[];
   codeError?: string;
 }
 
@@ -104,17 +111,13 @@ export function applyDiscountsToCart(
 ): ApplyDiscountsResult {
   const subtotalCents = addCents(...lines.map((l) => l.unitPriceCents * l.quantity));
 
-  let discountTotalCents = 0;
-  const appliedDiscountIds: number[] = [];
+  const applied: AppliedDiscount[] = [];
 
   for (const d of autoDiscounts) {
     if (d.code) continue; // codes only apply when entered explicitly
     if (!isDiscountWindowOpen(d, now)) continue;
     const amount = computeDiscountAmountCents(d, lines);
-    if (amount > 0) {
-      discountTotalCents += amount;
-      appliedDiscountIds.push(d.id);
-    }
+    if (amount > 0) applied.push({ discountId: d.id, amountCents: amount, isCode: false });
   }
 
   let codeError: string | undefined;
@@ -126,17 +129,34 @@ export function applyDiscountsToCart(
     });
     if (validation.valid) {
       const amount = computeDiscountAmountCents(codeDiscount.discount, lines);
-      discountTotalCents += amount;
-      appliedDiscountIds.push(codeDiscount.discount.id);
+      if (amount > 0) applied.push({ discountId: codeDiscount.discount.id, amountCents: amount, isCode: true });
     } else {
       codeError = validation.reason;
     }
   }
 
+  const rawTotal = addCents(...applied.map((a) => a.amountCents));
+  const discountTotalCents = clampCents(Math.min(rawTotal, subtotalCents), 0);
+
+  // If stacked discounts would exceed the subtotal, scale each discount's
+  // recorded share down proportionally so order_discounts / discount_redemptions
+  // rows sum to the true (clamped) total instead of over-reporting. The last
+  // entry absorbs any rounding remainder so cents always add up exactly.
+  let appliedDiscounts = applied;
+  if (rawTotal > discountTotalCents && rawTotal > 0) {
+    let remaining = discountTotalCents;
+    appliedDiscounts = applied.map((a, i) => {
+      const isLast = i === applied.length - 1;
+      const share = isLast ? remaining : clampCents(Math.round((a.amountCents / rawTotal) * discountTotalCents), 0);
+      remaining -= share;
+      return { ...a, amountCents: share };
+    });
+  }
+
   return {
     subtotalCents,
-    discountTotalCents: clampCents(Math.min(discountTotalCents, subtotalCents), 0),
-    appliedDiscountIds,
+    discountTotalCents,
+    appliedDiscounts,
     codeError,
   };
 }

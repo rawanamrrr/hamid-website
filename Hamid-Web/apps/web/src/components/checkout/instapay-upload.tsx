@@ -27,17 +27,27 @@ export function InstapayUpload({ orderNumber, hint }: { orderNumber: string; hin
       return;
     }
 
-    const put = await fetch(presign.data.uploadUrl, { method: "PUT", headers: { "Content-Type": file.type }, body: file });
-    if (!put.ok) {
+    const form = new FormData();
+    form.append("file", file);
+    form.append("api_key", presign.data.apiKey);
+    form.append("timestamp", String(presign.data.timestamp));
+    form.append("signature", presign.data.signature);
+    form.append("folder", presign.data.folder);
+    form.append("type", presign.data.type);
+    const upload = await fetch(presign.data.uploadUrl, { method: "POST", body: form });
+    const uploaded = await upload.json();
+    if (!upload.ok) {
       setError("Upload failed. Please try again.");
       setUploading(false);
       return;
     }
 
     const confirmed = await confirmPaymentProofAction(orderNumber, {
-      objectKey: presign.data.objectKey,
-      mime: file.type,
-      sizeBytes: file.size,
+      publicId: uploaded.public_id,
+      format: uploaded.format,
+      width: uploaded.width,
+      height: uploaded.height,
+      bytes: uploaded.bytes,
     });
     if ("error" in confirmed) {
       setError(confirmed.error);

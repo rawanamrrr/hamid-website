@@ -8,7 +8,7 @@ export default async function EditStoreProductPage({ params }: { params: Promise
   const productId = Number(id);
 
   const [product] = await db.select().from(storeProducts).where(eq(storeProducts.id, productId)).limit(1);
-  if (!product) notFound();
+  if (!product || product.deletedAt) notFound();
 
   const [translations, categories, productMedia] = await Promise.all([
     db.select().from(storeProductTranslations).where(eq(storeProductTranslations.productId, productId)),

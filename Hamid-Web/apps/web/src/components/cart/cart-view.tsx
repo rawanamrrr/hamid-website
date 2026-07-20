@@ -43,37 +43,49 @@ export function CartView({ lines, subtotalCents, dict }: { lines: CartLineView[]
     <div className="grid gap-8 lg:grid-cols-3">
       <div className="space-y-4 lg:col-span-2">
         {lines.map((line) => (
-          <div key={line.id} className="flex items-center gap-4 rounded-2xl border border-outline-variant/60 bg-surface-container-lowest p-4">
+          <div key={line.id} className="flex gap-3 sm:gap-4 rounded-2xl border border-outline-variant/60 bg-surface-container-lowest p-3 sm:p-4">
             <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-surface-container">
               {line.image && <Image src={line.image} alt={line.name} fill unoptimized className="object-cover" />}
             </div>
-            <div className="flex-1">
-              <p className="font-medium text-on-surface">{line.name}</p>
-              <p className="text-sm text-on-surface-variant">{formatMoney(line.unitPriceCents)}</p>
+            <div className="flex min-w-0 flex-1 flex-col">
+              <div className="flex items-start justify-between gap-2">
+                <div className="min-w-0">
+                  <p className="truncate font-medium text-on-surface">{line.name}</p>
+                  <p className="text-sm text-on-surface-variant">{formatMoney(line.unitPriceCents)}</p>
+                </div>
+                <button
+                  type="button"
+                  disabled={pending}
+                  onClick={() => remove(line.id)}
+                  aria-label={`Remove ${line.name}`}
+                  className="shrink-0 p-1 text-error hover:opacity-70"
+                >
+                  <Trash2 size={16} />
+                </button>
+              </div>
+              <div className="mt-2 flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    disabled={pending}
+                    onClick={() => setQuantity(line.id, line.quantity - 1)}
+                    className="flex h-8 w-8 items-center justify-center rounded-full border border-outline-variant text-on-surface disabled:opacity-50"
+                  >
+                    <Minus size={14} />
+                  </button>
+                  <span className="w-6 text-center text-sm">{line.quantity}</span>
+                  <button
+                    type="button"
+                    disabled={pending || line.quantity >= line.stockQty}
+                    onClick={() => setQuantity(line.id, line.quantity + 1)}
+                    className="flex h-8 w-8 items-center justify-center rounded-full border border-outline-variant text-on-surface disabled:opacity-50"
+                  >
+                    <Plus size={14} />
+                  </button>
+                </div>
+                <p className="whitespace-nowrap font-semibold text-on-surface">{formatMoney(line.lineTotalCents)}</p>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                disabled={pending}
-                onClick={() => setQuantity(line.id, line.quantity - 1)}
-                className="flex h-8 w-8 items-center justify-center rounded-full border border-outline-variant text-on-surface disabled:opacity-50"
-              >
-                <Minus size={14} />
-              </button>
-              <span className="w-6 text-center text-sm">{line.quantity}</span>
-              <button
-                type="button"
-                disabled={pending || line.quantity >= line.stockQty}
-                onClick={() => setQuantity(line.id, line.quantity + 1)}
-                className="flex h-8 w-8 items-center justify-center rounded-full border border-outline-variant text-on-surface disabled:opacity-50"
-              >
-                <Plus size={14} />
-              </button>
-            </div>
-            <p className="w-24 text-end font-semibold text-on-surface">{formatMoney(line.lineTotalCents)}</p>
-            <button type="button" disabled={pending} onClick={() => remove(line.id)} className="text-error hover:opacity-70">
-              <Trash2 size={16} />
-            </button>
           </div>
         ))}
       </div>

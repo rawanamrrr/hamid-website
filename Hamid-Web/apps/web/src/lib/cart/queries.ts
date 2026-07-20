@@ -1,5 +1,5 @@
 import "server-only";
-import { eq, inArray, sum } from "drizzle-orm";
+import { and, eq, inArray, isNull, sum } from "drizzle-orm";
 import { db, carts, cartItems, storeProducts, storeProductTranslations, storeProductMedia, media } from "@hamid/db";
 import { auth } from "@/auth";
 import { addCents, toCents, type Locale } from "@hamid/core";
@@ -47,7 +47,7 @@ export async function getCart(locale: Locale = "en"): Promise<CartView> {
 
   const productIds = items.map((i) => i.storeProductId);
   const [products, translations, mediaRows] = await Promise.all([
-    db.select().from(storeProducts).where(inArray(storeProducts.id, productIds)),
+    db.select().from(storeProducts).where(and(inArray(storeProducts.id, productIds), isNull(storeProducts.deletedAt))),
     db.select().from(storeProductTranslations).where(inArray(storeProductTranslations.productId, productIds)),
     db
       .select({ productId: storeProductMedia.productId, url: media.url, isPrimary: storeProductMedia.isPrimary })

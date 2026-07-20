@@ -5,6 +5,7 @@ import { eq } from "drizzle-orm";
 import { db, discounts, discountProducts, discountCategories } from "@hamid/db";
 import { discountSchema, type DiscountInput } from "@hamid/core";
 import { guardPermission, type ActionResult } from "@/lib/auth/rbac";
+import { logActivity } from "@/lib/activity/log";
 
 function revalidateDiscounts() {
   revalidatePath("/admin/discounts");
@@ -51,6 +52,7 @@ export async function createDiscountAction(input: DiscountInput): Promise<Action
     return row.id;
   });
 
+  await logActivity({ actorUserId: Number(guard.id), action: "discount.created", entityType: "discount", entityId: id });
   revalidateDiscounts();
   return { success: true, data: { id } };
 }
@@ -97,6 +99,7 @@ export async function updateDiscountAction(id: number, input: DiscountInput): Pr
     }
   });
 
+  await logActivity({ actorUserId: Number(guard.id), action: "discount.updated", entityType: "discount", entityId: id });
   revalidateDiscounts();
   return { success: true };
 }
@@ -106,6 +109,7 @@ export async function deleteDiscountAction(id: number): Promise<ActionResult> {
   if ("error" in guard) return guard;
 
   await db.delete(discounts).where(eq(discounts.id, id));
+  await logActivity({ actorUserId: Number(guard.id), action: "discount.deleted", entityType: "discount", entityId: id });
   revalidateDiscounts();
   return { success: true };
 }
@@ -115,6 +119,7 @@ export async function toggleDiscountActiveAction(id: number, isActive: boolean):
   if ("error" in guard) return guard;
 
   await db.update(discounts).set({ isActive }).where(eq(discounts.id, id));
+  await logActivity({ actorUserId: Number(guard.id), action: "discount.toggled", entityType: "discount", entityId: id, changes: { isActive } });
   revalidateDiscounts();
   return { success: true };
 }

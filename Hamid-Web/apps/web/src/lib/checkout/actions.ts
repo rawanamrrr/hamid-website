@@ -33,6 +33,8 @@ import { getCart } from "@/lib/cart/queries";
 import { getAutoDiscounts, getDiscountByCode } from "@/lib/discounts/resolve";
 import { getGuestCartToken, clearGuestCartCookie } from "@/lib/cart/guest-token";
 import type { ActionResult } from "@/lib/auth/rbac";
+import { sendEmail } from "@/lib/email/mailer";
+import { formatMoney } from "@hamid/core";
 
 async function getDeliveryFeeCents(): Promise<number> {
   const [row] = await db.select().from(settings).where(and(eq(settings.group, "checkout"), eq(settings.key, "delivery_fee"))).limit(1);
@@ -266,6 +268,22 @@ export async function placeOrderAction(input: CheckoutInput): Promise<ActionResu
   }
 
   if (!customerId) await clearGuestCartCookie();
+
+  const session = await auth();
+  const recipientEmail = session?.user?.email ?? data.guestContact?.email;
+  const recipientName = session?.user?.name ?? data.guestContact?.name ?? "there";
+  if (recipientEmail) {
+    const itemsHtml = cart.lines
+      .map((l) => `<li>${l.name} × ${l.quantity} — ${formatMoney(l.lineTotalCents)}</li>`)
+      .join("");
+    const itemsText = cart.lines.map((l) => `- ${l.name} x${l.quantity} — ${formatMoney(l.lineTotalCents)}`).join("\n");
+    await sendEmail({
+      to: recipientEmail,
+      subject: `Order confirmed — ${orderNumber}`,
+      text: `Hello ${recipientName},\n\nThanks for your order! Your order ${orderNumber} has been received.\n\n${itemsText}\n\nTotal: ${formatMoney(toCents(totals.grandTotal))}\n\nTrack it at: ${(process.env.AUTH_URL ?? "http://localhost:3000").replace(/\/$/, "")}/order/${orderNumber}`,
+      html: `<p>Hello ${recipientName},</p><p>Thanks for your order! Your order <strong>${orderNumber}</strong> has been received.</p><ul>${itemsHtml}</ul><p>Total: <strong>${formatMoney(toCents(totals.grandTotal))}</strong></p><p><a href="${(process.env.AUTH_URL ?? "http://localhost:3000").replace(/\/$/, "")}/order/${orderNumber}">Track your order</a></p>`,
+    });
+  }
 
   return { success: true, data: { orderNumber } };
 }

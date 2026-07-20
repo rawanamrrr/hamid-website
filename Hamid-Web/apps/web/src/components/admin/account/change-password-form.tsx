@@ -1,17 +1,26 @@
 "use client";
 
-import { useActionState, useEffect, useRef } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { changePasswordAction } from "@/lib/account/actions";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
+import { PasswordStrength } from "@/components/ui/password-strength";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, FormError } from "@/components/ui/card";
 
 export function ChangePasswordForm() {
   const [state, formAction, pending] = useActionState(changePasswordAction, null);
   const formRef = useRef<HTMLFormElement>(null);
+  const [newPassword, setNewPassword] = useState("");
   const succeeded = state !== null && "success" in state;
 
+  // Clear the controlled field during render (React's derived-state pattern);
+  // the imperative DOM reset stays in an effect.
+  const [prevState, setPrevState] = useState(state);
+  if (state !== prevState) {
+    setPrevState(state);
+    if (succeeded) setNewPassword("");
+  }
   useEffect(() => {
     if (succeeded) formRef.current?.reset();
   }, [succeeded]);
@@ -34,15 +43,24 @@ export function ChangePasswordForm() {
           )}
           <div>
             <Label htmlFor="currentPassword">Current password</Label>
-            <Input id="currentPassword" name="currentPassword" type="password" required autoComplete="current-password" />
+            <PasswordInput id="currentPassword" name="currentPassword" required autoComplete="current-password" />
           </div>
           <div>
             <Label htmlFor="newPassword">New password</Label>
-            <Input id="newPassword" name="newPassword" type="password" required minLength={8} autoComplete="new-password" />
+            <PasswordInput
+              id="newPassword"
+              name="newPassword"
+              required
+              minLength={8}
+              autoComplete="new-password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+            <PasswordStrength password={newPassword} />
           </div>
           <div>
             <Label htmlFor="confirmPassword">Confirm new password</Label>
-            <Input id="confirmPassword" name="confirmPassword" type="password" required minLength={8} autoComplete="new-password" />
+            <PasswordInput id="confirmPassword" name="confirmPassword" required minLength={8} autoComplete="new-password" />
           </div>
           <Button type="submit" disabled={pending}>
             {pending ? "Saving…" : "Update password"}

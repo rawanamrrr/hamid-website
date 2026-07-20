@@ -31,7 +31,7 @@ export default async function Locations() {
           <div className="bg-white rounded-3xl luxury-shadow p-5 space-y-4">
             <div className="flex items-start gap-3">
               <div className="w-10 h-10 rounded-full bg-[#fff1e6] flex items-center justify-center flex-shrink-0">
-                <span className="material-symbols-outlined text-[#7b5800] text-xl">location_on</span>
+                <span aria-hidden="true" className="material-symbols-outlined text-[#7b5800] text-xl">location_on</span>
               </div>
               <div>
                 <h4 className="font-bold text-black text-base">{dict.home.locations.branchName}</h4>
@@ -39,7 +39,7 @@ export default async function Locations() {
               </div>
             </div>
             <div className="flex items-center gap-3 text-sm text-[#4f4541]">
-              <span className="material-symbols-outlined text-[#7b5800] text-base">schedule</span>
+              <span aria-hidden="true" className="material-symbols-outlined text-[#7b5800] text-base">schedule</span>
               {dict.home.locations.openDailyHours}
             </div>
             <a
@@ -48,7 +48,7 @@ export default async function Locations() {
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 w-full h-11 bg-[#7b5800] text-white rounded-full text-xs font-semibold uppercase tracking-widest hover:bg-[#5c3d1e] transition-all"
             >
-              <span className="material-symbols-outlined text-[18px]">directions</span>
+              <span aria-hidden="true" className="material-symbols-outlined text-[18px]">directions</span>
               {dict.home.locations.getDirections}
             </a>
           </div>
@@ -69,7 +69,7 @@ export default async function Locations() {
                   key={name}
                   className={`p-6 rounded-2xl luxury-shadow flex items-start gap-4 ${active ? "bg-white" : "bg-white/50 border border-[#817570]/10"}`}
                 >
-                  <span className="material-symbols-outlined text-[#7b5800]">location_on</span>
+                  <span aria-hidden="true" className="material-symbols-outlined text-[#7b5800]">location_on</span>
                   <div>
                     <h4 className="font-bold text-black">{name}</h4>
                     <p className="text-sm text-[#4f4541]">{address}</p>
@@ -83,7 +83,7 @@ export default async function Locations() {
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 w-full h-12 border-2 border-[#7b5800] text-[#7b5800] rounded-full text-xs font-semibold uppercase tracking-widest hover:bg-[#7b5800] hover:text-white transition-all"
             >
-              <span className="material-symbols-outlined text-[18px]">directions</span>
+              <span aria-hidden="true" className="material-symbols-outlined text-[18px]">directions</span>
               {dict.home.locations.getDirections}
             </a>
           </div>

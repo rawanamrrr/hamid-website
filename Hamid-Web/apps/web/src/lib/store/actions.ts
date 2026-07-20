@@ -17,6 +17,7 @@ import {
   type StoreProductInput,
 } from "@hamid/core";
 import { guardPermission, type ActionResult } from "@/lib/auth/rbac";
+import { logActivity } from "@/lib/activity/log";
 
 function revalidateStore() {
   revalidatePath("/admin/store");
@@ -49,6 +50,7 @@ export async function createStoreCategoryAction(input: StoreCategoryInput): Prom
     return row.id;
   });
 
+  await logActivity({ actorUserId: Number(guard.id), action: "store_category.created", entityType: "store_category", entityId: id });
   revalidateStore();
   return { success: true, data: { id } };
 }
@@ -74,6 +76,7 @@ export async function updateStoreCategoryAction(id: number, input: StoreCategory
     ]);
   });
 
+  await logActivity({ actorUserId: Number(guard.id), action: "store_category.updated", entityType: "store_category", entityId: id });
   revalidateStore();
   return { success: true };
 }
@@ -86,6 +89,7 @@ export async function deleteStoreCategoryAction(id: number): Promise<ActionResul
   if (productInCategory) return { error: "Move or delete this category's products before deleting it." };
 
   await db.delete(storeCategories).where(eq(storeCategories.id, id));
+  await logActivity({ actorUserId: Number(guard.id), action: "store_category.deleted", entityType: "store_category", entityId: id });
   revalidateStore();
   return { success: true };
 }
@@ -133,6 +137,7 @@ export async function createStoreProductAction(input: StoreProductInput): Promis
     return row.id;
   });
 
+  await logActivity({ actorUserId: Number(guard.id), action: "store_product.created", entityType: "store_product", entityId: id });
   revalidateStore();
   return { success: true, data: { id } };
 }
@@ -178,6 +183,7 @@ export async function updateStoreProductAction(id: number, input: StoreProductIn
     }
   });
 
+  await logActivity({ actorUserId: Number(guard.id), action: "store_product.updated", entityType: "store_product", entityId: id });
   revalidateStore();
   return { success: true };
 }
@@ -186,7 +192,17 @@ export async function deleteStoreProductAction(id: number): Promise<ActionResult
   const guard = await guardPermission("store.manage");
   if ("error" in guard) return guard;
 
-  await db.delete(storeProducts).where(eq(storeProducts.id, id));
+  // Soft delete: past orders reference this product (orderItems.storeProductId
+  // is ON DELETE SET NULL, not cascade), and a hard delete would make it
+  // unrecoverable and break the admin's ability to look back at what was sold.
+  // The slug is freed up (renamed) so a new product can reuse it — `slug` has
+  // a DB-level unique constraint that a soft-deleted row would otherwise still hold.
+  const [existingProduct] = await db.select({ slug: storeProducts.slug }).from(storeProducts).where(eq(storeProducts.id, id)).limit(1);
+  await db
+    .update(storeProducts)
+    .set({ deletedAt: new Date(), isActive: false, slug: `${existingProduct?.slug ?? "product"}-deleted-${id}` })
+    .where(eq(storeProducts.id, id));
+  await logActivity({ actorUserId: Number(guard.id), action: "store_product.deleted", entityType: "store_product", entityId: id });
   revalidateStore();
   return { success: true };
 }

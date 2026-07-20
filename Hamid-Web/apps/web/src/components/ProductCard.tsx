@@ -34,12 +34,17 @@ export default function ProductCard({
   const [imgError, setImgError] = useState(false);
   const [pending, startTransition] = useTransition();
   const [added, setAdded] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   function handleAddToCart() {
     if (!productId) return;
+    setError(null);
     startTransition(async () => {
       const res = await addToCartAction(productId, 1);
-      if (!("error" in res)) {
+      if ("error" in res) {
+        setError(res.error);
+        setTimeout(() => setError(null), 3000);
+      } else {
         setAdded(true);
         setTimeout(() => setAdded(false), 1500);
       }
@@ -47,24 +52,38 @@ export default function ProductCard({
   }
 
   const ImageBlock = (
-    <div className="h-72 overflow-hidden relative bg-[#f2d5ba] flex-shrink-0">
+    <div className="relative aspect-[4/5] overflow-hidden bg-[#f2d5ba] flex-shrink-0">
       {!imgError ? (
         <Image
           src={image}
           alt={alt}
           fill
-          className="object-cover transition-transform duration-700 group-hover:scale-110"
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
           unoptimized
           onError={() => setImgError(true)}
         />
       ) : (
         <div className="w-full h-full flex items-center justify-center">
-          <span className="material-symbols-outlined text-[#947f78] text-6xl">local_cafe</span>
+          <span className="material-symbols-outlined text-[#947f78] text-5xl sm:text-6xl">local_cafe</span>
         </div>
       )}
       {badge && (
-        <span className="absolute top-4 left-4 bg-[#7b5800] text-white px-3 py-1 rounded-full text-xs uppercase tracking-tighter">
+        <span className="absolute top-2.5 start-2.5 sm:top-4 sm:start-4 bg-[#7b5800] text-white px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs uppercase tracking-tight">
           {badge}
+        </span>
+      )}
+      {rating != null && (
+        <span className="absolute bottom-2.5 end-2.5 sm:bottom-3 sm:end-3 flex items-center gap-0.5 rounded-full bg-white/90 backdrop-blur-sm px-2 py-0.5 text-[10px] sm:text-xs font-semibold text-[#271908]">
+          <span aria-hidden="true" className="flex items-center gap-0.5">
+            {rating}
+            <span
+              className="material-symbols-outlined text-[12px] sm:text-[14px] text-[#7b5800]"
+              style={{ fontVariationSettings: "'FILL' 1" }}
+            >
+              star
+            </span>
+          </span>
+          <span className="sr-only">{rating} out of 5 stars</span>
         </span>
       )}
     </div>
@@ -72,47 +91,55 @@ export default function ProductCard({
 
   const InfoBlock = (
     <div>
-      <div className="flex justify-between items-center mb-2">
-        {rating != null ? (
-          <span className="text-[#7b5800] flex items-center gap-1 text-xs font-semibold">
-            {rating}{" "}
-            <span className="material-symbols-outlined text-[14px]" style={{ fontVariationSettings: "'FILL' 1" }}>
-              star
-            </span>
-          </span>
-        ) : (
-          <span />
-        )}
-        <span className="text-[#4f4541] text-xs">{tag}</span>
-      </div>
-      <h3 className="font-[family-name:var(--font-plus-jakarta)] text-xl font-semibold text-black leading-snug line-clamp-2 min-h-[56px]">
+      <p className="text-[#817570] text-[10px] sm:text-xs uppercase tracking-wider mb-1">{tag}</p>
+      <h3 className="font-[family-name:var(--font-plus-jakarta)] text-sm sm:text-lg font-semibold text-[#271908] leading-snug line-clamp-2 min-h-[2.5rem] sm:min-h-[3.25rem]">
         {name}
       </h3>
     </div>
   );
 
   return (
-    <div className="group luxury-shadow bg-[#fff1e6] rounded-[1.75rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 flex flex-col">
+    <div className="group luxury-shadow bg-[#fff1e6] rounded-2xl sm:rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_18px_36px_-14px_rgba(39,25,8,0.3)] flex flex-col">
       {slug ? (
         <Link href={`/store/${slug}`}>{ImageBlock}</Link>
       ) : (
         ImageBlock
       )}
-      <div className="p-6 flex flex-col flex-1 justify-between gap-3">
+      <div className="p-3 sm:p-5 flex flex-col flex-1 gap-2 sm:gap-3">
         {slug ? <Link href={`/store/${slug}`}>{InfoBlock}</Link> : InfoBlock}
-        <div>
-          <p className="text-[#7b5800] font-[family-name:var(--font-plus-jakarta)] text-2xl font-semibold mb-3">
-            {price}
-          </p>
+
+        <div className="mt-auto">
+          {/* Mobile: price + round icon button. Desktop: price row, then full-width CTA. */}
+          <div className="flex items-center justify-between gap-2">
+            <p className="text-[#7b5800] font-[family-name:var(--font-plus-jakarta)] text-base sm:text-xl font-bold">
+              {price}
+            </p>
+            <button
+              type="button"
+              onClick={handleAddToCart}
+              disabled={pending || !productId}
+              aria-label={added ? addedLabel : addToCartLabel}
+              className="sm:hidden flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#271908] text-white active:scale-95 transition-all disabled:opacity-60"
+            >
+              <span aria-hidden="true" className="material-symbols-outlined text-[18px] select-none">
+                {added ? "check" : "add_shopping_cart"}
+              </span>
+            </button>
+          </div>
           <button
             type="button"
             onClick={handleAddToCart}
             disabled={pending || !productId}
-            className="w-full bg-black text-white py-4 rounded-2xl text-xs font-semibold uppercase tracking-widest flex items-center justify-center gap-2 group-hover:bg-[#7b5800] transition-colors disabled:opacity-60"
+            className="hidden sm:flex mt-3 w-full items-center justify-center gap-2 rounded-full bg-[#271908] py-3 text-xs font-semibold uppercase tracking-widest text-white transition-colors hover:bg-[#7b5800] disabled:opacity-60"
           >
-            {added ? addedLabel : addToCartLabel}{" "}
-            <span className="material-symbols-outlined text-[18px]">shopping_cart</span>
+            {added ? addedLabel : addToCartLabel}
+            <span aria-hidden="true" className="material-symbols-outlined text-[18px] select-none">shopping_cart</span>
           </button>
+          {error && (
+            <p role="alert" className="mt-2 text-[11px] sm:text-xs leading-snug text-red-700">
+              {error}
+            </p>
+          )}
         </div>
       </div>
     </div>

@@ -49,9 +49,9 @@ export default async function Testimonials() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between mb-1">
                     <h4 className="text-sm font-bold text-black">{name}</h4>
-                    <div className="flex gap-0.5 text-[#7b5800]">
+                    <div className="flex gap-0.5 text-[#7b5800]" role="img" aria-label="5 out of 5 stars">
                       {[...Array(5)].map((_, i) => (
-                        <span key={i} className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                        <span key={i} aria-hidden="true" className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
                       ))}
                     </div>
                   </div>
@@ -72,9 +72,9 @@ export default async function Testimonials() {
               <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-[#7b5800] relative flex-shrink-0">
                 <Image src={image} alt={name} fill className="object-cover" unoptimized />
               </div>
-              <div className="flex gap-1 text-[#7b5800]">
+              <div className="flex gap-1 text-[#7b5800]" role="img" aria-label="5 out of 5 stars">
                 {[...Array(5)].map((_, i) => (
-                  <span key={i} className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                  <span key={i} aria-hidden="true" className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
                 ))}
               </div>
               <p className="text-[#4f4541] italic leading-relaxed">&ldquo;{text}&rdquo;</p>

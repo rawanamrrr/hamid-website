@@ -8,11 +8,13 @@ import {
   menuCategoryTranslations,
   menuItems,
   menuItemTranslations,
+  menuItemSizes,
   menuHeroImages,
 } from "@hamid/db";
 import { menuCategorySchema, menuItemSchema, menuHeroImageSchema, type MenuCategoryInput, type MenuItemInput, type MenuHeroImageInput } from "@hamid/core";
 import { guardPermission } from "@/lib/auth/rbac";
 import type { ActionResult } from "@/lib/auth/rbac";
+import { logActivity } from "@/lib/activity/log";
 
 function revalidateMenu() {
   revalidatePath("/admin/menu");
@@ -46,6 +48,7 @@ export async function createMenuCategoryAction(input: MenuCategoryInput): Promis
     return row.id;
   });
 
+  await logActivity({ actorUserId: Number(guard.id), action: "menu_category.created", entityType: "menu_category", entityId: id });
   revalidateMenu();
   return { success: true, data: { id } };
 }
@@ -71,6 +74,7 @@ export async function updateMenuCategoryAction(id: number, input: MenuCategoryIn
     ]);
   });
 
+  await logActivity({ actorUserId: Number(guard.id), action: "menu_category.updated", entityType: "menu_category", entityId: id });
   revalidateMenu();
   return { success: true };
 }
@@ -83,6 +87,7 @@ export async function deleteMenuCategoryAction(id: number): Promise<ActionResult
   if (itemInCategory) return { error: "Move or delete this category's items before deleting it." };
 
   await db.delete(menuCategories).where(eq(menuCategories.id, id));
+  await logActivity({ actorUserId: Number(guard.id), action: "menu_category.deleted", entityType: "menu_category", entityId: id });
   revalidateMenu();
   return { success: true };
 }
@@ -106,7 +111,6 @@ export async function createMenuItemAction(input: MenuItemInput): Promise<Action
       .values({
         categoryId: data.categoryId,
         slug: data.slug,
-        price: data.price,
         imageMediaId: data.imageMediaId ?? null,
         badge: data.badge,
         isFeatured: data.isFeatured,
@@ -121,9 +125,13 @@ export async function createMenuItemAction(input: MenuItemInput): Promise<Action
         ? [{ itemId: row.id, locale: "ar" as const, name: data.name.ar, description: data.description?.ar || null, notes: data.notes?.ar || null }]
         : []),
     ]);
+    await tx.insert(menuItemSizes).values(
+      data.sizes.map((s, i) => ({ itemId: row.id, size: s.size, price: s.price, sortOrder: s.sortOrder ?? i })),
+    );
     return row.id;
   });
 
+  await logActivity({ actorUserId: Number(guard.id), action: "menu_item.created", entityType: "menu_item", entityId: id });
   revalidateMenu();
   return { success: true, data: { id } };
 }
@@ -142,7 +150,6 @@ export async function updateMenuItemAction(id: number, input: MenuItemInput): Pr
       .set({
         categoryId: data.categoryId,
         slug: data.slug,
-        price: data.price,
         imageMediaId: data.imageMediaId ?? null,
         badge: data.badge,
         isFeatured: data.isFeatured,
@@ -159,8 +166,16 @@ export async function updateMenuItemAction(id: number, input: MenuItemInput): Pr
         ? [{ itemId: id, locale: "ar" as const, name: data.name.ar, description: data.description?.ar || null, notes: data.notes?.ar || null }]
         : []),
     ]);
+
+    // Replace-all: simplest way to reconcile added/removed/reordered size
+    // rows without diffing — matches the translations pattern above.
+    await tx.delete(menuItemSizes).where(eq(menuItemSizes.itemId, id));
+    await tx.insert(menuItemSizes).values(
+      data.sizes.map((s, i) => ({ itemId: id, size: s.size, price: s.price, sortOrder: s.sortOrder ?? i })),
+    );
   });
 
+  await logActivity({ actorUserId: Number(guard.id), action: "menu_item.updated", entityType: "menu_item", entityId: id });
   revalidateMenu();
   return { success: true };
 }
@@ -169,7 +184,14 @@ export async function deleteMenuItemAction(id: number): Promise<ActionResult> {
   const guard = await guardPermission("menu.manage");
   if ("error" in guard) return guard;
 
-  await db.delete(menuItems).where(eq(menuItems.id, id));
+  // Soft delete — see deleteStoreProductAction for why this isn't a hard delete,
+  // and why the slug is renamed (frees it up for reuse under the unique constraint).
+  const [existingItem] = await db.select({ slug: menuItems.slug }).from(menuItems).where(eq(menuItems.id, id)).limit(1);
+  await db
+    .update(menuItems)
+    .set({ deletedAt: new Date(), isActive: false, slug: `${existingItem?.slug ?? "item"}-deleted-${id}` })
+    .where(eq(menuItems.id, id));
+  await logActivity({ actorUserId: Number(guard.id), action: "menu_item.deleted", entityType: "menu_item", entityId: id });
   revalidateMenu();
   return { success: true };
 }
@@ -184,6 +206,7 @@ export async function createMenuHeroImageAction(input: MenuHeroImageInput): Prom
   if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? "Invalid input." };
 
   const [row] = await db.insert(menuHeroImages).values(parsed.data).$returningId();
+  await logActivity({ actorUserId: Number(guard.id), action: "menu_hero_image.created", entityType: "menu_hero_image", entityId: row.id });
   revalidateMenu();
   return { success: true, data: { id: row.id } };
 }
@@ -193,6 +216,7 @@ export async function toggleMenuHeroImageAction(id: number, isActive: boolean): 
   if ("error" in guard) return guard;
 
   await db.update(menuHeroImages).set({ isActive }).where(eq(menuHeroImages.id, id));
+  await logActivity({ actorUserId: Number(guard.id), action: "menu_hero_image.toggled", entityType: "menu_hero_image", entityId: id, changes: { isActive } });
   revalidateMenu();
   return { success: true };
 }
@@ -202,6 +226,7 @@ export async function deleteMenuHeroImageAction(id: number): Promise<ActionResul
   if ("error" in guard) return guard;
 
   await db.delete(menuHeroImages).where(eq(menuHeroImages.id, id));
+  await logActivity({ actorUserId: Number(guard.id), action: "menu_hero_image.deleted", entityType: "menu_hero_image", entityId: id });
   revalidateMenu();
   return { success: true };
 }

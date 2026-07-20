@@ -27,7 +27,7 @@ export function AdminShell({
       <AdminSidebar permissions={permissions} mobileOpen={mobileNavOpen} onClose={() => setMobileNavOpen(false)} />
       <div className="flex flex-1 flex-col overflow-hidden">
         <AdminTopbar name={name} email={email} onOpenNav={() => setMobileNavOpen(true)} />
-        <main className="flex-1 overflow-y-auto p-4 md:p-6">{children}</main>
+        <main id="main-content" className="flex-1 overflow-y-auto p-4 md:p-6">{children}</main>
       </div>
     </div>
   );

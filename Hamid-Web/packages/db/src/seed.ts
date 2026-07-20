@@ -18,6 +18,7 @@ const {
   menuCategoryTranslations,
   menuItems,
   menuItemTranslations,
+  menuItemSizes,
   storeCategories,
   storeCategoryTranslations,
   storeProducts,
@@ -103,11 +104,12 @@ async function main() {
   // ── Menu catalog ──────────────────────────────────────────────────────────
   console.log("Seeding menu catalog...");
   const menuCategoryDefs: {
-    slug: string; icon: string; nameEn: string; nameAr: string;
+    slug: string; icon: string; nameEn: string; nameAr: string; image: string; imageAlt: string;
     items: { slug: string; nameEn: string; descEn: string; price: string; badge?: string }[];
   }[] = [
     {
       slug: "coffee", icon: "coffee", nameEn: "Coffee", nameAr: "القهوة",
+      image: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=1200&q=80", imageAlt: "Freshly roasted coffee beans",
       items: [
         { slug: "espresso", nameEn: "Espresso", descEn: "A concentrated shot of rich, dark Egyptian-blend espresso.", price: "45.00", badge: "Popular" },
         { slug: "double-espresso", nameEn: "Double Espresso", descEn: "Two concentrated shots for a deeper, bolder experience.", price: "60.00" },
@@ -121,6 +123,7 @@ async function main() {
     },
     {
       slug: "hot-drinks", icon: "local_cafe", nameEn: "Hot Drinks", nameAr: "المشروبات الساخنة",
+      image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1200&q=80", imageAlt: "Latte art in a warm cup",
       items: [
         { slug: "hot-chocolate", nameEn: "Hot Chocolate", descEn: "Rich dark chocolate melted into steamed whole milk.", price: "75.00" },
         { slug: "matcha-latte", nameEn: "Matcha Latte", descEn: "Ceremonial-grade matcha whisked with oat milk.", price: "90.00", badge: "New" },
@@ -132,6 +135,7 @@ async function main() {
     },
     {
       slug: "iced-coffee", icon: "ac_unit", nameEn: "Iced Coffee", nameAr: "القهوة المثلجة",
+      image: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=1200&q=80", imageAlt: "Iced coffee with condensation",
       items: [
         { slug: "cold-brew", nameEn: "Cold Brew", descEn: "12-hour cold-steeped coffee — smooth, low-acidity, naturally sweet.", price: "85.00", badge: "Popular" },
         { slug: "iced-latte", nameEn: "Iced Latte", descEn: "Double espresso over ice with chilled whole milk.", price: "80.00" },
@@ -143,6 +147,7 @@ async function main() {
     },
     {
       slug: "fresh-juice", icon: "local_bar", nameEn: "Fresh Juice", nameAr: "عصير طازج",
+      image: "https://images.unsplash.com/photo-1613478223719-2ab802602423?w=1200&q=80", imageAlt: "Fresh fruit juices",
       items: [
         { slug: "orange-juice", nameEn: "Fresh Orange Juice", descEn: "Cold-pressed Valencia oranges. Nothing else.", price: "65.00", badge: "Popular" },
         { slug: "mango-juice", nameEn: "Mango Juice", descEn: "Egyptian Alphonso mangoes blended fresh to order.", price: "70.00", badge: "Seasonal" },
@@ -154,6 +159,7 @@ async function main() {
     },
     {
       slug: "cocktails", icon: "wine_bar", nameEn: "Cocktails", nameAr: "الموكتيلات",
+      image: "https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=1200&q=80", imageAlt: "Craft cocktail",
       items: [
         { slug: "virgin-mojito", nameEn: "Virgin Mojito", descEn: "Fresh mint, lime, brown sugar, soda water and a mountain of crushed ice.", price: "75.00", badge: "Popular" },
         { slug: "passion-fruit-fizz", nameEn: "Passion Fruit Fizz", descEn: "Passion fruit purée, vanilla syrup, tonic water, and lime.", price: "85.00" },
@@ -165,6 +171,7 @@ async function main() {
     },
     {
       slug: "milkshakes", icon: "bakery_dining", nameEn: "Milkshakes", nameAr: "ميلك شيك",
+      image: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=1200&q=80", imageAlt: "Creamy milkshake",
       items: [
         { slug: "classic-vanilla", nameEn: "Classic Vanilla", descEn: "Madagascar vanilla bean ice cream blended to velvet perfection.", price: "85.00" },
         { slug: "dark-chocolate-shake", nameEn: "Dark Chocolate", descEn: "70% dark chocolate ice cream with a dash of espresso.", price: "95.00", badge: "Popular" },
@@ -176,6 +183,7 @@ async function main() {
     },
     {
       slug: "smoothies", icon: "blender", nameEn: "Smoothies", nameAr: "سموذي",
+      image: "https://images.unsplash.com/photo-1638176066666-ffb2f013c7dd?w=1200&q=80", imageAlt: "Fresh fruit smoothie",
       items: [
         { slug: "tropical-blend", nameEn: "Tropical Blend", descEn: "Mango, pineapple, passion fruit, and coconut milk.", price: "90.00", badge: "Popular" },
         { slug: "berry-blast", nameEn: "Mixed Berry Blast", descEn: "Strawberry, blueberry, raspberry, and Greek yoghurt.", price: "90.00" },
@@ -186,6 +194,7 @@ async function main() {
     },
     {
       slug: "soft-drinks", icon: "sports_bar", nameEn: "Soft Drinks", nameAr: "المشروبات الغازية",
+      image: "https://images.unsplash.com/photo-1554866585-cd94860890b7?w=1200&q=80", imageAlt: "Chilled soft drinks",
       items: [
         { slug: "cola", nameEn: "Coca-Cola", descEn: "330 ml chilled can.", price: "35.00" },
         { slug: "diet-cola", nameEn: "Diet Coke", descEn: "330 ml chilled can.", price: "35.00" },
@@ -198,6 +207,7 @@ async function main() {
     },
     {
       slug: "desserts", icon: "cake", nameEn: "Desserts", nameAr: "الحلويات",
+      image: "https://images.unsplash.com/photo-1551024506-0bccd828d307?w=1200&q=80", imageAlt: "Decadent dessert",
       items: [
         { slug: "umm-ali", nameEn: "Umm Ali", descEn: "Egypt's beloved bread pudding with cream, nuts, and raisins, served warm.", price: "85.00", badge: "Heritage" },
         { slug: "kunafa", nameEn: "Kunafa Slice", descEn: "Shredded pastry with sweet cream cheese and rose-water syrup.", price: "75.00", badge: "Popular" },
@@ -212,9 +222,15 @@ async function main() {
 
   let menuSort = 0;
   for (const cat of menuCategoryDefs) {
+    // Admin-replaceable placeholder image — see MenuCategoryForm's MediaPicker.
+    const [imageRow] = await db
+      .insert(media)
+      .values({ disk: "external", bucket: "", objectKey: cat.image, url: cat.image, mime: "image/jpeg", alt: cat.imageAlt, folder: "menu-categories" })
+      .$returningId();
+
     const [catRow] = await db
       .insert(menuCategories)
-      .values({ slug: cat.slug, icon: cat.icon, sortOrder: menuSort++, isActive: true })
+      .values({ slug: cat.slug, icon: cat.icon, imageMediaId: imageRow.id, sortOrder: menuSort++, isActive: true })
       .$returningId();
     await db.insert(menuCategoryTranslations).values([
       { categoryId: catRow.id, locale: "en", name: cat.nameEn },
@@ -228,7 +244,6 @@ async function main() {
         .values({
           categoryId: catRow.id,
           slug: item.slug,
-          price: item.price,
           currency: "EGP",
           badge: item.badge,
           isNew: item.badge === "New",
@@ -241,6 +256,14 @@ async function main() {
         locale: "en",
         name: item.nameEn,
         description: item.descEn,
+      });
+      // Every seeded item gets a single "Regular" size — pricing now lives in
+      // menuItemSizes, not the (deprecated, nullable) menuItems.price column.
+      await db.insert(menuItemSizes).values({
+        itemId: itemRow.id,
+        size: "Regular",
+        price: item.price,
+        sortOrder: 0,
       });
     }
   }

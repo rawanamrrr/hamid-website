@@ -1,16 +1,19 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import Link from "next/link";
 import { registerAction } from "@/lib/auth/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
+import { PasswordStrength } from "@/components/ui/password-strength";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, FormError } from "@/components/ui/card";
 import type { Dictionary } from "@/lib/i18n";
 
 export function RegisterForm({ dict }: { dict: Dictionary }) {
   const [state, formAction, pending] = useActionState(registerAction, null);
+  const [password, setPassword] = useState("");
 
   return (
     <Card>
@@ -35,7 +38,20 @@ export function RegisterForm({ dict }: { dict: Dictionary }) {
           </div>
           <div>
             <Label htmlFor="password">{dict.auth.password}</Label>
-            <Input id="password" name="password" type="password" required autoComplete="new-password" minLength={8} />
+            <PasswordInput
+              id="password"
+              name="password"
+              required
+              autoComplete="new-password"
+              minLength={8}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <PasswordStrength password={password} />
+          </div>
+          <div>
+            <Label htmlFor="confirmPassword">{dict.auth.confirmPassword}</Label>
+            <PasswordInput id="confirmPassword" name="confirmPassword" required autoComplete="new-password" minLength={8} />
           </div>
           <Button type="submit" className="w-full" disabled={pending}>
             {pending ? "…" : dict.auth.submitRegister}

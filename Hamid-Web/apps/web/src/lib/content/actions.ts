@@ -12,7 +12,9 @@ export interface BannerInput {
   titleEn?: string;
   titleAr?: string;
   subtitleEn?: string;
+  subtitleAr?: string;
   ctaTextEn?: string;
+  ctaTextAr?: string;
   isActive: boolean;
   sortOrder: number;
 }
@@ -47,8 +49,14 @@ export async function createBannerAction(input: BannerInput): Promise<ActionResu
         ctaText: input.ctaTextEn || null,
       });
     }
-    if (input.titleAr) {
-      await tx.insert(bannerTranslations).values({ bannerId: row.id, locale: "ar", title: input.titleAr });
+    if (input.titleAr || input.subtitleAr || input.ctaTextAr) {
+      await tx.insert(bannerTranslations).values({
+        bannerId: row.id,
+        locale: "ar",
+        title: input.titleAr || null,
+        subtitle: input.subtitleAr || null,
+        ctaText: input.ctaTextAr || null,
+      });
     }
     return row.id;
   });
@@ -71,6 +79,20 @@ export async function deleteBannerAction(id: number): Promise<ActionResult> {
   if ("error" in guard) return guard;
 
   await db.delete(banners).where(eq(banners.id, id));
+  revalidateContent();
+  return { success: true };
+}
+
+/** Persist a new display order — index in the array becomes the sortOrder. */
+export async function reorderBannersAction(orderedIds: number[]): Promise<ActionResult> {
+  const guard = await guardPermission("content.manage");
+  if ("error" in guard) return guard;
+
+  await db.transaction(async (tx) => {
+    for (let i = 0; i < orderedIds.length; i++) {
+      await tx.update(banners).set({ sortOrder: i }).where(eq(banners.id, orderedIds[i]));
+    }
+  });
   revalidateContent();
   return { success: true };
 }

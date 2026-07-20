@@ -1,16 +1,18 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import Link from "next/link";
 import { resetPasswordAction } from "@/lib/auth/password-reset";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
+import { PasswordStrength } from "@/components/ui/password-strength";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, FormError } from "@/components/ui/card";
 import type { Dictionary } from "@/lib/i18n";
 
 export function ResetPasswordForm({ dict, token }: { dict: Dictionary; token: string }) {
   const [state, formAction, pending] = useActionState(resetPasswordAction, null);
+  const [newPassword, setNewPassword] = useState("");
   const done = state !== null && "success" in state;
 
   if (!token) {
@@ -55,11 +57,20 @@ export function ResetPasswordForm({ dict, token }: { dict: Dictionary; token: st
             {state && "error" in state && <FormError>{state.error}</FormError>}
             <div>
               <Label htmlFor="newPassword">{dict.auth.newPassword}</Label>
-              <Input id="newPassword" name="newPassword" type="password" required minLength={8} autoComplete="new-password" />
+              <PasswordInput
+                id="newPassword"
+                name="newPassword"
+                required
+                minLength={8}
+                autoComplete="new-password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+              />
+              <PasswordStrength password={newPassword} />
             </div>
             <div>
               <Label htmlFor="confirmPassword">{dict.auth.confirmPassword}</Label>
-              <Input id="confirmPassword" name="confirmPassword" type="password" required minLength={8} autoComplete="new-password" />
+              <PasswordInput id="confirmPassword" name="confirmPassword" required minLength={8} autoComplete="new-password" />
             </div>
             <Button type="submit" className="w-full" disabled={pending}>
               {pending ? "…" : dict.auth.resetSubmit}

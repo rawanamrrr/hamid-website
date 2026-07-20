@@ -12,10 +12,21 @@ export const menuCategorySchema = z.object({
 });
 export type MenuCategoryInput = z.infer<typeof menuCategorySchema>;
 
+/** Common size labels offered as quick-picks in the admin form — not an enum, so a product can use any label (e.g. a dessert's "Slice"). */
+export const MENU_ITEM_SIZE_OPTIONS = ["Single", "Double", "Medium", "Large"] as const;
+
+export const menuItemSizeSchema = z.object({
+  id: z.number().int().positive().optional(),
+  size: z.string().min(1, "Size label is required").max(32),
+  price: decimalString,
+  sortOrder: z.coerce.number().int().default(0),
+});
+export type MenuItemSizeInput = z.infer<typeof menuItemSizeSchema>;
+
 export const menuItemSchema = z.object({
   categoryId: z.number().int().positive(),
   slug: slugSchema,
-  price: decimalString,
+  sizes: z.array(menuItemSizeSchema).min(1, "Add at least one size and price"),
   imageMediaId: z.number().int().positive().nullable().optional(),
   badge: z.string().max(50).optional(),
   isFeatured: z.boolean().default(false),

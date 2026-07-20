@@ -8,6 +8,7 @@ import { loginSchema, registerSchema } from "@hamid/core";
 import { auth, signIn, signOut } from "@/auth";
 import { getGuestCartToken, clearGuestCartCookie } from "@/lib/cart/guest-token";
 import { enforceRateLimit } from "@/lib/rate-limit";
+import { sendVerificationEmail } from "./email-verification";
 import type { ActionResult } from "./rbac";
 
 export async function loginAction(_prev: ActionResult | null, formData: FormData): Promise<ActionResult> {
@@ -53,6 +54,8 @@ export async function registerAction(_prev: ActionResult | null, formData: FormD
   if (customerRole) {
     await db.insert(userRoles).values({ userId: user.id, roleId: customerRole.id });
   }
+
+  await sendVerificationEmail(user.id, email, fullName);
 
   const result = await signIn("credentials", { email, password, redirect: false });
   if (result?.error) return { error: "Account created — please sign in." };

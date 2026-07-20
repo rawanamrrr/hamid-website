@@ -1,4 +1,4 @@
-import { count, sum, eq, inArray, lt, and } from "drizzle-orm";
+import { count, sum, eq, inArray, lt, and, isNull } from "drizzle-orm";
 import { db, orders, payments, storeProducts } from "@hamid/db";
 import { formatMoney, toCents } from "@hamid/core";
 import { Card, CardContent } from "@/components/ui/card";
@@ -17,7 +17,7 @@ async function getKpis() {
     db
       .select({ value: count() })
       .from(storeProducts)
-      .where(and(eq(storeProducts.isActive, true), lt(storeProducts.stockQty, 10))),
+      .where(and(eq(storeProducts.isActive, true), lt(storeProducts.stockQty, 10), isNull(storeProducts.deletedAt))),
   ]);
 
   return {

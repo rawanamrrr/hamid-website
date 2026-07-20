@@ -1,3 +1,10 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Our Branch | Hamid Afandi",
+  description: "Visit Hamid Afandi Coffee at Taksem Khattab, Mansoura for a premium coffee experience.",
+};
+
 const highlights = [
   { icon: "local_cafe", title: "Specialty Coffee", desc: "Full store of Egyptian heritage blends, Turkish coffee, and espresso drinks." },
   { icon: "storefront", title: "Dine In & Takeaway", desc: "A warm, thoughtfully designed space perfect for staying in or grabbing on the go." },
@@ -10,7 +17,7 @@ export default function BranchesPage() {
     <div>
       {/* Hero banner */}
       <section
-        className="relative h-[420px] flex items-end overflow-hidden"
+        className="relative h-[320px] md:h-[420px] flex items-end overflow-hidden"
         style={{
           backgroundImage:
             "url('https://lh3.googleusercontent.com/aida-public/AB6AXuDQwUW2-Nl99Fd61IHy372RbhsPzdro6dQMmnL8hfvAx3NN86mzWCtw9WNxR_o8IHRBJzTeFboF-QdCcaIDrE-e2UM-lSzKq8ohYF6NaTS72PeZX2mU4d5zt0bsmkwW00cV31Y_A06xscg83zg9MNZnHp7pTUvthrI0qiQXqATOXeIUHzjPL3qMrCFzqejlmZ1qjFUoPlZGIgHSu05uIeKZg1wO17r6s3eVRn7QwgVa8dRyE_CFHaggMcLredAc_hms4P6b2rxUB9h1')",
@@ -19,18 +26,18 @@ export default function BranchesPage() {
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-        <div className="relative z-10 px-8 md:px-16 pb-12 max-w-[1280px] mx-auto w-full">
+        <div className="relative z-10 px-5 md:px-16 pb-12 max-w-[1280px] mx-auto w-full">
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#fdca68] mb-3 block">Our Location</span>
-          <h1 className="font-[family-name:var(--font-plus-jakarta)] text-4xl md:text-6xl font-bold text-white leading-tight">
+          <h1 className="font-[family-name:var(--font-plus-jakarta)] text-3xl md:text-6xl font-bold text-white leading-tight">
             Mansoura Branch
           </h1>
         </div>
       </section>
 
       {/* Address card — overlaps hero */}
-      <div className="px-8 md:px-16 max-w-[1280px] mx-auto">
+      <div className="px-5 md:px-16 max-w-[1280px] mx-auto">
         <div
-          className="relative -mt-8 z-10 rounded-3xl p-8 md:p-10 luxury-shadow flex flex-col md:flex-row md:items-center gap-8 md:gap-16"
+          className="relative -mt-8 z-10 rounded-3xl p-6 md:p-10 luxury-shadow flex flex-col md:flex-row md:items-center gap-6 md:gap-16"
           style={{ background: "#fff8f4" }}
         >
           <div className="flex items-start gap-4 flex-1">
@@ -66,32 +73,32 @@ export default function BranchesPage() {
       </div>
 
       {/* What we offer */}
-      <section className="py-20 px-8 md:px-16 max-w-[1280px] mx-auto">
-        <h2 className="font-[family-name:var(--font-plus-jakarta)] text-[32px] font-semibold text-black mb-12 text-center">
+      <section className="py-12 md:py-20 px-5 md:px-16 max-w-[1280px] mx-auto">
+        <h2 className="font-[family-name:var(--font-plus-jakarta)] text-2xl md:text-[32px] font-semibold text-black mb-8 md:mb-12 text-center">
           What We Offer
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
           {highlights.map(({ icon, title, desc }) => (
             <div
               key={title}
-              className="bg-[#fff1e6] rounded-2xl p-8 text-center space-y-4 luxury-shadow hover:-translate-y-1 transition-transform duration-300"
+              className="bg-[#fff1e6] rounded-2xl p-5 md:p-8 text-center space-y-2.5 md:space-y-4 luxury-shadow hover:-translate-y-1 transition-transform duration-300"
             >
-              <div className="w-14 h-14 rounded-full bg-[#7b5800] flex items-center justify-center mx-auto">
-                <span className="material-symbols-outlined text-white text-2xl">{icon}</span>
+              <div className="w-11 h-11 md:w-14 md:h-14 rounded-full bg-[#7b5800] flex items-center justify-center mx-auto">
+                <span className="material-symbols-outlined text-white text-xl md:text-2xl">{icon}</span>
               </div>
-              <h3 className="font-[family-name:var(--font-plus-jakarta)] text-lg font-semibold text-black">{title}</h3>
-              <p className="text-[#4f4541] text-sm leading-relaxed">{desc}</p>
+              <h3 className="font-[family-name:var(--font-plus-jakarta)] text-base md:text-lg font-semibold text-black">{title}</h3>
+              <p className="text-[#4f4541] text-xs md:text-sm leading-relaxed">{desc}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* Ambiance strip */}
-      <section className="bg-[#0D0705] py-20 px-8 md:px-16">
-        <div className="max-w-[1280px] mx-auto flex flex-col md:flex-row items-center gap-12">
-          <div className="md:w-1/2 space-y-6">
+      <section className="bg-[#0D0705] py-12 md:py-20 px-5 md:px-16">
+        <div className="max-w-[1280px] mx-auto flex flex-col md:flex-row items-center gap-8 md:gap-12">
+          <div className="md:w-1/2 space-y-4 md:space-y-6">
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#fdca68]">The Experience</span>
-            <h2 className="font-[family-name:var(--font-plus-jakarta)] text-3xl md:text-4xl font-bold text-white leading-snug">
+            <h2 className="font-[family-name:var(--font-plus-jakarta)] text-2xl md:text-4xl font-bold text-white leading-snug">
               Cairo&apos;s Heritage, Right Here in Mansoura
             </h2>
             <p className="text-[#D9C1AA] leading-relaxed">
@@ -117,8 +124,8 @@ export default function BranchesPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 px-8 md:px-16 max-w-[1280px] mx-auto text-center space-y-6">
-        <h2 className="font-[family-name:var(--font-plus-jakarta)] text-3xl font-bold text-black">
+      <section className="py-12 md:py-20 px-5 md:px-16 max-w-[1280px] mx-auto text-center space-y-4 md:space-y-6">
+        <h2 className="font-[family-name:var(--font-plus-jakarta)] text-2xl md:text-3xl font-bold text-black">
           We&apos;d Love to See You
         </h2>
         <p className="text-[#4f4541] max-w-md mx-auto">

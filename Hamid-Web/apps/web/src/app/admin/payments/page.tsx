@@ -3,7 +3,7 @@ import NextImage from "next/image";
 import { desc, eq } from "drizzle-orm";
 import { db, payments, orders, paymentMethods, media } from "@hamid/db";
 import { formatMoney, toCents } from "@hamid/core";
-import { createPresignedGetUrl } from "@/lib/media/s3";
+import { authenticatedDeliveryUrl } from "@/lib/media/cloudinary";
 import { Table, Thead, Th, Tr, Td, EmptyRow } from "@/components/admin/table";
 import { PaymentReviewActions } from "@/components/admin/payments/review-actions";
 
@@ -17,7 +17,6 @@ export default async function AdminPaymentsPage() {
       orderNumber: orders.orderNumber,
       methodCode: paymentMethods.code,
       methodName: paymentMethods.name,
-      proofBucket: media.bucket,
       proofObjectKey: media.objectKey,
     })
     .from(payments)
@@ -27,12 +26,10 @@ export default async function AdminPaymentsPage() {
     .orderBy(desc(payments.createdAt))
     .limit(100);
 
-  const rowsWithProof = await Promise.all(
-    rows.map(async (r) => ({
-      ...r,
-      proofUrl: r.proofBucket && r.proofObjectKey ? await createPresignedGetUrl(r.proofBucket, r.proofObjectKey) : null,
-    })),
-  );
+  const rowsWithProof = rows.map((r) => ({
+    ...r,
+    proofUrl: r.proofObjectKey ? authenticatedDeliveryUrl(r.proofObjectKey) : null,
+  }));
 
   return (
     <div>

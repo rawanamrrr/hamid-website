@@ -1,11 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getBestSellerProducts } from "@/lib/store/queries";
+import { withDbTimeout } from "@/lib/db-timeout";
 import { getLocale, getDict } from "@/lib/i18n";
 
 export default async function BestSellers() {
   const [locale, dict] = await Promise.all([getLocale(), getDict()]);
-  const bestSellers = await getBestSellerProducts(locale, 8);
+  // Skip the section entirely if the catalog can't be reached right now.
+  const bestSellers = await withDbTimeout(getBestSellerProducts(locale, 8)).catch(() => []);
 
   if (bestSellers.length === 0) return null;
 
@@ -18,10 +20,10 @@ export default async function BestSellers() {
           </h2>
           <div className="hidden md:flex gap-4">
             <button className="w-12 h-12 rounded-full border border-[#817570] flex items-center justify-center hover:bg-black hover:text-white transition-all">
-              <span className="material-symbols-outlined">chevron_left</span>
+              <span aria-hidden="true" className="material-symbols-outlined">chevron_left</span>
             </button>
             <button className="w-12 h-12 rounded-full border border-[#817570] flex items-center justify-center hover:bg-black hover:text-white transition-all">
-              <span className="material-symbols-outlined">chevron_right</span>
+              <span aria-hidden="true" className="material-symbols-outlined">chevron_right</span>
             </button>
           </div>
         </div>

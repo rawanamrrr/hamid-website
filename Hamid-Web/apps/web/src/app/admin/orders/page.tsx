@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, count } from "drizzle-orm";
 import { db, orders, type OrderStatus } from "@hamid/db";
 import { formatMoney, toCents } from "@hamid/core";
 import { Table, Thead, Th, Tr, Td, EmptyRow } from "@/components/admin/table";
+import { Pagination, PAGE_SIZE } from "@/components/admin/pagination";
 
 const STATUS_LABEL: Record<OrderStatus, string> = {
   pending: "Pending",
@@ -17,12 +18,21 @@ const STATUS_LABEL: Record<OrderStatus, string> = {
 export default async function AdminOrdersPage({
   searchParams,
 }: {
-  searchParams: Promise<{ status?: string }>;
+  searchParams: Promise<{ status?: string; page?: string }>;
 }) {
-  const { status } = await searchParams;
-  const rows = status
-    ? await db.select().from(orders).where(eq(orders.status, status as OrderStatus)).orderBy(desc(orders.createdAt)).limit(100)
-    : await db.select().from(orders).orderBy(desc(orders.createdAt)).limit(100);
+  const { status, page: pageParam } = await searchParams;
+  const page = Math.max(1, Number(pageParam) || 1);
+  const offset = (page - 1) * PAGE_SIZE;
+  const whereClause = status ? eq(orders.status, status as OrderStatus) : undefined;
+
+  const [rows, [{ total }]] = await Promise.all([
+    whereClause
+      ? db.select().from(orders).where(whereClause).orderBy(desc(orders.createdAt)).limit(PAGE_SIZE).offset(offset)
+      : db.select().from(orders).orderBy(desc(orders.createdAt)).limit(PAGE_SIZE).offset(offset),
+    whereClause
+      ? db.select({ total: count() }).from(orders).where(whereClause)
+      : db.select({ total: count() }).from(orders),
+  ]);
 
   return (
     <div>
@@ -79,6 +89,7 @@ export default async function AdminOrdersPage({
           {rows.length === 0 && <EmptyRow colSpan={6}>No orders yet.</EmptyRow>}
         </tbody>
       </Table>
+      <Pagination basePath="/admin/orders" params={{ status }} page={page} total={total} />
     </div>
   );
 }

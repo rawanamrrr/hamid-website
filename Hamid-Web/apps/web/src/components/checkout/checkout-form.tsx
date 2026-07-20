@@ -72,7 +72,6 @@ export function CheckoutForm({
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fulfillmentType, discountCode]);
 
   async function onSubmit(values: CheckoutInput) {
@@ -85,22 +84,71 @@ export function CheckoutForm({
     router.push(`/order/${result.data.orderNumber}`);
   }
 
+  const summaryBody = (
+    <>
+      <div className="space-y-2 text-sm">
+        {cartLines.map((l) => (
+          <div key={l.id} className="flex justify-between gap-3 text-on-surface-variant">
+            <span className="min-w-0 truncate">
+              {l.name} × {l.quantity}
+            </span>
+            <span className="shrink-0">{formatMoney(l.lineTotalCents, "EGP", locale)}</span>
+          </div>
+        ))}
+      </div>
+      <div className={`mt-4 space-y-1.5 border-t border-outline-variant/60 pt-4 text-sm transition-opacity ${previewPending ? "opacity-60" : ""}`}>
+        <div className="flex justify-between text-on-surface-variant">
+          <span>{dict.cart.subtotal}</span>
+          <span>{formatMoney(preview.subtotalCents, "EGP", locale)}</span>
+        </div>
+        {fulfillmentType === "delivery" && (
+          <div className="flex justify-between text-on-surface-variant">
+            <span>{dict.checkout.deliveryFee}</span>
+            <span>{formatMoney(preview.deliveryFeeCents, "EGP", locale)}</span>
+          </div>
+        )}
+        {preview.discountTotalCents > 0 && (
+          <div className="flex justify-between text-secondary">
+            <span>{dict.checkout.discount}</span>
+            <span>-{formatMoney(preview.discountTotalCents, "EGP", locale)}</span>
+          </div>
+        )}
+        <div className="flex justify-between border-t border-outline-variant/60 pt-2 font-semibold text-on-surface">
+          <span>{dict.checkout.total}</span>
+          <span>{formatMoney(preview.grandTotalCents, "EGP", locale)}</span>
+        </div>
+      </div>
+    </>
+  );
+
   return (
-    <div className="grid gap-8 lg:grid-cols-3">
+    <div className="grid gap-6 lg:gap-8 lg:grid-cols-3">
+      {/* Mobile: collapsible summary pinned above the form so the total is
+          always one tap away. Desktop keeps the sidebar card below. */}
+      <details className="rounded-2xl border border-outline-variant/60 bg-surface-container-lowest lg:hidden">
+        <summary className="flex cursor-pointer list-none items-center justify-between p-4 font-display text-sm font-bold text-on-surface [&::-webkit-details-marker]:hidden">
+          <span>{dict.checkout.orderSummary}</span>
+          <span className={previewPending ? "opacity-60" : ""}>{formatMoney(preview.grandTotalCents, "EGP", locale)}</span>
+        </summary>
+        <div className="border-t border-outline-variant/60 p-4">{summaryBody}</div>
+      </details>
+
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 lg:col-span-2">
         <FormError>{serverError}</FormError>
 
         <Card>
           <CardContent className="space-y-4">
-            <h2 className="font-display text-lg font-bold text-on-surface">{dict.checkout.fulfillment}</h2>
-            <div className="flex gap-4">
-              <label className="flex items-center gap-2 text-sm">
-                <input type="radio" value="delivery" {...register("fulfillmentType")} /> {dict.checkout.delivery}
-              </label>
-              <label className="flex items-center gap-2 text-sm">
-                <input type="radio" value="pickup" {...register("fulfillmentType")} /> {dict.checkout.pickup}
-              </label>
-            </div>
+            <fieldset>
+              <legend className="font-display text-lg font-bold text-on-surface">{dict.checkout.fulfillment}</legend>
+              <div className="mt-4 flex gap-4">
+                <label className="flex items-center gap-2 text-sm">
+                  <input type="radio" value="delivery" {...register("fulfillmentType")} /> {dict.checkout.delivery}
+                </label>
+                <label className="flex items-center gap-2 text-sm">
+                  <input type="radio" value="pickup" {...register("fulfillmentType")} /> {dict.checkout.pickup}
+                </label>
+              </div>
+            </fieldset>
           </CardContent>
         </Card>
 
@@ -193,12 +241,16 @@ export function CheckoutForm({
 
         <Card>
           <CardContent className="space-y-3">
-            <h2 className="font-display text-lg font-bold text-on-surface">{dict.checkout.paymentMethod}</h2>
-            {paymentMethods.map((m) => (
-              <label key={m.code} className="flex items-center gap-2 text-sm">
-                <input type="radio" value={m.code} {...register("paymentMethodCode")} /> {m.name}
-              </label>
-            ))}
+            <fieldset>
+              <legend className="font-display text-lg font-bold text-on-surface">{dict.checkout.paymentMethod}</legend>
+              <div className="mt-3 space-y-3">
+                {paymentMethods.map((m) => (
+                  <label key={m.code} className="flex items-center gap-2 text-sm">
+                    <input type="radio" value={m.code} {...register("paymentMethodCode")} /> {m.name}
+                  </label>
+                ))}
+              </div>
+            </fieldset>
           </CardContent>
         </Card>
 
@@ -207,40 +259,9 @@ export function CheckoutForm({
         </Button>
       </form>
 
-      <div className="h-fit rounded-2xl border border-outline-variant/60 bg-surface-container-lowest p-6">
+      <div className="hidden h-fit rounded-2xl border border-outline-variant/60 bg-surface-container-lowest p-6 lg:block">
         <h2 className="mb-4 font-display text-lg font-bold text-on-surface">{dict.checkout.orderSummary}</h2>
-        <div className="space-y-2 text-sm">
-          {cartLines.map((l) => (
-            <div key={l.id} className="flex justify-between text-on-surface-variant">
-              <span>
-                {l.name} × {l.quantity}
-              </span>
-              <span>{formatMoney(l.lineTotalCents, "EGP", locale)}</span>
-            </div>
-          ))}
-        </div>
-        <div className={`mt-4 space-y-1.5 border-t border-outline-variant/60 pt-4 text-sm transition-opacity ${previewPending ? "opacity-60" : ""}`}>
-          <div className="flex justify-between text-on-surface-variant">
-            <span>{dict.cart.subtotal}</span>
-            <span>{formatMoney(preview.subtotalCents, "EGP", locale)}</span>
-          </div>
-          {fulfillmentType === "delivery" && (
-            <div className="flex justify-between text-on-surface-variant">
-              <span>{dict.checkout.deliveryFee}</span>
-              <span>{formatMoney(preview.deliveryFeeCents, "EGP", locale)}</span>
-            </div>
-          )}
-          {preview.discountTotalCents > 0 && (
-            <div className="flex justify-between text-secondary">
-              <span>{dict.checkout.discount}</span>
-              <span>-{formatMoney(preview.discountTotalCents, "EGP", locale)}</span>
-            </div>
-          )}
-          <div className="flex justify-between border-t border-outline-variant/60 pt-2 font-semibold text-on-surface">
-            <span>{dict.checkout.total}</span>
-            <span>{formatMoney(preview.grandTotalCents, "EGP", locale)}</span>
-          </div>
-        </div>
+        {summaryBody}
       </div>
     </div>
   );

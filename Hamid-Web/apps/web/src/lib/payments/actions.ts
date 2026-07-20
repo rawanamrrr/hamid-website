@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { and, eq } from "drizzle-orm";
 import { db, payments, media } from "@hamid/db";
 import { presignUploadSchema } from "@hamid/core";
-import { createPresignedUploadUrl, objectKeyFor, PRIVATE_BUCKET, isStorageConfigured, STORAGE_NOT_CONFIGURED_ERROR } from "@/lib/media/s3";
+import { createSignedUploadParams, isStorageConfigured, STORAGE_NOT_CONFIGURED_ERROR, type SignedUploadParams } from "@/lib/media/cloudinary";
 import { getOwnedOrder } from "@/lib/orders/queries";
 import type { ActionResult } from "@/lib/auth/rbac";
 import { enforceRateLimit } from "@/lib/rate-limit";
@@ -12,7 +12,7 @@ import { enforceRateLimit } from "@/lib/rate-limit";
 export async function presignPaymentProofUploadAction(
   orderNumber: string,
   input: { filename: string; mime: string; sizeBytes: number },
-): Promise<ActionResult<{ uploadUrl: string; objectKey: string }>> {
+): Promise<ActionResult<SignedUploadParams>> {
   // 10 upload attempts per 10 minutes per IP — generous for a legitimate
   // customer retrying a bad screenshot, tight enough to blunt abuse.
   const limited = await enforceRateLimit("payment-proof-upload", 10, 10 * 60 * 1000);
@@ -26,14 +26,13 @@ export async function presignPaymentProofUploadAction(
   const parsed = presignUploadSchema.safeParse({ ...input, isPrivate: true, folder: "payment-proofs" });
   if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? "Invalid file." };
 
-  const objectKey = objectKeyFor("payment-proofs", parsed.data.filename);
-  const uploadUrl = await createPresignedUploadUrl(PRIVATE_BUCKET, objectKey, parsed.data.mime);
-  return { success: true, data: { uploadUrl, objectKey } };
+  const params = createSignedUploadParams("payment-proofs", true);
+  return { success: true, data: params };
 }
 
 export async function confirmPaymentProofAction(
   orderNumber: string,
-  input: { objectKey: string; mime: string; sizeBytes: number },
+  input: { publicId: string; format: string; width?: number; height?: number; bytes: number },
 ): Promise<ActionResult> {
   const order = await getOwnedOrder(orderNumber);
   if (!order) return { error: "Order not found." };
@@ -44,12 +43,14 @@ export async function confirmPaymentProofAction(
   const [mediaRow] = await db
     .insert(media)
     .values({
-      disk: "minio",
-      bucket: PRIVATE_BUCKET,
-      objectKey: input.objectKey,
+      disk: "cloudinary",
+      bucket: process.env.CLOUDINARY_CLOUD_NAME ?? "",
+      objectKey: input.publicId,
       url: "",
-      mime: input.mime,
-      sizeBytes: input.sizeBytes,
+      mime: `image/${input.format.toLowerCase() === "jpg" ? "jpeg" : input.format.toLowerCase()}`,
+      width: input.width,
+      height: input.height,
+      sizeBytes: input.bytes,
       isPrivate: true,
       folder: "payment-proofs",
     })

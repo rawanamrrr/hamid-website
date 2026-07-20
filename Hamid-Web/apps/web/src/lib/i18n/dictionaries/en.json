@@ -94,10 +94,13 @@
     "title": "Our Store",
     "subtitle": "Every product is a story of craftsmanship, origin, and passion.",
     "all": "All",
-    "empty": "No products in this category yet."
+    "empty": "No products in this category yet.",
+    "searchPlaceholder": "Search products…",
+    "searchEmpty": "No products match your search."
   },
   "home": {
     "hero": {
+      "kicker": "Egyptian Heritage Coffee",
       "title": "A Taste of Egyptian Heritage in Every Cup",
       "subtitle": "Premium coffee, deeply rooted in tradition, crafted for modern coffee lovers. Experience the rich soul of Cairo's coffee culture.",
       "shopCoffee": "Shop Coffee",
@@ -174,6 +177,8 @@
     }
   },
   "common": {
+    "loadError": "We couldn't load this right now. Please try again in a moment.",
+    "retry": "Try Again",
     "save": "Save",
     "cancel": "Cancel",
     "delete": "Delete",

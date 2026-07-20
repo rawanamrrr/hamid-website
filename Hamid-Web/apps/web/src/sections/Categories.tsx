@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getDict } from "@/lib/i18n";
 
 export default async function Categories() {
@@ -17,9 +18,9 @@ export default async function Categories() {
             <div className="absolute inset-0 flex flex-col justify-end p-6 text-white">
               <h3 className="font-[family-name:var(--font-plus-jakarta)] text-xl font-bold mb-1">{dict.home.categories.coffeeBeansTitle}</h3>
               <p className="text-sm opacity-80 mb-3">{dict.home.categories.coffeeBeansDesc}</p>
-              <a href="/coffee" className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-widest text-[#ffdea6]">
-                {dict.home.categories.explore} <span className="material-symbols-outlined text-base">arrow_forward</span>
-              </a>
+              <Link href="/coffee" className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-widest text-[#ffdea6]">
+                {dict.home.categories.explore} <span aria-hidden="true" className="material-symbols-outlined text-base">arrow_forward</span>
+              </Link>
             </div>
           </div>
 
@@ -47,18 +48,18 @@ export default async function Categories() {
             <div className="absolute inset-0 flex flex-col justify-end p-10 text-white">
               <h3 className="font-[family-name:var(--font-plus-jakarta)] text-2xl font-bold mb-2">{dict.home.categories.coffeeBeansTitle}</h3>
               <p className="opacity-80 mb-6">{dict.home.categories.coffeeBeansDescLong}</p>
-              <a href="/coffee" className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[#ffdea6]">
-                {dict.home.categories.exploreCollection} <span className="material-symbols-outlined">arrow_forward</span>
-              </a>
+              <Link href="/coffee" className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[#ffdea6]">
+                {dict.home.categories.exploreCollection} <span aria-hidden="true" className="material-symbols-outlined">arrow_forward</span>
+              </Link>
             </div>
           </div>
           <div className="col-span-3 row-span-1 group relative overflow-hidden rounded-[1.75rem] luxury-shadow bg-black">
             <div className="absolute inset-0 bg-cover bg-center opacity-60 transition-transform duration-700 group-hover:scale-105" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuAtHJO0P8lnQRgLkZnHiguKhs_L21LPF-xDZvzmr2trJ7KmpFR_hwwIf1zcxrNys4ORwC0tdjlJR4T7U_7d6Appl-R2awVjPZxpR81qcuTx8HhgMdz7tio5QUxPSMycuQ6HxZkVwBiu5jp8H9sTR6edkTYOTlujLoop-J4WUshVgHSjETPfi9TB8ffq3_VG-JCyYcR2SvJB1KSlIvqRar7kagI0IWN1-oruYe-iwd7kdM4LKVEdcKa4QfLCasHCj_IYgYoaATeIJtxq')" }} />
             <div className="absolute inset-0 flex flex-col justify-end p-8 text-white">
               <h3 className="font-[family-name:var(--font-plus-jakarta)] text-2xl font-bold mb-1">{dict.home.categories.turkishCoffee}</h3>
-              <a href="/store" className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[#ffdea6]">
-                {dict.home.categories.viewMore} <span className="material-symbols-outlined">arrow_forward</span>
-              </a>
+              <Link href="/store" className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[#ffdea6]">
+                {dict.home.categories.viewMore} <span aria-hidden="true" className="material-symbols-outlined">arrow_forward</span>
+              </Link>
             </div>
           </div>
           <div className="col-span-3 row-span-1 group relative overflow-hidden rounded-[1.75rem] luxury-shadow bg-[#7b5800]">

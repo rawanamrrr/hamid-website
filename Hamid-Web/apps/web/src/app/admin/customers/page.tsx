@@ -3,24 +3,38 @@ import { desc, eq, count, sum } from "drizzle-orm";
 import { db, customers, users, orders } from "@hamid/db";
 import { formatMoney, toCents } from "@hamid/core";
 import { Table, Thead, Th, Tr, Td, EmptyRow } from "@/components/admin/table";
+import { Pagination, PAGE_SIZE } from "@/components/admin/pagination";
 
-export default async function AdminCustomersPage() {
-  const rows = await db
-    .select({
-      id: customers.id,
-      fullName: users.fullName,
-      email: users.email,
-      phone: users.phone,
-      loyaltyPoints: customers.loyaltyPoints,
-      createdAt: customers.createdAt,
-      orderCount: count(orders.id),
-      totalSpent: sum(orders.grandTotal),
-    })
-    .from(customers)
-    .innerJoin(users, eq(users.id, customers.userId))
-    .leftJoin(orders, eq(orders.customerId, customers.id))
-    .groupBy(customers.id, users.fullName, users.email, users.phone, customers.loyaltyPoints, customers.createdAt)
-    .orderBy(desc(customers.createdAt));
+export default async function AdminCustomersPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
+  const { page: pageParam } = await searchParams;
+  const page = Math.max(1, Number(pageParam) || 1);
+  const offset = (page - 1) * PAGE_SIZE;
+
+  const [rows, [{ total }]] = await Promise.all([
+    db
+      .select({
+        id: customers.id,
+        fullName: users.fullName,
+        email: users.email,
+        phone: users.phone,
+        loyaltyPoints: customers.loyaltyPoints,
+        createdAt: customers.createdAt,
+        orderCount: count(orders.id),
+        totalSpent: sum(orders.grandTotal),
+      })
+      .from(customers)
+      .innerJoin(users, eq(users.id, customers.userId))
+      .leftJoin(orders, eq(orders.customerId, customers.id))
+      .groupBy(customers.id, users.fullName, users.email, users.phone, customers.loyaltyPoints, customers.createdAt)
+      .orderBy(desc(customers.createdAt))
+      .limit(PAGE_SIZE)
+      .offset(offset),
+    db.select({ total: count() }).from(customers),
+  ]);
 
   return (
     <div>
@@ -58,6 +72,7 @@ export default async function AdminCustomersPage() {
             {rows.length === 0 && <EmptyRow colSpan={7}>No customers yet.</EmptyRow>}
           </tbody>
         </Table>
+        <Pagination basePath="/admin/customers" page={page} total={total} />
       </div>
     </div>
   );

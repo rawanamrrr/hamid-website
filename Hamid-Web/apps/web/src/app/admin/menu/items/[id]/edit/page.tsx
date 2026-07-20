@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { and, asc, eq } from "drizzle-orm";
-import { db, menuItems, menuItemTranslations, menuCategories, menuCategoryTranslations, media } from "@hamid/db";
+import { db, menuItems, menuItemTranslations, menuItemSizes, menuCategories, menuCategoryTranslations, media } from "@hamid/db";
 import { MenuItemForm } from "@/components/admin/menu/item-form";
 
 export default async function EditMenuItemPage({ params }: { params: Promise<{ id: string }> }) {
@@ -8,15 +8,16 @@ export default async function EditMenuItemPage({ params }: { params: Promise<{ i
   const itemId = Number(id);
 
   const [item] = await db.select().from(menuItems).where(eq(menuItems.id, itemId)).limit(1);
-  if (!item) notFound();
+  if (!item || item.deletedAt) notFound();
 
-  const [translations, categories] = await Promise.all([
+  const [translations, categories, sizes] = await Promise.all([
     db.select().from(menuItemTranslations).where(eq(menuItemTranslations.itemId, itemId)),
     db
       .select({ id: menuCategories.id, name: menuCategoryTranslations.name })
       .from(menuCategories)
       .leftJoin(menuCategoryTranslations, and(eq(menuCategoryTranslations.categoryId, menuCategories.id), eq(menuCategoryTranslations.locale, "en")))
       .orderBy(asc(menuCategories.sortOrder)),
+    db.select().from(menuItemSizes).where(eq(menuItemSizes.itemId, itemId)).orderBy(asc(menuItemSizes.sortOrder)),
   ]);
 
   const en = translations.find((t) => t.locale === "en");
@@ -37,7 +38,7 @@ export default async function EditMenuItemPage({ params }: { params: Promise<{ i
         defaultValues={{
           categoryId: item.categoryId,
           slug: item.slug,
-          price: item.price,
+          sizes: sizes.map((s) => ({ id: s.id, size: s.size, price: s.price, sortOrder: s.sortOrder })),
           badge: item.badge ?? "",
           isFeatured: item.isFeatured,
           isNew: item.isNew,

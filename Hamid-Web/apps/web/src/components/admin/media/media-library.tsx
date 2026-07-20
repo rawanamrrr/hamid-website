@@ -15,20 +15,6 @@ export interface MediaItem {
   mime: string;
 }
 
-function readImageDimensions(file: File): Promise<{ width?: number; height?: number }> {
-  return new Promise((resolve) => {
-    if (!file.type.startsWith("image/")) return resolve({});
-    const img = new Image();
-    const objectUrl = URL.createObjectURL(file);
-    img.onload = () => {
-      resolve({ width: img.naturalWidth, height: img.naturalHeight });
-      URL.revokeObjectURL(objectUrl);
-    };
-    img.onerror = () => resolve({});
-    img.src = objectUrl;
-  });
-}
-
 export function MediaLibrary({ initialItems }: { initialItems: MediaItem[] }) {
   const [items, setItems] = useState(initialItems);
   const [uploading, setUploading] = useState(false);
@@ -54,24 +40,26 @@ export function MediaLibrary({ initialItems }: { initialItems: MediaItem[] }) {
         continue;
       }
 
-      const putRes = await fetch(presign.uploadUrl, {
-        method: "PUT",
-        headers: { "Content-Type": file.type },
-        body: file,
-      });
-      if (!putRes.ok) {
+      const form = new FormData();
+      form.append("file", file);
+      form.append("api_key", presign.apiKey);
+      form.append("timestamp", String(presign.timestamp));
+      form.append("signature", presign.signature);
+      form.append("folder", presign.folder);
+      form.append("type", presign.type);
+      const uploadRes = await fetch(presign.uploadUrl, { method: "POST", body: form });
+      const uploaded = await uploadRes.json();
+      if (!uploadRes.ok) {
         setError(`Upload failed for ${file.name}.`);
         continue;
       }
 
-      const dims = await readImageDimensions(file);
       const confirmed = await confirmMediaUploadAction({
-        bucket: presign.bucket,
-        objectKey: presign.objectKey,
-        mime: file.type,
-        sizeBytes: file.size,
-        width: dims.width,
-        height: dims.height,
+        publicId: uploaded.public_id,
+        format: uploaded.format,
+        width: uploaded.width,
+        height: uploaded.height,
+        bytes: uploaded.bytes,
         title: file.name,
         folder: "library",
         isPrivate: false,

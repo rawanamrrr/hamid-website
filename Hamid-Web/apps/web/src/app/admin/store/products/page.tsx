@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { and, asc, eq } from "drizzle-orm";
+import { and, asc, eq, count, isNull } from "drizzle-orm";
 import { Plus, Pencil } from "lucide-react";
 import { db, storeProducts, storeProductTranslations, storeCategories } from "@hamid/db";
 import { formatMoney, toCents } from "@hamid/core";
@@ -7,24 +7,39 @@ import { Button } from "@/components/ui/button";
 import { Table, Thead, Th, Tr, Td, EmptyRow } from "@/components/admin/table";
 import { SectionTabs } from "@/components/admin/section-tabs";
 import { DeleteButton } from "@/components/admin/delete-button";
+import { Pagination, PAGE_SIZE } from "@/components/admin/pagination";
 import { deleteStoreProductAction } from "@/lib/store/actions";
 
-export default async function AdminStoreProductsPage() {
-  const rows = await db
-    .select({
-      id: storeProducts.id,
-      price: storeProducts.price,
-      stockQty: storeProducts.stockQty,
-      isActive: storeProducts.isActive,
-      isBestSeller: storeProducts.isBestSeller,
-      isFeaturedHome: storeProducts.isFeaturedHome,
-      name: storeProductTranslations.name,
-      categoryName: storeCategories.slug,
-    })
-    .from(storeProducts)
-    .leftJoin(storeProductTranslations, and(eq(storeProductTranslations.productId, storeProducts.id), eq(storeProductTranslations.locale, "en")))
-    .leftJoin(storeCategories, eq(storeCategories.id, storeProducts.categoryId))
-    .orderBy(asc(storeProducts.categoryId), asc(storeProducts.sortOrder));
+export default async function AdminStoreProductsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
+  const { page: pageParam } = await searchParams;
+  const page = Math.max(1, Number(pageParam) || 1);
+  const offset = (page - 1) * PAGE_SIZE;
+
+  const [rows, [{ total }]] = await Promise.all([
+    db
+      .select({
+        id: storeProducts.id,
+        price: storeProducts.price,
+        stockQty: storeProducts.stockQty,
+        isActive: storeProducts.isActive,
+        isBestSeller: storeProducts.isBestSeller,
+        isFeaturedHome: storeProducts.isFeaturedHome,
+        name: storeProductTranslations.name,
+        categoryName: storeCategories.slug,
+      })
+      .from(storeProducts)
+      .leftJoin(storeProductTranslations, and(eq(storeProductTranslations.productId, storeProducts.id), eq(storeProductTranslations.locale, "en")))
+      .leftJoin(storeCategories, eq(storeCategories.id, storeProducts.categoryId))
+      .where(isNull(storeProducts.deletedAt))
+      .orderBy(asc(storeProducts.categoryId), asc(storeProducts.sortOrder))
+      .limit(PAGE_SIZE)
+      .offset(offset),
+    db.select({ total: count() }).from(storeProducts).where(isNull(storeProducts.deletedAt)),
+  ]);
 
   return (
     <div>
@@ -91,6 +106,7 @@ export default async function AdminStoreProductsPage() {
           {rows.length === 0 && <EmptyRow colSpan={7}>No products yet.</EmptyRow>}
         </tbody>
       </Table>
+      <Pagination basePath="/admin/store/products" page={page} total={total} />
     </div>
   );
 }

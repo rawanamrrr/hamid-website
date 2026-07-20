@@ -1,11 +1,13 @@
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import { getFeaturedHomeProducts } from "@/lib/store/queries";
+import { withDbTimeout } from "@/lib/db-timeout";
 import { getLocale, getDict } from "@/lib/i18n";
 
 export default async function FeaturedProducts() {
   const [locale, dict] = await Promise.all([getLocale(), getDict()]);
-  const featured = await getFeaturedHomeProducts(locale, 4);
+  // Skip the section entirely if the catalog can't be reached right now.
+  const featured = await withDbTimeout(getFeaturedHomeProducts(locale, 4)).catch(() => []);
 
   if (featured.length === 0) return null;
 

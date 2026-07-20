@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import type { MenuSectionView as MenuSection, MenuItemView as MenuItem } from "@/lib/menu/queries";
 
 // ─── Badge colour mapping ──────────────────────────────────────────────────
@@ -11,68 +12,118 @@ const BADGE_STYLES: Record<string, string> = {
   Heritage: "bg-[#271908]/8 text-[#271908] border border-[#271908]/15",
 };
 
+/** Full-bleed image with a graceful icon fallback — shared by the grid tile and section banner. */
+function CategoryVisual({ section, sizes }: { section: MenuSection; sizes: string }) {
+  const [imgError, setImgError] = useState(false);
+  if (section.image && !imgError) {
+    return (
+      <Image
+        src={section.image}
+        alt=""
+        fill
+        unoptimized
+        sizes={sizes}
+        className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+        onError={() => setImgError(true)}
+      />
+    );
+  }
+  return (
+    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#3a2614] to-[#1a1006]">
+      <span aria-hidden="true" className="material-symbols-outlined text-5xl text-[#c8a97a]/70">
+        {section.icon}
+      </span>
+    </div>
+  );
+}
+
+// ─── Category grid tile (the page's visual centrepiece) ───────────────────
+function CategoryTile({ section }: { section: MenuSection }) {
+  return (
+    <a
+      href={`#${section.id}`}
+      className="group relative aspect-square sm:aspect-[3/4] overflow-hidden rounded-2xl sm:rounded-[1.5rem] bg-[#1a1006] shadow-[0_8px_24px_-8px_rgba(39,25,8,0.35)]"
+    >
+      <CategoryVisual section={section} sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 p-3.5 md:p-4">
+        <p className="font-[family-name:var(--font-plus-jakarta)] text-[15px] md:text-lg font-bold leading-tight text-white">
+          {section.title}
+        </p>
+        <p className="mt-0.5 text-[11px] font-medium text-white/70">
+          {section.items.length} {section.items.length === 1 ? "item" : "items"}
+        </p>
+      </div>
+    </a>
+  );
+}
+
 // ─── Single menu item card ─────────────────────────────────────────────────
 function MenuItemCard({ item }: { item: MenuItem }) {
-  return (
-    <div className="group relative flex flex-col justify-between bg-white rounded-2xl p-5 luxury-shadow border border-[#e8d5bc]/40 hover:border-[#c8a97a]/60 hover:-translate-y-0.5 transition-all duration-300">
-      {/* Badge */}
-      {item.badge && (
-        <span
-          className={`absolute top-4 right-4 text-[10px] font-semibold uppercase tracking-widest px-2.5 py-1 rounded-full ${
-            BADGE_STYLES[item.badge] ?? "bg-[#7b5800]/10 text-[#7b5800]"
-          }`}
-        >
-          {item.badge}
-        </span>
-      )}
+  const singleSize = item.sizes.length === 1;
 
-      <div className="space-y-1.5 pr-12">
-        <h3 className="font-[family-name:var(--font-plus-jakarta)] text-[15px] font-semibold text-[#271908] leading-snug">
+  return (
+    <div className="group flex flex-col justify-between rounded-2xl sm:rounded-[1.25rem] border border-[#e8d5bc]/40 bg-white p-3.5 sm:p-5 shadow-[0_2px_10px_-4px_rgba(39,25,8,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#c8a97a]/60 hover:shadow-[0_10px_24px_-8px_rgba(39,25,8,0.18)]">
+      <div className="space-y-1 sm:space-y-1.5">
+        {item.badge && (
+          <span
+            className={`inline-block text-[9px] sm:text-[10px] font-semibold uppercase tracking-widest px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full ${
+              BADGE_STYLES[item.badge] ?? "bg-[#7b5800]/10 text-[#7b5800]"
+            }`}
+          >
+            {item.badge}
+          </span>
+        )}
+        <h3 className="font-[family-name:var(--font-plus-jakarta)] text-[13px] sm:text-[15px] font-semibold text-[#271908] leading-snug">
           {item.name}
         </h3>
         {item.description && (
-          <p className="text-[#4f4541] text-xs leading-relaxed line-clamp-2">
+          <p className="text-[#4f4541] text-[11px] sm:text-xs leading-relaxed line-clamp-2">
             {item.description}
           </p>
         )}
       </div>
 
-      <div className="mt-4 flex items-center justify-between">
-        <span className="font-[family-name:var(--font-plus-jakarta)] text-base font-bold text-[#7b5800]">
-          {item.price}
-        </span>
-        <button
-          aria-label={`Add ${item.name} to order`}
-          className="w-8 h-8 rounded-full bg-[#7b5800] text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-[#5d4200] hover:scale-110 shadow-sm"
-        >
-          <span className="material-symbols-outlined text-[16px] select-none">add</span>
-        </button>
+      <div className="mt-3 sm:mt-4 border-t border-[#e8d5bc]/50 pt-2.5 sm:pt-3">
+        {singleSize ? (
+          <span className="font-[family-name:var(--font-plus-jakarta)] text-sm sm:text-base font-bold text-[#7b5800]">
+            {item.sizes[0].price}
+          </span>
+        ) : (
+          <ul className="space-y-0.5 sm:space-y-1">
+            {item.sizes.map((s) => (
+              <li key={s.size} className="flex items-center justify-between gap-2 text-xs sm:text-sm">
+                <span className="text-[#4f4541] truncate">{s.size}</span>
+                <span className="font-[family-name:var(--font-plus-jakarta)] font-bold text-[#7b5800] whitespace-nowrap">{s.price}</span>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );
 }
 
-// ─── One full section block ────────────────────────────────────────────────
+// ─── One full category section: panoramic banner + item grid ──────────────
 function MenuSectionBlock({ section }: { section: MenuSection }) {
   return (
-    <section id={section.id} className="scroll-mt-36">
-      {/* Section header */}
-      <div className="flex items-center gap-3 mb-6 md:mb-8">
-        <div className="w-10 h-10 rounded-xl bg-[#271908] flex items-center justify-center flex-shrink-0">
-          <span className="material-symbols-outlined text-[#c8a97a] text-[20px] select-none">
-            {section.icon}
-          </span>
-        </div>
-        <div>
-          <h2 className="font-[family-name:var(--font-plus-jakarta)] text-xl md:text-2xl font-bold text-[#271908]">
+    <section id={section.id} className="scroll-mt-32">
+      {/* Panoramic banner — the "instant recognition" moment as you scroll */}
+      <div className="group relative mb-4 h-28 overflow-hidden rounded-2xl sm:rounded-[1.75rem] sm:h-44 md:h-52 md:mb-8">
+        <CategoryVisual section={section} sizes="100vw" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-4 sm:p-5 md:p-7">
+          <h2 className="font-[family-name:var(--font-plus-jakarta)] text-xl sm:text-2xl font-bold text-white md:text-4xl">
             {section.title}
           </h2>
-          <div className="h-0.5 w-12 bg-[#7b5800] mt-1 rounded-full" />
+          <span className="hidden shrink-0 rounded-full bg-white/15 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-sm sm:inline-block">
+            {section.items.length} {section.items.length === 1 ? "item" : "items"}
+          </span>
         </div>
       </div>
 
-      {/* Items grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      {/* Items grid — two columns even on phones so the list stays scannable */}
+      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-4">
         {section.items.map((item) => (
           <MenuItemCard key={item.id} item={item} />
         ))}
@@ -81,7 +132,7 @@ function MenuSectionBlock({ section }: { section: MenuSection }) {
   );
 }
 
-// ─── Sticky section navigation ────────────────────────────────────────────
+// ─── Sticky quick-jump nav ──────────────────────────────────────────────────
 function StickyNav({
   sections,
   activeId,
@@ -91,7 +142,6 @@ function StickyNav({
 }) {
   const navRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll the nav pill into view when active section changes
   useEffect(() => {
     const nav = navRef.current;
     if (!nav) return;
@@ -102,23 +152,25 @@ function StickyNav({
   }, [activeId]);
 
   return (
-    <div className="sticky top-[60px] z-40 bg-[#fff8f4]/90 backdrop-blur-md border-b border-[#e8d5bc]/50 shadow-sm">
+    <div
+      className="sticky z-30 border-b border-[#e8d5bc]/50 bg-[#fff8f4]/90 backdrop-blur-md transition-[top] duration-300"
+      style={{ top: "var(--nav-offset, 52px)" }}
+    >
       <div
         ref={navRef}
-        className="flex gap-2 overflow-x-auto no-scrollbar px-5 md:px-16 py-3 max-w-[1280px] mx-auto"
+        className="mx-auto flex max-w-[1280px] gap-1.5 overflow-x-auto no-scrollbar px-5 py-2.5 md:px-16"
       >
         {sections.map((s) => (
           <a
             key={s.id}
             data-id={s.id}
             href={`#${s.id}`}
-            className={`flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-widest transition-all duration-200 ${
+            className={`flex-shrink-0 rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors duration-200 ${
               activeId === s.id
-                ? "bg-[#271908] text-[#c8a97a] shadow-sm"
-                : "bg-transparent text-[#4f4541] hover:bg-[#ffead8] hover:text-[#271908]"
+                ? "bg-[#271908] text-[#c8a97a]"
+                : "bg-transparent text-[#817570] hover:bg-[#ffead8] hover:text-[#271908]"
             }`}
           >
-            <span className="material-symbols-outlined text-[14px] select-none">{s.icon}</span>
             {s.title}
           </a>
         ))}
@@ -131,21 +183,18 @@ function StickyNav({
 export default function MenuPageClient({ sections }: { sections: MenuSection[] }) {
   const [activeId, setActiveId] = useState<string>(sections[0]?.id ?? "");
 
-  // Intersection Observer — track which section is in the viewport
   useEffect(() => {
     if (!sections.length) return;
-
     const observers: IntersectionObserver[] = [];
 
     sections.forEach((section) => {
       const el = document.getElementById(section.id);
       if (!el) return;
-
       const obs = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) setActiveId(section.id);
         },
-        { rootMargin: "-30% 0px -60% 0px", threshold: 0 }
+        { rootMargin: "-30% 0px -60% 0px", threshold: 0 },
       );
       obs.observe(el);
       observers.push(obs);
@@ -156,44 +205,33 @@ export default function MenuPageClient({ sections }: { sections: MenuSection[] }
 
   return (
     <div className="min-h-screen bg-[#fff8f4]">
-      {/* ── Hero Banner ─────────────────────────────────────────────────── */}
-      <div className="relative bg-[#271908] py-16 md:py-24 px-5 md:px-16 overflow-hidden">
-        {/* Decorative pattern overlay */}
-        <div className="pattern-overlay absolute inset-0 opacity-20" />
+      {/* ── Compact intro ────────────────────────────────────────────────── */}
+      <div className="bg-[#271908] px-5 py-12 text-center md:px-16 md:py-16">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-[#c8a97a]">
+          Hamid Afandi
+        </p>
+        <h1 className="font-[family-name:var(--font-plus-jakarta)] text-3xl font-bold text-white md:text-5xl">
+          Our Menu
+        </h1>
+        <p className="mx-auto mt-3 max-w-md text-sm text-white/70 md:text-base">
+          Every category has its own story — browse by what catches your eye.
+        </p>
+      </div>
 
-        {/* Decorative corner accents */}
-        <div className="absolute top-8 left-8 w-16 h-16 border-t-2 border-l-2 border-[#c8a97a]/30 hidden md:block" />
-        <div className="absolute bottom-8 right-8 w-16 h-16 border-b-2 border-r-2 border-[#c8a97a]/30 hidden md:block" />
-
-        <div className="relative z-10 text-center max-w-2xl mx-auto">
-          <p className="text-[#c8a97a] text-xs font-semibold uppercase tracking-[0.25em] mb-3">
-            Hamid Afandi
-          </p>
-          <h1 className="font-[family-name:var(--font-plus-jakarta)] text-3xl md:text-5xl font-bold text-white mb-4">
-            Our Menu
-          </h1>
-          <p className="text-white/60 text-sm md:text-base max-w-md mx-auto leading-relaxed">
-            Fresh ingredients, heritage recipes, and modern craft — explore
-            everything we serve.
-          </p>
-
-          {/* Section count badge */}
-          <div className="mt-6 inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/10 rounded-full px-5 py-2">
-            <span className="material-symbols-outlined text-[#c8a97a] text-[16px] select-none">
-              restaurant_menu
-            </span>
-            <span className="text-white/80 text-xs font-semibold uppercase tracking-widest">
-              {sections.length} Categories
-            </span>
-          </div>
+      {/* ── Category showcase — instantly recognisable, no reading required ─ */}
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-5 py-6 sm:py-8 md:px-16 md:py-10">
+        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3 md:gap-4 lg:grid-cols-4">
+          {sections.map((section) => (
+            <CategoryTile key={section.id} section={section} />
+          ))}
         </div>
       </div>
 
-      {/* ── Sticky Section Nav ───────────────────────────────────────────── */}
+      {/* ── Sticky Section Nav ──────────────────────────────────────────── */}
       <StickyNav sections={sections} activeId={activeId} />
 
       {/* ── Menu Content ────────────────────────────────────────────────── */}
-      <div className="max-w-[1280px] mx-auto px-5 md:px-16 py-12 md:py-16 space-y-16 md:space-y-20">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-5 md:px-16 py-8 md:py-14 space-y-10 sm:space-y-14 md:space-y-20">
         {sections.map((section) => (
           <MenuSectionBlock key={section.id} section={section} />
         ))}
@@ -207,7 +245,7 @@ export default function MenuPageClient({ sections }: { sections: MenuSection[] }
         <h2 className="font-[family-name:var(--font-plus-jakarta)] text-2xl md:text-3xl font-bold text-white mb-4">
           Visit Us In Person
         </h2>
-        <p className="text-white/60 text-sm max-w-sm mx-auto mb-6">
+        <p className="text-white/80 text-sm max-w-sm mx-auto mb-6">
           Come experience the aromas, the warmth, and the heritage — in our
           Mansoura branch.
         </p>
@@ -215,7 +253,7 @@ export default function MenuPageClient({ sections }: { sections: MenuSection[] }
           href="/branches"
           className="inline-flex items-center gap-2 bg-[#7b5800] text-white px-8 py-3 rounded-full text-xs font-semibold uppercase tracking-widest hover:bg-[#5d4200] transition-colors"
         >
-          <span className="material-symbols-outlined text-[16px] select-none">location_on</span>
+          <span aria-hidden="true" className="material-symbols-outlined text-[16px] select-none">location_on</span>
           Find Our Branch
         </a>
       </div>

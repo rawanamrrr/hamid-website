@@ -4,7 +4,6 @@ import { useState } from "react";
 import NextImage from "next/image";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ImageOff, Upload, X, ChevronLeft, ChevronRight, Star } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { listPublicMediaAction, presignMediaUploadAction, confirmMediaUploadAction } from "@/lib/media/actions";
 import type { PickedMedia } from "./media-picker";
 
@@ -57,13 +56,22 @@ export function MediaGalleryPicker({
       isPrivate: false,
     });
     if ("uploadUrl" in presign) {
-      const put = await fetch(presign.uploadUrl, { method: "PUT", headers: { "Content-Type": file.type }, body: file });
-      if (put.ok) {
+      const form = new FormData();
+      form.append("file", file);
+      form.append("api_key", presign.apiKey);
+      form.append("timestamp", String(presign.timestamp));
+      form.append("signature", presign.signature);
+      form.append("folder", presign.folder);
+      form.append("type", presign.type);
+      const upload = await fetch(presign.uploadUrl, { method: "POST", body: form });
+      const uploaded = await upload.json();
+      if (upload.ok) {
         const confirmed = await confirmMediaUploadAction({
-          bucket: presign.bucket,
-          objectKey: presign.objectKey,
-          mime: file.type,
-          sizeBytes: file.size,
+          publicId: uploaded.public_id,
+          format: uploaded.format,
+          width: uploaded.width,
+          height: uploaded.height,
+          bytes: uploaded.bytes,
           title: file.name,
           folder: "library",
           isPrivate: false,

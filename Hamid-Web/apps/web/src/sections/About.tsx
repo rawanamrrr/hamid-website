@@ -37,7 +37,7 @@ export default async function About() {
             className="group inline-flex items-center gap-3 text-black text-xs font-semibold uppercase tracking-widest border-b-2 border-black pb-2 hover:text-[#7b5800] hover:border-[#7b5800] transition-all"
           >
             {dict.home.about.cta}
-            <span className="material-symbols-outlined transition-transform group-hover:translate-x-2">
+            <span aria-hidden="true" className="material-symbols-outlined transition-transform group-hover:translate-x-2">
               arrow_right_alt
             </span>
           </Link>

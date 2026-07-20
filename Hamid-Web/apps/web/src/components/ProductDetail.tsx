@@ -84,10 +84,13 @@ export function ProductDetail({
       <div>
         {product.rating != null && (
           <span className="mb-2 flex items-center gap-1 text-xs font-semibold text-[#7b5800]">
-            {product.rating}{" "}
-            <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>
-              star
+            <span aria-hidden="true" className="flex items-center gap-1">
+              {product.rating}{" "}
+              <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>
+                star
+              </span>
             </span>
+            <span className="sr-only">{product.rating} out of 5 stars</span>
           </span>
         )}
         <h1 className="font-[family-name:var(--font-plus-jakarta)] text-3xl font-bold text-black md:text-4xl">{product.name}</h1>

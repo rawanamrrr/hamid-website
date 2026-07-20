@@ -69,6 +69,14 @@ export async function deleteObject(bucket: string, objectKey: string) {
   await s3Internal.send(new DeleteObjectCommand({ Bucket: bucket, Key: objectKey }));
 }
 
+/** Reads just the first `maxBytes` of an object — enough to sniff a magic-byte signature without downloading the whole file. */
+export async function readObjectHeadBytes(bucket: string, objectKey: string, maxBytes = 16): Promise<Buffer> {
+  const command = new GetObjectCommand({ Bucket: bucket, Key: objectKey, Range: `bytes=0-${maxBytes - 1}` });
+  const result = await s3Internal.send(command);
+  const body = await result.Body?.transformToByteArray();
+  return Buffer.from(body ?? []);
+}
+
 export function objectKeyFor(folder: string | undefined, filename: string): string {
   const ext = filename.includes(".") ? filename.split(".").pop() : undefined;
   const base = crypto.randomUUID();

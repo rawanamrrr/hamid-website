@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { db, settings } from "@hamid/db";
 import { guardPermission, type ActionResult } from "@/lib/auth/rbac";
+import { logActivity } from "@/lib/activity/log";
 
 export interface SiteSettingsInput {
   siteNameEn: string;
@@ -32,6 +33,7 @@ export async function updateSiteSettingsAction(input: SiteSettingsInput): Promis
     upsertSetting("checkout", "guest_checkout_enabled", input.guestCheckoutEnabled),
   ]);
 
+  await logActivity({ actorUserId: Number(guard.id), action: "settings.updated", entityType: "settings" });
   revalidatePath("/admin/settings");
   return { success: true };
 }

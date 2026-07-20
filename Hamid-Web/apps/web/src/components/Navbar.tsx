@@ -2,7 +2,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Menu, ShoppingBag, X } from "lucide-react";
 import { logoutAction } from "@/lib/auth/actions";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import type { Dictionary, Locale } from "@/lib/i18n";
@@ -11,6 +12,15 @@ interface NavUser {
   name?: string | null;
   email?: string | null;
   permissions: string[];
+}
+
+function CartBadge({ count }: { count: number }) {
+  if (count <= 0) return null;
+  return (
+    <span className="absolute top-0.5 end-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#7b5800] px-1 text-[10px] font-bold text-white">
+      {count > 99 ? "99+" : count}
+    </span>
+  );
 }
 
 export default function Navbar({
@@ -26,6 +36,7 @@ export default function Navbar({
 }) {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
 
   const links = [
@@ -38,13 +49,44 @@ export default function Navbar({
   ];
 
   useEffect(() => {
+    let lastY = window.scrollY;
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      const y = window.scrollY;
+      setScrolled(y > 20);
+      // Hide when scrolling down past the header, reveal on any scroll up.
+      // The small delta threshold avoids flickering from momentum jitter.
+      if (y < 80) {
+        setHidden(false);
+      } else if (y - lastY > 6) {
+        setHidden(true);
+      } else if (lastY - y > 6) {
+        setHidden(false);
+      }
+      lastY = y;
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Sticky elements further down the page (e.g. the menu's section nav) dock
+  // against the header via this variable instead of a hard-coded offset.
+  const navRef = useRef<HTMLElement>(null);
+  const navVisible = !hidden || navOpen;
+  useEffect(() => {
+    const height = navVisible ? navRef.current?.offsetHeight ?? 60 : 0;
+    document.documentElement.style.setProperty("--nav-offset", `${height}px`);
+  }, [navVisible, scrolled]);
+
+  // Lock page scroll while the mobile drawer is open.
+  useEffect(() => {
+    if (!navOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [navOpen]);
 
   const toggleNav = () => setNavOpen((prev) => !prev);
   const closeNav = () => setNavOpen(false);
@@ -55,37 +97,40 @@ export default function Navbar({
     ? "bg-[#fff8f4]/85 backdrop-blur-md shadow-sm border-b border-[#e8d5bc]/40"
     : "bg-[#fff8f4]/95 border-b border-[#e8d5bc]/10";
 
-  const navPy = scrolled ? "py-1 md:py-1.5" : "py-2.5 md:py-3";
+  const navPy = scrolled ? "py-1 md:py-1.5" : "py-2 md:py-2.5";
   const canAccessDashboard = !!user?.permissions.includes("dashboard.view");
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${navBg}`}>
+    <nav
+      ref={navRef}
+      className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${navBg} ${
+        navVisible ? "translate-y-0" : "-translate-y-full"
+      }`}
+    >
       {/* ── Top bar ── */}
-      <div className={`px-5 md:px-16 max-w-[1280px] mx-auto w-full transition-all duration-300 ease-in-out ${navPy}`}>
+      <div className={`px-4 md:px-16 max-w-[1280px] mx-auto w-full transition-all duration-300 ease-in-out ${navPy}`}>
 
         {/* Mobile row: hamburger | logo | bag */}
-        <div className="flex items-center justify-between md:hidden">
+        <div className="flex items-center justify-between lg:hidden">
           {/* Hamburger */}
           <button
             type="button"
             onClick={toggleNav}
             aria-label={navOpen ? "Close menu" : "Open menu"}
             aria-expanded={navOpen}
-            className="w-10 h-10 flex items-center justify-center text-[#271908] hover:text-[#7b5800] transition-colors shrink-0"
+            className="w-11 h-11 -ms-1.5 flex items-center justify-center text-[#271908] active:text-[#7b5800] transition-colors shrink-0"
           >
-            <span className="material-symbols-outlined text-2xl select-none">
-              {navOpen ? "close" : "menu"}
-            </span>
+            {navOpen ? <X size={24} strokeWidth={2} /> : <Menu size={24} strokeWidth={2} />}
           </button>
 
           {/* Logo – sits naturally in the centre of the flex row */}
-          <Link href="/" onClick={closeNav} className="flex items-center">
+          <Link href="/" onClick={closeNav} className="flex items-center" aria-label="Hamid Afandi — home">
             <Image
               src="/hamid-logo.png"
               alt="Hamid Afandi"
-              width={80}
-              height={27}
-              className="object-contain"
+              width={48}
+              height={48}
+              className="h-12 w-12 object-contain drop-shadow-sm"
               priority
             />
           </Link>
@@ -94,26 +139,25 @@ export default function Navbar({
           <Link
             href="/cart"
             aria-label={dict.nav.cart}
-            className="relative w-10 h-10 flex items-center justify-center text-[#271908] hover:text-[#7b5800] transition-colors shrink-0"
+            className="relative w-11 h-11 -me-1.5 flex items-center justify-center text-[#271908] active:text-[#7b5800] transition-colors shrink-0"
           >
-            <span className="material-symbols-outlined text-2xl select-none">shopping_bag</span>
-            {cartCount > 0 && (
-              <span className="absolute top-1 end-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#7b5800] px-1 text-[10px] font-bold text-white">
-                {cartCount > 99 ? "99+" : cartCount}
-              </span>
-            )}
+            <ShoppingBag size={22} strokeWidth={2} />
+            <CartBadge count={cartCount} />
           </Link>
         </div>
 
-        {/* Desktop row: links | logo | actions */}
-        <div className="hidden md:grid md:grid-cols-3 items-center">
+        {/* Desktop row: links | logo | actions. 1fr|auto|1fr keeps the logo
+            centred while giving the link/action columns real space — with
+            equal thirds the six links overflowed under the logo cell, which
+            silently swallowed clicks on the last link (Branches). */}
+        <div className="hidden lg:grid lg:grid-cols-[1fr_auto_1fr] items-center">
           {/* Left: nav links */}
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-5 xl:gap-7">
             {links.map(({ href, label }) => (
               <Link
                 key={href}
                 href={href}
-                className={`text-xs font-semibold uppercase tracking-widest transition-colors duration-300 ${
+                className={`whitespace-nowrap text-xs font-semibold uppercase tracking-wider transition-colors duration-300 ${
                   pathname === href
                     ? "text-[#7b5800] border-b-2 border-[#7b5800] pb-1"
                     : "text-[#271908] hover:text-[#7b5800]"
@@ -124,15 +168,16 @@ export default function Navbar({
             ))}
           </div>
 
-          {/* Center: logo */}
-          <div className="flex justify-center">
-            <Link href="/" className="flex items-center">
+          {/* Center: logo (wrapper is click-transparent so it can never mask
+              neighbouring links; the logo link itself stays clickable) */}
+          <div className="flex justify-center pointer-events-none px-6">
+            <Link href="/" className="flex items-center pointer-events-auto" aria-label="Hamid Afandi — home">
               <Image
                 src="/hamid-logo.png"
                 alt="Hamid Afandi"
-                width={90}
-                height={30}
-                className="object-contain"
+                width={56}
+                height={56}
+                className="h-14 w-14 object-contain drop-shadow-sm transition-transform duration-300 hover:scale-105"
                 priority
               />
             </Link>
@@ -167,14 +212,10 @@ export default function Navbar({
             <Link
               href="/cart"
               aria-label={dict.nav.cart}
-              className="relative material-symbols-outlined text-[#271908] hover:text-[#7b5800] transition-colors text-base"
+              className="relative flex h-9 w-9 items-center justify-center text-[#271908] hover:text-[#7b5800] transition-colors"
             >
-              shopping_bag
-              {cartCount > 0 && (
-                <span className="absolute -top-2 -end-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#7b5800] px-1 font-sans text-[10px] font-bold text-white">
-                  {cartCount > 99 ? "99+" : cartCount}
-                </span>
-              )}
+              <ShoppingBag size={18} strokeWidth={2} />
+              <CartBadge count={cartCount} />
             </Link>
             <Link
               href="/store"
@@ -186,55 +227,64 @@ export default function Navbar({
         </div>
       </div>
 
-      {/* ── Mobile dropdown ── */}
+      {/* ── Mobile drawer — overlays the page; backdrop closes it ── */}
       {navOpen && (
-        <div className="md:hidden bg-[#fff8f4] border-t border-[#e8d5bc]/60 px-5 py-6 space-y-1">
-          {links.map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              onClick={closeNav}
-              className={`block py-3 text-sm font-semibold uppercase tracking-widest border-b border-[#e8d5bc]/40 transition-colors ${
-                pathname === href ? "text-[#7b5800]" : "text-[#271908]"
-              }`}
-            >
-              {label}
-            </Link>
-          ))}
-
-          <div className="flex items-center justify-between py-3 border-b border-[#e8d5bc]/40">
-            {user ? (
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                {canAccessDashboard && (
-                  <Link href="/admin" onClick={closeNav} className="text-sm font-semibold uppercase tracking-widest text-[#271908]">
-                    {dict.nav.dashboard}
-                  </Link>
-                )}
-                <Link href="/account" onClick={closeNav} className="text-sm font-semibold uppercase tracking-widest text-[#271908]">
-                  {user.name || dict.nav.account}
-                </Link>
-                <form action={logoutAction}>
-                  <button type="submit" className="text-sm font-semibold uppercase tracking-widest text-[#271908]">
-                    {dict.nav.logout}
-                  </button>
-                </form>
-              </div>
-            ) : (
-              <Link href="/login" onClick={closeNav} className="text-sm font-semibold uppercase tracking-widest text-[#271908]">
-                {dict.nav.login}
-              </Link>
-            )}
-            <LanguageSwitcher locale={locale} className="text-sm font-semibold uppercase tracking-widest text-[#7b5800]" />
-          </div>
-
-          <Link
-            href="/store"
+        <>
+          {/* -z-10 keeps the backdrop behind the bar and drawer (both children of
+              this stacking context) while it still overlays the page below. */}
+          <div
+            className="lg:hidden fixed inset-0 -z-10 bg-black/35"
             onClick={closeNav}
-            className="block mt-4 bg-[#7b5800] text-white text-center py-4 rounded-full text-xs font-semibold uppercase tracking-wider hover:bg-[#765400] transition-colors"
-          >
-            {dict.nav.orderNow}
-          </Link>
-        </div>
+            aria-hidden="true"
+          />
+          <div className="lg:hidden absolute top-full left-0 right-0 bg-[#fff8f4] border-t border-[#e8d5bc]/60 px-5 py-5 space-y-1 shadow-[0_16px_32px_-16px_rgba(39,25,8,0.25)] max-h-[calc(100dvh-var(--nav-offset,60px))] overflow-y-auto">
+            {links.map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                onClick={closeNav}
+                className={`block py-3 text-sm font-semibold uppercase tracking-widest border-b border-[#e8d5bc]/40 transition-colors ${
+                  pathname === href ? "text-[#7b5800]" : "text-[#271908]"
+                }`}
+              >
+                {label}
+              </Link>
+            ))}
+
+            <div className="flex items-center justify-between py-3 border-b border-[#e8d5bc]/40">
+              {user ? (
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                  {canAccessDashboard && (
+                    <Link href="/admin" onClick={closeNav} className="text-sm font-semibold uppercase tracking-widest text-[#271908]">
+                      {dict.nav.dashboard}
+                    </Link>
+                  )}
+                  <Link href="/account" onClick={closeNav} className="text-sm font-semibold uppercase tracking-widest text-[#271908]">
+                    {user.name || dict.nav.account}
+                  </Link>
+                  <form action={logoutAction}>
+                    <button type="submit" className="text-sm font-semibold uppercase tracking-widest text-[#271908]">
+                      {dict.nav.logout}
+                    </button>
+                  </form>
+                </div>
+              ) : (
+                <Link href="/login" onClick={closeNav} className="text-sm font-semibold uppercase tracking-widest text-[#271908]">
+                  {dict.nav.login}
+                </Link>
+              )}
+              <LanguageSwitcher locale={locale} className="text-sm font-semibold uppercase tracking-widest text-[#7b5800]" />
+            </div>
+
+            <Link
+              href="/store"
+              onClick={closeNav}
+              className="block mt-4 bg-[#7b5800] text-white text-center py-4 rounded-full text-xs font-semibold uppercase tracking-wider hover:bg-[#765400] transition-colors"
+            >
+              {dict.nav.orderNow}
+            </Link>
+          </div>
+        </>
       )}
     </nav>
   );

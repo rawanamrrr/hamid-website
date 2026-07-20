@@ -1,21 +1,34 @@
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, count } from "drizzle-orm";
 import { db, activityLogs, users } from "@hamid/db";
 import { Table, Thead, Th, Tr, Td, EmptyRow } from "@/components/admin/table";
+import { Pagination, PAGE_SIZE } from "@/components/admin/pagination";
 
-export default async function AdminActivityPage() {
-  const rows = await db
-    .select({
-      id: activityLogs.id,
-      action: activityLogs.action,
-      entityType: activityLogs.entityType,
-      entityId: activityLogs.entityId,
-      createdAt: activityLogs.createdAt,
-      actorName: users.fullName,
-    })
-    .from(activityLogs)
-    .leftJoin(users, eq(users.id, activityLogs.actorUserId))
-    .orderBy(desc(activityLogs.createdAt))
-    .limit(200);
+export default async function AdminActivityPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
+  const { page: pageParam } = await searchParams;
+  const page = Math.max(1, Number(pageParam) || 1);
+  const offset = (page - 1) * PAGE_SIZE;
+
+  const [rows, [{ total }]] = await Promise.all([
+    db
+      .select({
+        id: activityLogs.id,
+        action: activityLogs.action,
+        entityType: activityLogs.entityType,
+        entityId: activityLogs.entityId,
+        createdAt: activityLogs.createdAt,
+        actorName: users.fullName,
+      })
+      .from(activityLogs)
+      .leftJoin(users, eq(users.id, activityLogs.actorUserId))
+      .orderBy(desc(activityLogs.createdAt))
+      .limit(PAGE_SIZE)
+      .offset(offset),
+    db.select({ total: count() }).from(activityLogs),
+  ]);
 
   return (
     <div>
@@ -49,6 +62,7 @@ export default async function AdminActivityPage() {
             {rows.length === 0 && <EmptyRow colSpan={4}>No activity recorded yet.</EmptyRow>}
           </tbody>
         </Table>
+        <Pagination basePath="/admin/activity" page={page} total={total} />
       </div>
     </div>
   );
