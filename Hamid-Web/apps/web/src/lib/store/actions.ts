@@ -21,6 +21,7 @@ import {
 } from "@hamid/core";
 import { guardPermission, type ActionResult } from "@/lib/auth/rbac";
 import { logActivity } from "@/lib/activity/log";
+import { getSiteCurrency } from "@/lib/settings/queries";
 
 function revalidateStore() {
   revalidatePath("/admin/store");
@@ -100,6 +101,30 @@ export async function deleteStoreCategoryAction(id: number): Promise<ActionResul
   return { success: true };
 }
 
+export async function toggleStoreCategoryActiveAction(id: number, isActive: boolean): Promise<ActionResult> {
+  const guard = await guardPermission("store.manage");
+  if ("error" in guard) return guard;
+
+  await db.update(storeCategories).set({ isActive }).where(eq(storeCategories.id, id));
+  await logActivity({ actorUserId: Number(guard.id), action: "store_category.toggled", entityType: "store_category", entityId: id, changes: { isActive } });
+  revalidateStore();
+  return { success: true };
+}
+
+export async function reorderStoreCategoriesAction(orderedIds: number[]): Promise<ActionResult> {
+  const guard = await guardPermission("store.manage");
+  if ("error" in guard) return guard;
+
+  await db.transaction(async (tx) => {
+    for (let i = 0; i < orderedIds.length; i++) {
+      await tx.update(storeCategories).set({ sortOrder: i }).where(eq(storeCategories.id, orderedIds[i]));
+    }
+  });
+  await logActivity({ actorUserId: Number(guard.id), action: "store_category.reordered", entityType: "store_category" });
+  revalidateStore();
+  return { success: true };
+}
+
 // ── Products ──────────────────────────────────────────────────────────────
 
 export async function createStoreProductAction(input: StoreProductInput): Promise<ActionResult<{ id: number }>> {
@@ -113,6 +138,8 @@ export async function createStoreProductAction(input: StoreProductInput): Promis
   const [existing] = await db.select({ id: storeProducts.id }).from(storeProducts).where(eq(storeProducts.slug, data.slug)).limit(1);
   if (existing) return { error: "A product with this slug already exists." };
 
+  const currency = await getSiteCurrency();
+
   const id = await db.transaction(async (tx) => {
     const [row] = await tx
       .insert(storeProducts)
@@ -121,6 +148,7 @@ export async function createStoreProductAction(input: StoreProductInput): Promis
         slug: data.slug,
         sku: data.sku || null,
         price: data.price,
+        currency,
         compareAtPrice: data.compareAtPrice ?? null,
         isBestSeller: data.isBestSeller,
         isFeaturedHome: data.isFeaturedHome,

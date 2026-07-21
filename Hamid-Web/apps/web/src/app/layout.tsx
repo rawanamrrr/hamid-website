@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans, Cairo } from "next/font/google";
 import "./globals.css";
 import { getLocale, dir } from "@/lib/i18n";
+import { getSiteName } from "@/lib/settings/queries";
+import { withDbTimeout } from "@/lib/db-timeout";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const plusJakarta = Plus_Jakarta_Sans({
@@ -17,11 +19,14 @@ const cairo = Cairo({
   weight: ["400", "500", "600", "700", "800"],
 });
 
-export const metadata: Metadata = {
-  title: "HAMID AFANDI | Modern Egyptian Heritage Coffee",
-  description:
-    "Premium coffee, deeply rooted in tradition, crafted for modern coffee lovers.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const [locale, siteName] = await Promise.all([getLocale(), withDbTimeout(getSiteName()).catch(() => null)]);
+  const name = (locale === "ar" ? siteName?.ar : siteName?.en) ?? "Hamid Afandi";
+  return {
+    title: `${name.toUpperCase()} | Modern Egyptian Heritage Coffee`,
+    description: "Premium coffee, deeply rooted in tradition, crafted for modern coffee lovers.",
+  };
+}
 
 // Declared via the Viewport API (not manual <head> JSX) so Next guarantees it
 // on every render path — error pages, streamed responses, etc. Without it,

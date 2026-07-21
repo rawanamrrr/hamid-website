@@ -7,7 +7,7 @@
     "about": "About",
     "branches": "Branches",
     "cart": "Cart",
-    "account": "Account",
+    "account": "My Account",
     "login": "Log in",
     "logout": "Log out",
     "register": "Sign up",
@@ -24,8 +24,10 @@
     "careTitle": "Customer Care",
     "careLinks": ["Contact Us", "Shipping & Returns", "Store Locator", "FAQ"],
     "ourBranch": "Our Branch",
+    "ourBranches": "Our Branches",
     "branchHint": "Visit us at Taksem Khattab, Mansoura for a premium coffee experience.",
     "openDaily": "Open Daily",
+    "viewAllBranches": "View all branches",
     "privacyPolicy": "Privacy Policy"
   },
   "auth": {
@@ -88,7 +90,10 @@
   "product": {
     "addToCart": "Add to Cart",
     "added": "Added ✓",
-    "outOfStock": "Out of stock"
+    "outOfStock": "Out of stock",
+    "addedToCartTitle": "Added to your cart",
+    "continueShopping": "Continue Shopping",
+    "goToCart": "Go to Cart"
   },
   "store": {
     "title": "Our Store",

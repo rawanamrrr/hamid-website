@@ -6,6 +6,8 @@ import { useEffect, useRef, useState } from "react";
 import { Menu, ShoppingBag, X } from "lucide-react";
 import { logoutAction } from "@/lib/auth/actions";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { AddedToCartDialog } from "@/components/AddedToCartDialog";
+import { subscribeAddedToCart, type AddedToCartPayload } from "@/lib/cart/added-to-cart-bus";
 import type { Dictionary, Locale } from "@/lib/i18n";
 
 interface NavUser {
@@ -38,6 +40,24 @@ export default function Navbar({
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
+  const [addedToCart, setAddedToCart] = useState<AddedToCartPayload | null>(null);
+
+  useEffect(() => subscribeAddedToCart(setAddedToCart), []);
+
+  const addedToCartDialog = (
+    <AddedToCartDialog
+      open={!!addedToCart}
+      onClose={() => setAddedToCart(null)}
+      productName={addedToCart?.name}
+      productImage={addedToCart?.image}
+      productMeta={addedToCart?.meta}
+      labels={{
+        title: dict.product.addedToCartTitle,
+        continueShopping: dict.product.continueShopping,
+        goToCart: dict.product.goToCart,
+      }}
+    />
+  );
 
   const links = [
     { href: "/", label: dict.nav.home },
@@ -72,7 +92,11 @@ export default function Navbar({
   // Sticky elements further down the page (e.g. the menu's section nav) dock
   // against the header via this variable instead of a hard-coded offset.
   const navRef = useRef<HTMLElement>(null);
-  const navVisible = !hidden || navOpen;
+  // The "Added to cart" toast is anchored to the cart icon in this header, so
+  // it needs the header on screen to anchor to — force it visible for as
+  // long as the toast is up, even if the shopper had scrolled it away, and
+  // let it resume normal scroll-hide behavior the moment the toast closes.
+  const navVisible = !hidden || navOpen || !!addedToCart;
   useEffect(() => {
     const height = navVisible ? navRef.current?.offsetHeight ?? 60 : 0;
     document.documentElement.style.setProperty("--nav-offset", `${height}px`);
@@ -136,14 +160,17 @@ export default function Navbar({
           </Link>
 
           {/* Shopping bag */}
-          <Link
-            href="/cart"
-            aria-label={dict.nav.cart}
-            className="relative w-11 h-11 -me-1.5 flex items-center justify-center text-[#271908] active:text-[#7b5800] transition-colors shrink-0"
-          >
-            <ShoppingBag size={22} strokeWidth={2} />
-            <CartBadge count={cartCount} />
-          </Link>
+          <div className="relative -me-1.5 shrink-0">
+            <Link
+              href="/cart"
+              aria-label={dict.nav.cart}
+              className="relative w-11 h-11 flex items-center justify-center text-[#271908] active:text-[#7b5800] transition-colors"
+            >
+              <ShoppingBag size={22} strokeWidth={2} />
+              <CartBadge count={cartCount} />
+            </Link>
+            {addedToCartDialog}
+          </div>
         </div>
 
         {/* Desktop row: links | logo | actions. 1fr|auto|1fr keeps the logo
@@ -198,7 +225,7 @@ export default function Navbar({
                   href="/account"
                   className="shrink-0 max-w-[9rem] truncate text-xs font-semibold uppercase tracking-widest text-[#271908] hover:text-[#7b5800]"
                 >
-                  {user.name || dict.nav.account}
+                  {dict.nav.account}
                 </Link>
                 <form action={logoutAction} className="shrink-0">
                   <button type="submit" className="whitespace-nowrap text-xs font-semibold uppercase tracking-widest text-[#271908] hover:text-[#7b5800]">
@@ -212,14 +239,17 @@ export default function Navbar({
               </Link>
             )}
 
-            <Link
-              href="/cart"
-              aria-label={dict.nav.cart}
-              className="relative flex h-9 w-9 shrink-0 items-center justify-center text-[#271908] hover:text-[#7b5800] transition-colors"
-            >
-              <ShoppingBag size={18} strokeWidth={2} />
-              <CartBadge count={cartCount} />
-            </Link>
+            <div className="relative shrink-0">
+              <Link
+                href="/cart"
+                aria-label={dict.nav.cart}
+                className="relative flex h-9 w-9 items-center justify-center text-[#271908] hover:text-[#7b5800] transition-colors"
+              >
+                <ShoppingBag size={18} strokeWidth={2} />
+                <CartBadge count={cartCount} />
+              </Link>
+              {addedToCartDialog}
+            </div>
             <Link
               href="/store"
               className="shrink-0 whitespace-nowrap bg-[#7b5800] text-white px-6 xl:px-8 py-3 rounded-full text-xs font-semibold uppercase tracking-wider hover:bg-[#765400] transition-colors"
@@ -263,7 +293,7 @@ export default function Navbar({
                     </Link>
                   )}
                   <Link href="/account" onClick={closeNav} className="text-sm font-semibold uppercase tracking-widest text-[#271908]">
-                    {user.name || dict.nav.account}
+                    {dict.nav.account}
                   </Link>
                   <form action={logoutAction}>
                     <button type="submit" className="text-sm font-semibold uppercase tracking-widest text-[#271908]">

@@ -6,6 +6,7 @@ import NextImage from "next/image";
 import { Trash2, Plus } from "lucide-react";
 import { MediaPicker, type PickedMedia } from "@/components/admin/media-picker";
 import { createStoreHeroImageAction, toggleStoreHeroImageAction, deleteStoreHeroImageAction } from "@/lib/store/actions";
+import { toast } from "@/components/ui/toast";
 
 interface HeroItem {
   id: number;
@@ -23,8 +24,13 @@ export function HeroImagesManager({ items, nextSortOrder }: { items: HeroItem[];
     if (!m) return;
     startTransition(async () => {
       const res = await createStoreHeroImageAction({ mediaId: m.id, sortOrder: nextSortOrder, isActive: true });
-      if ("error" in res) setError(res.error);
-      else router.refresh();
+      if ("error" in res) {
+        setError(res.error);
+        toast(res.error, "error");
+      } else {
+        toast("Hero image added.");
+        router.refresh();
+      }
       setPicked(null);
     });
   }
@@ -64,6 +70,7 @@ export function HeroImagesManager({ items, nextSortOrder }: { items: HeroItem[];
                 onClick={() =>
                   startTransition(async () => {
                     await deleteStoreHeroImageAction(item.id);
+                    toast("Hero image removed.");
                     router.refresh();
                   })
                 }

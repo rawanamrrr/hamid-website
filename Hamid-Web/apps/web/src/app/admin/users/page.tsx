@@ -1,18 +1,27 @@
-import { desc, eq, inArray, notInArray, sql } from "drizzle-orm";
+import Link from "next/link";
+import { desc, eq, ne, notInArray, sql } from "drizzle-orm";
 import { db, users, userRoles, roles } from "@hamid/db";
 import { Table, Thead, Th, EmptyRow } from "@/components/admin/table";
+import { Button } from "@/components/ui/button";
 import { UserRow } from "@/components/admin/users/user-row";
 import { NewStaffForm } from "@/components/admin/users/new-staff-form";
-
-const STAFF_ROLE_SLUGS = ["super_admin", "admin", "manager", "staff"] as const;
+import { getAllRoles } from "@/lib/roles/queries";
 
 export default async function AdminUsersPage() {
-  const staffRows = await db
-    .select({ userId: users.id, fullName: users.fullName, email: users.email, status: users.status, roleSlug: roles.slug })
-    .from(userRoles)
-    .innerJoin(users, eq(users.id, userRoles.userId))
-    .innerJoin(roles, eq(roles.id, userRoles.roleId))
-    .where(inArray(roles.slug, STAFF_ROLE_SLUGS));
+  const [staffRows, allRoles] = await Promise.all([
+    db
+      .select({ userId: users.id, fullName: users.fullName, email: users.email, status: users.status, roleSlug: roles.slug })
+      .from(userRoles)
+      .innerJoin(users, eq(users.id, userRoles.userId))
+      .innerJoin(roles, eq(roles.id, userRoles.roleId))
+      // Any role other than "customer" grants dashboard access, whether it's
+      // one of the 4 built-in staff roles or a custom one created in Admin →
+      // Roles — a fixed whitelist would silently hide custom-role members here.
+      .where(ne(roles.slug, "customer")),
+    getAllRoles(),
+  ]);
+
+  const roleOptions = allRoles.filter((r) => r.slug !== "super_admin" && r.slug !== "customer").map((r) => ({ slug: r.slug, name: r.name }));
 
   // Everyone who is not staff is a customer — including any user with no
   // role row at all, so nobody can be invisible to this screen.
@@ -37,7 +46,12 @@ export default async function AdminUsersPage() {
     <div>
       <div className="flex items-center justify-between">
         <h1 className="font-display text-2xl font-bold text-on-surface">Users & Roles</h1>
-        <p className="text-sm text-on-surface-variant">{total} registered users</p>
+        <div className="flex items-center gap-4">
+          <p className="text-sm text-on-surface-variant">{total} registered users</p>
+          <Button asChild variant="outline" size="sm">
+            <Link href="/admin/roles">Manage roles</Link>
+          </Button>
+        </div>
       </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-3">
@@ -56,7 +70,15 @@ export default async function AdminUsersPage() {
               </Thead>
               <tbody>
                 {staffRows.map((u) => (
-                  <UserRow key={u.userId} userId={u.userId} fullName={u.fullName} email={u.email} status={u.status} roleSlug={u.roleSlug} />
+                  <UserRow
+                    key={u.userId}
+                    userId={u.userId}
+                    fullName={u.fullName}
+                    email={u.email}
+                    status={u.status}
+                    roleSlug={u.roleSlug}
+                    roleOptions={roleOptions}
+                  />
                 ))}
                 {staffRows.length === 0 && <EmptyRow colSpan={5}>No staff users yet.</EmptyRow>}
               </tbody>
@@ -96,7 +118,7 @@ export default async function AdminUsersPage() {
           </section>
         </div>
 
-        <NewStaffForm />
+        <NewStaffForm roleOptions={roleOptions} />
       </div>
     </div>
   );

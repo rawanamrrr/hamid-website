@@ -37,6 +37,7 @@ export function DiscountForm({
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<DiscountInput>({
     resolver: zodResolver(discountSchema) as unknown as Resolver<DiscountInput>,
@@ -61,6 +62,10 @@ export function DiscountForm({
   });
 
   const scope = watch("scope");
+  // Automatic = no code: the discount just applies and shows on the product
+  // itself (price + strikethrough), rather than requiring the shopper to type
+  // a code at checkout.
+  const [isAutomatic, setIsAutomatic] = useState(!defaultValues?.code);
 
   async function onSubmit(values: DiscountInput) {
     setServerError(null);
@@ -121,21 +126,43 @@ export function DiscountForm({
               <Input id="value" type="number" step="0.01" {...register("value")} />
               {errors.value && <p className="mt-1 text-xs text-error">{errors.value.message}</p>}
             </div>
-            <div>
-              <Label htmlFor="code">Code (optional)</Label>
-              <Input
-                id="code"
-                placeholder="RAMADAN25"
-                {...register("code", {
-                  onChange: (e) => {
-                    const upper = e.target.value.toUpperCase();
-                    if (upper !== e.target.value) e.target.value = upper;
-                  },
-                })}
-              />
-              {errors.code && <p className="mt-1 text-xs text-error">{errors.code.message}</p>}
-            </div>
+            {!isAutomatic && (
+              <div>
+                <Label htmlFor="code">Code</Label>
+                <Input
+                  id="code"
+                  placeholder="RAMADAN25"
+                  {...register("code", {
+                    onChange: (e) => {
+                      const upper = e.target.value.toUpperCase();
+                      if (upper !== e.target.value) e.target.value = upper;
+                    },
+                  })}
+                />
+                {errors.code && <p className="mt-1 text-xs text-error">{errors.code.message}</p>}
+              </div>
+            )}
           </div>
+
+          <label className="flex items-start gap-2.5 rounded-xl border border-outline-variant/60 bg-surface-container-lowest p-3 text-sm text-on-surface">
+            <input
+              type="checkbox"
+              checked={isAutomatic}
+              onChange={(e) => {
+                setIsAutomatic(e.target.checked);
+                if (e.target.checked) setValue("code", "");
+              }}
+              className="mt-0.5 h-4 w-4 rounded border-outline-variant"
+            />
+            <span>
+              <span className="block font-semibold">Automatic offer — no code needed</span>
+              <span className="block text-xs text-on-surface-variant">
+                Applies to matching products automatically — the discounted price and a struck-through original price
+                show right on the product, and shoppers don&apos;t need to enter anything at checkout. Turn this off to
+                require a code instead.
+              </span>
+            </span>
+          </label>
 
           <div>
             <Label htmlFor="scope">Applies to</Label>

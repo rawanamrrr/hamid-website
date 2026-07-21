@@ -4,22 +4,24 @@ import { db, paymentMethods, users } from "@hamid/db";
 import { getCart } from "@/lib/cart/queries";
 import { getSessionUser } from "@/lib/auth/rbac";
 import { getDict, getLocale } from "@/lib/i18n";
-import { getGovernorateFees, getInstapayDetails } from "@/lib/settings/queries";
+import { getGovernorateFees, getInstapayDetails, isGuestCheckoutEnabled } from "@/lib/settings/queries";
 import { getCustomerAddresses } from "@/lib/addresses/queries";
 import { CheckoutForm } from "@/components/checkout/checkout-form";
 
 export default async function CheckoutPage() {
   const locale = await getLocale();
-  const [cart, user, methods, dict, governorateFees, instapayDetails] = await Promise.all([
+  const [cart, user, methods, dict, governorateFees, instapayDetails, guestCheckoutEnabled] = await Promise.all([
     getCart(locale),
     getSessionUser(),
     db.select().from(paymentMethods).where(eq(paymentMethods.isActive, true)),
     getDict(),
     getGovernorateFees(),
     getInstapayDetails(),
+    isGuestCheckoutEnabled(),
   ]);
 
   if (cart.lines.length === 0) redirect("/cart");
+  if (!user && !guestCheckoutEnabled) redirect("/login?callbackUrl=/checkout");
 
   // SessionUser doesn't carry phone — pull it (plus a name/email fallback)
   // straight from the account so the Pickup contact card can be prefilled

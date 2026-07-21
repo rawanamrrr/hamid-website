@@ -92,6 +92,30 @@ export async function deleteMenuCategoryAction(id: number): Promise<ActionResult
   return { success: true };
 }
 
+export async function toggleMenuCategoryActiveAction(id: number, isActive: boolean): Promise<ActionResult> {
+  const guard = await guardPermission("menu.manage");
+  if ("error" in guard) return guard;
+
+  await db.update(menuCategories).set({ isActive }).where(eq(menuCategories.id, id));
+  await logActivity({ actorUserId: Number(guard.id), action: "menu_category.toggled", entityType: "menu_category", entityId: id, changes: { isActive } });
+  revalidateMenu();
+  return { success: true };
+}
+
+export async function reorderMenuCategoriesAction(orderedIds: number[]): Promise<ActionResult> {
+  const guard = await guardPermission("menu.manage");
+  if ("error" in guard) return guard;
+
+  await db.transaction(async (tx) => {
+    for (let i = 0; i < orderedIds.length; i++) {
+      await tx.update(menuCategories).set({ sortOrder: i }).where(eq(menuCategories.id, orderedIds[i]));
+    }
+  });
+  await logActivity({ actorUserId: Number(guard.id), action: "menu_category.reordered", entityType: "menu_category" });
+  revalidateMenu();
+  return { success: true };
+}
+
 // ── Items ─────────────────────────────────────────────────────────────────
 
 export async function createMenuItemAction(input: MenuItemInput): Promise<ActionResult<{ id: number }>> {

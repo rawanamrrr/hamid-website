@@ -7,7 +7,7 @@
     "about": "من نحن",
     "branches": "الفروع",
     "cart": "السلة",
-    "account": "الحساب",
+    "account": "حسابي",
     "login": "تسجيل الدخول",
     "logout": "تسجيل الخروج",
     "register": "إنشاء حساب",
@@ -24,8 +24,10 @@
     "careTitle": "خدمة العملاء",
     "careLinks": ["تواصل معنا", "الشحن والإرجاع", "فروعنا", "الأسئلة الشائعة"],
     "ourBranch": "فرعنا",
+    "ourBranches": "فروعنا",
     "branchHint": "زورونا في تقسيم خطاب، المنصورة لتجربة قهوة مميزة.",
     "openDaily": "مفتوح يوميًا",
+    "viewAllBranches": "عرض كل الفروع",
     "privacyPolicy": "سياسة الخصوصية"
   },
   "auth": {
@@ -88,7 +90,10 @@
   "product": {
     "addToCart": "أضف إلى السلة",
     "added": "تمت الإضافة ✓",
-    "outOfStock": "غير متوفر"
+    "outOfStock": "غير متوفر",
+    "addedToCartTitle": "تمت الإضافة إلى سلتك",
+    "continueShopping": "متابعة التسوق",
+    "goToCart": "الذهاب إلى السلة"
   },
   "store": {
     "title": "متجرنا",

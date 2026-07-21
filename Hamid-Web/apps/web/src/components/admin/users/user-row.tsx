@@ -6,8 +6,6 @@ import { useRouter } from "next/navigation";
 import { updateUserRoleAction, toggleUserStatusAction } from "@/lib/users/actions";
 import { Tr, Td } from "@/components/admin/table";
 
-const ROLE_OPTIONS = ["admin", "manager", "staff", "customer"] as const;
-
 export function UserRow({
   userId,
   fullName,
@@ -15,6 +13,7 @@ export function UserRow({
   phone,
   status,
   roleSlug,
+  roleOptions,
 }: {
   userId: number;
   fullName: string;
@@ -22,6 +21,8 @@ export function UserRow({
   phone?: string | null;
   status: string;
   roleSlug: string;
+  /** Assignable roles (any role except super_admin/customer) — omitted for the customer table, which never shows this select. */
+  roleOptions?: { slug: string; name: string }[];
 }) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
@@ -45,16 +46,16 @@ export function UserRow({
               disabled={pending}
               onChange={(e) =>
                 startTransition(async () => {
-                  const res = await updateUserRoleAction(userId, e.target.value as (typeof ROLE_OPTIONS)[number]);
+                  const res = await updateUserRoleAction(userId, e.target.value);
                   if ("error" in res) setError(res.error);
                   else router.refresh();
                 })
               }
               className="h-9 rounded-lg border border-outline-variant bg-surface-container-lowest px-2 text-xs text-on-surface"
             >
-              {ROLE_OPTIONS.map((r) => (
-                <option key={r} value={r} className="capitalize">
-                  {r}
+              {(roleOptions ?? []).map((r) => (
+                <option key={r.slug} value={r.slug}>
+                  {r.name}
                 </option>
               ))}
             </select>

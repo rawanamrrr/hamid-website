@@ -24,6 +24,7 @@ export default async function AdminStoreProductsPage({
       .select({
         id: storeProducts.id,
         price: storeProducts.price,
+        currency: storeProducts.currency,
         stockQty: storeProducts.stockQty,
         isActive: storeProducts.isActive,
         isBestSeller: storeProducts.isBestSeller,
@@ -77,7 +78,7 @@ export default async function AdminStoreProductsPage({
             <Tr key={p.id}>
               <Td className="font-medium">{p.name ?? "—"}</Td>
               <Td className="text-on-surface-variant">{p.categoryName}</Td>
-              <Td>{formatMoney(toCents(p.price))}</Td>
+              <Td>{formatMoney(toCents(p.price), p.currency)}</Td>
               <Td className={p.stockQty < 10 ? "font-semibold text-error" : "text-on-surface-variant"}>{p.stockQty}</Td>
               <Td className="space-x-1">
                 {p.isBestSeller && <span className="rounded-full bg-secondary-container px-2 py-0.5 text-xs">Best seller</span>}

@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import type { Dictionary } from "@/lib/i18n";
+import type { BranchView } from "@/lib/branches/queries";
 
 const EXPERIENCE_HREFS = ["/sourcing", "/brewing-guides", "/wholesale", "/careers"];
 const CARE_HREFS = ["/contact", "/shipping-returns", "/branches", "/faq"];
@@ -33,7 +34,7 @@ function AccordionSection({ title, links }: { title: string; links: { label: str
   );
 }
 
-export default function Footer({ dict }: { dict: Dictionary }) {
+export default function Footer({ dict, branches = [] }: { dict: Dictionary; branches?: BranchView[] }) {
   const sections = [
     { title: dict.footer.experienceTitle, links: dict.footer.experienceLinks.map((label, i) => ({ label, href: EXPERIENCE_HREFS[i] })) },
     { title: dict.footer.careTitle, links: dict.footer.careLinks.map((label, i) => ({ label, href: CARE_HREFS[i] })) },
@@ -101,9 +102,30 @@ export default function Footer({ dict }: { dict: Dictionary }) {
             </div>
           ))}
           <div>
-            <h4 className="text-xs font-semibold uppercase tracking-widest text-[#7b5800] mb-6">{dict.footer.ourBranch}</h4>
-            <p className="text-[#D9C1AA] text-base opacity-80 mb-4">{dict.footer.branchHint}</p>
-            <p className="text-white font-bold">{dict.footer.openDaily}</p>
+            <h4 className="text-xs font-semibold uppercase tracking-widest text-[#7b5800] mb-6">
+              {branches.length > 1 ? dict.footer.ourBranches : dict.footer.ourBranch}
+            </h4>
+            {branches.length > 0 ? (
+              <ul className="space-y-4">
+                {branches.slice(0, 3).map((b) => (
+                  <li key={b.id}>
+                    <p className="text-white font-bold">{b.name}</p>
+                    {b.address && <p className="text-[#D9C1AA] text-sm opacity-80">{b.address}</p>}
+                    {b.hours && <p className="text-[#D9C1AA] text-sm opacity-80">{b.hours}</p>}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <>
+                <p className="text-[#D9C1AA] text-base opacity-80 mb-4">{dict.footer.branchHint}</p>
+                <p className="text-white font-bold">{dict.footer.openDaily}</p>
+              </>
+            )}
+            {branches.length > 1 && (
+              <Link href="/branches" className="mt-4 inline-block text-sm font-semibold text-[#7b5800] hover:underline">
+                {dict.footer.viewAllBranches}
+              </Link>
+            )}
           </div>
         </div>
 
@@ -113,8 +135,21 @@ export default function Footer({ dict }: { dict: Dictionary }) {
             <AccordionSection key={title} title={title} links={links} />
           ))}
           <div className="border-b border-white/10 py-4">
-            <h4 className="text-xs font-semibold uppercase tracking-widest text-[#7b5800] mb-2">{dict.footer.ourBranch}</h4>
-            <p className="text-[#D9C1AA] text-sm opacity-80">{dict.footer.branchHint}</p>
+            <h4 className="text-xs font-semibold uppercase tracking-widest text-[#7b5800] mb-2">
+              {branches.length > 1 ? dict.footer.ourBranches : dict.footer.ourBranch}
+            </h4>
+            {branches.length > 0 ? (
+              <ul className="space-y-2">
+                {branches.slice(0, 3).map((b) => (
+                  <li key={b.id} className="text-[#D9C1AA] text-sm opacity-80">
+                    <span className="font-semibold text-white">{b.name}</span>
+                    {b.address && ` — ${b.address}`}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-[#D9C1AA] text-sm opacity-80">{dict.footer.branchHint}</p>
+            )}
           </div>
         </div>
       </div>

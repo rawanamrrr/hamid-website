@@ -3,12 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useTransition } from "react";
 import { addToCartAction } from "@/lib/cart/actions";
+import { notifyAddedToCart } from "@/lib/cart/added-to-cart-bus";
 
 interface ProductCardProps {
   productId?: number;
   slug?: string;
   name: string;
   price: string;
+  compareAtPrice?: string | null;
   rating: number | null;
   tag: string;
   badge?: string;
@@ -23,6 +25,7 @@ export default function ProductCard({
   slug,
   name,
   price,
+  compareAtPrice,
   rating,
   tag,
   badge,
@@ -47,6 +50,7 @@ export default function ProductCard({
       } else {
         setAdded(true);
         setTimeout(() => setAdded(false), 1500);
+        notifyAddedToCart({ name, image, meta: [tag, price].filter(Boolean).join(" · ") });
       }
     });
   }
@@ -111,8 +115,13 @@ export default function ProductCard({
         <div className="mt-auto">
           {/* Mobile: price + round icon button. Desktop: price row, then full-width CTA. */}
           <div className="flex items-center justify-between gap-2">
-            <p className="text-[#7b5800] font-[family-name:var(--font-plus-jakarta)] text-base sm:text-xl font-bold">
-              {price}
+            <p className="flex items-baseline gap-1.5 sm:gap-2">
+              <span className="text-[#7b5800] font-[family-name:var(--font-plus-jakarta)] text-base sm:text-xl font-bold">
+                {price}
+              </span>
+              {compareAtPrice && (
+                <span className="text-[#947f78] text-xs sm:text-sm line-through">{compareAtPrice}</span>
+              )}
             </p>
             <button
               type="button"

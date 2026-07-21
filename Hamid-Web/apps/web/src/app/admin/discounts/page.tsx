@@ -45,7 +45,9 @@ export default async function AdminDiscountsPage() {
               return (
                 <Tr key={d.id}>
                   <Td className="font-medium">{d.name}</Td>
-                  <Td className="text-on-surface-variant">{d.code ?? "—"}</Td>
+                  <Td className="text-on-surface-variant">
+                    {d.code ?? <span className="rounded-full bg-secondary-container px-2 py-0.5 text-xs text-on-secondary-container">Automatic</span>}
+                  </Td>
                   <Td>{d.type === "percent" ? `${d.value}%` : formatMoney(toCents(d.value))}</Td>
                   <Td className="text-on-surface-variant capitalize">{d.scope}</Td>
                   <Td className="text-on-surface-variant text-xs">

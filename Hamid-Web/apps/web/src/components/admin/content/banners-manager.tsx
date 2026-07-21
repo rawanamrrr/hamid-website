@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, FormError } from "@/components/ui/card";
+import { toast } from "@/components/ui/toast";
 import {
   createBannerAction,
   toggleBannerActiveAction,
@@ -92,8 +93,11 @@ export function BannersManager({ items }: { items: BannerItem[] }) {
         isActive: true,
         sortOrder: items.filter((b) => b.placement === placement).length,
       });
-      if ("error" in res) setError(res.error);
-      else {
+      if ("error" in res) {
+        setError(res.error);
+        toast(res.error, "error");
+      } else {
+        toast(isHero ? "Hero slide added." : "Banner added.");
         setImage(null);
         setTitleEn("");
         setTitleAr("");
@@ -221,7 +225,7 @@ export function BannersManager({ items }: { items: BannerItem[] }) {
               />
             )}
           </div>
-          <Button type="button" onClick={addBanner} disabled={pending}>
+          <Button type="button" onClick={addBanner} loading={pending}>
             {isHero ? "Add hero slide" : "Add banner"}
           </Button>
         </CardContent>

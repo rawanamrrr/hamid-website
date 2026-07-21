@@ -1,8 +1,13 @@
 import { getDict } from "@/lib/i18n";
+import { getBranches, FALLBACK_BRANCH } from "@/lib/branches/queries";
+import { withDbTimeout } from "@/lib/db-timeout";
 
 export default async function Locations() {
-  const dict = await getDict();
-  const branches = [{ name: dict.home.locations.branchName, address: "Taksem Khattab, Mansoura", active: true }];
+  const [dict, rows] = await Promise.all([getDict(), withDbTimeout(getBranches()).catch(() => [])]);
+  const list = rows.length > 0 ? rows : [FALLBACK_BRANCH];
+  const branches = list.map((b) => ({ name: b.name, address: b.address ?? "—", active: true }));
+  const primaryMapUrl = list[0]?.mapUrl ?? FALLBACK_BRANCH.mapUrl!;
+  const primaryAddress = list[0]?.address ?? FALLBACK_BRANCH.address!;
   return (
     <section className="py-12 md:py-20 bg-[#ffe4c9] overflow-hidden">
       <div className="px-5 md:px-16 max-w-[1280px] mx-auto">
@@ -34,16 +39,16 @@ export default async function Locations() {
                 <span aria-hidden="true" className="material-symbols-outlined text-[#7b5800] text-xl">location_on</span>
               </div>
               <div>
-                <h4 className="font-bold text-black text-base">{dict.home.locations.branchName}</h4>
-                <p className="text-sm text-[#4f4541]">Taksem Khattab, Mansoura</p>
+                <h4 className="font-bold text-black text-base">{list[0]?.name ?? dict.home.locations.branchName}</h4>
+                <p className="text-sm text-[#4f4541]">{primaryAddress}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 text-sm text-[#4f4541]">
               <span aria-hidden="true" className="material-symbols-outlined text-[#7b5800] text-base">schedule</span>
-              {dict.home.locations.openDailyHours}
+              {list[0]?.hours ?? dict.home.locations.openDailyHours}
             </div>
             <a
-              href="https://maps.google.com/?q=Taksem+Khattab+Mansoura"
+              href={primaryMapUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 w-full h-11 bg-[#7b5800] text-white rounded-full text-xs font-semibold uppercase tracking-widest hover:bg-[#5c3d1e] transition-all"
@@ -78,7 +83,7 @@ export default async function Locations() {
               ))}
             </div>
             <a
-              href="https://maps.google.com/?q=Taksem+Khattab+Mansoura"
+              href={primaryMapUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 w-full h-12 border-2 border-[#7b5800] text-[#7b5800] rounded-full text-xs font-semibold uppercase tracking-widest hover:bg-[#7b5800] hover:text-white transition-all"

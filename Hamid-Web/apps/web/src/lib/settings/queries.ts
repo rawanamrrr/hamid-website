@@ -27,6 +27,29 @@ export async function getNotificationEmail(): Promise<string> {
   return typeof value === "string" && value.trim() ? value.trim() : "zeyad5zoks@gmail.com";
 }
 
+const DEFAULT_SITE_NAME = { en: "Hamid Afandi", ar: "حامد أفندي" };
+
+/** Site name configured in Admin → Settings → General. */
+export async function getSiteName(): Promise<{ en: string; ar: string }> {
+  const value = (await getSetting("site", "name").catch(() => null)) as { en?: string; ar?: string } | null;
+  return {
+    en: value?.en?.trim() || DEFAULT_SITE_NAME.en,
+    ar: value?.ar?.trim() || DEFAULT_SITE_NAME.ar,
+  };
+}
+
+/** Default currency configured in Admin → Settings → General — used for new store products. */
+export async function getSiteCurrency(): Promise<string> {
+  const value = await getSetting("site", "currency").catch(() => null);
+  return typeof value === "string" && value.trim() ? value.trim().toUpperCase() : "EGP";
+}
+
+/** Whether guests may check out without an account (Admin → Settings → General). */
+export async function isGuestCheckoutEnabled(): Promise<boolean> {
+  const value = await getSetting("checkout", "guest_checkout_enabled").catch(() => null);
+  return value !== false;
+}
+
 /** InstaPay account to display at checkout so customers know where to send the payment. */
 export async function getInstapayDetails(): Promise<{ number: string; name: string }> {
   const [number, name] = await Promise.all([

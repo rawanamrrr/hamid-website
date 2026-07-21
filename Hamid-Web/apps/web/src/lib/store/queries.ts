@@ -11,7 +11,8 @@ import {
   storeHeroImages,
   media,
 } from "@hamid/db";
-import { formatMoney, toCents, type Locale } from "@hamid/core";
+import { formatMoney, toCents, computeDiscountAmountCents, isDiscountWindowOpen, type Locale, type DiscountLike } from "@hamid/core";
+import { getAutoDiscounts } from "@/lib/discounts/resolve";
 
 /**
  * 60s time-based cache on the read-heavy public catalog queries — this is a
@@ -51,6 +52,28 @@ export interface StoreProductView {
 
 function pickTranslation<T extends { locale: string }>(rows: T[], locale: Locale): T | undefined {
   return rows.find((r) => r.locale === locale) ?? rows.find((r) => r.locale === "en");
+}
+
+/**
+ * Codeless ("automatic") discounts — created in Admin → Discounts with no
+ * code — apply straight to the storefront price/compare-at display, with no
+ * code needed at checkout (checkout already applies these the same way; this
+ * mirrors that so the sale is visible before the cart, not just at the total).
+ * If several auto-discounts match a product, the single largest saving wins —
+ * this is display only, so there's no need for the cart's proportional-split
+ * stacking logic.
+ */
+function applyAutoDiscount(priceCents: number, categoryId: number, productId: number, autoDiscounts: DiscountLike[], now = new Date()): number {
+  let bestDiscountCents = 0;
+  for (const d of autoDiscounts) {
+    if (!isDiscountWindowOpen(d, now)) continue;
+    const matches =
+      d.scope === "all" || (d.scope === "category" && d.categoryIds?.includes(categoryId)) || (d.scope === "product" && d.productIds?.includes(productId));
+    if (!matches) continue;
+    const amount = computeDiscountAmountCents(d, [{ productId, categoryId, unitPriceCents: priceCents, quantity: 1 }]);
+    if (amount > bestDiscountCents) bestDiscountCents = amount;
+  }
+  return Math.max(0, priceCents - bestDiscountCents);
 }
 
 async function getStoreCategoriesImpl(locale: Locale = "en"): Promise<StoreCategoryView[]> {
@@ -125,13 +148,14 @@ async function getStoreProductsImpl(locale: Locale = "en", filter: string | Stor
   if (products.length === 0) return [];
 
   const productIds = products.map((p) => p.id);
-  const [translations, mediaRows] = await Promise.all([
+  const [translations, mediaRows, autoDiscounts] = await Promise.all([
     db.select().from(storeProductTranslations).where(inArray(storeProductTranslations.productId, productIds)),
     db
       .select({ productId: storeProductMedia.productId, url: media.url, isPrimary: storeProductMedia.isPrimary })
       .from(storeProductMedia)
       .innerJoin(media, eq(media.id, storeProductMedia.mediaId))
       .where(inArray(storeProductMedia.productId, productIds)),
+    getAutoDiscounts(),
   ]);
 
   return products.map((p) => {
@@ -139,12 +163,20 @@ async function getStoreProductsImpl(locale: Locale = "en", filter: string | Stor
     const primaryMedia = mediaRows.find((m) => m.productId === p.id && m.isPrimary) ?? mediaRows.find((m) => m.productId === p.id);
     const category = categoryById.get(p.categoryId);
 
+    const priceCents = toCents(p.price);
+    const discountedCents = applyAutoDiscount(priceCents, p.categoryId, p.id, autoDiscounts);
+    const hasAutoDiscount = discountedCents < priceCents;
+
     return {
       id: p.id,
       slug: p.slug,
       name: t?.name ?? p.slug,
-      price: formatMoney(toCents(p.price), p.currency, locale),
-      compareAtPrice: p.compareAtPrice ? formatMoney(toCents(p.compareAtPrice), p.currency, locale) : null,
+      price: formatMoney(hasAutoDiscount ? discountedCents : priceCents, p.currency, locale),
+      compareAtPrice: hasAutoDiscount
+        ? formatMoney(priceCents, p.currency, locale)
+        : p.compareAtPrice
+          ? formatMoney(toCents(p.compareAtPrice), p.currency, locale)
+          : null,
       rating: p.rating ? Number(p.rating) : null,
       tag: category?.slug ?? "",
       badge: p.isBestSeller ? "Bestseller" : undefined,
@@ -176,7 +208,7 @@ async function getStoreProductBySlugImpl(slug: string, locale: Locale = "en"): P
     .limit(1);
   if (!product) return null;
 
-  const [category, translations, mediaRows] = await Promise.all([
+  const [category, translations, mediaRows, autoDiscounts] = await Promise.all([
     db.select().from(storeCategories).where(eq(storeCategories.id, product.categoryId)).limit(1).then((r) => r[0]),
     db.select().from(storeProductTranslations).where(eq(storeProductTranslations.productId, product.id)),
     db
@@ -185,10 +217,15 @@ async function getStoreProductBySlugImpl(slug: string, locale: Locale = "en"): P
       .innerJoin(media, eq(media.id, storeProductMedia.mediaId))
       .where(eq(storeProductMedia.productId, product.id))
       .orderBy(asc(storeProductMedia.sortOrder)),
+    getAutoDiscounts(),
   ]);
 
   const t = pickTranslation(translations, locale);
   const primaryMedia = mediaRows.find((m) => m.isPrimary) ?? mediaRows[0];
+
+  const priceCents = toCents(product.price);
+  const discountedCents = applyAutoDiscount(priceCents, product.categoryId, product.id, autoDiscounts);
+  const hasAutoDiscount = discountedCents < priceCents;
 
   return {
     id: product.id,
@@ -196,8 +233,12 @@ async function getStoreProductBySlugImpl(slug: string, locale: Locale = "en"): P
     name: t?.name ?? product.slug,
     description: t?.description ?? null,
     notes: t?.notes ?? null,
-    price: formatMoney(toCents(product.price), product.currency, locale),
-    compareAtPrice: product.compareAtPrice ? formatMoney(toCents(product.compareAtPrice), product.currency, locale) : null,
+    price: formatMoney(hasAutoDiscount ? discountedCents : priceCents, product.currency, locale),
+    compareAtPrice: hasAutoDiscount
+      ? formatMoney(priceCents, product.currency, locale)
+      : product.compareAtPrice
+        ? formatMoney(toCents(product.compareAtPrice), product.currency, locale)
+        : null,
     rating: product.rating ? Number(product.rating) : null,
     tag: category?.slug ?? "",
     badge: product.isBestSeller ? "Bestseller" : undefined,

@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { CredentialsSignin } from "next-auth";
 import { and, eq } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 import { db, users, customers, roles, userRoles, carts, cartItems } from "@hamid/db";
@@ -21,8 +22,17 @@ export async function loginAction(_prev: ActionResult | null, formData: FormData
   const limited = await enforceRateLimit("login", 10, 10 * 60 * 1000, parsed.data.email);
   if (!limited.ok) return { error: limited.error };
 
-  const result = await signIn("credentials", { ...parsed.data, redirect: false });
-  if (result?.error) return { error: "Invalid email or password." };
+  try {
+    const result = await signIn("credentials", { ...parsed.data, redirect: false });
+    if (result?.error) return { error: "Invalid email or password." };
+  } catch (err) {
+    // With redirect:false this is expected to return { error } rather than
+    // throw, but this NextAuth version throws CredentialsSignin on bad
+    // credentials regardless — without this catch it surfaces as an
+    // unhandled server error page instead of a friendly form message.
+    if (err instanceof CredentialsSignin) return { error: "Invalid email or password." };
+    throw err;
+  }
 
   await mergeGuestCartIntoUser();
 
@@ -77,8 +87,13 @@ export async function registerAction(_prev: ActionResult | null, formData: FormD
 
   await sendVerificationEmail(userId, email, fullName);
 
-  const result = await signIn("credentials", { email, password, redirect: false });
-  if (result?.error) return { error: "Account created — please sign in." };
+  try {
+    const result = await signIn("credentials", { email, password, redirect: false });
+    if (result?.error) return { error: "Account created — please sign in." };
+  } catch (err) {
+    if (err instanceof CredentialsSignin) return { error: "Account created — please sign in." };
+    throw err;
+  }
 
   await mergeGuestCartIntoUser();
   redirect("/");

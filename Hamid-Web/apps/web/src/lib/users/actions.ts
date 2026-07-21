@@ -8,10 +8,6 @@ import { registerSchema, PERMISSION_SLUGS, type PermissionSlug } from "@hamid/co
 import { guardPermission, type ActionResult } from "@/lib/auth/rbac";
 import { logActivity } from "@/lib/activity/log";
 
-/** Staff-assignable roles only — super_admin is seeded once and never granted via this UI. */
-const ASSIGNABLE_ROLES = ["admin", "manager", "staff", "customer"] as const;
-type AssignableRole = (typeof ASSIGNABLE_ROLES)[number];
-
 /** True when the target user holds super_admin — those accounts are managed nowhere but the seed. */
 async function isSuperAdmin(userId: number): Promise<boolean> {
   const rows = await db
@@ -26,12 +22,12 @@ export async function createStaffUserAction(input: {
   fullName: string;
   email: string;
   password: string;
-  roleSlug: Exclude<AssignableRole, "customer">;
+  roleSlug: string;
 }): Promise<ActionResult<{ id: number }>> {
   const guard = await guardPermission("users.manage");
   if ("error" in guard) return guard;
 
-  if (!(["admin", "manager", "staff"] as const).includes(input.roleSlug)) return { error: "Invalid role." };
+  if (input.roleSlug === "customer" || input.roleSlug === "super_admin") return { error: "Invalid role." };
 
   const parsed = registerSchema.safeParse({ fullName: input.fullName, email: input.email, password: input.password });
   if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? "Invalid input." };
@@ -58,11 +54,11 @@ export async function createStaffUserAction(input: {
   return { success: true, data: { id } };
 }
 
-export async function updateUserRoleAction(userId: number, roleSlug: AssignableRole): Promise<ActionResult> {
+export async function updateUserRoleAction(userId: number, roleSlug: string): Promise<ActionResult> {
   const guard = await guardPermission("users.manage");
   if ("error" in guard) return guard;
 
-  if (!ASSIGNABLE_ROLES.includes(roleSlug)) return { error: "Invalid role." };
+  if (roleSlug === "super_admin") return { error: "Invalid role." };
   if (await isSuperAdmin(userId)) return { error: "The primary admin account cannot be changed." };
 
   const [role] = await db.select({ id: roles.id }).from(roles).where(eq(roles.slug, roleSlug)).limit(1);

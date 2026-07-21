@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, FormError } from "@/components/ui/card";
 
-export function NewStaffForm() {
+export function NewStaffForm({ roleOptions }: { roleOptions: { slug: string; name: string }[] }) {
   const router = useRouter();
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -20,7 +20,7 @@ export function NewStaffForm() {
       fullName: String(formData.get("fullName")),
       email: String(formData.get("email")),
       password: String(formData.get("password")),
-      roleSlug: formData.get("roleSlug") as "admin" | "manager" | "staff",
+      roleSlug: String(formData.get("roleSlug")),
     });
     setPending(false);
     if ("error" in res) {
@@ -55,12 +55,14 @@ export function NewStaffForm() {
             <select
               id="roleSlug"
               name="roleSlug"
-              defaultValue="staff"
+              defaultValue={roleOptions.find((r) => r.slug === "staff")?.slug ?? roleOptions[0]?.slug}
               className="flex h-11 w-full rounded-xl border border-outline-variant bg-surface-container-lowest px-3 text-sm text-on-surface"
             >
-              <option value="admin">Admin</option>
-              <option value="manager">Manager</option>
-              <option value="staff">Staff</option>
+              {roleOptions.map((r) => (
+                <option key={r.slug} value={r.slug}>
+                  {r.name}
+                </option>
+              ))}
             </select>
           </div>
           <Button type="submit" disabled={pending} className="w-full">

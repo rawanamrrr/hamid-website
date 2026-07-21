@@ -44,6 +44,7 @@ export const ADMIN_NAV: AdminNavGroup[] = [
     label: "System",
     items: [
       { label: "Users & Roles", href: "/admin/users", icon: "ShieldCheck", permission: "users.view" },
+      { label: "Roles", href: "/admin/roles", icon: "KeyRound", permission: "roles.manage" },
       { label: "Branches", href: "/admin/branches", icon: "MapPin", permission: "branches.view" },
       { label: "Settings", href: "/admin/settings", icon: "Settings", permission: "settings.manage" },
       { label: "Activity Logs", href: "/admin/activity", icon: "History", permission: "activity.view" },

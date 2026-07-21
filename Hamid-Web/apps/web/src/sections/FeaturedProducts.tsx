@@ -32,6 +32,7 @@ export default async function FeaturedProducts() {
             slug={p.slug}
             name={p.name}
             price={p.price}
+            compareAtPrice={p.compareAtPrice}
             rating={p.rating}
             tag={p.tag}
             badge={p.badge}

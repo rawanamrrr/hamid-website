@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState, useTransition } from "react";
 import { Minus, Plus, ShoppingCart } from "lucide-react";
 import { addToCartAction } from "@/lib/cart/actions";
+import { notifyAddedToCart } from "@/lib/cart/added-to-cart-bus";
 import type { StoreProductDetailView } from "@/lib/store/queries";
 
 export function ProductDetail({
@@ -33,6 +34,7 @@ export function ProductDetail({
       }
       setAdded(true);
       setTimeout(() => setAdded(false), 1500);
+      notifyAddedToCart({ name: product.name, image: product.image, meta: [product.tag, product.price].filter(Boolean).join(" · ") });
     });
   }
 

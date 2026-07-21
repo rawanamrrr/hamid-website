@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { asc } from "drizzle-orm";
-import { db, branchLocations } from "@hamid/db";
 import { withDbTimeout } from "@/lib/db-timeout";
+import { getBranches, FALLBACK_BRANCH } from "@/lib/branches/queries";
 
 export const metadata: Metadata = {
   title: "Our Branches | Hamid Afandi",
@@ -15,26 +14,12 @@ const highlights = [
   { icon: "shopping_bag", title: "Retail Corner", desc: "Take home your favourite beans, grinders, and gift sets." },
 ];
 
-/** Shown if no branch has been configured in the dashboard yet (or the DB is briefly unreachable). */
-const FALLBACK_BRANCH = {
-  id: 0,
-  name: "Mansoura Branch",
-  address: "Taksem Khattab, Mansoura",
-  hours: "Open Daily",
-  mapUrl: "https://maps.google.com/?q=Taksem+Khattab+Mansoura",
-};
-
 export default async function BranchesPage() {
-  const rows = await withDbTimeout(
-    db
-      .select({ id: branchLocations.id, name: branchLocations.name, address: branchLocations.address, hours: branchLocations.hours, mapUrl: branchLocations.mapUrl })
-      .from(branchLocations)
-      .orderBy(asc(branchLocations.id)),
-  ).catch(() => []);
+  const rows = await withDbTimeout(getBranches()).catch(() => []);
 
   const list = rows.length > 0 ? rows : [FALLBACK_BRANCH];
   const single = list.length === 1;
-  const primaryMapUrl = list[0]?.mapUrl ?? FALLBACK_BRANCH.mapUrl;
+  const primaryMapUrl = list[0]?.mapUrl ?? FALLBACK_BRANCH.mapUrl!;
 
   return (
     <div>
@@ -62,33 +47,78 @@ export default async function BranchesPage() {
       {/* Branch cards — overlap the hero */}
       <div className="px-5 md:px-16 max-w-[1280px] mx-auto">
         <div className={`relative -mt-8 z-10 grid gap-4 md:gap-6 ${single ? "" : "md:grid-cols-2"}`}>
-          {list.map((b) => (
-            <div key={b.id} className="rounded-3xl p-6 md:p-8 luxury-shadow" style={{ background: "#fff8f4" }}>
-              {!single && (
-                <h2 className="font-[family-name:var(--font-plus-jakarta)] text-xl font-bold text-black mb-4">{b.name}</h2>
-              )}
-              <div className="flex flex-col gap-5 md:flex-row md:items-center md:gap-10">
-                <div className="flex items-start gap-4 flex-1">
-                  <div className="w-11 h-11 md:w-12 md:h-12 rounded-full bg-[#7b5800] flex items-center justify-center flex-shrink-0">
-                    <span aria-hidden="true" className="material-symbols-outlined text-white text-xl">location_on</span>
+          {list.map((b) =>
+            single ? (
+              <div key={b.id} className="rounded-3xl p-6 md:p-8 luxury-shadow" style={{ background: "#fff8f4" }}>
+                <div className="flex flex-col gap-5 md:flex-row md:items-center md:gap-10">
+                  <div className="flex items-start gap-4 flex-1">
+                    <div className="w-11 h-11 md:w-12 md:h-12 rounded-full bg-[#7b5800] flex items-center justify-center flex-shrink-0">
+                      <span aria-hidden="true" className="material-symbols-outlined text-white text-xl">location_on</span>
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-widest text-[#7b5800] mb-1">Address</p>
+                      <p className="font-[family-name:var(--font-plus-jakarta)] text-lg md:text-xl font-bold text-black">
+                        {b.address ?? "—"}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-widest text-[#7b5800] mb-1">Address</p>
-                    <p className="font-[family-name:var(--font-plus-jakarta)] text-lg md:text-xl font-bold text-black">
-                      {b.address ?? "—"}
-                    </p>
-                  </div>
-                </div>
 
-                <div className="flex items-start gap-4 flex-1">
-                  <div className="w-11 h-11 md:w-12 md:h-12 rounded-full bg-[#7b5800] flex items-center justify-center flex-shrink-0">
-                    <span aria-hidden="true" className="material-symbols-outlined text-white text-xl">schedule</span>
+                  <div className="flex items-start gap-4 flex-1">
+                    <div className="w-11 h-11 md:w-12 md:h-12 rounded-full bg-[#7b5800] flex items-center justify-center flex-shrink-0">
+                      <span aria-hidden="true" className="material-symbols-outlined text-white text-xl">schedule</span>
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-widest text-[#7b5800] mb-1">Hours</p>
+                      <p className="font-[family-name:var(--font-plus-jakarta)] text-lg md:text-xl font-bold text-black">
+                        {b.hours ?? "Open Daily"}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-widest text-[#7b5800] mb-1">Hours</p>
-                    <p className="font-[family-name:var(--font-plus-jakarta)] text-lg md:text-xl font-bold text-black">
-                      {b.hours ?? "Open Daily"}
-                    </p>
+
+                  {b.mapUrl && (
+                    <a
+                      href={b.mapUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-shrink-0 bg-[#7b5800] text-white px-7 py-3.5 rounded-full text-xs font-semibold uppercase tracking-widest hover:bg-[#765400] transition-colors inline-flex items-center justify-center gap-2"
+                    >
+                      <span aria-hidden="true" className="material-symbols-outlined text-[18px]">directions</span>
+                      Get Directions
+                    </a>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <div
+                key={b.id}
+                className="flex flex-col rounded-3xl p-6 md:p-8 luxury-shadow"
+                style={{ background: "#fff8f4" }}
+              >
+                <h2 className="font-[family-name:var(--font-plus-jakarta)] text-xl font-bold text-black mb-5">{b.name}</h2>
+
+                <div className="flex-1 space-y-5">
+                  <div className="flex items-start gap-4">
+                    <div className="w-11 h-11 rounded-full bg-[#7b5800] flex items-center justify-center flex-shrink-0">
+                      <span aria-hidden="true" className="material-symbols-outlined text-white text-xl">location_on</span>
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-xs font-semibold uppercase tracking-widest text-[#7b5800] mb-1">Address</p>
+                      <p className="font-[family-name:var(--font-plus-jakarta)] text-base md:text-lg font-bold text-black leading-snug">
+                        {b.address ?? "—"}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="w-11 h-11 rounded-full bg-[#7b5800] flex items-center justify-center flex-shrink-0">
+                      <span aria-hidden="true" className="material-symbols-outlined text-white text-xl">schedule</span>
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-xs font-semibold uppercase tracking-widest text-[#7b5800] mb-1">Hours</p>
+                      <p className="font-[family-name:var(--font-plus-jakarta)] text-base md:text-lg font-bold text-black leading-snug">
+                        {b.hours ?? "Open Daily"}
+                      </p>
+                    </div>
                   </div>
                 </div>
 
@@ -97,15 +127,15 @@ export default async function BranchesPage() {
                     href={b.mapUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-shrink-0 bg-[#7b5800] text-white px-7 py-3.5 rounded-full text-xs font-semibold uppercase tracking-widest hover:bg-[#765400] transition-colors inline-flex items-center justify-center gap-2"
+                    className="mt-6 w-full bg-[#7b5800] text-white px-7 py-3.5 rounded-full text-xs font-semibold uppercase tracking-widest hover:bg-[#765400] transition-colors inline-flex items-center justify-center gap-2"
                   >
                     <span aria-hidden="true" className="material-symbols-outlined text-[18px]">directions</span>
                     Get Directions
                   </a>
                 )}
               </div>
-            </div>
-          ))}
+            ),
+          )}
         </div>
       </div>
 

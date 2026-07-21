@@ -37,7 +37,7 @@ import { getAutoDiscounts, getDiscountByCode } from "@/lib/discounts/resolve";
 import { getGuestCartToken, clearGuestCartCookie } from "@/lib/cart/guest-token";
 import type { ActionResult } from "@/lib/auth/rbac";
 import { sendEmail } from "@/lib/email/mailer";
-import { getGovernorateFees, getNotificationEmail } from "@/lib/settings/queries";
+import { getGovernorateFees, getNotificationEmail, isGuestCheckoutEnabled } from "@/lib/settings/queries";
 import { formatMoney } from "@hamid/core";
 
 /**
@@ -186,6 +186,14 @@ export async function placeOrderAction(input: CheckoutInput): Promise<ActionResu
   const parsed = checkoutSchema.safeParse(input);
   if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? "Invalid checkout details." };
   const data = parsed.data;
+
+  // Defense in depth — the checkout page already redirects guests to /login
+  // when this setting is off, but a direct call to this action shouldn't be
+  // able to bypass it.
+  const session = await auth();
+  if (!session?.user && !(await isGuestCheckoutEnabled())) {
+    return { error: "Guest checkout is currently disabled. Please sign in to place an order." };
+  }
 
   // Resolve the delivery governorate first — it determines the delivery fee.
   let governorate: string | null = data.newAddress?.governorate ?? null;
@@ -356,7 +364,6 @@ export async function placeOrderAction(input: CheckoutInput): Promise<ActionResu
 
   if (!customerId) await clearGuestCartCookie();
 
-  const session = await auth();
   const recipientEmail = session?.user?.email ?? data.guestContact?.email;
   const recipientName = session?.user?.name ?? data.guestContact?.name ?? "there";
   if (recipientEmail) {
