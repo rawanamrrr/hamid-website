@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, FormError } from "@/components/ui/card";
 import { MediaGalleryPicker } from "@/components/admin/media-gallery-picker";
 import type { PickedMedia } from "@/components/admin/media-picker";
+import { toast } from "@/components/ui/toast";
 
 export function StoreProductForm({
   productId,
@@ -57,8 +58,10 @@ export function StoreProductForm({
 
     if ("error" in result) {
       setServerError(result.error);
+      toast(result.error, "error");
       return;
     }
+    toast(productId ? "Product updated." : "Product created.");
     router.push("/admin/store/products");
     router.refresh();
   }
@@ -156,8 +159,8 @@ export function StoreProductForm({
           </div>
 
           <div className="flex gap-3">
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Saving…" : productId ? "Save changes" : "Create product"}
+            <Button type="submit" loading={isSubmitting}>
+              {productId ? "Save changes" : "Create product"}
             </Button>
             <Button type="button" variant="outline" onClick={() => router.push("/admin/store/products")}>
               Cancel

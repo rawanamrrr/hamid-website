@@ -8,6 +8,14 @@ import { auth } from "@/auth";
 import { ensureGuestCartToken } from "./guest-token";
 import type { ActionResult } from "@/lib/auth/rbac";
 
+// The cart badge lives in the (shop) root layout, which wraps every page —
+// revalidating just "/cart"/"/store" left the badge stale when items were
+// added from the homepage, menu, or a product detail page. Revalidating the
+// layout itself refreshes the badge everywhere in one shot.
+function revalidateCart() {
+  revalidatePath("/", "layout");
+}
+
 async function resolveCartId(): Promise<number> {
   const session = await auth();
   if (session?.user) {
@@ -54,8 +62,7 @@ export async function addToCartAction(storeProductId: number, quantity = 1): Pro
     return { error: "Couldn't add to cart — please try again." };
   }
 
-  revalidatePath("/cart");
-  revalidatePath("/store");
+  revalidateCart();
   return { success: true };
 }
 
@@ -70,12 +77,12 @@ export async function updateCartItemQuantityAction(cartItemId: number, quantity:
   if (quantity > product.stockQty) return { error: "Not enough stock available." };
 
   await db.update(cartItems).set({ quantity }).where(eq(cartItems.id, cartItemId));
-  revalidatePath("/cart");
+  revalidateCart();
   return { success: true };
 }
 
 export async function removeCartItemAction(cartItemId: number): Promise<ActionResult> {
   await db.delete(cartItems).where(eq(cartItems.id, cartItemId));
-  revalidatePath("/cart");
+  revalidateCart();
   return { success: true };
 }

@@ -23,6 +23,9 @@ export default async function AdminPaymentsPage() {
     .innerJoin(orders, eq(orders.id, payments.orderId))
     .innerJoin(paymentMethods, eq(paymentMethods.id, payments.methodId))
     .leftJoin(media, eq(media.id, payments.proofMediaId))
+    // This page exists to review InstaPay screenshot proofs — Cash on
+    // Delivery doesn't have a proof to approve/reject, so it doesn't belong here.
+    .where(eq(paymentMethods.code, "instapay"))
     .orderBy(desc(payments.createdAt))
     .limit(100);
 
@@ -34,7 +37,7 @@ export default async function AdminPaymentsPage() {
   return (
     <div>
       <h1 className="font-display text-2xl font-bold text-on-surface">Payments</h1>
-      <p className="mt-1 text-sm text-on-surface-variant">Review InstaPay screenshots and confirm Cash on Delivery orders.</p>
+      <p className="mt-1 text-sm text-on-surface-variant">Review InstaPay payment screenshots and approve or reject them.</p>
 
       <div className="mt-6">
         <Table>

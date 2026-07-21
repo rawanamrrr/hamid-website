@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { and, eq } from "drizzle-orm";
 import { db, payments, media } from "@hamid/db";
 import { presignUploadSchema } from "@hamid/core";
-import { createSignedUploadParams, isStorageConfigured, STORAGE_NOT_CONFIGURED_ERROR, type SignedUploadParams } from "@/lib/media/cloudinary";
+import { createPaymentProofUploadParams, isStorageConfigured, STORAGE_NOT_CONFIGURED_ERROR, type SignedUploadParams } from "@/lib/media/cloudinary";
 import { getOwnedOrder } from "@/lib/orders/queries";
 import type { ActionResult } from "@/lib/auth/rbac";
 import { enforceRateLimit } from "@/lib/rate-limit";
@@ -26,8 +26,57 @@ export async function presignPaymentProofUploadAction(
   const parsed = presignUploadSchema.safeParse({ ...input, isPrivate: true, folder: "payment-proofs" });
   if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? "Invalid file." };
 
-  const params = createSignedUploadParams("payment-proofs", true);
+  const params = createPaymentProofUploadParams();
   return { success: true, data: params };
+}
+
+/**
+ * Pre-checkout variant of the two actions above: the order doesn't exist yet
+ * at the point the customer picks InstaPay and uploads their screenshot, so
+ * there's no orderNumber to tie the upload to. The media row created here is
+ * handed to placeOrderAction as paymentProofMediaId once the order is placed.
+ */
+export async function presignCheckoutPaymentProofUploadAction(input: {
+  filename: string;
+  mime: string;
+  sizeBytes: number;
+}): Promise<ActionResult<SignedUploadParams>> {
+  const limited = await enforceRateLimit("payment-proof-upload", 10, 10 * 60 * 1000);
+  if (!limited.ok) return { error: limited.error };
+
+  if (!isStorageConfigured()) return { error: STORAGE_NOT_CONFIGURED_ERROR };
+
+  const parsed = presignUploadSchema.safeParse({ ...input, isPrivate: true, folder: "payment-proofs" });
+  if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? "Invalid file." };
+
+  const params = createPaymentProofUploadParams();
+  return { success: true, data: params };
+}
+
+export async function confirmCheckoutPaymentProofAction(input: {
+  publicId: string;
+  format: string;
+  width?: number;
+  height?: number;
+  bytes: number;
+}): Promise<ActionResult<{ mediaId: number }>> {
+  const [mediaRow] = await db
+    .insert(media)
+    .values({
+      disk: "cloudinary",
+      bucket: process.env.CLOUDINARY_CLOUD_NAME ?? "",
+      objectKey: input.publicId,
+      url: "",
+      mime: `image/${input.format.toLowerCase() === "jpg" ? "jpeg" : input.format.toLowerCase()}`,
+      width: input.width,
+      height: input.height,
+      sizeBytes: input.bytes,
+      isPrivate: true,
+      folder: "payment-proofs",
+    })
+    .$returningId();
+
+  return { success: true, data: { mediaId: mediaRow.id } };
 }
 
 export async function confirmPaymentProofAction(

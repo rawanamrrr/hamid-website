@@ -8,18 +8,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, FormError } from "@/components/ui/card";
+import { toast } from "@/components/ui/toast";
 
 export function SettingsForm({ initial }: { initial: SiteSettingsInput }) {
   const router = useRouter();
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [saved, setSaved] = useState(false);
   const [fees, setFees] = useState<GovernorateFee[]>(initial.governorateFees);
 
   async function onSubmit(formData: FormData) {
     setPending(true);
     setError(null);
-    setSaved(false);
     const res = await updateSiteSettingsAction({
       siteNameEn: String(formData.get("siteNameEn")),
       siteNameAr: String(formData.get("siteNameAr")),
@@ -29,13 +28,16 @@ export function SettingsForm({ initial }: { initial: SiteSettingsInput }) {
       notificationEmail: String(formData.get("notificationEmail")),
       taxEnabled: formData.get("taxEnabled") === "on",
       guestCheckoutEnabled: formData.get("guestCheckoutEnabled") === "on",
+      instapayNumber: String(formData.get("instapayNumber")),
+      instapayName: String(formData.get("instapayName")),
     });
     setPending(false);
     if ("error" in res) {
       setError(res.error);
+      toast(res.error, "error");
       return;
     }
-    setSaved(true);
+    toast("Settings saved.");
     router.refresh();
   }
 
@@ -46,7 +48,6 @@ export function SettingsForm({ initial }: { initial: SiteSettingsInput }) {
   return (
     <form action={onSubmit} className="max-w-3xl space-y-6">
       <FormError>{error}</FormError>
-      {saved && <p className="text-sm text-secondary">Settings saved.</p>}
 
       <Card>
         <CardHeader>
@@ -152,8 +153,29 @@ export function SettingsForm({ initial }: { initial: SiteSettingsInput }) {
         </CardContent>
       </Card>
 
-      <Button type="submit" disabled={pending}>
-        {pending ? "Saving…" : "Save settings"}
+      <Card>
+        <CardHeader>
+          <CardTitle>InstaPay account</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <p className="text-xs text-on-surface-variant">
+            Shown to customers at checkout when they choose InstaPay, so they know where to send the payment.
+          </p>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <Label htmlFor="instapayNumber">InstaPay number / handle</Label>
+              <Input id="instapayNumber" name="instapayNumber" placeholder="e.g. 01012345678" defaultValue={initial.instapayNumber} />
+            </div>
+            <div>
+              <Label htmlFor="instapayName">Account name</Label>
+              <Input id="instapayName" name="instapayName" placeholder="e.g. Hamid Afandi Coffee" defaultValue={initial.instapayName} />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Button type="submit" loading={pending}>
+        Save settings
       </Button>
     </form>
   );

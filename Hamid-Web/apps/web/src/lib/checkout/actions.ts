@@ -3,7 +3,10 @@
 import { eq, and, gte, count, sql } from "drizzle-orm";
 import {
   db,
+  users,
   customers,
+  roles,
+  userRoles,
   addresses,
   orders,
   orderItems,
@@ -126,8 +129,8 @@ export async function previewOrderTotalsAction(
   }
 
   const code = discountCode?.trim() || undefined;
-  const { discountResult, totals } = await computeCheckoutPricing(fulfillmentType, code, governorate);
-  const discountError = code && discountResult.codeError ? discountResult.codeError : undefined;
+  const { codeDiscount, discountResult, totals } = await computeCheckoutPricing(fulfillmentType, code, governorate);
+  const discountError = code ? (codeDiscount ? discountResult.codeError : "This discount code doesn't exist.") : undefined;
 
   return {
     success: true,
@@ -140,6 +143,43 @@ export async function previewOrderTotalsAction(
       discountError,
     },
   };
+}
+
+/**
+ * Guests who provide an email at checkout get an account created for them
+ * automatically, so their order and address are there next time they sign
+ * in. Deliberately does NOT attach the order to an existing password-
+ * protected account just because someone typed that email — that would leak
+ * a stranger's order history into their account. A pre-existing passwordless
+ * (i.e. itself auto-created) account is safe to reuse/extend. The account has
+ * no password yet; registerAction lets that email "claim" it later by
+ * setting one, instead of bouncing with "already exists".
+ */
+async function resolveOrCreateGuestCustomer(contact: { name: string; phone: string; email?: string }): Promise<number | null> {
+  const email = contact.email?.trim();
+  if (!email) return null;
+
+  const [existingUser] = await db.select({ id: users.id, passwordHash: users.passwordHash }).from(users).where(eq(users.email, email)).limit(1);
+  if (existingUser) {
+    if (existingUser.passwordHash) return null;
+    const [existingCustomer] = await db.select({ id: customers.id }).from(customers).where(eq(customers.userId, existingUser.id)).limit(1);
+    if (existingCustomer) return existingCustomer.id;
+    const [newCustomer] = await db.insert(customers).values({ userId: existingUser.id }).$returningId();
+    return newCustomer.id;
+  }
+
+  const [userRow] = await db
+    .insert(users)
+    .values({ email, phone: contact.phone || null, fullName: contact.name, passwordHash: null, status: "active" })
+    .$returningId();
+  const [customerRow] = await db.insert(customers).values({ userId: userRow.id }).$returningId();
+
+  const [customerRole] = await db.select({ id: roles.id }).from(roles).where(eq(roles.slug, "customer")).limit(1);
+  if (customerRole) {
+    await db.insert(userRoles).values({ userId: userRow.id, roleId: customerRole.id });
+  }
+
+  return customerRow.id;
 }
 
 export async function placeOrderAction(input: CheckoutInput): Promise<ActionResult<{ orderNumber: string }>> {
@@ -165,8 +205,9 @@ export async function placeOrderAction(input: CheckoutInput): Promise<ActionResu
     if (line.quantity > line.stockQty) return { error: `${line.name} no longer has enough stock.` };
   }
 
-  if (data.discountCode && !codeDiscount) return { error: "Invalid discount code." };
-  if (data.discountCode && discountResult.codeError) return { error: discountResult.codeError };
+  // An invalid/inapplicable/expired discount code doesn't block checkout —
+  // the checkout page already surfaces why it didn't apply (see
+  // previewOrderTotalsAction); the order simply proceeds without that discount.
 
   const [method] = await db.select().from(paymentMethods).where(and(eq(paymentMethods.code, data.paymentMethodCode), eq(paymentMethods.isActive, true))).limit(1);
   if (!method) return { error: "Selected payment method is not available." };
@@ -175,15 +216,30 @@ export async function placeOrderAction(input: CheckoutInput): Promise<ActionResu
   if (userId) {
     const [customer] = await db.select().from(customers).where(eq(customers.userId, userId)).limit(1);
     customerId = customer?.id ?? null;
+  } else if (data.guestContact?.email) {
+    customerId = await resolveOrCreateGuestCustomer(data.guestContact);
   }
 
   // ── Address resolution (delivery only) ────────────────────────────────
   let addressId: number | null = null;
   if (data.fulfillmentType === "delivery") {
     if (data.addressId) {
-      addressId = data.addressId;
+      // Must belong to this customer — otherwise anyone could pass an
+      // arbitrary addressId and have their order shipped to/reveal a
+      // stranger's saved delivery address.
+      const [owned] = await db
+        .select({ id: addresses.id })
+        .from(addresses)
+        .where(and(eq(addresses.id, data.addressId), customerId ? eq(addresses.customerId, customerId) : sql`false`))
+        .limit(1);
+      if (!owned) return { error: "That saved address is no longer available." };
+      addressId = owned.id;
     } else if (data.newAddress) {
       const guestToken = customerId ? null : await getGuestCartToken();
+      if (customerId && data.newAddress.isDefault) {
+        // Only one saved address should be "the" default per customer.
+        await db.update(addresses).set({ isDefault: false }).where(eq(addresses.customerId, customerId));
+      }
       const [row] = await db
         .insert(addresses)
         .values({ ...data.newAddress, customerId, guestToken })
@@ -204,7 +260,10 @@ export async function placeOrderAction(input: CheckoutInput): Promise<ActionResu
       .values({
         orderNumber,
         customerId,
-        guestContact: customerId ? null : data.guestContact,
+        // For logged-in customers this is normally redundant with their
+        // account details, but for Pickup it may be a different name/phone
+        // (who's actually collecting the order) — keep it whenever provided.
+        guestContact: data.guestContact ?? null,
         channel: "web",
         status: "pending",
         fulfillmentType: data.fulfillmentType,
@@ -262,7 +321,11 @@ export async function placeOrderAction(input: CheckoutInput): Promise<ActionResu
       orderId: orderRow.id,
       methodId: method.id,
       amount: totals.grandTotal,
-      status: "pending",
+      // InstaPay orders arrive with proof already attached (required at
+      // checkout — see checkoutSchema) so they go straight to "submitted"
+      // for admin review, skipping the otherwise-meaningless "pending" state.
+      status: data.paymentMethodCode === "instapay" ? "submitted" : "pending",
+      proofMediaId: data.paymentMethodCode === "instapay" ? data.paymentProofMediaId : null,
     });
 
     for (const line of cart.lines) {

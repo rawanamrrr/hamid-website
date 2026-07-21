@@ -179,8 +179,39 @@ function StickyNav({
   );
 }
 
+const HERO_SLIDE_INTERVAL_MS = 6000;
+
+// ─── Intro banner background — crossfades through the admin-managed hero images ─
+function IntroHeroBackground({ images }: { images: string[] }) {
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    if (images.length < 2) return;
+    const timer = setInterval(() => setActive((i) => (i + 1) % images.length), HERO_SLIDE_INTERVAL_MS);
+    return () => clearInterval(timer);
+  }, [images.length]);
+
+  if (images.length === 0) return null;
+
+  return (
+    <div className="absolute inset-0 z-0">
+      {images.map((url, i) => (
+        <div
+          key={url}
+          className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out ${
+            i === active ? "opacity-100" : "opacity-0"
+          }`}
+          style={{ backgroundImage: `url('${url}')` }}
+          aria-hidden={i !== active}
+        />
+      ))}
+      <div className="absolute inset-0 bg-black/55" />
+    </div>
+  );
+}
+
 // ─── Main client component ─────────────────────────────────────────────────
-export default function MenuPageClient({ sections }: { sections: MenuSection[] }) {
+export default function MenuPageClient({ sections, heroImages }: { sections: MenuSection[]; heroImages: string[] }) {
   const [activeId, setActiveId] = useState<string>(sections[0]?.id ?? "");
 
   useEffect(() => {
@@ -206,16 +237,19 @@ export default function MenuPageClient({ sections }: { sections: MenuSection[] }
   return (
     <div className="min-h-screen bg-[#fff8f4]">
       {/* ── Compact intro ────────────────────────────────────────────────── */}
-      <div className="bg-[#271908] px-5 py-12 text-center md:px-16 md:py-16">
-        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-[#c8a97a]">
-          Hamid Afandi
-        </p>
-        <h1 className="font-[family-name:var(--font-plus-jakarta)] text-3xl font-bold text-white md:text-5xl">
-          Our Menu
-        </h1>
-        <p className="mx-auto mt-3 max-w-md text-sm text-white/70 md:text-base">
-          Every category has its own story — browse by what catches your eye.
-        </p>
+      <div className="relative overflow-hidden bg-[#271908] px-5 py-12 text-center md:px-16 md:py-16">
+        <IntroHeroBackground images={heroImages} />
+        <div className="relative z-10">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-[#c8a97a]">
+            Hamid Afandi
+          </p>
+          <h1 className="font-[family-name:var(--font-plus-jakarta)] text-3xl font-bold text-white md:text-5xl">
+            Our Menu
+          </h1>
+          <p className="mx-auto mt-3 max-w-md text-sm text-white/70 md:text-base">
+            Every category has its own story — browse by what catches your eye.
+          </p>
+        </div>
       </div>
 
       {/* ── Category showcase — instantly recognisable, no reading required ─ */}

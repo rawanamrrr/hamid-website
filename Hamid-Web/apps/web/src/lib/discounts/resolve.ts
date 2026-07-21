@@ -35,7 +35,9 @@ export async function getAutoDiscounts(): Promise<DiscountLike[]> {
 }
 
 export async function getDiscountByCode(code: string): Promise<DiscountLike | null> {
-  const [row] = await db.select().from(discounts).where(eq(discounts.code, code)).limit(1);
+  // Codes are stored uppercase (admin auto-uppercases on save) — normalize
+  // the lookup so a customer typing lowercase still matches.
+  const [row] = await db.select().from(discounts).where(eq(discounts.code, code.trim().toUpperCase())).limit(1);
   if (!row) return null;
   const [result] = await toDiscountLike([row]);
   return result;

@@ -19,7 +19,7 @@ export default async function AdminCustomerDetailPage({ params }: { params: Prom
   if (!row) notFound();
 
   const [customerAddresses, customerOrders] = await Promise.all([
-    db.select().from(addresses).where(eq(addresses.customerId, customerId)),
+    db.select().from(addresses).where(eq(addresses.customerId, customerId)).orderBy(desc(addresses.isDefault), desc(addresses.id)),
     db.select().from(orders).where(eq(orders.customerId, customerId)).orderBy(desc(orders.createdAt)),
   ]);
 
@@ -36,9 +36,18 @@ export default async function AdminCustomerDetailPage({ params }: { params: Prom
             <h2 className="mb-3 font-display text-base font-bold text-on-surface">Addresses</h2>
             <div className="space-y-3">
               {customerAddresses.map((a) => (
-                <p key={a.id} className="text-sm text-on-surface-variant">
-                  {a.recipientName} — {a.street}, {a.area}, {a.city}, {a.governorate}
-                </p>
+                <div key={a.id} className="rounded-lg border border-outline-variant/60 p-3 text-sm">
+                  <p className="font-semibold text-on-surface">
+                    {a.label || a.recipientName}
+                    {a.isDefault && <span className="ms-2 text-xs font-normal text-on-surface-variant">(Default)</span>}
+                  </p>
+                  <p className="mt-0.5 text-on-surface-variant">
+                    {a.recipientName} — {a.phone}
+                  </p>
+                  <p className="mt-0.5 text-on-surface-variant">
+                    {[a.street, a.building, a.area, a.city, a.governorate].filter(Boolean).join(", ")}
+                  </p>
+                </div>
               ))}
               {customerAddresses.length === 0 && <p className="text-sm text-on-surface-variant">No saved addresses.</p>}
             </div>

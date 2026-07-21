@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 import { db, users, customers, roles, userRoles, carts, cartItems } from "@hamid/db";
 import { loginSchema, registerSchema } from "@hamid/core";
@@ -40,22 +40,42 @@ export async function registerAction(_prev: ActionResult | null, formData: FormD
   const limited = await enforceRateLimit("register", 5, 60 * 60 * 1000);
   if (!limited.ok) return { error: limited.error };
 
-  const [existing] = await db.select({ id: users.id }).from(users).where(eq(users.email, email)).limit(1);
-  if (existing) return { error: "An account with this email already exists." };
+  const [existing] = await db.select({ id: users.id, passwordHash: users.passwordHash }).from(users).where(eq(users.email, email)).limit(1);
+  if (existing && existing.passwordHash) return { error: "An account with this email already exists." };
 
   const passwordHash = await bcrypt.hash(password, 12);
-  const [user] = await db
-    .insert(users)
-    .values({ email, phone, fullName, passwordHash, status: "active", emailVerifiedAt: null })
-    .$returningId();
-  await db.insert(customers).values({ userId: user.id });
+  let userId: number;
+
+  if (existing) {
+    // Passwordless account, auto-created from a prior guest checkout under
+    // this email (see resolveOrCreateGuestCustomer in checkout/actions.ts) —
+    // this registration "claims" it by attaching the chosen password, rather
+    // than erroring or creating a duplicate account with the same email.
+    userId = existing.id;
+    await db.update(users).set({ phone, fullName, passwordHash }).where(eq(users.id, userId));
+
+    const [customer] = await db.select({ id: customers.id }).from(customers).where(eq(customers.userId, userId)).limit(1);
+    if (!customer) await db.insert(customers).values({ userId });
+  } else {
+    const [user] = await db
+      .insert(users)
+      .values({ email, phone, fullName, passwordHash, status: "active", emailVerifiedAt: null })
+      .$returningId();
+    userId = user.id;
+    await db.insert(customers).values({ userId });
+  }
 
   const [customerRole] = await db.select({ id: roles.id }).from(roles).where(eq(roles.slug, "customer")).limit(1);
   if (customerRole) {
-    await db.insert(userRoles).values({ userId: user.id, roleId: customerRole.id });
+    const [existingRole] = await db
+      .select({ userId: userRoles.userId })
+      .from(userRoles)
+      .where(and(eq(userRoles.userId, userId), eq(userRoles.roleId, customerRole.id)))
+      .limit(1);
+    if (!existingRole) await db.insert(userRoles).values({ userId, roleId: customerRole.id });
   }
 
-  await sendVerificationEmail(user.id, email, fullName);
+  await sendVerificationEmail(userId, email, fullName);
 
   const result = await signIn("credentials", { email, password, redirect: false });
   if (result?.error) return { error: "Account created — please sign in." };

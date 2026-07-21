@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getMenuSections } from "@/lib/menu/queries";
+import { getMenuSections, getMenuHeroImages } from "@/lib/menu/queries";
 import { getDict, getLocale } from "@/lib/i18n";
 import MenuPageClient from "./MenuPageClient";
 import { LoadErrorBand } from "@/components/LoadErrorBand";
@@ -17,10 +17,13 @@ export const metadata: Metadata = {
 
 export default async function MenuPage() {
   const locale = await getLocale();
-  const sections = await withDbTimeout(getMenuSections(locale)).catch(() => null);
+  const [sections, heroImages] = await Promise.all([
+    withDbTimeout(getMenuSections(locale)).catch(() => null),
+    withDbTimeout(getMenuHeroImages()).catch(() => []),
+  ]);
   if (sections === null) {
     const dict = await getDict();
     return <LoadErrorBand message={dict.common.loadError} retryLabel={dict.common.retry} href="/menu" />;
   }
-  return <MenuPageClient sections={sections} />;
+  return <MenuPageClient sections={sections} heroImages={heroImages} />;
 }

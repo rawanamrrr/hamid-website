@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, FormError } from "@/components/ui/card";
+import { toast } from "@/components/ui/toast";
 
 export interface BranchItem {
   id: number;
@@ -61,8 +62,8 @@ function BranchForm({
         </div>
       </div>
       <div className="flex gap-2">
-        <Button type="submit" disabled={pending}>
-          {pending ? "Saving…" : submitLabel}
+        <Button type="submit" loading={pending}>
+          {submitLabel}
         </Button>
         {onCancel && (
           <Button type="button" variant="ghost" onClick={onCancel}>
@@ -80,12 +81,15 @@ export function BranchesManager({ items }: { items: BranchItem[] }) {
   const [error, setError] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<number | null>(null);
 
-  function run(fn: () => Promise<{ error: string } | { success: true } | { success: true; data: unknown }>) {
+  function run(fn: () => Promise<{ error: string } | { success: true } | { success: true; data: unknown }>, successMsg: string) {
     setError(null);
     startTransition(async () => {
       const res = await fn();
-      if ("error" in res) setError(res.error);
-      else {
+      if ("error" in res) {
+        setError(res.error);
+        toast(res.error, "error");
+      } else {
+        toast(successMsg);
         setEditingId(null);
         router.refresh();
       }
@@ -111,7 +115,7 @@ export function BranchesManager({ items }: { items: BranchItem[] }) {
                   pending={pending}
                   submitLabel="Save branch"
                   onCancel={() => setEditingId(null)}
-                  onSubmit={(input) => run(() => updateBranchAction(b.id, input))}
+                  onSubmit={(input) => run(() => updateBranchAction(b.id, input), "Branch updated.")}
                 />
               </CardContent>
             </Card>
@@ -149,7 +153,7 @@ export function BranchesManager({ items }: { items: BranchItem[] }) {
                   type="button"
                   disabled={pending}
                   onClick={() => {
-                    if (confirm(`Delete branch "${b.name}"?`)) run(() => deleteBranchAction(b.id));
+                    if (confirm(`Delete branch "${b.name}"?`)) run(() => deleteBranchAction(b.id), "Branch deleted.");
                   }}
                   aria-label={`Delete ${b.name}`}
                   className="flex h-8 w-8 items-center justify-center rounded-full border border-outline-variant text-error hover:bg-error-container/40"
@@ -172,7 +176,7 @@ export function BranchesManager({ items }: { items: BranchItem[] }) {
           <CardTitle>Add branch</CardTitle>
         </CardHeader>
         <CardContent>
-          <BranchForm pending={pending} submitLabel="Add branch" onSubmit={(input) => run(() => createBranchAction(input))} />
+          <BranchForm pending={pending} submitLabel="Add branch" onSubmit={(input) => run(() => createBranchAction(input), "Branch added.")} />
         </CardContent>
       </Card>
     </div>

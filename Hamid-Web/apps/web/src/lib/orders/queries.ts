@@ -5,17 +5,23 @@ import { auth } from "@/auth";
 
 /**
  * Guest orders are looked up by order number alone (the standard "guest order
- * tracking" pattern — no account exists to check ownership against). Logged-in
- * users are additionally verified against the order's customerId so one
- * customer can't browse another's order by guessing numbers.
+ * tracking" pattern — no session exists to check ownership against). This
+ * still applies even when the order has a customerId: a guest who checked
+ * out with an email gets an account auto-created for them (see
+ * resolveOrCreateGuestCustomer in checkout/actions.ts) without ever signing
+ * in, so `customerId` alone doesn't mean "requires a session" anymore.
+ *
+ * Ownership is only enforced when someone IS signed in — a logged-in
+ * customer can't browse another customer's order by guessing numbers, but an
+ * anonymous visitor can always view an order by its number (same as before
+ * guest-to-account auto-creation existed).
  */
 export async function getOwnedOrder(orderNumber: string) {
   const session = await auth();
   const [order] = await db.select().from(orders).where(eq(orders.orderNumber, orderNumber)).limit(1);
   if (!order) return null;
 
-  if (order.customerId) {
-    if (!session?.user) return null;
+  if (order.customerId && session?.user) {
     const [customer] = await db.select().from(customers).where(eq(customers.userId, Number(session.user.id))).limit(1);
     if (!customer || customer.id !== order.customerId) return null;
   }

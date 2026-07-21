@@ -7,6 +7,7 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { PasswordStrength } from "@/components/ui/password-strength";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, FormError } from "@/components/ui/card";
+import { toast } from "@/components/ui/toast";
 
 export function ChangePasswordForm() {
   const [state, formAction, pending] = useActionState(changePasswordAction, null);
@@ -24,6 +25,12 @@ export function ChangePasswordForm() {
   useEffect(() => {
     if (succeeded) formRef.current?.reset();
   }, [succeeded]);
+
+  useEffect(() => {
+    if (state && "error" in state) toast(state.error, "error");
+    else if (succeeded) toast("Password updated.");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state]);
 
   return (
     <Card className="max-w-lg">
@@ -62,8 +69,8 @@ export function ChangePasswordForm() {
             <Label htmlFor="confirmPassword">Confirm new password</Label>
             <PasswordInput id="confirmPassword" name="confirmPassword" required minLength={8} autoComplete="new-password" />
           </div>
-          <Button type="submit" disabled={pending}>
-            {pending ? "Saving…" : "Update password"}
+          <Button type="submit" loading={pending}>
+            Update password
           </Button>
         </form>
       </CardContent>

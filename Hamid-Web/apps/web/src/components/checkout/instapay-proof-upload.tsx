@@ -1,22 +1,23 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { useRouter } from "next/navigation";
-import { Upload } from "lucide-react";
+import { Upload, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { presignPaymentProofUploadAction, confirmPaymentProofAction } from "@/lib/payments/actions";
+import { presignCheckoutPaymentProofUploadAction, confirmCheckoutPaymentProofAction } from "@/lib/payments/actions";
 
-export function InstapayUpload({ orderNumber, hint }: { orderNumber: string; hint: string }) {
-  const router = useRouter();
+/** Required InstaPay screenshot upload shown at checkout, before the order is placed. */
+export function InstapayProofUpload({ onUploaded }: { onUploaded: (mediaId: number | null) => void }) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [uploadedName, setUploadedName] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   async function handleFile(file: File) {
     setUploading(true);
     setError(null);
+    onUploaded(null);
 
-    const presign = await presignPaymentProofUploadAction(orderNumber, {
+    const presign = await presignCheckoutPaymentProofUploadAction({
       filename: file.name,
       mime: file.type,
       sizeBytes: file.size,
@@ -43,7 +44,7 @@ export function InstapayUpload({ orderNumber, hint }: { orderNumber: string; hin
       return;
     }
 
-    const confirmed = await confirmPaymentProofAction(orderNumber, {
+    const confirmed = await confirmCheckoutPaymentProofAction({
       publicId: uploaded.public_id,
       format: uploaded.format,
       width: uploaded.width,
@@ -56,13 +57,13 @@ export function InstapayUpload({ orderNumber, hint }: { orderNumber: string; hin
       return;
     }
 
-    router.refresh();
+    setUploadedName(file.name);
+    onUploaded(confirmed.data.mediaId);
     setUploading(false);
   }
 
   return (
-    <div className="rounded-2xl border border-outline-variant/60 bg-surface-container p-5">
-      <p className="mb-3 text-sm text-on-surface-variant">{hint}</p>
+    <div>
       <input
         ref={inputRef}
         type="file"
@@ -70,11 +71,16 @@ export function InstapayUpload({ orderNumber, hint }: { orderNumber: string; hin
         className="hidden"
         onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])}
       />
-      <Button type="button" onClick={() => inputRef.current?.click()} disabled={uploading}>
+      <Button type="button" variant="outline" onClick={() => inputRef.current?.click()} disabled={uploading}>
         <Upload size={16} />
-        {uploading ? "Uploading…" : "Upload InstaPay screenshot"}
+        {uploading ? "Uploading…" : uploadedName ? "Replace screenshot" : "Upload payment screenshot"}
       </Button>
-      {error && <p className="mt-2 text-sm text-error">{error}</p>}
+      {uploadedName && !error && (
+        <p className="mt-2 flex items-center gap-1.5 text-xs text-secondary">
+          <CheckCircle2 size={14} /> {uploadedName} uploaded.
+        </p>
+      )}
+      {error && <p className="mt-2 text-xs text-error">{error}</p>}
     </div>
   );
 }

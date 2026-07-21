@@ -63,6 +63,8 @@ export interface DiscountValidationContext {
   orderSubtotalCents: number;
   /** How many times THIS user has already redeemed this discount (for perUserLimit). */
   userRedemptionCount?: number;
+  /** Cart lines — needed to catch "valid code, but scoped to a product/category not in this cart". */
+  lines?: CartLineLike[];
 }
 
 export function validateDiscount(
@@ -70,15 +72,23 @@ export function validateDiscount(
   ctx: DiscountValidationContext,
 ): { valid: true } | { valid: false; reason: string } {
   const now = ctx.now ?? new Date();
-  if (!isDiscountWindowOpen(discount, now)) return { valid: false, reason: "Discount is not currently active." };
+  if (!isDiscountWindowOpen(discount, now)) return { valid: false, reason: "This discount code has expired or is not yet active." };
   if (discount.minOrderTotal && ctx.orderSubtotalCents < toCents(discount.minOrderTotal)) {
-    return { valid: false, reason: "Order total is below the minimum required for this discount." };
+    return { valid: false, reason: "Your order total is below the minimum required for this discount." };
   }
   if (discount.maxUses !== null && discount.usedCount >= discount.maxUses) {
-    return { valid: false, reason: "This discount has reached its usage limit." };
+    return { valid: false, reason: "This discount code has reached its usage limit." };
   }
   if (discount.perUserLimit !== null && (ctx.userRedemptionCount ?? 0) >= discount.perUserLimit) {
-    return { valid: false, reason: "You have already used this discount the maximum number of times." };
+    return { valid: false, reason: "You've already used this discount code the maximum number of times allowed." };
+  }
+  if (ctx.lines && discount.scope !== "all" && !ctx.lines.some((l) => lineMatchesDiscount(discount, l))) {
+    return {
+      valid: false,
+      reason: discount.scope === "category"
+        ? "This discount code doesn't apply to any items in your cart."
+        : "This discount code doesn't apply to any products in your cart.",
+    };
   }
   return { valid: true };
 }
@@ -126,6 +136,7 @@ export function applyDiscountsToCart(
       now,
       orderSubtotalCents: subtotalCents,
       userRedemptionCount: codeDiscount.userRedemptionCount,
+      lines,
     });
     if (validation.valid) {
       const amount = computeDiscountAmountCents(codeDiscount.discount, lines);

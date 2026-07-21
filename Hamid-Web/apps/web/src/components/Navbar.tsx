@@ -184,27 +184,30 @@ export default function Navbar({
           </div>
 
           {/* Right: language, auth, bag + CTA */}
-          <div className="flex items-center justify-end gap-4">
-            <LanguageSwitcher locale={locale} className="text-[#271908] hover:text-[#7b5800] text-xs font-semibold uppercase tracking-widest transition-colors" />
+          <div className="flex items-center justify-end gap-3 xl:gap-4">
+            <LanguageSwitcher locale={locale} className="shrink-0 whitespace-nowrap text-[#271908] hover:text-[#7b5800] text-xs font-semibold uppercase tracking-widest transition-colors" />
 
             {user ? (
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3 xl:gap-4">
                 {canAccessDashboard && (
-                  <Link href="/admin" className="text-xs font-semibold uppercase tracking-widest text-[#271908] hover:text-[#7b5800]">
+                  <Link href="/admin" className="shrink-0 whitespace-nowrap text-xs font-semibold uppercase tracking-widest text-[#271908] hover:text-[#7b5800]">
                     {dict.nav.dashboard}
                   </Link>
                 )}
-                <Link href="/account" className="text-xs font-semibold uppercase tracking-widest text-[#271908] hover:text-[#7b5800]">
+                <Link
+                  href="/account"
+                  className="shrink-0 max-w-[9rem] truncate text-xs font-semibold uppercase tracking-widest text-[#271908] hover:text-[#7b5800]"
+                >
                   {user.name || dict.nav.account}
                 </Link>
-                <form action={logoutAction}>
-                  <button type="submit" className="text-xs font-semibold uppercase tracking-widest text-[#271908] hover:text-[#7b5800]">
+                <form action={logoutAction} className="shrink-0">
+                  <button type="submit" className="whitespace-nowrap text-xs font-semibold uppercase tracking-widest text-[#271908] hover:text-[#7b5800]">
                     {dict.nav.logout}
                   </button>
                 </form>
               </div>
             ) : (
-              <Link href="/login" className="text-xs font-semibold uppercase tracking-widest text-[#271908] hover:text-[#7b5800]">
+              <Link href="/login" className="shrink-0 whitespace-nowrap text-xs font-semibold uppercase tracking-widest text-[#271908] hover:text-[#7b5800]">
                 {dict.nav.login}
               </Link>
             )}
@@ -212,14 +215,14 @@ export default function Navbar({
             <Link
               href="/cart"
               aria-label={dict.nav.cart}
-              className="relative flex h-9 w-9 items-center justify-center text-[#271908] hover:text-[#7b5800] transition-colors"
+              className="relative flex h-9 w-9 shrink-0 items-center justify-center text-[#271908] hover:text-[#7b5800] transition-colors"
             >
               <ShoppingBag size={18} strokeWidth={2} />
               <CartBadge count={cartCount} />
             </Link>
             <Link
               href="/store"
-              className="bg-[#7b5800] text-white px-8 py-3 rounded-full text-xs font-semibold uppercase tracking-wider hover:bg-[#765400] transition-colors"
+              className="shrink-0 whitespace-nowrap bg-[#7b5800] text-white px-6 xl:px-8 py-3 rounded-full text-xs font-semibold uppercase tracking-wider hover:bg-[#765400] transition-colors"
             >
               {dict.nav.orderNow}
             </Link>

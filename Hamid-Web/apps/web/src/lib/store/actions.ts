@@ -9,12 +9,15 @@ import {
   storeProducts,
   storeProductTranslations,
   storeProductMedia,
+  storeHeroImages,
 } from "@hamid/db";
 import {
   storeCategorySchema,
   storeProductSchema,
+  storeHeroImageSchema,
   type StoreCategoryInput,
   type StoreProductInput,
+  type StoreHeroImageInput,
 } from "@hamid/core";
 import { guardPermission, type ActionResult } from "@/lib/auth/rbac";
 import { logActivity } from "@/lib/activity/log";
@@ -23,6 +26,9 @@ function revalidateStore() {
   revalidatePath("/admin/store");
   revalidatePath("/admin/store/products");
   revalidatePath("/store");
+  // Featured/best-seller toggles render on the homepage, not just /store —
+  // without this the home page keeps serving a stale render after a toggle.
+  revalidatePath("/");
 }
 
 // ── Categories ────────────────────────────────────────────────────────────
@@ -203,6 +209,41 @@ export async function deleteStoreProductAction(id: number): Promise<ActionResult
     .set({ deletedAt: new Date(), isActive: false, slug: `${existingProduct?.slug ?? "product"}-deleted-${id}` })
     .where(eq(storeProducts.id, id));
   await logActivity({ actorUserId: Number(guard.id), action: "store_product.deleted", entityType: "store_product", entityId: id });
+  revalidateStore();
+  return { success: true };
+}
+
+// ── Hero images ───────────────────────────────────────────────────────────
+
+export async function createStoreHeroImageAction(input: StoreHeroImageInput): Promise<ActionResult<{ id: number }>> {
+  const guard = await guardPermission("store.manage");
+  if ("error" in guard) return guard;
+
+  const parsed = storeHeroImageSchema.safeParse(input);
+  if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? "Invalid input." };
+
+  const [row] = await db.insert(storeHeroImages).values(parsed.data).$returningId();
+  await logActivity({ actorUserId: Number(guard.id), action: "store_hero_image.created", entityType: "store_hero_image", entityId: row.id });
+  revalidateStore();
+  return { success: true, data: { id: row.id } };
+}
+
+export async function toggleStoreHeroImageAction(id: number, isActive: boolean): Promise<ActionResult> {
+  const guard = await guardPermission("store.manage");
+  if ("error" in guard) return guard;
+
+  await db.update(storeHeroImages).set({ isActive }).where(eq(storeHeroImages.id, id));
+  await logActivity({ actorUserId: Number(guard.id), action: "store_hero_image.toggled", entityType: "store_hero_image", entityId: id, changes: { isActive } });
+  revalidateStore();
+  return { success: true };
+}
+
+export async function deleteStoreHeroImageAction(id: number): Promise<ActionResult> {
+  const guard = await guardPermission("store.manage");
+  if ("error" in guard) return guard;
+
+  await db.delete(storeHeroImages).where(eq(storeHeroImages.id, id));
+  await logActivity({ actorUserId: Number(guard.id), action: "store_hero_image.deleted", entityType: "store_hero_image", entityId: id });
   revalidateStore();
   return { success: true };
 }

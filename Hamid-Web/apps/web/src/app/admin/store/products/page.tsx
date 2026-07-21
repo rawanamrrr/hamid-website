@@ -56,6 +56,7 @@ export default async function AdminStoreProductsPage({
         tabs={[
           { label: "Categories", href: "/admin/store" },
           { label: "Products", href: "/admin/store/products" },
+          { label: "Hero Images", href: "/admin/store/hero" },
         ]}
       />
 

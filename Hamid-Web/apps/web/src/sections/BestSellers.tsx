@@ -1,5 +1,4 @@
-import Image from "next/image";
-import Link from "next/link";
+import ProductCard from "@/components/ProductCard";
 import { getBestSellerProducts } from "@/lib/store/queries";
 import { withDbTimeout } from "@/lib/db-timeout";
 import { getLocale, getDict } from "@/lib/i18n";
@@ -30,22 +29,21 @@ export default async function BestSellers() {
 
         <div className="flex gap-4 md:gap-6 overflow-x-auto no-scrollbar pb-4 -mx-5 px-5 md:-mx-0 md:px-0">
           {bestSellers.map((p) => (
-            <Link
-              key={p.id}
-              href={`/store/${p.slug}`}
-              className="min-w-[220px] md:min-w-[300px] flex-shrink-0 group luxury-shadow bg-white rounded-3xl overflow-hidden transition-all duration-500 hover:-translate-y-2"
-            >
-              <div className="h-44 md:h-64 overflow-hidden relative bg-[#f2d5ba]">
-                <Image src={p.image} alt={p.alt} fill className="object-cover" unoptimized />
-              </div>
-              <div className="p-4 md:p-6 space-y-1 md:space-y-2">
-                <h3 className="font-[family-name:var(--font-plus-jakarta)] text-base md:text-2xl font-semibold text-black leading-snug">
-                  {p.name}
-                </h3>
-                <p className="text-[#4f4541] text-xs">{p.tag}</p>
-                <p className="text-[#7b5800] font-bold text-sm md:text-base">{p.price}</p>
-              </div>
-            </Link>
+            <div key={p.id} className="min-w-[220px] md:min-w-[300px] flex-shrink-0">
+              <ProductCard
+                productId={p.id}
+                slug={p.slug}
+                name={p.name}
+                price={p.price}
+                rating={p.rating}
+                tag={p.tag}
+                badge={p.badge}
+                image={p.image}
+                alt={p.alt}
+                addToCartLabel={dict.product.addToCart}
+                addedLabel={dict.product.added}
+              />
+            </div>
           ))}
         </div>
 

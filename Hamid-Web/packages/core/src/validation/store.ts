@@ -1,6 +1,13 @@
 import { z } from "zod";
 import { slugSchema, decimalString, nullableDecimalString, requiredLocalizedText, optionalLocalizedText } from "./shared";
 
+export const storeHeroImageSchema = z.object({
+  mediaId: z.number().int().positive(),
+  sortOrder: z.coerce.number().int().default(0),
+  isActive: z.boolean().default(true),
+});
+export type StoreHeroImageInput = z.infer<typeof storeHeroImageSchema>;
+
 export const storeCategorySchema = z.object({
   slug: slugSchema,
   imageMediaId: z.number().int().positive().nullable().optional(),
@@ -38,7 +45,8 @@ export const discountSchema = z
     code: z
       .string()
       .max(50)
-      .regex(/^[A-Z0-9_-]*$/, "Uppercase letters, numbers, hyphens and underscores only")
+      .transform((v) => v.toUpperCase())
+      .refine((v) => /^[A-Z0-9_-]*$/.test(v), "Letters, numbers, hyphens and underscores only")
       .optional(),
     minOrderTotal: nullableDecimalString.optional(),
     maxUses: z.coerce.number().int().positive().nullable().optional(),
@@ -46,8 +54,8 @@ export const discountSchema = z
     startsAt: z.coerce.date(),
     endsAt: z.coerce.date(),
     isActive: z.boolean().default(true),
-    productIds: z.array(z.number().int().positive()).default([]),
-    categoryIds: z.array(z.number().int().positive()).default([]),
+    productIds: z.array(z.coerce.number().int().positive()).default([]),
+    categoryIds: z.array(z.coerce.number().int().positive()).default([]),
   })
   .refine((d) => d.endsAt > d.startsAt, { message: "End date must be after start date", path: ["endsAt"] })
   .refine((d) => d.scope !== "product" || d.productIds.length > 0, {

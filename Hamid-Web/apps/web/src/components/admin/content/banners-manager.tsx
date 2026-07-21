@@ -33,6 +33,25 @@ const PLACEMENTS = [
 
 const placementLabel = (value: string) => PLACEMENTS.find((p) => p.value === value)?.label ?? value;
 
+const SITE_PAGES = [
+  { value: "/", label: "Home" },
+  { value: "/menu", label: "Menu" },
+  { value: "/store", label: "Store" },
+  { value: "/store?category=coffee-beans", label: "Store — Coffee Beans" },
+  { value: "/store?category=turkish-coffee", label: "Store — Turkish Coffee" },
+  { value: "/store?category=espresso", label: "Store — Espresso" },
+  { value: "/store?category=accessories", label: "Store — Accessories" },
+  { value: "/coffee", label: "Coffee (our story)" },
+  { value: "/about", label: "About" },
+  { value: "/branches", label: "Branches" },
+  { value: "/contact", label: "Contact" },
+  { value: "/sourcing", label: "Sourcing" },
+  { value: "/cart", label: "Cart" },
+  { value: "/checkout", label: "Checkout" },
+  { value: "/login", label: "Login" },
+];
+const CUSTOM_LINK = "__custom__";
+
 export function BannersManager({ items }: { items: BannerItem[] }) {
   const router = useRouter();
   const [image, setImage] = useState<PickedMedia | null>(null);
@@ -50,6 +69,9 @@ export function BannersManager({ items }: { items: BannerItem[] }) {
   const heroSlides = items.filter((b) => b.placement === "home_hero");
   const otherBanners = items.filter((b) => b.placement !== "home_hero");
   const isHero = placement === "home_hero";
+
+  const isKnownLink = linkUrl === "" || SITE_PAGES.some((p) => p.value === linkUrl);
+  const linkSelectValue = isKnownLink ? linkUrl : CUSTOM_LINK;
 
   function addBanner() {
     if (!image) {
@@ -175,7 +197,29 @@ export function BannersManager({ items }: { items: BannerItem[] }) {
           )}
           <div>
             <Label htmlFor="linkUrl">{isHero ? "Button link (optional)" : "Link (optional)"}</Label>
-            <Input id="linkUrl" placeholder="/store" value={linkUrl} onChange={(e) => setLinkUrl(e.target.value)} />
+            <select
+              id="linkUrl"
+              value={linkSelectValue}
+              onChange={(e) => setLinkUrl(e.target.value === CUSTOM_LINK ? "" : e.target.value)}
+              className="flex h-11 w-full rounded-xl border border-outline-variant bg-surface-container-lowest px-3 text-sm text-on-surface"
+            >
+              <option value="">— None —</option>
+              {SITE_PAGES.map((p) => (
+                <option key={p.value} value={p.value}>
+                  {p.label}
+                </option>
+              ))}
+              <option value={CUSTOM_LINK}>Custom URL…</option>
+            </select>
+            {linkSelectValue === CUSTOM_LINK && (
+              <Input
+                className="mt-2"
+                placeholder="https://... or /path"
+                value={linkUrl}
+                onChange={(e) => setLinkUrl(e.target.value)}
+                autoFocus
+              />
+            )}
           </div>
           <Button type="button" onClick={addBanner} disabled={pending}>
             {isHero ? "Add hero slide" : "Add banner"}

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { desc, eq } from "drizzle-orm";
 import {
@@ -8,6 +9,8 @@ import {
   payments,
   paymentMethods,
   addresses,
+  customers,
+  users,
 } from "@hamid/db";
 import { formatMoney, toCents } from "@hamid/core";
 import { Card, CardContent } from "@/components/ui/card";
@@ -20,7 +23,7 @@ export default async function AdminOrderDetailPage({ params }: { params: Promise
   const [order] = await db.select().from(orders).where(eq(orders.id, orderId)).limit(1);
   if (!order) notFound();
 
-  const [items, history, paymentRows, address] = await Promise.all([
+  const [items, history, paymentRows, address, customerAccount] = await Promise.all([
     db.select().from(orderItems).where(eq(orderItems.orderId, orderId)),
     db.select().from(orderStatusHistory).where(eq(orderStatusHistory.orderId, orderId)).orderBy(desc(orderStatusHistory.createdAt)),
     db
@@ -35,9 +38,24 @@ export default async function AdminOrderDetailPage({ params }: { params: Promise
       .innerJoin(paymentMethods, eq(paymentMethods.id, payments.methodId))
       .where(eq(payments.orderId, orderId)),
     order.addressId ? db.select().from(addresses).where(eq(addresses.id, order.addressId)).limit(1) : Promise.resolve([]),
+    order.customerId
+      ? db
+          .select({ fullName: users.fullName, email: users.email, phone: users.phone })
+          .from(customers)
+          .innerJoin(users, eq(users.id, customers.userId))
+          .where(eq(customers.id, order.customerId))
+          .limit(1)
+      : Promise.resolve([]),
   ]);
 
   const guestContact = order.guestContact as { name?: string; phone?: string; email?: string } | null;
+  const account = customerAccount[0];
+  // guestContact (who to actually hand a Pickup order to / contact) takes
+  // priority over the account's own details when both exist, since it may
+  // deliberately differ (e.g. ordering for someone else).
+  const customerName = guestContact?.name ?? account?.fullName ?? "Guest";
+  const customerPhone = guestContact?.phone ?? account?.phone ?? null;
+  const customerEmail = guestContact?.email ?? account?.email ?? null;
 
   return (
     <div>
@@ -88,12 +106,23 @@ export default async function AdminOrderDetailPage({ params }: { params: Promise
           <Card>
             <CardContent>
               <h2 className="mb-3 font-display text-base font-bold text-on-surface">Customer</h2>
-              <p className="text-sm text-on-surface">{guestContact?.name ?? "Registered customer"}</p>
-              {guestContact?.phone && <p className="text-sm text-on-surface-variant">{guestContact.phone}</p>}
-              {guestContact?.email && <p className="text-sm text-on-surface-variant">{guestContact.email}</p>}
+              {order.customerId ? (
+                <Link href={`/admin/customers/${order.customerId}`} className="text-sm font-semibold text-primary hover:underline">
+                  {customerName}
+                </Link>
+              ) : (
+                <p className="text-sm text-on-surface">{customerName}</p>
+              )}
+              <p className="mt-0.5 text-xs uppercase tracking-wide text-on-surface-variant">
+                {order.customerId ? "Registered customer" : "Guest checkout"}
+              </p>
+              {customerPhone && <p className="mt-2 text-sm text-on-surface-variant">{customerPhone}</p>}
+              {customerEmail && <p className="text-sm text-on-surface-variant">{customerEmail}</p>}
               {address[0] && (
                 <p className="mt-2 text-sm text-on-surface-variant">
-                  {address[0].street}, {address[0].area}, {address[0].city}, {address[0].governorate}
+                  {[address[0].street, address[0].building, address[0].area, address[0].city, address[0].governorate]
+                    .filter(Boolean)
+                    .join(", ")}
                 </p>
               )}
             </CardContent>

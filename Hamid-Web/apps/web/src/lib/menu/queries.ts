@@ -104,7 +104,11 @@ export const getMenuSections = unstable_cache(getMenuSectionsImpl, ["menu-sectio
   revalidate: CATALOG_REVALIDATE_SECONDS,
 });
 
-async function getMenuHeroImagesImpl(): Promise<string[]> {
+// Not cached: this table is tiny (a handful of rows) and rarely queried
+// outside this one banner, so the cost of hitting the DB on every load is
+// negligible — and it means admin changes appear immediately via the
+// existing revalidatePath("/menu") instead of waiting out the 60s window.
+export async function getMenuHeroImages(): Promise<string[]> {
   const rows = await db
     .select({ url: media.url })
     .from(menuHeroImages)
@@ -113,7 +117,3 @@ async function getMenuHeroImagesImpl(): Promise<string[]> {
     .orderBy(asc(menuHeroImages.sortOrder));
   return rows.map((r) => r.url);
 }
-
-export const getMenuHeroImages = unstable_cache(getMenuHeroImagesImpl, ["menu-hero-images"], {
-  revalidate: CATALOG_REVALIDATE_SECONDS,
-});

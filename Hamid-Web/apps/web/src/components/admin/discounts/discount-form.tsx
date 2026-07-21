@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, FormError } from "@/components/ui/card";
+import { toast } from "@/components/ui/toast";
 
 function toDatetimeLocal(d?: Date | string | null): string {
   if (!d) return "";
@@ -66,17 +67,36 @@ export function DiscountForm({
     const result = discountId ? await updateDiscountAction(discountId, values) : await createDiscountAction(values);
     if ("error" in result) {
       setServerError(result.error);
+      toast(result.error, "error");
       return;
     }
+    toast(discountId ? "Discount updated." : "Discount created.");
     router.push("/admin/discounts");
     router.refresh();
   }
+
+  // Surfaces validation failures on any field, including ones without their
+  // own inline message below — otherwise a bad value on e.g. Type, Starts,
+  // or Max uses blocks submission with zero visible feedback.
+  const errorMessages = Object.values(errors)
+    .map((e) => (e && typeof e === "object" && "message" in e ? (e.message as string | undefined) : undefined))
+    .filter((m): m is string => !!m);
 
   return (
     <Card>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <FormError>{serverError}</FormError>
+          {errorMessages.length > 0 && (
+            <div className="rounded-xl border border-error/30 bg-error/5 p-3 text-xs text-error">
+              <p className="font-semibold">Please fix the following:</p>
+              <ul className="mt-1 list-disc space-y-0.5 ps-4">
+                {errorMessages.map((m, i) => (
+                  <li key={i}>{m}</li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           <div>
             <Label htmlFor="name">Name</Label>
@@ -103,7 +123,16 @@ export function DiscountForm({
             </div>
             <div>
               <Label htmlFor="code">Code (optional)</Label>
-              <Input id="code" placeholder="RAMADAN25" {...register("code")} />
+              <Input
+                id="code"
+                placeholder="RAMADAN25"
+                {...register("code", {
+                  onChange: (e) => {
+                    const upper = e.target.value.toUpperCase();
+                    if (upper !== e.target.value) e.target.value = upper;
+                  },
+                })}
+              />
               {errors.code && <p className="mt-1 text-xs text-error">{errors.code.message}</p>}
             </div>
           </div>
@@ -127,7 +156,13 @@ export function DiscountForm({
               <div className="grid max-h-40 grid-cols-1 gap-2 overflow-y-auto rounded-xl border border-outline-variant p-3 sm:grid-cols-2">
                 {categories.map((c) => (
                   <label key={c.id} className="flex items-center gap-2 text-sm">
-                    <input type="checkbox" value={c.id} {...register("categoryIds")} className="h-4 w-4 rounded border-outline-variant" />
+                    <input
+                      type="checkbox"
+                      value={c.id}
+                      defaultChecked={defaultValues?.categoryIds?.includes(c.id)}
+                      {...register("categoryIds")}
+                      className="h-4 w-4 rounded border-outline-variant"
+                    />
                     {c.name}
                   </label>
                 ))}
@@ -142,7 +177,13 @@ export function DiscountForm({
               <div className="grid max-h-40 grid-cols-1 gap-2 overflow-y-auto rounded-xl border border-outline-variant p-3 sm:grid-cols-2">
                 {products.map((p) => (
                   <label key={p.id} className="flex items-center gap-2 text-sm">
-                    <input type="checkbox" value={p.id} {...register("productIds")} className="h-4 w-4 rounded border-outline-variant" />
+                    <input
+                      type="checkbox"
+                      value={p.id}
+                      defaultChecked={defaultValues?.productIds?.includes(p.id)}
+                      {...register("productIds")}
+                      className="h-4 w-4 rounded border-outline-variant"
+                    />
                     {p.name}
                   </label>
                 ))}
@@ -194,8 +235,8 @@ export function DiscountForm({
           </label>
 
           <div className="flex gap-3">
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Saving…" : discountId ? "Save changes" : "Create discount"}
+            <Button type="submit" loading={isSubmitting}>
+              {discountId ? "Save changes" : "Create discount"}
             </Button>
             <Button type="button" variant="outline" onClick={() => router.push("/admin/discounts")}>
               Cancel

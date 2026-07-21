@@ -4,8 +4,9 @@ import ProductCard from "@/components/ProductCard";
 import { StoreSearchInput } from "@/components/store/search-input";
 import { LoadErrorBand } from "@/components/LoadErrorBand";
 import { withDbTimeout } from "@/lib/db-timeout";
-import { getStoreCategories, getStoreProducts } from "@/lib/store/queries";
+import { getStoreCategories, getStoreProducts, getStoreHeroImages } from "@/lib/store/queries";
 import { getLocale, getDict } from "@/lib/i18n";
+import { StoreHeroBackground } from "@/components/store/hero-background";
 
 // Note: this route reads the locale cookie (via getLocale) and searchParams,
 // which force dynamic (per-request) rendering — an ISR `revalidate` export
@@ -25,19 +26,23 @@ export default async function StorePage({
   const activeCategory = params.category;
   const search = params.q;
 
-  const [categories, products] = await Promise.all([
+  const [categories, products, heroImages] = await Promise.all([
     withDbTimeout(getStoreCategories(locale)).catch(() => null),
     withDbTimeout(getStoreProducts(locale, { categorySlug: activeCategory, search })).catch(() => null),
+    withDbTimeout(getStoreHeroImages()).catch(() => []),
   ]);
 
   return (
     <div className="min-h-screen">
-      <div className="bg-[#271908] py-14 md:py-24 px-5 md:px-16 text-center">
-        <p className="text-[#c8a97a] text-xs font-semibold uppercase tracking-widest mb-3">Hamid Afandi</p>
-        <h1 className="font-[family-name:var(--font-plus-jakarta)] text-3xl md:text-5xl font-bold text-white mb-4">
-          {dict.store.title}
-        </h1>
-        <p className="text-white/80 text-sm md:text-lg max-w-xl mx-auto">{dict.store.subtitle}</p>
+      <div className="relative overflow-hidden bg-[#271908] py-14 md:py-24 px-5 md:px-16 text-center">
+        <StoreHeroBackground images={heroImages} />
+        <div className="relative z-10">
+          <p className="text-[#c8a97a] text-xs font-semibold uppercase tracking-widest mb-3">Hamid Afandi</p>
+          <h1 className="font-[family-name:var(--font-plus-jakarta)] text-3xl md:text-5xl font-bold text-white mb-4">
+            {dict.store.title}
+          </h1>
+          <p className="text-white/80 text-sm md:text-lg max-w-xl mx-auto">{dict.store.subtitle}</p>
+        </div>
       </div>
 
       {categories === null || products === null ? (

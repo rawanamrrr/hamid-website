@@ -19,6 +19,8 @@ export interface SiteSettingsInput {
   notificationEmail: string;
   taxEnabled: boolean;
   guestCheckoutEnabled: boolean;
+  instapayNumber: string;
+  instapayName: string;
 }
 
 async function upsertSetting(group: string, key: string, value: unknown) {
@@ -49,6 +51,8 @@ export async function updateSiteSettingsAction(input: SiteSettingsInput): Promis
     upsertSetting("notifications", "email", notificationEmail),
     upsertSetting("checkout", "tax_enabled", input.taxEnabled),
     upsertSetting("checkout", "guest_checkout_enabled", input.guestCheckoutEnabled),
+    upsertSetting("checkout", "instapay_number", input.instapayNumber.trim()),
+    upsertSetting("checkout", "instapay_name", input.instapayName.trim()),
   ]);
 
   await logActivity({ actorUserId: Number(guard.id), action: "settings.updated", entityType: "settings" });

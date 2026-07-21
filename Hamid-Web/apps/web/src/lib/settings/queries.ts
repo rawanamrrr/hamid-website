@@ -26,3 +26,15 @@ export async function getNotificationEmail(): Promise<string> {
   const value = await getSetting("notifications", "email").catch(() => null);
   return typeof value === "string" && value.trim() ? value.trim() : "zeyad5zoks@gmail.com";
 }
+
+/** InstaPay account to display at checkout so customers know where to send the payment. */
+export async function getInstapayDetails(): Promise<{ number: string; name: string }> {
+  const [number, name] = await Promise.all([
+    getSetting("checkout", "instapay_number").catch(() => null),
+    getSetting("checkout", "instapay_name").catch(() => null),
+  ]);
+  return {
+    number: typeof number === "string" ? number.trim() : "",
+    name: typeof name === "string" ? name.trim() : "",
+  };
+}

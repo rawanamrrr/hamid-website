@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, FormError } from "@/components/ui/card";
 import { MediaPicker, type PickedMedia } from "@/components/admin/media-picker";
+import { toast } from "@/components/ui/toast";
 
 export function MenuCategoryForm({
   categoryId,
@@ -51,8 +52,10 @@ export function MenuCategoryForm({
 
     if ("error" in result) {
       setServerError(result.error);
+      toast(result.error, "error");
       return;
     }
+    toast(categoryId ? "Category updated." : "Category created.");
     router.push("/admin/menu");
     router.refresh();
   }
@@ -110,8 +113,8 @@ export function MenuCategoryForm({
           </label>
 
           <div className="flex gap-3">
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Saving…" : categoryId ? "Save changes" : "Create category"}
+            <Button type="submit" loading={isSubmitting}>
+              {categoryId ? "Save changes" : "Create category"}
             </Button>
             <Button type="button" variant="outline" onClick={() => router.push("/admin/menu")}>
               Cancel

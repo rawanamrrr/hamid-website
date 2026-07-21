@@ -8,6 +8,7 @@ import {
   storeProducts,
   storeProductTranslations,
   storeProductMedia,
+  storeHeroImages,
   media,
 } from "@hamid/db";
 import { formatMoney, toCents, type Locale } from "@hamid/core";
@@ -214,10 +215,27 @@ export const getStoreProductBySlug = unstable_cache(getStoreProductBySlugImpl, [
   revalidate: CATALOG_REVALIDATE_SECONDS,
 });
 
+// Not routed through the 60s unstable_cache like getStoreProducts: these
+// power the homepage Featured/Best Seller sections, are cheap (small, limited
+// queries), and admins expect a featured/best-seller toggle to appear on the
+// home page immediately rather than after the cache window elapses.
+// Not cached: same rationale as getMenuHeroImages — this table is tiny and
+// rarely queried, so admin changes should appear immediately rather than
+// waiting out the 60s catalog cache window.
+export async function getStoreHeroImages(): Promise<string[]> {
+  const rows = await db
+    .select({ url: media.url })
+    .from(storeHeroImages)
+    .innerJoin(media, eq(media.id, storeHeroImages.mediaId))
+    .where(eq(storeHeroImages.isActive, true))
+    .orderBy(asc(storeHeroImages.sortOrder));
+  return rows.map((r) => r.url);
+}
+
 export async function getFeaturedHomeProducts(locale: Locale = "en", limit = 8): Promise<StoreProductView[]> {
-  return getStoreProducts(locale, { onlyFeaturedHome: true, limit });
+  return getStoreProductsImpl(locale, { onlyFeaturedHome: true, limit });
 }
 
 export async function getBestSellerProducts(locale: Locale = "en", limit = 8): Promise<StoreProductView[]> {
-  return getStoreProducts(locale, { onlyBestSeller: true, limit });
+  return getStoreProductsImpl(locale, { onlyBestSeller: true, limit });
 }

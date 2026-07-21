@@ -38,6 +38,8 @@ export default async function AdminSettingsPage() {
           notificationEmail: (find("notifications", "email") as string) ?? "zeyad5zoks@gmail.com",
           taxEnabled: Boolean(find("checkout", "tax_enabled")),
           guestCheckoutEnabled: find("checkout", "guest_checkout_enabled") !== false,
+          instapayNumber: (find("checkout", "instapay_number") as string) ?? "",
+          instapayName: (find("checkout", "instapay_name") as string) ?? "",
         }}
       />
     </div>

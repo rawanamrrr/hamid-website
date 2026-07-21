@@ -23,9 +23,14 @@ export const checkoutSchema = z
     guestContact: guestContactSchema.optional(),
     paymentMethodCode: z.enum(["cash_on_delivery", "instapay"]),
     discountCode: z.string().max(50).optional(),
+    paymentProofMediaId: z.number().int().positive().optional(),
   })
   .refine((d) => d.fulfillmentType === "pickup" || d.addressId || d.newAddress, {
     message: "An address is required for delivery orders",
     path: ["addressId"],
+  })
+  .refine((d) => d.paymentMethodCode !== "instapay" || d.paymentProofMediaId, {
+    message: "Please upload your InstaPay payment screenshot.",
+    path: ["paymentProofMediaId"],
   });
 export type CheckoutInput = z.infer<typeof checkoutSchema>;

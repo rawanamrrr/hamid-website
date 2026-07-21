@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { AdminSidebar } from "./sidebar";
 import { AdminTopbar } from "./topbar";
+import { Toaster } from "@/components/ui/toast";
 
 /**
  * Wraps the sidebar + topbar so the mobile hamburger toggle (in the topbar)
@@ -24,6 +25,7 @@ export function AdminShell({
 
   return (
     <div className="flex h-screen overflow-hidden bg-surface">
+      <Toaster />
       <AdminSidebar permissions={permissions} mobileOpen={mobileNavOpen} onClose={() => setMobileNavOpen(false)} />
       <div className="flex flex-1 flex-col overflow-hidden">
         <AdminTopbar name={name} email={email} onOpenNav={() => setMobileNavOpen(true)} />

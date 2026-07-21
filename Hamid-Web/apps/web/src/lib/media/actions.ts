@@ -2,7 +2,17 @@
 
 import { revalidatePath } from "next/cache";
 import { desc, eq } from "drizzle-orm";
-import { db, media } from "@hamid/db";
+import {
+  db,
+  media,
+  storeProductMedia,
+  storeCategories,
+  storeHeroImages,
+  menuItems,
+  menuCategories,
+  menuHeroImages,
+  banners,
+} from "@hamid/db";
 import { presignUploadSchema } from "@hamid/core";
 import { guardPermission } from "@/lib/auth/rbac";
 import { logActivity } from "@/lib/activity/log";
@@ -95,6 +105,36 @@ export async function listPublicMediaAction() {
   return { success: true as const, items: rows };
 }
 
+/** Everywhere a media row can be referenced from — used to block deletion while still in use. */
+async function findMediaUsage(id: number): Promise<string | null> {
+  const [
+    productMedia,
+    categoryImage,
+    storeHero,
+    itemImage,
+    menuCategoryImage,
+    menuHero,
+    banner,
+  ] = await Promise.all([
+    db.select({ id: storeProductMedia.id }).from(storeProductMedia).where(eq(storeProductMedia.mediaId, id)).limit(1),
+    db.select({ id: storeCategories.id }).from(storeCategories).where(eq(storeCategories.imageMediaId, id)).limit(1),
+    db.select({ id: storeHeroImages.id }).from(storeHeroImages).where(eq(storeHeroImages.mediaId, id)).limit(1),
+    db.select({ id: menuItems.id }).from(menuItems).where(eq(menuItems.imageMediaId, id)).limit(1),
+    db.select({ id: menuCategories.id }).from(menuCategories).where(eq(menuCategories.imageMediaId, id)).limit(1),
+    db.select({ id: menuHeroImages.id }).from(menuHeroImages).where(eq(menuHeroImages.mediaId, id)).limit(1),
+    db.select({ id: banners.id }).from(banners).where(eq(banners.mediaId, id)).limit(1),
+  ]);
+
+  if (productMedia.length) return "a store product";
+  if (categoryImage.length) return "a store category";
+  if (storeHero.length) return "the store's hero images";
+  if (itemImage.length) return "a menu item";
+  if (menuCategoryImage.length) return "a menu category";
+  if (menuHero.length) return "the menu's hero images";
+  if (banner.length) return "a homepage banner";
+  return null;
+}
+
 export async function deleteMediaAction(id: number) {
   const guard = await guardPermission("media.manage");
   if ("error" in guard) return guard;
@@ -102,8 +142,19 @@ export async function deleteMediaAction(id: number) {
   const [row] = await db.select().from(media).where(eq(media.id, id)).limit(1);
   if (!row) return { error: "Media not found." };
 
+  const usage = await findMediaUsage(id);
+  if (usage) return { error: `This image is still used by ${usage} — remove it there first before deleting.` };
+
+  // Delete the DB row before the remote asset: if something still references
+  // this media (a table findMediaUsage doesn't know about, or a race), the
+  // FK constraint rejects the delete and we never touch Cloudinary — so a
+  // product's image can never be silently broken by a media deletion.
+  try {
+    await db.delete(media).where(eq(media.id, id));
+  } catch {
+    return { error: "This image is still in use elsewhere — remove it there first before deleting." };
+  }
   await destroyAsset(row.objectKey, row.isPrivate);
-  await db.delete(media).where(eq(media.id, id));
 
   await logActivity({ actorUserId: Number(guard.id), action: "media.deleted", entityType: "media", entityId: id });
   revalidatePath("/admin/media");

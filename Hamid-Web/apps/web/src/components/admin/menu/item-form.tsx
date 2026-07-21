@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, FormError } from "@/components/ui/card";
 import { MediaPicker, type PickedMedia } from "@/components/admin/media-picker";
+import { toast } from "@/components/ui/toast";
 
 export function MenuItemForm({
   itemId,
@@ -62,8 +63,10 @@ export function MenuItemForm({
 
     if ("error" in result) {
       setServerError(result.error);
+      toast(result.error, "error");
       return;
     }
+    toast(itemId ? "Item updated." : "Item created.");
     router.push("/admin/menu/items");
     router.refresh();
   }
@@ -191,18 +194,14 @@ export function MenuItemForm({
               Active
             </label>
             <label className="flex items-center gap-2 text-sm text-on-surface">
-              <input type="checkbox" {...register("isFeatured")} className="h-4 w-4 rounded border-outline-variant" />
-              Featured
-            </label>
-            <label className="flex items-center gap-2 text-sm text-on-surface">
               <input type="checkbox" {...register("isNew")} className="h-4 w-4 rounded border-outline-variant" />
               New item
             </label>
           </div>
 
           <div className="flex gap-3">
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Saving…" : itemId ? "Save changes" : "Create item"}
+            <Button type="submit" loading={isSubmitting}>
+              {itemId ? "Save changes" : "Create item"}
             </Button>
             <Button type="button" variant="outline" onClick={() => router.push("/admin/menu/items")}>
               Cancel

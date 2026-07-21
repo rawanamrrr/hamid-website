@@ -34,7 +34,18 @@ export interface SignedUploadParams {
   folder: string;
   type: "upload" | "authenticated";
   uploadUrl: string;
+  /** Incoming (upload-time) transformation, if any — the client must send this exact string back with the upload, since it's part of the signature. */
+  transformation?: string;
 }
+
+/**
+ * Caps the *stored* asset's dimensions/quality at upload time (an "incoming"
+ * transformation, not an eager/derived one) — phone screenshots routinely
+ * come in at 3000px+ and several MB, which is wasted storage for something
+ * only ever viewed at thumbnail/lightbox size in the admin review queue.
+ * c_limit never upscales smaller images.
+ */
+const PAYMENT_PROOF_TRANSFORMATION = "c_limit,w_1600,h_1600,q_auto:good,f_auto";
 
 /**
  * Cloudinary's signed-upload flow: the browser POSTs the file directly to
@@ -43,14 +54,16 @@ export interface SignedUploadParams {
  * presigned-PUT pattern — same "server authorizes, browser uploads directly"
  * shape, just a different signing scheme.
  *
- * `folder` and `type` must exactly match what the client sends in the
- * upload request — Cloudinary's signature covers every param except `file`,
- * `cloud_name`, `resource_type`, and `api_key`.
+ * `folder`, `type`, and `transformation` must exactly match what the client
+ * sends in the upload request — Cloudinary's signature covers every param
+ * except `file`, `cloud_name`, `resource_type`, and `api_key`.
  */
-export function createSignedUploadParams(folder: string, isPrivate: boolean): SignedUploadParams {
+export function createSignedUploadParams(folder: string, isPrivate: boolean, transformation?: string): SignedUploadParams {
   const timestamp = Math.round(Date.now() / 1000);
   const type = isPrivate ? "authenticated" : "upload";
-  const signature = cloudinary.utils.api_sign_request({ folder, timestamp, type }, API_SECRET);
+  const paramsToSign: Record<string, string | number> = { folder, timestamp, type };
+  if (transformation) paramsToSign.transformation = transformation;
+  const signature = cloudinary.utils.api_sign_request(paramsToSign, API_SECRET);
 
   return {
     cloudName: CLOUD_NAME,
@@ -59,8 +72,13 @@ export function createSignedUploadParams(folder: string, isPrivate: boolean): Si
     signature,
     folder,
     type,
+    transformation,
     uploadUrl: `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
   };
+}
+
+export function createPaymentProofUploadParams(): SignedUploadParams {
+  return createSignedUploadParams("payment-proofs", true, PAYMENT_PROOF_TRANSFORMATION);
 }
 
 /** Public delivery URL with automatic format + quality baked in — no per-callsite changes needed anywhere images are rendered. */

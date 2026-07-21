@@ -11,6 +11,17 @@ import {
 import { fk, id, locale, softDelete, timestamps, uuid } from "./_helpers";
 import { media } from "./media";
 
+export const storeHeroImages = mysqlTable("store_hero_images", {
+  id: id(),
+  uuid: uuid(),
+  mediaId: fk("media_id")
+    .notNull()
+    .references(() => media.id),
+  sortOrder: int("sort_order").notNull().default(0),
+  isActive: boolean("is_active").notNull().default(true),
+  ...timestamps,
+});
+
 /** Separate from the Menu module by design (Phase 1 decision) — the e-commerce catalog. */
 export const storeCategories = mysqlTable("store_categories", {
   id: id(),

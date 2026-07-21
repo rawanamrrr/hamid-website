@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, FormError } from "@/components/ui/card";
+import { toast } from "@/components/ui/toast";
 
 const ROLE_OPTIONS = ["admin", "manager", "staff", "customer"] as const;
 
@@ -71,9 +72,12 @@ export function ManageUserPanel({
     setNotice(null);
     startTransition(async () => {
       const res = await fn();
-      if ("error" in res) setError(res.error);
-      else {
+      if ("error" in res) {
+        setError(res.error);
+        toast(res.error, "error");
+      } else {
         setNotice(successMsg);
+        toast(successMsg);
         router.refresh();
       }
     });
@@ -119,7 +123,7 @@ export function ManageUserPanel({
           <Button
             type="button"
             variant="outline"
-            disabled={pending}
+            loading={pending}
             onClick={() =>
               run(() => toggleUserStatusAction(userId, status === "active" ? "suspended" : "active"), status === "active" ? "Account suspended." : "Account reactivated.")
             }
@@ -174,11 +178,11 @@ export function ManageUserPanel({
             </div>
             <Button
               type="button"
-              disabled={pending}
+              loading={pending}
               className="mt-4"
               onClick={() => run(() => setUserPermissionsAction(userId, [...overrides]), "Permissions saved — apply at their next sign-in.")}
             >
-              {pending ? "Saving…" : "Save permissions"}
+              Save permissions
             </Button>
           </CardContent>
         </Card>
@@ -201,7 +205,7 @@ export function ManageUserPanel({
               <Label htmlFor="newPassword">New password</Label>
               <Input id="newPassword" name="newPassword" type="password" minLength={8} required />
             </div>
-            <Button type="submit" variant="outline" disabled={pending}>
+            <Button type="submit" variant="outline" loading={pending}>
               Reset password
             </Button>
           </form>

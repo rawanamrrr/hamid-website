@@ -53,7 +53,7 @@ export default function ProductCard({
 
   const ImageBlock = (
     <div className="relative aspect-[4/5] overflow-hidden bg-[#f2d5ba] flex-shrink-0">
-      {!imgError ? (
+      {!imgError && image ? (
         <Image
           src={image}
           alt={alt}
