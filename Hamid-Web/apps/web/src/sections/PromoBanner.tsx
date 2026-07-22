@@ -1,26 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
-import { and, asc, eq } from "drizzle-orm";
-import { db, banners, bannerTranslations, media } from "@hamid/db";
 import { getLocale } from "@/lib/i18n";
-import { withDbTimeout } from "@/lib/db-timeout";
+import { getPromoBanner } from "@/lib/content/queries";
 
 export default async function PromoBanner({ placement = "home_top" }: { placement?: string }) {
   const locale = await getLocale();
-
-  // A promo banner is decorative — if its query fails or hangs (e.g.
-  // transient DB outage), skip it rather than crashing the whole page.
-  const rows = await withDbTimeout(db
-    .select({ id: banners.id, url: media.url, linkUrl: banners.linkUrl, title: bannerTranslations.title, ctaText: bannerTranslations.ctaText })
-    .from(banners)
-    .innerJoin(media, eq(media.id, banners.mediaId))
-    .leftJoin(bannerTranslations, and(eq(bannerTranslations.bannerId, banners.id), eq(bannerTranslations.locale, locale)))
-    .where(and(eq(banners.isActive, true), eq(banners.placement, placement)))
-    .orderBy(asc(banners.sortOrder))
-    .limit(1))
-    .catch(() => []);
-
-  const banner = rows[0];
+  const banner = await getPromoBanner(placement, locale);
   if (!banner) return null;
 
   const content = (

@@ -21,15 +21,23 @@ function createPool() {
   }
   // Tuned for the site4now shared-hosting MySQL, which enforces
   // wait_timeout=30s and max_user_connections=20: any connection idle longer
-  // than 30s is killed server-side, and a pool that keeps 10 idle sockets
-  // (the old config) hands out dead ones — the source of the intermittent
-  // "Failed query" errors. Recycle idle connections well before the server
-  // does, and stay far under the per-user cap so a second dev server or
-  // deploy doesn't exhaust it.
+  // than 30s is killed server-side, and a pool that keeps many idle sockets
+  // around hands out dead ones — the source of the intermittent "Failed
+  // query" errors that connectionLimit:5 originally fixed. But 5 concurrent
+  // connections turned out too tight the other direction: a single page like
+  // the homepage fires ~7-8 independent parallel queries (Hero,
+  // FeaturedProducts, Categories, BestSellers, Locations, Navbar, Footer —
+  // each its own async server component), so most of them ended up queueing
+  // for a free connection on every load, which is exactly the "everything
+  // feels laggy" symptom. connectionLimit:10 gives enough headroom for that
+  // burst while maxIdle stays low (so idle sockets still get recycled well
+  // before the server's own 30s cutoff, same fix as before) and queueLimit
+  // still leaves clear room under the host's 20-connection cap for a second
+  // dev server or deploy.
   return mysql.createPool({
     uri: url ?? "mysql://placeholder:placeholder@localhost:3306/placeholder",
-    connectionLimit: 5,
-    maxIdle: 2,
+    connectionLimit: 10,
+    maxIdle: 3,
     idleTimeout: 15_000,
     enableKeepAlive: true,
     keepAliveInitialDelay: 10_000,
