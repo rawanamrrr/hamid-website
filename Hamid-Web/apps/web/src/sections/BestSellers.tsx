@@ -1,12 +1,13 @@
 import ProductCard from "@/components/ProductCard";
 import { getBestSellerProducts } from "@/lib/store/queries";
-import { withDbTimeout } from "@/lib/db-timeout";
 import { getLocale, getDict } from "@/lib/i18n";
 
 export default async function BestSellers() {
   const [locale, dict] = await Promise.all([getLocale(), getDict()]);
-  // Skip the section entirely if the catalog can't be reached right now.
-  const bestSellers = await withDbTimeout(getBestSellerProducts(locale, 8)).catch(() => []);
+  // getBestSellerProducts is now itself cached (see store/queries.ts) — no
+  // extra withDbTimeout wrapper needed, and the .catch keeps a DB blip from
+  // taking the section down.
+  const bestSellers = await getBestSellerProducts(locale, 8).catch(() => []);
 
   if (bestSellers.length === 0) return null;
 

@@ -14,6 +14,7 @@ import {
   UserCog,
   MapPin,
   KeyRound,
+  Info,
   type LucideIcon,
 } from "lucide-react";
 
@@ -33,4 +34,5 @@ export const ICON_MAP: Record<string, LucideIcon> = {
   UserCog,
   MapPin,
   KeyRound,
+  Info,
 };

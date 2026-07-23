@@ -13,6 +13,7 @@ import {
 } from "@hamid/db";
 import { formatMoney, toCents, computeDiscountAmountCents, isDiscountWindowOpen, type Locale, type DiscountLike } from "@hamid/core";
 import { getAutoDiscounts } from "@/lib/discounts/resolve";
+import { withDbTimeout } from "@/lib/db-timeout";
 
 /**
  * 60s time-based cache on the read-heavy public catalog queries — this is a
@@ -256,10 +257,6 @@ export const getStoreProductBySlug = unstable_cache(getStoreProductBySlugImpl, [
   revalidate: CATALOG_REVALIDATE_SECONDS,
 });
 
-// Not routed through the 60s unstable_cache like getStoreProducts: these
-// power the homepage Featured/Best Seller sections, are cheap (small, limited
-// queries), and admins expect a featured/best-seller toggle to appear on the
-// home page immediately rather than after the cache window elapses.
 // Not cached: same rationale as getMenuHeroImages — this table is tiny and
 // rarely queried, so admin changes should appear immediately rather than
 // waiting out the 60s catalog cache window.
@@ -273,10 +270,24 @@ export async function getStoreHeroImages(): Promise<string[]> {
   return rows.map((r) => r.url);
 }
 
-export async function getFeaturedHomeProducts(locale: Locale = "en", limit = 8): Promise<StoreProductView[]> {
-  return getStoreProductsImpl(locale, { onlyFeaturedHome: true, limit });
+// Previously these called getStoreProductsImpl directly — bypassing the 60s
+// unstable_cache that /store's identical query pipeline gets — so every
+// single homepage load paid for a full fresh round-trip (categories, product
+// query, then translations+media+discounts) to the remote MySQL host. That
+// was the "Featured Coffee loads noticeably slower" symptom: the rest of the
+// homepage is either static or cached, this wasn't. Store/menu admin actions
+// already call revalidatePath("/") on save, so the same up-to-60s staleness
+// trade-off already accepted for /store applies here too.
+async function getFeaturedHomeProductsImpl(locale: Locale = "en", limit = 8): Promise<StoreProductView[]> {
+  return withDbTimeout(getStoreProductsImpl(locale, { onlyFeaturedHome: true, limit }));
 }
+export const getFeaturedHomeProducts = unstable_cache(getFeaturedHomeProductsImpl, ["featured-home-products"], {
+  revalidate: CATALOG_REVALIDATE_SECONDS,
+});
 
-export async function getBestSellerProducts(locale: Locale = "en", limit = 8): Promise<StoreProductView[]> {
-  return getStoreProductsImpl(locale, { onlyBestSeller: true, limit });
+async function getBestSellerProductsImpl(locale: Locale = "en", limit = 8): Promise<StoreProductView[]> {
+  return withDbTimeout(getStoreProductsImpl(locale, { onlyBestSeller: true, limit }));
 }
+export const getBestSellerProducts = unstable_cache(getBestSellerProductsImpl, ["best-seller-products"], {
+  revalidate: CATALOG_REVALIDATE_SECONDS,
+});

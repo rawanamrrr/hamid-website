@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import Hero from "@/sections/Hero";
-import PromoBanner from "@/sections/PromoBanner";
 import HeritageStory from "@/sections/HeritageStory";
 import FeaturedProducts from "@/sections/FeaturedProducts";
 import Categories from "@/sections/Categories";
@@ -26,9 +25,6 @@ export default async function Home() {
     <>
       <Suspense fallback={<div className="h-[56svh] md:h-[600px]" />}>
         <Hero />
-      </Suspense>
-      <Suspense fallback={null}>
-        <PromoBanner placement="home_top" />
       </Suspense>
       <Suspense fallback={null}>
         <FeaturedProducts />

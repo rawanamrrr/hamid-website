@@ -2,8 +2,17 @@
 
 import { revalidatePath } from "next/cache";
 import { eq } from "drizzle-orm";
-import { db, banners, bannerTranslations } from "@hamid/db";
+import { db, banners, bannerTranslations, contentBlocks } from "@hamid/db";
 import { guardPermission, type ActionResult } from "@/lib/auth/rbac";
+import {
+  CATEGORY_CARD_KEYS,
+  INSTAGRAM_PHOTO_KEYS,
+  type AboutHeroPayload,
+  type CategoryCardKey,
+  type CategoryCardPayload,
+  type InstagramPhotoKey,
+  type InstagramPhotoPayload,
+} from "@/lib/content/queries";
 
 export interface BannerInput {
   mediaId: number;
@@ -94,5 +103,52 @@ export async function reorderBannersAction(orderedIds: number[]): Promise<Action
     }
   });
   revalidateContent();
+  return { success: true };
+}
+
+// ─── Generic content blocks — About hero, homepage category cards, homepage
+// Instagram photos. Each block is identified by (page, blockKey), which is
+// unique in the schema, so every save is a single upsert — no separate
+// create/update paths, no ids to track from the client.
+async function upsertContentBlock(page: string, blockKey: string, type: string, payload: Record<string, unknown>) {
+  await db
+    .insert(contentBlocks)
+    .values({ page, blockKey, type, payload })
+    .onDuplicateKeyUpdate({ set: { payload, type } });
+}
+
+export async function saveAboutHeroAction(input: AboutHeroPayload): Promise<ActionResult> {
+  const guard = await guardPermission("content.manage");
+  if ("error" in guard) return guard;
+  if (!input.imageUrl?.trim()) return { error: "Choose an image first." };
+
+  await upsertContentBlock("about", "hero", "image", { ...input });
+  revalidatePath("/admin/about");
+  revalidatePath("/about");
+  return { success: true };
+}
+
+export async function saveCategoryCardAction(key: CategoryCardKey, input: CategoryCardPayload): Promise<ActionResult> {
+  const guard = await guardPermission("content.manage");
+  if ("error" in guard) return guard;
+  if (!CATEGORY_CARD_KEYS.includes(key)) return { error: "Invalid card." };
+  if (!input.imageUrl?.trim()) return { error: "Choose an image first." };
+  if (!input.titleEn.trim()) return { error: "An English title is required." };
+
+  await upsertContentBlock("home", key, "category_card", { ...input });
+  revalidatePath("/admin/content");
+  revalidatePath("/");
+  return { success: true };
+}
+
+export async function saveInstagramPhotoAction(key: InstagramPhotoKey, input: InstagramPhotoPayload): Promise<ActionResult> {
+  const guard = await guardPermission("content.manage");
+  if ("error" in guard) return guard;
+  if (!INSTAGRAM_PHOTO_KEYS.includes(key)) return { error: "Invalid photo slot." };
+  if (!input.imageUrl?.trim()) return { error: "Choose an image first." };
+
+  await upsertContentBlock("home", key, "instagram_photo", { ...input });
+  revalidatePath("/admin/content");
+  revalidatePath("/");
   return { success: true };
 }

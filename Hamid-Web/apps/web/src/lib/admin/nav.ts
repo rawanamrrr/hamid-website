@@ -37,6 +37,7 @@ export const ADMIN_NAV: AdminNavGroup[] = [
     label: "Content",
     items: [
       { label: "Home Page", href: "/admin/content", icon: "Home", permission: "content.view" },
+      { label: "About Page", href: "/admin/about", icon: "Info", permission: "content.view" },
       { label: "Media Library", href: "/admin/media", icon: "Image", permission: "media.view" },
     ],
   },
