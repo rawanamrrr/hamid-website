@@ -62,6 +62,7 @@ export default function Navbar({
   const links = [
     { href: "/", label: dict.nav.home },
     { href: "/menu", label: dict.nav.menu },
+    { href: "/menu2", label: "Menu 2" },
     { href: "/store", label: dict.nav.store },
     { href: "/coffee", label: dict.nav.coffee },
     { href: "/about", label: dict.nav.about },

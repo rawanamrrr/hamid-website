@@ -26,8 +26,7 @@ export default async function Locations() {
             <div
               className="w-full h-full bg-cover bg-center"
               style={{
-                backgroundImage:
-                  "url('https://lh3.googleusercontent.com/aida-public/AB6AXuD_Ki8fEXHLMzEoRtk5goIjM_EVOkVtEP0qBbxKbSTsgMapp-SXp2jIsZ2-TOJb0kCXVhb2sjKl1OSz5eqJ9bkC5mB0GshPuGOhSc4ddSK-weJEbjEicmY5gGfI8RwWorDG5jP68GctDQWWC-irILJPQqZBqFyS2pt6kwCcbKJ-oSbO-LR7NICpjoXUZmVdmxBbBFQm_psK5swjehJriSQHqHE2XOAsehHEegHlQ52AIw0YVcZilmCS6Mnaz1Wd0J7b3XgJNihHJ0_i')",
+                backgroundImage: "url('/map.png')",
               }}
             />
           </div>
@@ -97,8 +96,7 @@ export default async function Locations() {
             <div
               className="w-full h-full bg-cover bg-center"
               style={{
-                backgroundImage:
-                  "url('https://lh3.googleusercontent.com/aida-public/AB6AXuD_Ki8fEXHLMzEoRtk5goIjM_EVOkVtEP0qBbxKbSTsgMapp-SXp2jIsZ2-TOJb0kCXVhb2sjKl1OSz5eqJ9bkC5mB0GshPuGOhSc4ddSK-weJEbjEicmY5gGfI8RwWorDG5jP68GctDQWWC-irILJPQqZBqFyS2pt6kwCcbKJ-oSbO-LR7NICpjoXUZmVdmxBbBFQm_psK5swjehJriSQHqHE2XOAsehHEegHlQ52AIw0YVcZilmCS6Mnaz1Wd0J7b3XgJNihHJ0_i')",
+                backgroundImage: "url('/map.png')",
               }}
             />
           </div>

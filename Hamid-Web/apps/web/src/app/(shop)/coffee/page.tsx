@@ -9,10 +9,10 @@ export const metadata: Metadata = {
 };
 
 const origins = [
-  { name: "Ethiopia", flag: "🇪🇹", description: "Bright floral notes, sparkling citrus acidity, jasmine finish." },
-  { name: "Brazil", flag: "🇧🇷", description: "Chocolate body, low acidity, nutty sweetness." },
-  { name: "Colombia", flag: "🇨🇴", description: "Balanced, caramel sweetness with a mild fruit undertone." },
-  { name: "Yemen", flag: "🇾🇪", description: "Wild, complex, wine-like with a distinctive earthy depth." },
+  { name: "Ethiopia", icon: "local_florist", description: "Bright floral notes, sparkling citrus acidity, jasmine finish." },
+  { name: "Brazil", icon: "cookie", description: "Chocolate body, low acidity, nutty sweetness." },
+  { name: "Colombia", icon: "eco", description: "Balanced, caramel sweetness with a mild fruit undertone." },
+  { name: "Yemen", icon: "landscape", description: "Wild, complex, wine-like with a distinctive earthy depth." },
 ];
 
 export default async function CoffeePage() {
@@ -36,13 +36,26 @@ export default async function CoffeePage() {
       {/* Origins */}
       <section className="py-12 md:py-16 bg-[#ffead8]">
         <div className="px-5 md:px-16 max-w-[1280px] mx-auto">
+          <span className="block text-center text-xs font-semibold uppercase tracking-[0.2em] text-[#7b5800] mb-2 md:mb-3">
+            Sourced With Care
+          </span>
           <h2 className="font-[family-name:var(--font-plus-jakarta)] text-2xl md:text-[32px] font-semibold text-black mb-8 md:mb-12 text-center">
             Coffee Origins
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
-            {origins.map(({ name, flag, description }) => (
-              <div key={name} className="bg-white rounded-2xl p-5 md:p-8 luxury-shadow text-center space-y-2.5 md:space-y-4">
-                <span className="text-4xl md:text-5xl">{flag}</span>
+            {origins.map(({ name, icon, description }) => (
+              <div
+                key={name}
+                className="group bg-white rounded-2xl md:rounded-[1.5rem] p-5 md:p-8 luxury-shadow text-center space-y-3 md:space-y-4 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_18px_36px_-14px_rgba(39,25,8,0.3)]"
+              >
+                <div className="mx-auto flex h-14 w-14 md:h-16 md:w-16 items-center justify-center rounded-full bg-[#fff1e6] transition-colors duration-300 group-hover:bg-[#7b5800]">
+                  <span
+                    aria-hidden="true"
+                    className="material-symbols-outlined text-2xl md:text-3xl text-[#7b5800] transition-colors duration-300 group-hover:text-white"
+                  >
+                    {icon}
+                  </span>
+                </div>
                 <h3 className="font-[family-name:var(--font-plus-jakarta)] text-lg md:text-xl font-semibold text-black">{name}</h3>
                 <p className="text-[#4f4541] text-xs md:text-sm leading-relaxed">{description}</p>
               </div>

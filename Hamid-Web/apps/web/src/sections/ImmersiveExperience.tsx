@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { getDict } from "@/lib/i18n";
 
 export default async function ImmersiveExperience() {
@@ -43,6 +44,13 @@ export default async function ImmersiveExperience() {
             </div>
           ))}
         </div>
+        <Link
+          href="/menu"
+          className="mt-8 md:mt-12 inline-flex items-center gap-2 bg-[#7b5800] text-white px-8 py-3.5 md:px-10 md:py-4 rounded-full text-xs font-semibold uppercase tracking-widest hover:bg-[#765400] transition-colors"
+        >
+          {dict.home.immersive.viewMenu}
+          <span aria-hidden="true" className="material-symbols-outlined text-[18px]">arrow_forward</span>
+        </Link>
       </div>
     </section>
   );

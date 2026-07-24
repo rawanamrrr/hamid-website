@@ -137,7 +137,8 @@
       "stat2Label": "Artisan Roasted",
       "stat2Sub": "Small batches for maximum flavor profile.",
       "stat3Label": "Heritage Brewed",
-      "stat3Sub": "Combining old-world techniques with new technology."
+      "stat3Sub": "Combining old-world techniques with new technology.",
+      "viewMenu": "View Our Menu"
     },
     "bestSellers": {
       "title": "Best Sellers",
