@@ -25,6 +25,11 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: `${name.toUpperCase()} | Modern Egyptian Heritage Coffee`,
     description: "Premium coffee, deeply rooted in tradition, crafted for modern coffee lovers.",
+    icons: {
+      icon: "/icon.png",
+      shortcut: "/favicon.ico",
+      apple: "/apple-icon.png",
+    },
   };
 }
 
