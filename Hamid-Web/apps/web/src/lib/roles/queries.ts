@@ -1,4 +1,5 @@
 import "server-only";
+import { cache } from "react";
 import { asc, count, eq } from "drizzle-orm";
 import { db, roles, rolePermissions, permissions, userRoles } from "@hamid/db";
 
@@ -12,10 +13,12 @@ export interface RoleView {
   userCount: number;
 }
 
-export async function getAllRoles(): Promise<RoleView[]> {
-  const roleRows = await db.select().from(roles).orderBy(asc(roles.isSystem), asc(roles.name));
-
-  const [permRows, userCounts] = await Promise.all([
+// React cache() de-dupes repeated calls within a single request — e.g.
+// admin/users/page.tsx and the nav/role pickers it renders can each ask for
+// this independently on the same page load.
+export const getAllRoles = cache(async (): Promise<RoleView[]> => {
+  const [roleRows, permRows, userCounts] = await Promise.all([
+    db.select().from(roles).orderBy(asc(roles.isSystem), asc(roles.name)),
     db
       .select({ roleId: rolePermissions.roleId, slug: permissions.slug })
       .from(rolePermissions)
@@ -34,7 +37,7 @@ export async function getAllRoles(): Promise<RoleView[]> {
     permissionSlugs: permRows.filter((p) => p.roleId === r.id).map((p) => p.slug),
     userCount: userCountByRole.get(r.id) ?? 0,
   }));
-}
+});
 
 /** Roles a customer-facing account should never be assigned via the staff UI — kept out of the "assign to staff" pickers. */
 export const NON_STAFF_ROLE_SLUGS = ["customer"] as const;

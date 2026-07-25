@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { auth } from "@/auth";
 import type { PermissionSlug } from "@hamid/core";
 
@@ -9,8 +10,16 @@ export type SessionUser = {
   permissions: string[];
 };
 
+// De-dupes repeated auth() calls within a single request — e.g. the admin
+// layout resolves the session once, and several admin pages (like
+// admin/account) independently call getSessionUser() again on top of that.
+// Without this, each of those re-runs NextAuth's jwt callback, which
+// periodically (every ACCESS_REFRESH_MS) re-queries the DB for roles and
+// permissions — turning one page load into multiple redundant DB round trips.
+const cachedAuth = cache(auth);
+
 export async function getSessionUser(): Promise<SessionUser | null> {
-  const session = await auth();
+  const session = await cachedAuth();
   if (!session?.user) return null;
   return session.user as SessionUser;
 }

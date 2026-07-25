@@ -8,7 +8,7 @@ import { NewStaffForm } from "@/components/admin/users/new-staff-form";
 import { getAllRoles } from "@/lib/roles/queries";
 
 export default async function AdminUsersPage() {
-  const [staffRows, allRoles] = await Promise.all([
+  const [staffRows, allRoles, [{ total }]] = await Promise.all([
     db
       .select({ userId: users.id, fullName: users.fullName, email: users.email, status: users.status, roleSlug: roles.slug })
       .from(userRoles)
@@ -19,6 +19,10 @@ export default async function AdminUsersPage() {
       // Roles — a fixed whitelist would silently hide custom-role members here.
       .where(ne(roles.slug, "customer")),
     getAllRoles(),
+    // Independent of staffRows/customerRows below — no reason to wait on
+    // those to run this count, so it joins the first parallel batch instead
+    // of adding a third sequential round trip.
+    db.select({ total: sql<number>`COUNT(*)` }).from(users),
   ]);
 
   const roleOptions = allRoles.filter((r) => r.slug !== "super_admin" && r.slug !== "customer").map((r) => ({ slug: r.slug, name: r.name }));
@@ -39,8 +43,6 @@ export default async function AdminUsersPage() {
     .where(staffIds.length > 0 ? notInArray(users.id, staffIds) : undefined)
     .orderBy(desc(users.createdAt))
     .limit(100);
-
-  const [{ total }] = await db.select({ total: sql<number>`COUNT(*)` }).from(users);
 
   return (
     <div>

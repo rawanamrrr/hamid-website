@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { X } from "lucide-react";
-import { ADMIN_NAV } from "@/lib/admin/nav";
+import { ADMIN_NAV, UNRESTRICTED_ADMIN_PATHS } from "@/lib/admin/nav";
 import { ICON_MAP } from "./icon-map";
 import { cn } from "@/lib/utils";
 
@@ -30,7 +30,9 @@ export function AdminSidebar({
       </div>
       <div className="flex-1 overflow-y-auto px-3 py-4">
         {ADMIN_NAV.map((group) => {
-          const items = group.items.filter((item) => permissions.includes(item.permission));
+          const items = group.items.filter(
+            (item) => permissions.includes(item.permission) || UNRESTRICTED_ADMIN_PATHS.includes(item.href),
+          );
           if (items.length === 0) return null;
           return (
             <div key={group.label} className="mb-6">

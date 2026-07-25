@@ -14,6 +14,14 @@ export const registerSchema = z
   });
 export type RegisterInput = z.infer<typeof registerSchema>;
 
+/** Admin-created staff accounts — no confirm-password field, since there's no matching UI input for it (the admin sets a temporary password once, not the account holder). */
+export const createStaffSchema = z.object({
+  fullName: z.string().min(2, "Name is too short").max(191),
+  email: z.string().email().max(191),
+  password: z.string().min(8, "Password must be at least 8 characters").max(72),
+});
+export type CreateStaffInput = z.infer<typeof createStaffSchema>;
+
 export const loginSchema = z.object({
   email: z.string().email(),
   password: z.string().min(1, "Password is required"),

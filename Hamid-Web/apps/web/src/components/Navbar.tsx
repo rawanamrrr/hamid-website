@@ -122,7 +122,10 @@ export default function Navbar({
     : "bg-[#fff8f4]/95 border-b border-[#e8d5bc]/10";
 
   const navPy = scrolled ? "py-1 md:py-1.5" : "py-2 md:py-2.5";
-  const canAccessDashboard = !!user?.permissions.includes("dashboard.view");
+  // Any granted admin permission is enough to show the link — dashboard.view
+  // specifically only gates the KPI overview page, not dashboard access as a
+  // whole (see proxy.ts and admin/layout.tsx, which use the same rule).
+  const canAccessDashboard = !!user && user.permissions.length > 0;
 
   return (
     <nav

@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import bcrypt from "bcryptjs";
 import { eq, inArray } from "drizzle-orm";
 import { db, users, roles, userRoles, userPermissions, permissions } from "@hamid/db";
-import { registerSchema, PERMISSION_SLUGS, type PermissionSlug } from "@hamid/core";
+import { createStaffSchema, PERMISSION_SLUGS, type PermissionSlug } from "@hamid/core";
 import { guardPermission, type ActionResult } from "@/lib/auth/rbac";
 import { logActivity } from "@/lib/activity/log";
 
@@ -29,7 +29,7 @@ export async function createStaffUserAction(input: {
 
   if (input.roleSlug === "customer" || input.roleSlug === "super_admin") return { error: "Invalid role." };
 
-  const parsed = registerSchema.safeParse({ fullName: input.fullName, email: input.email, password: input.password });
+  const parsed = createStaffSchema.safeParse({ fullName: input.fullName, email: input.email, password: input.password });
   if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? "Invalid input." };
 
   const [existing] = await db.select({ id: users.id }).from(users).where(eq(users.email, input.email)).limit(1);
