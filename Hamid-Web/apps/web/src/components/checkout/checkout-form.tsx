@@ -184,7 +184,7 @@ export function CheckoutForm({
             </div>
             <div className="flex justify-between font-semibold text-on-surface">
               <span>Price after discount</span>
-              <span>{formatMoney(preview.subtotalCents - preview.discountTotalCents, "EGP", locale)}</span>
+              <span className="text-red-600 font-bold">{formatMoney(preview.subtotalCents - preview.discountTotalCents, "EGP", locale)}</span>
             </div>
           </>
         )}

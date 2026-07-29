@@ -11,6 +11,7 @@ const CATALOG_REVALIDATE_SECONDS = 60;
 export interface MenuItemSizeView {
   size: string;
   price: string;
+  compareAtPrice?: string | null;
 }
 
 export interface MenuItemView {

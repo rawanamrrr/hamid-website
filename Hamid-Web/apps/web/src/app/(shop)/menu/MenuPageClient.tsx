@@ -61,15 +61,25 @@ function MenuItemCard({ item }: { item: MenuItem }) {
 
       <div className="mt-3 sm:mt-4 border-t border-[#e8d5bc]/50 pt-2.5 sm:pt-3">
         {singleSize ? (
-          <span className="font-[family-name:var(--font-plus-jakarta)] text-sm sm:text-base font-bold text-[#57392D]">
-            {item.sizes[0].price}
-          </span>
+          <div className="flex items-baseline gap-2">
+            <span className={`font-[family-name:var(--font-plus-jakarta)] text-sm sm:text-base font-bold ${item.sizes[0].compareAtPrice ? "text-red-600" : "text-[#57392D]"}`}>
+              {item.sizes[0].price}
+            </span>
+            {item.sizes[0].compareAtPrice && (
+              <span className="text-[#8E7B6A] text-xs line-through">{item.sizes[0].compareAtPrice}</span>
+            )}
+          </div>
         ) : (
           <ul className="space-y-0.5 sm:space-y-1">
             {item.sizes.map((s) => (
               <li key={s.size} className="flex items-center justify-between gap-2 text-xs sm:text-sm">
                 <span className="text-[#4A3026] truncate">{s.size}</span>
-                <span className="font-[family-name:var(--font-plus-jakarta)] font-bold text-[#57392D] whitespace-nowrap">{s.price}</span>
+                <div className="flex items-baseline gap-1.5">
+                  <span className={`font-[family-name:var(--font-plus-jakarta)] font-bold whitespace-nowrap ${s.compareAtPrice ? "text-red-600" : "text-[#57392D]"}`}>{s.price}</span>
+                  {s.compareAtPrice && (
+                    <span className="text-[#8E7B6A] text-xs line-through">{s.compareAtPrice}</span>
+                  )}
+                </div>
               </li>
             ))}
           </ul>

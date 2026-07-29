@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { X } from "lucide-react";
@@ -21,7 +22,10 @@ export function AdminSidebar({
   const nav = (
     <>
       <div className="flex h-16 items-center justify-between gap-2 border-b border-outline-variant/60 px-6">
-        <span className="font-display text-lg font-bold text-on-surface">Hamid Afandi</span>
+        <Link href="/admin" className="flex items-center gap-2.5">
+          <Image src="/brand/logo-icon-cropped.svg" alt="Hamid Afandi" width={30} height={28} className="h-7 w-auto object-contain" priority />
+          <span className="font-display text-lg font-bold text-on-surface">Hamid Afandi</span>
+        </Link>
         {onClose && (
           <button type="button" onClick={onClose} className="text-on-surface-variant md:hidden" aria-label="Close menu">
             <X size={20} />

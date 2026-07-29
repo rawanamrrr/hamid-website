@@ -103,7 +103,7 @@ export default function ProductCard({
   );
 
   return (
-    <div className="group luxury-shadow bg-[#FAECD2] rounded-2xl sm:rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_18px_36px_-14px_rgba(39,25,8,0.3)] flex flex-col">
+    <div className="group luxury-shadow bg-[#FAECD2] rounded-2xl sm:rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_18px_36px_-14px_rgba(39,25,8,0.3)] flex flex-col h-full">
       {slug ? (
         <Link href={`/store/${slug}`}>{ImageBlock}</Link>
       ) : (
@@ -116,7 +116,7 @@ export default function ProductCard({
           {/* Mobile: price + round icon button. Desktop: price row, then full-width CTA. */}
           <div className="flex items-center justify-between gap-2">
             <p className="flex items-baseline gap-1.5 sm:gap-2">
-              <span className="text-[#57392D] font-[family-name:var(--font-plus-jakarta)] text-base sm:text-xl font-bold">
+              <span className={`font-[family-name:var(--font-plus-jakarta)] text-base sm:text-xl font-bold ${compareAtPrice ? "text-red-600" : "text-[#57392D]"}`}>
                 {price}
               </span>
               {compareAtPrice && (

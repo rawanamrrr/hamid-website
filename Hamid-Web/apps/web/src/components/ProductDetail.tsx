@@ -97,7 +97,7 @@ export function ProductDetail({
         )}
         <h1 className="font-[family-name:var(--font-plus-jakarta)] text-3xl font-bold text-black md:text-4xl">{product.name}</h1>
         <div className="mt-3 flex items-baseline gap-3">
-          <span className="text-2xl font-semibold text-[#57392D]">{product.price}</span>
+          <span className={`text-2xl font-semibold ${product.compareAtPrice ? "text-red-600" : "text-[#57392D]"}`}>{product.price}</span>
           {product.compareAtPrice && <span className="text-lg text-[#8E7B6A] line-through">{product.compareAtPrice}</span>}
         </div>
 

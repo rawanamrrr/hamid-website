@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { getAboutHero } from "@/lib/content/queries";
 import { getDict } from "@/lib/i18n";
 import { SocialIconLinks } from "@/components/social-links";
+import About from "@/sections/About";
+import ImmersiveExperience from "@/sections/ImmersiveExperience";
+import InstagramGallery from "@/sections/InstagramGallery";
+import Newsletter from "@/sections/Newsletter";
 
 export const metadata: Metadata = {
   title: "Our Story | Hamid Afandi",
@@ -47,6 +51,9 @@ export default async function AboutPage() {
         </div>
       </section>
 
+      {/* Heritage in Every Single Detail Section */}
+      <About />
+
       {/* Values */}
       <section className="py-12 md:py-20 bg-[#FFE2C6]">
         <div className="px-5 md:px-16 max-w-[1280px] mx-auto">
@@ -67,6 +74,12 @@ export default async function AboutPage() {
         </div>
       </section>
 
+      {/* The Coffee Experience Section */}
+      <ImmersiveExperience />
+
+      {/* From Our Instagram Section */}
+      <InstagramGallery />
+
       {/* Follow us */}
       <section className="py-12 md:py-20 px-5 md:px-16 max-w-[1280px] mx-auto text-center">
         <h2 className="font-[family-name:var(--font-plus-jakarta)] text-2xl md:text-[32px] font-semibold text-black mb-3">
@@ -79,6 +92,9 @@ export default async function AboutPage() {
           linkClassName="border-[#e8d5bc] text-[#57392D] hover:border-[#57392D] hover:bg-[#57392D] hover:text-white"
         />
       </section>
+
+      {/* Join Our Coffee Circle (Newsletter) Section */}
+      <Newsletter dict={dict} />
     </div>
   );
 }
