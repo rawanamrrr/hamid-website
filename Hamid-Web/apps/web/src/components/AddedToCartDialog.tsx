@@ -2,10 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
 import { CheckCircle2, ShoppingCart, X } from "lucide-react";
-
-const AUTO_DISMISS_MS = 5000;
 
 /**
  * Toast dropdown anchored directly under the cart icon — rendered by Navbar
@@ -15,6 +12,9 @@ const AUTO_DISMISS_MS = 5000;
  * the "Order Now" button sits after it). Deliberately not a full-screen
  * modal, so it never blocks the rest of the page. z-[95] keeps it above the
  * sticky nav (z-50) and the mobile checkout summary bar (z-40).
+ *
+ * Stays open until the user explicitly clicks "Go to Cart", "Continue Shopping",
+ * or the close button.
  */
 export function AddedToCartDialog({
   open,
@@ -33,19 +33,12 @@ export function AddedToCartDialog({
   productMeta?: string;
   labels: { title: string; continueShopping: string; goToCart: string };
 }) {
-  useEffect(() => {
-    if (!open) return;
-    const timer = setTimeout(onClose, AUTO_DISMISS_MS);
-    return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
-
   if (!open) return null;
 
   return (
     <div
       role="status"
-      className="absolute end-2 top-full z-[95] mt-3 w-[calc(100vw-2rem)] max-w-[300px] rounded-2xl border border-outline-variant/60 bg-white shadow-2xl sm:end-0 sm:w-[300px]"
+      className="fixed bottom-5 start-4 end-4 z-[999] mx-auto max-w-[340px] rounded-2xl border border-outline-variant/60 bg-white p-1 shadow-[0_20px_50px_rgba(0,0,0,0.3)] sm:absolute sm:bottom-auto sm:top-full sm:end-0 sm:start-auto sm:mt-3 sm:w-[300px] sm:max-w-none sm:p-0"
     >
       <div className="flex items-center justify-between gap-2 p-3.5 pb-2.5 sm:p-4 sm:pb-3">
         <div className="flex min-w-0 items-center gap-2">
@@ -81,6 +74,7 @@ export function AddedToCartDialog({
       <div className="flex flex-col gap-2 p-3.5 pt-1 sm:p-4 sm:pt-1">
         <Link
           href="/cart"
+          onClick={onClose}
           className="flex h-10 w-full items-center justify-center gap-1.5 rounded-full bg-[#000000] text-[11px] font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#57392D]"
         >
           <ShoppingCart size={14} />

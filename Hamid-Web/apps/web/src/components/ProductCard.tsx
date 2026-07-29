@@ -103,7 +103,7 @@ export default function ProductCard({
   );
 
   return (
-    <div className="group luxury-shadow bg-[#FAECD2] rounded-2xl sm:rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_18px_36px_-14px_rgba(39,25,8,0.3)] flex flex-col h-full">
+    <div className="group luxury-shadow bg-[#FAECD2] rounded-2xl sm:rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_18px_36px_-14px_rgba(39,25,8,0.3)] flex flex-col">
       {slug ? (
         <Link href={`/store/${slug}`}>{ImageBlock}</Link>
       ) : (

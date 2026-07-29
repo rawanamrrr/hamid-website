@@ -61,11 +61,11 @@ export function CategoryProductRow({
       {/* Product Cards Row */}
       <div
         ref={scrollRef}
-        className="flex items-stretch gap-4 md:gap-6 overflow-x-auto no-scrollbar pb-3 scroll-smooth -mx-5 px-5 md:-mx-0 md:px-0"
+        className="flex gap-4 md:gap-6 overflow-x-auto no-scrollbar pb-3 scroll-smooth -mx-5 px-5 md:-mx-0 md:px-0"
         dir="ltr"
       >
         {products.map((p) => (
-          <div key={p.id} className="w-[240px] sm:w-[260px] md:w-[280px] shrink-0 flex flex-col">
+          <div key={p.id} className="w-[calc(50%-8px)] sm:w-[240px] md:w-[280px] shrink-0 min-w-[150px]">
             <ProductCard
               productId={p.id}
               slug={p.slug}
