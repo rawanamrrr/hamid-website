@@ -29,7 +29,8 @@ export function AddedToCartDialog({
     <div
       role="status"
       dir={isArabic ? "rtl" : "ltr"}
-      className="absolute top-full end-0 mt-2 z-[9999] w-[calc(100vw-32px)] max-w-[320px] rounded-2xl border border-[#e8d5bc] bg-white p-3.5 sm:p-4 shadow-[0_16px_40px_rgba(0,0,0,0.25)]"
+      style={{ right: 0, left: "auto" }}
+      className="absolute top-full right-0 mt-2 z-[9999] w-[calc(100vw-32px)] max-w-[320px] rounded-2xl border border-[#e8d5bc] bg-white p-3.5 sm:p-4 shadow-[0_16px_40px_rgba(0,0,0,0.25)]"
     >
       <div className="flex items-center justify-between gap-2 pb-2.5 sm:pb-3">
         <div className="flex min-w-0 items-center gap-2">

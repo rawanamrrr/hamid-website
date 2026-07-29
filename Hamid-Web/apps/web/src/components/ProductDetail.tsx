@@ -14,8 +14,11 @@ export function ProductDetail({
   product: StoreProductDetailView;
   dict: { addToCart: string; added: string; outOfStock: string };
 }) {
-  const images = product.images.length > 0 ? product.images : [{ url: product.image, alt: product.alt }];
+  const validImages = product.images.filter((img) => Boolean(img?.url));
+  const images = validImages.length > 0 ? validImages : (product.image ? [{ url: product.image, alt: product.alt }] : []);
+
   const [activeImage, setActiveImage] = useState(0);
+  const currentImg = images[activeImage];
   const [imgError, setImgError] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [pending, startTransition] = useTransition();
@@ -43,10 +46,10 @@ export function ProductDetail({
       {/* Gallery */}
       <div>
         <div className="relative aspect-square overflow-hidden rounded-3xl bg-[#FCE8CD]">
-          {!imgError && images[activeImage] ? (
+          {!imgError && currentImg && Boolean(currentImg.url) ? (
             <Image
-              src={images[activeImage]!.url}
-              alt={images[activeImage]!.alt}
+              src={currentImg.url}
+              alt={currentImg.alt || ""}
               fill
               className="object-cover"
               unoptimized
@@ -65,19 +68,22 @@ export function ProductDetail({
         </div>
         {images.length > 1 && (
           <div className="mt-4 flex gap-3">
-            {images.map((img, i) => (
-              <button
-                key={img.url + i}
-                type="button"
-                onClick={() => {
-                  setActiveImage(i);
-                  setImgError(false);
-                }}
-                className={`h-16 w-16 overflow-hidden rounded-xl border-2 ${i === activeImage ? "border-[#57392D]" : "border-transparent"}`}
-              >
-                <Image src={img.url} alt={img.alt} width={64} height={64} unoptimized className="h-full w-full object-cover" />
-              </button>
-            ))}
+            {images.map((img, i) => {
+              if (!img.url) return null;
+              return (
+                <button
+                  key={img.url + i}
+                  type="button"
+                  onClick={() => {
+                    setActiveImage(i);
+                    setImgError(false);
+                  }}
+                  className={`h-16 w-16 overflow-hidden rounded-xl border-2 ${i === activeImage ? "border-[#57392D]" : "border-transparent"}`}
+                >
+                  <Image src={img.url} alt={img.alt || ""} width={64} height={64} unoptimized className="h-full w-full object-cover" />
+                </button>
+              );
+            })}
           </div>
         )}
       </div>
