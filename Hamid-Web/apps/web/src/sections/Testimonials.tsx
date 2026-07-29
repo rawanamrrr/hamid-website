@@ -25,37 +25,37 @@ const testimonials = [
 export default async function Testimonials() {
   const dict = await getDict();
   return (
-    <section className="py-12 md:py-20 bg-[#fff1e6]">
+    <section className="py-12 md:py-20 bg-[#FAECD2]">
       <div className="px-5 md:px-16 max-w-[1280px] mx-auto">
         <h2 className="font-[family-name:var(--font-plus-jakarta)] text-2xl md:text-[32px] font-semibold text-black mb-8 md:mb-12 text-center">
           {dict.home.testimonials.title}
         </h2>
 
-        {/* Mobile: horizontal scroll */}
-        <div className="flex gap-4 overflow-x-auto no-scrollbar pb-4 -mx-5 px-5 md:hidden">
+        {/* Mobile: horizontal scroll — dir="ltr" keeps swipe/scroll direction consistent between languages */}
+        <div className="flex gap-4 overflow-x-auto no-scrollbar pb-4 -mx-5 px-5 md:hidden" dir="ltr">
           {testimonials.map(({ name, initials, image, text }) => (
             <div
               key={name}
               className="min-w-[260px] max-w-[260px] flex-shrink-0 bg-white rounded-3xl luxury-shadow overflow-hidden"
             >
               {/* Accent top bar */}
-              <div className="h-1 w-full bg-gradient-to-r from-[#c8a97a] to-[#7b5800]" />
+              <div className="h-1 w-full bg-gradient-to-r from-[#FFE2C6] to-[#57392D]" />
               <div className="p-5 flex gap-4 items-start">
                 {/* Avatar */}
-                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#7b5800] relative flex-shrink-0 bg-[#fdca68] flex items-center justify-center">
+                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#57392D] relative flex-shrink-0 bg-[#FFE2C6] flex items-center justify-center">
                   <Image src={image} alt={name} fill className="object-cover" unoptimized />
-                  <span className="absolute text-xs font-bold text-[#7b5800]">{initials}</span>
+                  <span className="absolute text-xs font-bold text-[#57392D]">{initials}</span>
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between mb-1">
                     <h4 className="text-sm font-bold text-black">{name}</h4>
-                    <div className="flex gap-0.5 text-[#7b5800]" role="img" aria-label="5 out of 5 stars">
+                    <div className="flex gap-0.5 text-[#57392D]" role="img" aria-label="5 out of 5 stars">
                       {[...Array(5)].map((_, i) => (
                         <span key={i} aria-hidden="true" className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
                       ))}
                     </div>
                   </div>
-                  <p className="text-[#4f4541] italic text-sm leading-relaxed">&ldquo;{text}&rdquo;</p>
+                  <p className="text-[#4A3026] italic text-sm leading-relaxed">&ldquo;{text}&rdquo;</p>
                 </div>
               </div>
             </div>
@@ -69,15 +69,15 @@ export default async function Testimonials() {
               key={name}
               className="bg-white p-10 rounded-[1.75rem] luxury-shadow flex flex-col items-center space-y-6"
             >
-              <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-[#7b5800] relative flex-shrink-0">
+              <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-[#57392D] relative flex-shrink-0">
                 <Image src={image} alt={name} fill className="object-cover" unoptimized />
               </div>
-              <div className="flex gap-1 text-[#7b5800]" role="img" aria-label="5 out of 5 stars">
+              <div className="flex gap-1 text-[#57392D]" role="img" aria-label="5 out of 5 stars">
                 {[...Array(5)].map((_, i) => (
                   <span key={i} aria-hidden="true" className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
                 ))}
               </div>
-              <p className="text-[#4f4541] italic leading-relaxed">&ldquo;{text}&rdquo;</p>
+              <p className="text-[#4A3026] italic leading-relaxed">&ldquo;{text}&rdquo;</p>
               <h4 className="text-xs font-semibold uppercase tracking-widest text-black">{name}</h4>
             </div>
           ))}

@@ -19,9 +19,53 @@ interface NavUser {
 function CartBadge({ count }: { count: number }) {
   if (count <= 0) return null;
   return (
-    <span className="absolute top-0.5 end-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#7b5800] px-1 text-[10px] font-bold text-white">
+    <span className="absolute top-0.5 end-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#57392D] px-1 text-[10px] font-bold text-white">
       {count > 99 ? "99+" : count}
     </span>
+  );
+}
+
+/**
+ * Logo + brand name lockup, always in that fixed left-to-right order (icon
+ * first, name second) regardless of page direction — see BrandMark's caller
+ * for why this is wrapped in dir="ltr".
+ *
+ * Both assets are the official brand SVGs (Icon.svg / Name Arabic.svg),
+ * cropped only to trim the large empty margin baked into their source export
+ * (a print/presentation canvas) — every path, mask, and color inside is
+ * untouched, so the complete mark and complete Arabic wordmark always render
+ * in full, never simplified or partially cropped.
+ *
+ * The name itself DOES flip to match the active language: the Arabic wordmark
+ * isn't a translated label, it's the brand's actual Arabic name, so it should
+ * render (as the official artwork, not styled text) when the site is in
+ * Arabic — only the icon+name ORDER stays fixed for consistent brand
+ * recognition, not the name's own script/direction.
+ */
+function BrandMark({ locale, height }: { locale: Locale; height: number }) {
+  // Intrinsic aspect ratios of the cropped brand assets — height is the only
+  // thing callers choose; width follows so neither mark ever stretches.
+  const iconWidth = Math.round(height * (363 / 339));
+  const wordmarkWidth = Math.round(height * (583 / 245));
+
+  return (
+    <Link href="/" className="flex items-center gap-2.5 md:gap-3" aria-label="Hamid Afandi — home">
+      <span className="relative shrink-0" style={{ width: iconWidth, height }}>
+        <Image src="/brand/logo-icon-cropped.svg" alt="Hamid Afandi" fill className="object-contain" priority />
+      </span>
+      {locale === "ar" ? (
+        <span className="relative shrink-0" style={{ width: wordmarkWidth, height }}>
+          <Image src="/brand/wordmark-ar-cropped.svg" alt="حميد أفندي" fill className="object-contain" priority />
+        </span>
+      ) : (
+        <span
+          className="font-[family-name:var(--font-plus-jakarta)] font-bold text-[#57392D] whitespace-nowrap"
+          style={{ fontSize: Math.round(height * 0.42) }}
+        >
+          Hamid Afandi
+        </span>
+      )}
+    </Link>
   );
 }
 
@@ -116,10 +160,10 @@ export default function Navbar({
   const closeNav = () => setNavOpen(false);
 
   const navBg = navOpen
-    ? "bg-[#fff8f4] border-b border-[#e8d5bc]/60"
+    ? "bg-[#F5F5DC] border-b border-[#e8d5bc]/60"
     : scrolled
-    ? "bg-[#fff8f4]/85 backdrop-blur-md shadow-sm border-b border-[#e8d5bc]/40"
-    : "bg-[#fff8f4]/95 border-b border-[#e8d5bc]/10";
+    ? "bg-[#F5F5DC]/85 backdrop-blur-md shadow-sm border-b border-[#e8d5bc]/40"
+    : "bg-[#F5F5DC]/95 border-b border-[#e8d5bc]/10";
 
   const navPy = scrolled ? "py-1 md:py-1.5" : "py-2 md:py-2.5";
   // Any granted admin permission is enough to show the link — dashboard.view
@@ -137,37 +181,31 @@ export default function Navbar({
       {/* ── Top bar ── */}
       <div className={`px-4 md:px-16 max-w-[1280px] mx-auto w-full transition-all duration-300 ease-in-out ${navPy}`}>
 
-        {/* Mobile row: hamburger | logo | bag */}
-        <div className="flex items-center justify-between lg:hidden">
+        {/* Mobile row: hamburger | logo+name | bag. Locked dir="ltr" so the
+            hamburger/logo/cart trio keeps the same visual order in Arabic —
+            only the brand name's own text flips to the Arabic wordmark. */}
+        <div className="flex items-center justify-between gap-2 lg:hidden" dir="ltr">
           {/* Hamburger */}
           <button
             type="button"
             onClick={toggleNav}
             aria-label={navOpen ? "Close menu" : "Open menu"}
             aria-expanded={navOpen}
-            className="w-11 h-11 -ms-1.5 flex items-center justify-center text-[#271908] active:text-[#7b5800] transition-colors shrink-0"
+            className="w-11 h-11 -ms-1.5 flex items-center justify-center text-[#000000] active:text-[#57392D] transition-colors shrink-0"
           >
             {navOpen ? <X size={24} strokeWidth={2} /> : <Menu size={24} strokeWidth={2} />}
           </button>
 
-          {/* Logo – sits naturally in the centre of the flex row */}
-          <Link href="/" onClick={closeNav} className="flex items-center" aria-label="Hamid Afandi — home">
-            <Image
-              src="/hamid-logo.png"
-              alt="Hamid Afandi"
-              width={48}
-              height={48}
-              className="h-12 w-12 object-contain drop-shadow-sm"
-              priority
-            />
-          </Link>
+          <div className="min-w-0" onClick={closeNav}>
+            <BrandMark locale={locale} height={40} />
+          </div>
 
           {/* Shopping bag */}
           <div className="relative -me-1.5 shrink-0">
             <Link
               href="/cart"
               aria-label={dict.nav.cart}
-              className="relative w-11 h-11 flex items-center justify-center text-[#271908] active:text-[#7b5800] transition-colors"
+              className="relative w-11 h-11 flex items-center justify-center text-[#000000] active:text-[#57392D] transition-colors"
             >
               <ShoppingBag size={22} strokeWidth={2} />
               <CartBadge count={cartCount} />
@@ -176,68 +214,60 @@ export default function Navbar({
           </div>
         </div>
 
-        {/* Desktop row: links | logo | actions. 1fr|auto|1fr keeps the logo
-            centred while giving the link/action columns real space — with
-            equal thirds the six links overflowed under the logo cell, which
-            silently swallowed clicks on the last link (Branches). */}
-        <div className="hidden lg:grid lg:grid-cols-[1fr_auto_1fr] items-center">
-          {/* Left: nav links */}
-          <div className="flex items-center gap-5 xl:gap-7">
-            {links.map(({ href, label }) => (
-              <Link
-                key={href}
-                href={href}
-                className={`whitespace-nowrap text-xs font-semibold uppercase tracking-wider transition-colors duration-300 ${
-                  pathname === href
-                    ? "text-[#7b5800] border-b-2 border-[#7b5800] pb-1"
-                    : "text-[#271908] hover:text-[#7b5800]"
-                }`}
-              >
-                {label}
-              </Link>
-            ))}
+        {/* Desktop row: brand (logo+name) far left, nav+language+actions far
+            right. Locked dir="ltr" so this macro layout never mirrors in
+            Arabic — only the brand name text and nav labels themselves
+            change language; icon/nav/cart position stays put for consistent
+            brand recognition either way. */}
+        <div className="hidden lg:flex items-center justify-between gap-6" dir="ltr">
+          {/* Left: logo + name */}
+          <div className="shrink-0">
+            <BrandMark locale={locale} height={52} />
           </div>
 
-          {/* Center: logo (wrapper is click-transparent so it can never mask
-              neighbouring links; the logo link itself stays clickable) */}
-          <div className="flex justify-center pointer-events-none px-6">
-            <Link href="/" className="flex items-center pointer-events-auto" aria-label="Hamid Afandi — home">
-              <Image
-                src="/hamid-logo.png"
-                alt="Hamid Afandi"
-                width={56}
-                height={56}
-                className="h-14 w-14 object-contain drop-shadow-sm transition-transform duration-300 hover:scale-105"
-                priority
-              />
-            </Link>
-          </div>
+          {/* Right: nav links, language switcher beside them, then account/cart/CTA */}
+          <div className="flex items-center gap-5 xl:gap-7 min-w-0">
+            <div className="flex items-center gap-5 xl:gap-7">
+              {links.map(({ href, label }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className={`whitespace-nowrap text-xs font-semibold uppercase tracking-wider transition-colors duration-300 ${
+                    pathname === href
+                      ? "text-[#57392D] border-b-2 border-[#57392D] pb-1"
+                      : "text-[#000000] hover:text-[#57392D]"
+                  }`}
+                >
+                  {label}
+                </Link>
+              ))}
+            </div>
 
-          {/* Right: language, auth, bag + CTA */}
-          <div className="flex items-center justify-end gap-3 xl:gap-4">
-            <LanguageSwitcher locale={locale} className="shrink-0 whitespace-nowrap text-[#271908] hover:text-[#7b5800] text-xs font-semibold uppercase tracking-widest transition-colors" />
+            <LanguageSwitcher locale={locale} className="shrink-0 whitespace-nowrap text-[#000000] hover:text-[#57392D] text-xs font-semibold uppercase tracking-widest transition-colors" />
+
+            <div className="h-4 w-px shrink-0 bg-[#e8d5bc]" aria-hidden="true" />
 
             {user ? (
               <div className="flex items-center gap-3 xl:gap-4">
                 {canAccessDashboard && (
-                  <Link href="/admin" className="shrink-0 whitespace-nowrap text-xs font-semibold uppercase tracking-widest text-[#271908] hover:text-[#7b5800]">
+                  <Link href="/admin" className="shrink-0 whitespace-nowrap text-xs font-semibold uppercase tracking-widest text-[#000000] hover:text-[#57392D]">
                     {dict.nav.dashboard}
                   </Link>
                 )}
                 <Link
                   href="/account"
-                  className="shrink-0 max-w-[9rem] truncate text-xs font-semibold uppercase tracking-widest text-[#271908] hover:text-[#7b5800]"
+                  className="shrink-0 max-w-[9rem] truncate text-xs font-semibold uppercase tracking-widest text-[#000000] hover:text-[#57392D]"
                 >
                   {dict.nav.account}
                 </Link>
                 <form action={logoutAction} className="shrink-0">
-                  <button type="submit" className="whitespace-nowrap text-xs font-semibold uppercase tracking-widest text-[#271908] hover:text-[#7b5800]">
+                  <button type="submit" className="whitespace-nowrap text-xs font-semibold uppercase tracking-widest text-[#000000] hover:text-[#57392D]">
                     {dict.nav.logout}
                   </button>
                 </form>
               </div>
             ) : (
-              <Link href="/login" className="shrink-0 whitespace-nowrap text-xs font-semibold uppercase tracking-widest text-[#271908] hover:text-[#7b5800]">
+              <Link href="/login" className="shrink-0 whitespace-nowrap text-xs font-semibold uppercase tracking-widest text-[#000000] hover:text-[#57392D]">
                 {dict.nav.login}
               </Link>
             )}
@@ -246,7 +276,7 @@ export default function Navbar({
               <Link
                 href="/cart"
                 aria-label={dict.nav.cart}
-                className="relative flex h-9 w-9 items-center justify-center text-[#271908] hover:text-[#7b5800] transition-colors"
+                className="relative flex h-9 w-9 items-center justify-center text-[#000000] hover:text-[#57392D] transition-colors"
               >
                 <ShoppingBag size={18} strokeWidth={2} />
                 <CartBadge count={cartCount} />
@@ -255,7 +285,7 @@ export default function Navbar({
             </div>
             <Link
               href="/store"
-              className="shrink-0 whitespace-nowrap bg-[#7b5800] text-white px-6 xl:px-8 py-3 rounded-full text-xs font-semibold uppercase tracking-wider hover:bg-[#765400] transition-colors"
+              className="shrink-0 whitespace-nowrap bg-[#57392D] text-white px-6 xl:px-8 py-3 rounded-full text-xs font-semibold uppercase tracking-wider hover:bg-[#412B22] transition-colors"
             >
               {dict.nav.orderNow}
             </Link>
@@ -273,14 +303,14 @@ export default function Navbar({
             onClick={closeNav}
             aria-hidden="true"
           />
-          <div className="lg:hidden absolute top-full left-0 right-0 bg-[#fff8f4] border-t border-[#e8d5bc]/60 px-5 py-5 space-y-1 shadow-[0_16px_32px_-16px_rgba(39,25,8,0.25)] max-h-[calc(100dvh-var(--nav-offset,60px))] overflow-y-auto">
+          <div className="lg:hidden absolute top-full left-0 right-0 bg-[#F5F5DC] border-t border-[#e8d5bc]/60 px-5 py-5 space-y-1 shadow-[0_16px_32px_-16px_rgba(39,25,8,0.25)] max-h-[calc(100dvh-var(--nav-offset,60px))] overflow-y-auto">
             {links.map(({ href, label }) => (
               <Link
                 key={href}
                 href={href}
                 onClick={closeNav}
                 className={`block py-3 text-sm font-semibold uppercase tracking-widest border-b border-[#e8d5bc]/40 transition-colors ${
-                  pathname === href ? "text-[#7b5800]" : "text-[#271908]"
+                  pathname === href ? "text-[#57392D]" : "text-[#000000]"
                 }`}
               >
                 {label}
@@ -291,31 +321,31 @@ export default function Navbar({
               {user ? (
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                   {canAccessDashboard && (
-                    <Link href="/admin" onClick={closeNav} className="text-sm font-semibold uppercase tracking-widest text-[#271908]">
+                    <Link href="/admin" onClick={closeNav} className="text-sm font-semibold uppercase tracking-widest text-[#000000]">
                       {dict.nav.dashboard}
                     </Link>
                   )}
-                  <Link href="/account" onClick={closeNav} className="text-sm font-semibold uppercase tracking-widest text-[#271908]">
+                  <Link href="/account" onClick={closeNav} className="text-sm font-semibold uppercase tracking-widest text-[#000000]">
                     {dict.nav.account}
                   </Link>
                   <form action={logoutAction}>
-                    <button type="submit" className="text-sm font-semibold uppercase tracking-widest text-[#271908]">
+                    <button type="submit" className="text-sm font-semibold uppercase tracking-widest text-[#000000]">
                       {dict.nav.logout}
                     </button>
                   </form>
                 </div>
               ) : (
-                <Link href="/login" onClick={closeNav} className="text-sm font-semibold uppercase tracking-widest text-[#271908]">
+                <Link href="/login" onClick={closeNav} className="text-sm font-semibold uppercase tracking-widest text-[#000000]">
                   {dict.nav.login}
                 </Link>
               )}
-              <LanguageSwitcher locale={locale} className="text-sm font-semibold uppercase tracking-widest text-[#7b5800]" />
+              <LanguageSwitcher locale={locale} className="text-sm font-semibold uppercase tracking-widest text-[#57392D]" />
             </div>
 
             <Link
               href="/store"
               onClick={closeNav}
-              className="block mt-4 bg-[#7b5800] text-white text-center py-4 rounded-full text-xs font-semibold uppercase tracking-wider hover:bg-[#765400] transition-colors"
+              className="block mt-4 bg-[#57392D] text-white text-center py-4 rounded-full text-xs font-semibold uppercase tracking-wider hover:bg-[#412B22] transition-colors"
             >
               {dict.nav.orderNow}
             </Link>

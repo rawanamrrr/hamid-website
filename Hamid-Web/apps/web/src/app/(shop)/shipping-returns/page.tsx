@@ -10,7 +10,7 @@ export default function ShippingReturnsPage() {
   return (
     <div>
       <SimplePageHero eyebrow="Support" title="Shipping & Returns" />
-      <section className="py-16 px-5 md:px-16 max-w-3xl mx-auto space-y-8 text-[#4f4541] leading-relaxed">
+      <section className="py-16 px-5 md:px-16 max-w-3xl mx-auto space-y-8 text-[#4A3026] leading-relaxed">
         <div className="space-y-3">
           <h2 className="font-[family-name:var(--font-plus-jakarta)] text-xl font-semibold text-black">Delivery</h2>
           <p>
@@ -39,7 +39,7 @@ export default function ShippingReturnsPage() {
         <div className="space-y-3">
           <h2 className="font-[family-name:var(--font-plus-jakarta)] text-xl font-semibold text-black">Questions?</h2>
           <p>
-            Reach out via our <a href="/contact" className="text-[#7b5800] underline">Contact page</a> and we&apos;ll help
+            Reach out via our <a href="/contact" className="text-[#57392D] underline">Contact page</a> and we&apos;ll help
             sort it out.
           </p>
         </div>

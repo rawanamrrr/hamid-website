@@ -4,29 +4,29 @@ import type { Dictionary } from "@/lib/i18n";
 
 const CoffeeBranchSvg = () => (
   <svg viewBox="0 0 180 140" className="w-full h-full" fill="none">
-    <path d="M20 130 Q40 100 60 80 Q80 60 100 50 Q120 40 150 30" stroke="#c8a97a" strokeWidth="2" strokeLinecap="round" fill="none" />
-    <path d="M60 80 Q50 60 55 40" stroke="#c8a97a" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-    <ellipse cx="52" cy="32" rx="14" ry="20" fill="none" stroke="#c8a97a" strokeWidth="1.5" transform="rotate(-20 52 32)" />
-    <path d="M52 14 Q58 32 52 50" stroke="#c8a97a" strokeWidth="1" fill="none" />
-    <path d="M80 65 Q72 48 76 30" stroke="#c8a97a" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-    <ellipse cx="74" cy="22" rx="12" ry="18" fill="none" stroke="#c8a97a" strokeWidth="1.5" transform="rotate(-15 74 22)" />
-    <path d="M74 6 Q80 22 74 38" stroke="#c8a97a" strokeWidth="1" fill="none" />
-    <path d="M100 50 Q95 32 98 16" stroke="#c8a97a" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-    <ellipse cx="97" cy="9" rx="11" ry="16" fill="none" stroke="#c8a97a" strokeWidth="1.5" transform="rotate(-10 97 9)" />
-    <path d="M97 -5 Q103 9 97 23" stroke="#c8a97a" strokeWidth="1" fill="none" />
-    <circle cx="40" cy="112" r="5" fill="#c8a97a" />
-    <circle cx="65" cy="95" r="4" fill="#c8a97a" />
-    <circle cx="88" cy="78" r="4" fill="#c8a97a" />
-    <path d="M20 130 Q15 120 22 112 Q29 104 38 108" stroke="#c8a97a" strokeWidth="1.2" fill="none" strokeLinecap="round" />
-    <path d="M35 118 Q28 108 33 98 Q38 88 47 92" stroke="#c8a97a" strokeWidth="1.2" fill="none" strokeLinecap="round" />
+    <path d="M20 130 Q40 100 60 80 Q80 60 100 50 Q120 40 150 30" stroke="#FFE2C6" strokeWidth="2" strokeLinecap="round" fill="none" />
+    <path d="M60 80 Q50 60 55 40" stroke="#FFE2C6" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+    <ellipse cx="52" cy="32" rx="14" ry="20" fill="none" stroke="#FFE2C6" strokeWidth="1.5" transform="rotate(-20 52 32)" />
+    <path d="M52 14 Q58 32 52 50" stroke="#FFE2C6" strokeWidth="1" fill="none" />
+    <path d="M80 65 Q72 48 76 30" stroke="#FFE2C6" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+    <ellipse cx="74" cy="22" rx="12" ry="18" fill="none" stroke="#FFE2C6" strokeWidth="1.5" transform="rotate(-15 74 22)" />
+    <path d="M74 6 Q80 22 74 38" stroke="#FFE2C6" strokeWidth="1" fill="none" />
+    <path d="M100 50 Q95 32 98 16" stroke="#FFE2C6" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+    <ellipse cx="97" cy="9" rx="11" ry="16" fill="none" stroke="#FFE2C6" strokeWidth="1.5" transform="rotate(-10 97 9)" />
+    <path d="M97 -5 Q103 9 97 23" stroke="#FFE2C6" strokeWidth="1" fill="none" />
+    <circle cx="40" cy="112" r="5" fill="#FFE2C6" />
+    <circle cx="65" cy="95" r="4" fill="#FFE2C6" />
+    <circle cx="88" cy="78" r="4" fill="#FFE2C6" />
+    <path d="M20 130 Q15 120 22 112 Q29 104 38 108" stroke="#FFE2C6" strokeWidth="1.2" fill="none" strokeLinecap="round" />
+    <path d="M35 118 Q28 108 33 98 Q38 88 47 92" stroke="#FFE2C6" strokeWidth="1.2" fill="none" strokeLinecap="round" />
   </svg>
 );
 
 const CoffeeBeanSmall = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 30 42" className={className} fill="none">
-    <ellipse cx="15" cy="21" rx="10" ry="16" fill="#c8a97a" stroke="#a0784a" strokeWidth="1.2" />
-    <path d="M15 6 Q19 21 15 36" stroke="#a0784a" strokeWidth="1" fill="none" />
-    <path d="M15 6 Q11 21 15 36" stroke="#a0784a" strokeWidth="1" fill="none" />
+    <ellipse cx="15" cy="21" rx="10" ry="16" fill="#FFE2C6" stroke="#8C6B57" strokeWidth="1.2" />
+    <path d="M15 6 Q19 21 15 36" stroke="#8C6B57" strokeWidth="1" fill="none" />
+    <path d="M15 6 Q11 21 15 36" stroke="#8C6B57" strokeWidth="1" fill="none" />
   </svg>
 );
 
@@ -35,7 +35,7 @@ export default function Newsletter({ dict }: { dict: Dictionary }) {
     <section className="py-10 px-4 md:py-16 md:px-16 max-w-[1280px] mx-auto">
       <div
         className="relative overflow-hidden rounded-3xl"
-        style={{ background: "#f5ead8", border: "2px solid #3b1f0a" }}
+        style={{ background: "#F5F5DC", border: "2px solid #000000" }}
       >
         {/* Desktop layout */}
         <div className="hidden md:flex items-stretch min-h-[220px]">
@@ -50,28 +50,28 @@ export default function Newsletter({ dict }: { dict: Dictionary }) {
           <div className="flex flex-col justify-center py-12 pr-12 flex-1">
             <h2
               className="font-[family-name:var(--font-plus-jakarta)] text-3xl font-bold mb-2"
-              style={{ color: "#3b1f0a" }}
+              style={{ color: "#000000" }}
             >
               {dict.home.newsletter.title}
             </h2>
-            <p className="text-base mb-6" style={{ color: "#5c3d1e" }}>
+            <p className="text-base mb-6" style={{ color: "#57392D" }}>
               {dict.home.newsletter.subtitle}
             </p>
             <form
               className="flex rounded-xl overflow-hidden max-w-md"
-              style={{ border: "1.5px solid #c8a97a", background: "#fff8f4" }}
+              style={{ border: "1.5px solid #FFE2C6", background: "#F5F5DC" }}
               onSubmit={(e) => e.preventDefault()}
             >
               <input
                 type="email"
                 placeholder={dict.home.newsletter.placeholder}
                 className="flex-grow px-5 py-3.5 bg-transparent outline-none text-sm"
-                style={{ color: "#3b1f0a" }}
+                style={{ color: "#000000" }}
               />
               <button
                 type="submit"
                 className="px-7 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 flex-shrink-0"
-                style={{ background: "#c8a97a" }}
+                style={{ background: "#FFE2C6" }}
               >
                 {dict.home.newsletter.subscribe}
               </button>
@@ -94,11 +94,11 @@ export default function Newsletter({ dict }: { dict: Dictionary }) {
 
           <h2
             className="font-[family-name:var(--font-plus-jakarta)] text-2xl font-bold mb-2 leading-snug"
-            style={{ color: "#3b1f0a" }}
+            style={{ color: "#000000" }}
           >
             {dict.home.newsletter.title}
           </h2>
-          <p className="text-sm mb-6 leading-relaxed" style={{ color: "#5c3d1e" }}>
+          <p className="text-sm mb-6 leading-relaxed" style={{ color: "#57392D" }}>
             {dict.home.newsletter.subtitle}
           </p>
 
@@ -112,15 +112,15 @@ export default function Newsletter({ dict }: { dict: Dictionary }) {
               placeholder={dict.home.newsletter.placeholder}
               className="w-full px-5 py-4 rounded-xl text-sm outline-none"
               style={{
-                background: "#fff8f4",
-                border: "1.5px solid #c8a97a",
-                color: "#3b1f0a",
+                background: "#F5F5DC",
+                border: "1.5px solid #FFE2C6",
+                color: "#000000",
               }}
             />
             <button
               type="submit"
               className="w-full py-4 rounded-xl text-sm font-semibold text-white transition-opacity hover:opacity-90"
-              style={{ background: "#c8a97a" }}
+              style={{ background: "#FFE2C6" }}
             >
               {dict.home.newsletter.subscribe}
             </button>

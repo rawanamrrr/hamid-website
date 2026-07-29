@@ -34,14 +34,14 @@ export function StoreSearchInput({ placeholder }: { placeholder: string }) {
 
   return (
     <div className="relative mx-auto mb-8 w-full max-w-md">
-      <Search size={16} className="pointer-events-none absolute inset-y-0 start-4 my-auto text-[#817570]" aria-hidden="true" />
+      <Search size={16} className="pointer-events-none absolute inset-y-0 start-4 my-auto text-[#8E7B6A]" aria-hidden="true" />
       <input
         type="search"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         aria-label={placeholder}
-        className="w-full rounded-full border border-[#e8d5bc]/60 bg-white py-2.5 ps-11 pe-11 text-sm text-[#271908] placeholder:text-[#817570] focus:border-[#7b5800] focus:outline-none [&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden"
+        className="w-full rounded-full border border-[#e8d5bc]/60 bg-white py-2.5 ps-11 pe-11 text-sm text-[#000000] placeholder:text-[#8E7B6A] focus:border-[#57392D] focus:outline-none [&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden"
       />
       {value && (
         <button
@@ -51,7 +51,7 @@ export function StoreSearchInput({ placeholder }: { placeholder: string }) {
             pushQuery("");
           }}
           aria-label="Clear search"
-          className="absolute inset-y-0 end-4 my-auto text-[#817570] hover:text-black"
+          className="absolute inset-y-0 end-4 my-auto text-[#8E7B6A] hover:text-black"
         >
           <X size={16} />
         </button>

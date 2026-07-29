@@ -13,7 +13,9 @@ import { toast } from "@/components/ui/toast";
 export interface BranchItem {
   id: number;
   name: string;
+  nameAr: string | null;
   address: string | null;
+  addressAr: string | null;
   hours: string | null;
   mapUrl: string | null;
 }
@@ -36,16 +38,24 @@ function BranchForm({
       action={(formData) =>
         onSubmit({
           name: String(formData.get("name") ?? ""),
+          nameAr: String(formData.get("nameAr") ?? ""),
           address: String(formData.get("address") ?? ""),
+          addressAr: String(formData.get("addressAr") ?? ""),
           hours: String(formData.get("hours") ?? ""),
           mapUrl: String(formData.get("mapUrl") ?? ""),
         })
       }
       className="space-y-4"
     >
-      <div>
-        <Label htmlFor="name">Branch name</Label>
-        <Input id="name" name="name" defaultValue={initial?.name} required />
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <Label htmlFor="name">Branch name (English)</Label>
+          <Input id="name" name="name" defaultValue={initial?.name} required />
+        </div>
+        <div>
+          <Label htmlFor="nameAr">Branch name (Arabic)</Label>
+          <Input id="nameAr" name="nameAr" dir="rtl" defaultValue={initial?.nameAr ?? ""} placeholder="فرع المنصورة" />
+        </div>
       </div>
       <div>
         <Label htmlFor="mapUrl">Google Maps link</Label>
@@ -53,13 +63,17 @@ function BranchForm({
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
-          <Label htmlFor="address">Address (optional)</Label>
+          <Label htmlFor="address">Address (English, optional)</Label>
           <Input id="address" name="address" defaultValue={initial?.address ?? ""} placeholder="Taksem Khattab, Mansoura" />
         </div>
         <div>
-          <Label htmlFor="hours">Hours (optional)</Label>
-          <Input id="hours" name="hours" defaultValue={initial?.hours ?? ""} placeholder="Open Daily" />
+          <Label htmlFor="addressAr">Address (Arabic, optional)</Label>
+          <Input id="addressAr" name="addressAr" dir="rtl" defaultValue={initial?.addressAr ?? ""} placeholder="تقسيم خطاب، المنصورة" />
         </div>
+      </div>
+      <div>
+        <Label htmlFor="hours">Hours (optional)</Label>
+        <Input id="hours" name="hours" defaultValue={initial?.hours ?? ""} placeholder="Open Daily" />
       </div>
       <div className="flex gap-2">
         <Button type="submit" loading={pending}>
@@ -125,7 +139,10 @@ export function BranchesManager({ items }: { items: BranchItem[] }) {
               className="flex items-start justify-between gap-4 rounded-xl border border-outline-variant/60 bg-surface-container-lowest p-4"
             >
               <div className="min-w-0">
-                <p className="font-semibold text-on-surface">{b.name}</p>
+                <p className="font-semibold text-on-surface">
+                  {b.name}
+                  {b.nameAr && <span dir="rtl" className="ms-2 font-normal text-on-surface-variant">{b.nameAr}</span>}
+                </p>
                 <p className="mt-0.5 text-sm text-on-surface-variant">
                   {[b.address, b.hours].filter(Boolean).join(" · ") || "No address / hours set"}
                 </p>

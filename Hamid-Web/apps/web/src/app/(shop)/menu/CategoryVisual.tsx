@@ -21,8 +21,8 @@ export function CategoryVisual({ section, sizes }: { section: MenuSection; sizes
     );
   }
   return (
-    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#3a2614] to-[#1a1006]">
-      <span aria-hidden="true" className="material-symbols-outlined text-5xl text-[#c8a97a]/70">
+    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#3a2614] to-[#000000]">
+      <span aria-hidden="true" className="material-symbols-outlined text-5xl text-[#FFE2C6]/70">
         {section.icon}
       </span>
     </div>

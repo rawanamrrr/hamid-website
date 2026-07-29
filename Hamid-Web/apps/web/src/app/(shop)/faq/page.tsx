@@ -43,11 +43,11 @@ export default function FaqPage() {
             <details key={q} className="group py-5">
               <summary className="flex cursor-pointer list-none items-center justify-between font-[family-name:var(--font-plus-jakarta)] font-semibold text-black">
                 {q}
-                <span className="material-symbols-outlined text-[#7b5800] transition-transform group-open:rotate-180" aria-hidden="true">
+                <span className="material-symbols-outlined text-[#57392D] transition-transform group-open:rotate-180" aria-hidden="true">
                   expand_more
                 </span>
               </summary>
-              <p className="mt-3 text-[#4f4541] leading-relaxed">{a}</p>
+              <p className="mt-3 text-[#4A3026] leading-relaxed">{a}</p>
             </details>
           ))}
         </div>

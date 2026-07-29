@@ -21,7 +21,7 @@ export default function SourcingPage() {
         title="Sourcing"
         subtitle="We build direct relationships with farmers across the coffee belt to bring you beans with real provenance."
       />
-      <section className="py-16 px-5 md:px-16 max-w-3xl mx-auto space-y-6 text-[#4f4541] leading-relaxed">
+      <section className="py-16 px-5 md:px-16 max-w-3xl mx-auto space-y-6 text-[#4A3026] leading-relaxed">
         <p>
           Every bag of Hamid Afandi coffee begins with a relationship, not a transaction. We work directly with
           farmers and cooperatives, visiting origin whenever we can, to ensure fair prices and consistent quality

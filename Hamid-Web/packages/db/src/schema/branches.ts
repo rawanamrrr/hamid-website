@@ -31,7 +31,9 @@ export const branches = mysqlTable("branches", {
 export const branchLocations = mysqlTable("branch_locations", {
   id: id(),
   name: varchar("name", { length: 191 }).notNull(),
+  nameAr: varchar("name_ar", { length: 191 }),
   address: varchar("address", { length: 255 }),
+  addressAr: varchar("address_ar", { length: 255 }),
   hours: varchar("hours", { length: 191 }),
   mapUrl: varchar("map_url", { length: 512 }),
   ...timestamps,

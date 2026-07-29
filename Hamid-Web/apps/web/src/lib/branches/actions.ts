@@ -7,7 +7,9 @@ import { guardPermission, type ActionResult } from "@/lib/auth/rbac";
 
 export interface BranchInput {
   name: string;
+  nameAr?: string;
   address?: string;
+  addressAr?: string;
   hours?: string;
   mapUrl?: string;
 }
@@ -23,7 +25,9 @@ function validate(input: BranchInput): string | null {
 function clean(input: BranchInput) {
   return {
     name: input.name.trim(),
+    nameAr: input.nameAr?.trim() || null,
     address: input.address?.trim() || null,
+    addressAr: input.addressAr?.trim() || null,
     hours: input.hours?.trim() || null,
     mapUrl: input.mapUrl?.trim() || null,
   };

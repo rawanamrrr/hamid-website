@@ -19,22 +19,22 @@ export default async function About() {
             />
           </div>
           {/* Corner accents — desktop only */}
-          <div className="hidden md:block absolute -top-10 -left-10 w-40 h-40 border-t-2 border-l-2 border-[#7b5800]/30" />
-          <div className="hidden md:block absolute -bottom-10 -right-10 w-40 h-40 border-b-2 border-r-2 border-[#7b5800]/30" />
+          <div className="hidden md:block absolute -top-10 -left-10 w-40 h-40 border-t-2 border-l-2 border-[#57392D]/30" />
+          <div className="hidden md:block absolute -bottom-10 -right-10 w-40 h-40 border-b-2 border-r-2 border-[#57392D]/30" />
         </div>
 
         <div className="w-full md:w-1/2 space-y-5 md:space-y-8">
           <div className="space-y-3">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#7b5800]">{dict.home.about.kicker}</span>
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#57392D]">{dict.home.about.kicker}</span>
             <h2 className="font-[family-name:var(--font-plus-jakarta)] text-3xl md:text-5xl font-bold text-black leading-tight">
               {dict.home.about.title}
             </h2>
           </div>
-          <p className="text-sm md:text-lg text-[#4f4541] leading-relaxed">{dict.home.about.p1}</p>
-          <p className="text-sm md:text-base text-[#4f4541] leading-relaxed">{dict.home.about.p2}</p>
+          <p className="text-sm md:text-lg text-[#4A3026] leading-relaxed">{dict.home.about.p1}</p>
+          <p className="text-sm md:text-base text-[#4A3026] leading-relaxed">{dict.home.about.p2}</p>
           <Link
             href="/about"
-            className="group inline-flex items-center gap-3 text-black text-xs font-semibold uppercase tracking-widest border-b-2 border-black pb-2 hover:text-[#7b5800] hover:border-[#7b5800] transition-all"
+            className="group inline-flex items-center gap-3 text-black text-xs font-semibold uppercase tracking-widest border-b-2 border-black pb-2 hover:text-[#57392D] hover:border-[#57392D] transition-all"
           >
             {dict.home.about.cta}
             <span aria-hidden="true" className="material-symbols-outlined transition-transform group-hover:translate-x-2">

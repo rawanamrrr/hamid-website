@@ -8,11 +8,11 @@ import Link from "next/link";
 export function LoadErrorBand({ message, retryLabel, href }: { message: string; retryLabel: string; href: string }) {
   return (
     <div className="mx-auto flex max-w-md flex-col items-center gap-4 px-5 py-20 text-center">
-      <span aria-hidden="true" className="material-symbols-outlined text-4xl text-[#c8a97a]">wifi_off</span>
-      <p className="text-sm leading-relaxed text-[#4f4541]">{message}</p>
+      <span aria-hidden="true" className="material-symbols-outlined text-4xl text-[#FFE2C6]">wifi_off</span>
+      <p className="text-sm leading-relaxed text-[#4A3026]">{message}</p>
       <Link
         href={href}
-        className="rounded-full bg-[#271908] px-6 py-2.5 text-xs font-semibold uppercase tracking-widest text-white transition-colors hover:bg-[#7b5800]"
+        className="rounded-full bg-[#000000] px-6 py-2.5 text-xs font-semibold uppercase tracking-widest text-white transition-colors hover:bg-[#57392D]"
       >
         {retryLabel}
       </Link>

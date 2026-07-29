@@ -38,13 +38,17 @@ export function MenuStickyNav({ sections }: { sections: { id: string; title: str
   }, [activeId]);
 
   return (
-    <div className="sticky z-30 border-b border-[#e8d5bc]/50 bg-[#fff8f4]/90 backdrop-blur-md transition-[top] duration-300"
+    <div className="sticky z-30 border-b border-[#e8d5bc]/50 bg-[#F5F5DC]/90 backdrop-blur-md transition-[top] duration-300"
       style={{ top: "var(--nav-offset, 52px)" }}>
-      <div ref={navRef} className="mx-auto flex max-w-[1280px] gap-1.5 overflow-x-auto no-scrollbar px-5 py-2.5 md:px-16">
+      {/* dir="ltr": scrollLeft sign conventions for RTL differ across
+          browsers, which would break the offsetLeft-based auto-centering
+          above — and a jump-nav's left-to-right pill order shouldn't flip
+          with the page language anyway. */}
+      <div ref={navRef} dir="ltr" className="mx-auto flex max-w-[1280px] gap-1.5 overflow-x-auto no-scrollbar px-5 py-2.5 md:px-16">
         {sections.map((s) => (
           <a key={s.id} data-id={s.id} href={`#${s.id}`}
             className={`flex-shrink-0 rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors duration-200 ${
-              activeId === s.id ? "bg-[#271908] text-[#c8a97a]" : "bg-transparent text-[#817570] hover:bg-[#ffead8] hover:text-[#271908]"
+              activeId === s.id ? "bg-[#000000] text-[#FFE2C6]" : "bg-transparent text-[#8E7B6A] hover:bg-[#FFE2C6] hover:text-[#000000]"
             }`}>
             {s.title}
           </a>

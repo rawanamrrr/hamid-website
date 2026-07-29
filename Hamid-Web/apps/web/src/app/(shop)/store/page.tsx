@@ -34,10 +34,10 @@ export default async function StorePage({
 
   return (
     <div className="min-h-screen">
-      <div className="relative overflow-hidden bg-[#271908] py-14 md:py-24 px-5 md:px-16 text-center">
+      <div className="relative overflow-hidden bg-[#000000] py-14 md:py-24 px-5 md:px-16 text-center">
         <StoreHeroBackground images={heroImages} />
         <div className="relative z-10">
-          <p className="text-[#c8a97a] text-xs font-semibold uppercase tracking-widest mb-3">Hamid Afandi</p>
+          <p className="text-[#FFE2C6] text-xs font-semibold uppercase tracking-widest mb-3">Hamid Afandi</p>
           <h1 className="font-[family-name:var(--font-plus-jakarta)] text-3xl md:text-5xl font-bold text-white mb-4">
             {dict.store.title}
           </h1>
@@ -51,11 +51,12 @@ export default async function StorePage({
       <div className="py-10 md:py-16 px-5 md:px-16 max-w-[1280px] mx-auto">
         <StoreSearchInput placeholder={dict.store.searchPlaceholder} />
 
-        <div className="flex gap-2 md:gap-4 overflow-x-auto no-scrollbar pb-2 mb-8 md:mb-12 md:flex-wrap md:justify-center">
+        {/* dir="ltr": consistent horizontal-scroll direction regardless of page language */}
+        <div className="flex gap-2 md:gap-4 overflow-x-auto no-scrollbar pb-2 mb-8 md:mb-12 md:flex-wrap md:justify-center" dir="ltr">
           <Link
             href="/store"
             className={`flex-shrink-0 px-5 py-2 rounded-full border text-xs font-semibold uppercase tracking-widest transition-all whitespace-nowrap ${
-              !activeCategory ? "bg-black text-white border-black" : "border-[#817570] hover:bg-black hover:text-white hover:border-black"
+              !activeCategory ? "bg-black text-white border-black" : "border-[#8E7B6A] hover:bg-black hover:text-white hover:border-black"
             }`}
           >
             {dict.store.all}
@@ -67,7 +68,7 @@ export default async function StorePage({
               className={`flex-shrink-0 px-5 py-2 rounded-full border text-xs font-semibold uppercase tracking-widest transition-all whitespace-nowrap ${
                 activeCategory === cat.slug
                   ? "bg-black text-white border-black"
-                  : "border-[#817570] hover:bg-black hover:text-white hover:border-black"
+                  : "border-[#8E7B6A] hover:bg-black hover:text-white hover:border-black"
               }`}
             >
               {cat.name}
@@ -96,7 +97,7 @@ export default async function StorePage({
         </div>
 
         {products.length === 0 && (
-          <p className="text-center text-[#4f4541] py-16">{search ? dict.store.searchEmpty : dict.store.empty}</p>
+          <p className="text-center text-[#4A3026] py-16">{search ? dict.store.searchEmpty : dict.store.empty}</p>
         )}
       </div>
       )}

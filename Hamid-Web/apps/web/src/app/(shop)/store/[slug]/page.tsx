@@ -30,7 +30,7 @@ export default async function StoreProductPage({ params }: { params: Promise<{ s
 
   return (
     <div className="mx-auto max-w-5xl px-5 py-12 md:px-16 md:py-16">
-      <Link href="/store" className="mb-8 inline-flex items-center gap-1 text-sm font-semibold text-[#7b5800] hover:underline">
+      <Link href="/store" className="mb-8 inline-flex items-center gap-1 text-sm font-semibold text-[#57392D] hover:underline">
         <ChevronLeft size={16} />
         {dict.store.title}
       </Link>

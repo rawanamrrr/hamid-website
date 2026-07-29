@@ -24,17 +24,17 @@ export default function ContactPage() {
             {CHANNELS.map(({ icon, label, value, href }) => {
               const body = (
                 <>
-                  <span aria-hidden="true" className="material-symbols-outlined text-2xl text-[#7b5800]">{icon}</span>
+                  <span aria-hidden="true" className="material-symbols-outlined text-2xl text-[#57392D]">{icon}</span>
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-widest text-[#817570]">{label}</p>
-                    <p className="mt-1 text-sm font-medium text-[#271908]">{value}</p>
+                    <p className="text-xs font-semibold uppercase tracking-widest text-[#8E7B6A]">{label}</p>
+                    <p className="mt-1 text-sm font-medium text-[#000000]">{value}</p>
                   </div>
                 </>
               );
               const classes =
                 "flex items-center gap-4 rounded-2xl border border-[#e8d5bc]/60 p-5 transition-colors";
               return href ? (
-                <a key={label} href={href} className={`${classes} hover:border-[#7b5800]`}>
+                <a key={label} href={href} className={`${classes} hover:border-[#57392D]`}>
                   {body}
                 </a>
               ) : (
@@ -43,9 +43,9 @@ export default function ContactPage() {
                 </div>
               );
             })}
-            <p className="pt-2 text-sm leading-relaxed text-[#4f4541]">
+            <p className="pt-2 text-sm leading-relaxed text-[#4A3026]">
               For wholesale partnerships, see our{" "}
-              <a href="/wholesale" className="text-[#7b5800] underline">
+              <a href="/wholesale" className="text-[#57392D] underline">
                 Wholesale page
               </a>
               .
@@ -54,7 +54,7 @@ export default function ContactPage() {
 
           {/* Form */}
           <div className="lg:col-span-3">
-            <h2 className="mb-4 font-[family-name:var(--font-plus-jakarta)] text-xl font-bold text-[#271908]">
+            <h2 className="mb-4 font-[family-name:var(--font-plus-jakarta)] text-xl font-bold text-[#000000]">
               Send us a message
             </h2>
             <ContactForm />

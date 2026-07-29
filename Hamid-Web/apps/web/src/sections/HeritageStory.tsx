@@ -6,7 +6,7 @@ function getCategories(dict: Dictionary) { return [
   {
     label: dict.home.heritage.coffeeBeans,
     icon: (
-      <svg viewBox="0 0 64 64" fill="none" stroke="#5c3d1e" strokeWidth="1.8" className="w-10 h-10">
+      <svg viewBox="0 0 64 64" fill="none" stroke="#57392D" strokeWidth="1.8" className="w-10 h-10">
         <rect x="10" y="28" width="44" height="28" rx="3" />
         <rect x="18" y="18" width="28" height="12" rx="2" />
         <line x1="32" y1="10" x2="32" y2="18" />
@@ -22,7 +22,7 @@ function getCategories(dict: Dictionary) { return [
   {
     label: dict.home.heritage.turkishCoffee,
     icon: (
-      <svg viewBox="0 0 64 64" fill="none" stroke="#5c3d1e" strokeWidth="1.8" className="w-10 h-10">
+      <svg viewBox="0 0 64 64" fill="none" stroke="#57392D" strokeWidth="1.8" className="w-10 h-10">
         <path d="M18 20 Q16 40 20 48 Q24 54 32 54 Q40 54 44 48 Q48 40 46 20 Z" />
         <line x1="18" y1="20" x2="46" y2="20" />
         <path d="M44 30 Q52 30 52 38 Q52 46 44 46" />
@@ -34,7 +34,7 @@ function getCategories(dict: Dictionary) { return [
   {
     label: dict.home.heritage.espresso,
     icon: (
-      <svg viewBox="0 0 64 64" fill="none" stroke="#5c3d1e" strokeWidth="1.8" className="w-10 h-10">
+      <svg viewBox="0 0 64 64" fill="none" stroke="#57392D" strokeWidth="1.8" className="w-10 h-10">
         <rect x="20" y="8" width="24" height="36" rx="4" transform="rotate(-30 32 32)" />
         <circle cx="38" cy="44" r="6" />
         <line x1="32" y1="44" x2="20" y2="56" strokeWidth="3" strokeLinecap="round" />
@@ -44,7 +44,7 @@ function getCategories(dict: Dictionary) { return [
   {
     label: dict.home.heritage.accessories,
     icon: (
-      <svg viewBox="0 0 64 64" fill="none" stroke="#5c3d1e" strokeWidth="1.8" className="w-10 h-10">
+      <svg viewBox="0 0 64 64" fill="none" stroke="#57392D" strokeWidth="1.8" className="w-10 h-10">
         <path d="M14 38 Q14 52 32 52 Q50 52 50 38 L46 24 H18 Z" />
         <line x1="18" y1="24" x2="46" y2="24" />
         <path d="M46 32 Q54 32 54 38 Q54 44 46 44" />
@@ -60,38 +60,38 @@ function getCategories(dict: Dictionary) { return [
 
 const CoffeeBeanSvg = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 40 56" className={className} fill="none">
-    <ellipse cx="20" cy="28" rx="14" ry="22" fill="#c8a97a" stroke="#a0784a" strokeWidth="1.5" />
-    <path d="M20 8 Q26 28 20 48" stroke="#a0784a" strokeWidth="1.5" fill="none" />
-    <path d="M20 8 Q14 28 20 48" stroke="#a0784a" strokeWidth="1.5" fill="none" />
+    <ellipse cx="20" cy="28" rx="14" ry="22" fill="#FFE2C6" stroke="#8C6B57" strokeWidth="1.5" />
+    <path d="M20 8 Q26 28 20 48" stroke="#8C6B57" strokeWidth="1.5" fill="none" />
+    <path d="M20 8 Q14 28 20 48" stroke="#8C6B57" strokeWidth="1.5" fill="none" />
   </svg>
 );
 
 const CoffeeBranchSvg = () => (
   <svg viewBox="0 0 200 80" className="w-48 h-16 mx-auto" fill="none">
-    <path d="M100 60 Q70 40 40 50 Q20 55 10 45" stroke="#8B6340" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-    <path d="M100 60 Q130 40 160 50 Q180 55 190 45" stroke="#8B6340" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-    <path d="M40 50 Q35 35 45 25" stroke="#8B6340" strokeWidth="1.2" fill="none" />
-    <ellipse cx="45" cy="22" rx="8" ry="11" fill="#c8a97a" stroke="#8B6340" strokeWidth="1" transform="rotate(-15 45 22)" />
-    <path d="M45 12 Q50 22 45 32" stroke="#8B6340" strokeWidth="0.8" fill="none" />
-    <path d="M65 44 Q60 30 68 20" stroke="#8B6340" strokeWidth="1.2" fill="none" />
-    <ellipse cx="68" cy="17" rx="8" ry="11" fill="#c8a97a" stroke="#8B6340" strokeWidth="1" transform="rotate(-10 68 17)" />
-    <path d="M68 7 Q73 17 68 27" stroke="#8B6340" strokeWidth="0.8" fill="none" />
-    <circle cx="30" cy="55" r="4" fill="#8B6340" />
-    <circle cx="55" cy="48" r="4" fill="#8B6340" transform="rotate(-10 55 48)" />
-    <path d="M160 50 Q155 35 165 25" stroke="#8B6340" strokeWidth="1.2" fill="none" />
-    <ellipse cx="165" cy="22" rx="8" ry="11" fill="#c8a97a" stroke="#8B6340" strokeWidth="1" transform="rotate(15 165 22)" />
-    <path d="M165 12 Q160 22 165 32" stroke="#8B6340" strokeWidth="0.8" fill="none" />
-    <path d="M135 44 Q130 30 138 20" stroke="#8B6340" strokeWidth="1.2" fill="none" />
-    <ellipse cx="138" cy="17" rx="8" ry="11" fill="#c8a97a" stroke="#8B6340" strokeWidth="1" transform="rotate(10 138 17)" />
-    <path d="M138 7 Q133 17 138 27" stroke="#8B6340" strokeWidth="0.8" fill="none" />
-    <circle cx="170" cy="55" r="4" fill="#8B6340" />
-    <circle cx="145" cy="48" r="4" fill="#8B6340" transform="rotate(10 145 48)" />
-    <path d="M95 60 Q100 45 100 30" stroke="#8B6340" strokeWidth="1.2" fill="none" />
-    <path d="M105 60 Q100 45 100 30" stroke="#8B6340" strokeWidth="1.2" fill="none" />
+    <path d="M100 60 Q70 40 40 50 Q20 55 10 45" stroke="#57392D" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+    <path d="M100 60 Q130 40 160 50 Q180 55 190 45" stroke="#57392D" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+    <path d="M40 50 Q35 35 45 25" stroke="#57392D" strokeWidth="1.2" fill="none" />
+    <ellipse cx="45" cy="22" rx="8" ry="11" fill="#FFE2C6" stroke="#57392D" strokeWidth="1" transform="rotate(-15 45 22)" />
+    <path d="M45 12 Q50 22 45 32" stroke="#57392D" strokeWidth="0.8" fill="none" />
+    <path d="M65 44 Q60 30 68 20" stroke="#57392D" strokeWidth="1.2" fill="none" />
+    <ellipse cx="68" cy="17" rx="8" ry="11" fill="#FFE2C6" stroke="#57392D" strokeWidth="1" transform="rotate(-10 68 17)" />
+    <path d="M68 7 Q73 17 68 27" stroke="#57392D" strokeWidth="0.8" fill="none" />
+    <circle cx="30" cy="55" r="4" fill="#57392D" />
+    <circle cx="55" cy="48" r="4" fill="#57392D" transform="rotate(-10 55 48)" />
+    <path d="M160 50 Q155 35 165 25" stroke="#57392D" strokeWidth="1.2" fill="none" />
+    <ellipse cx="165" cy="22" rx="8" ry="11" fill="#FFE2C6" stroke="#57392D" strokeWidth="1" transform="rotate(15 165 22)" />
+    <path d="M165 12 Q160 22 165 32" stroke="#57392D" strokeWidth="0.8" fill="none" />
+    <path d="M135 44 Q130 30 138 20" stroke="#57392D" strokeWidth="1.2" fill="none" />
+    <ellipse cx="138" cy="17" rx="8" ry="11" fill="#FFE2C6" stroke="#57392D" strokeWidth="1" transform="rotate(10 138 17)" />
+    <path d="M138 7 Q133 17 138 27" stroke="#57392D" strokeWidth="0.8" fill="none" />
+    <circle cx="170" cy="55" r="4" fill="#57392D" />
+    <circle cx="145" cy="48" r="4" fill="#57392D" transform="rotate(10 145 48)" />
+    <path d="M95 60 Q100 45 100 30" stroke="#57392D" strokeWidth="1.2" fill="none" />
+    <path d="M105 60 Q100 45 100 30" stroke="#57392D" strokeWidth="1.2" fill="none" />
     {/* swirl left */}
-    <path d="M40 60 Q30 55 35 48 Q40 41 48 46" stroke="#8B6340" strokeWidth="1" fill="none" strokeLinecap="round" />
+    <path d="M40 60 Q30 55 35 48 Q40 41 48 46" stroke="#57392D" strokeWidth="1" fill="none" strokeLinecap="round" />
     {/* swirl right */}
-    <path d="M160 60 Q170 55 165 48 Q160 41 152 46" stroke="#8B6340" strokeWidth="1" fill="none" strokeLinecap="round" />
+    <path d="M160 60 Q170 55 165 48 Q160 41 152 46" stroke="#57392D" strokeWidth="1" fill="none" strokeLinecap="round" />
   </svg>
 );
 
@@ -111,12 +111,12 @@ export default async function HeritageStory() {
   return (
     <section
       className="relative overflow-hidden py-20"
-      style={{ background: "linear-gradient(135deg, #f5ead8 0%, #ede0c8 50%, #f5ead8 100%)" }}
+      style={{ background: "linear-gradient(135deg, #F5F5DC 0%, #FCE8CD 50%, #F5F5DC 100%)" }}
     >
       {/* Subtle wood-grain lines */}
       <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-10" preserveAspectRatio="none">
         {[...Array(18)].map((_, i) => (
-          <line key={i} x1={`${(i * 6) - 5}%`} y1="0" x2={`${(i * 6) + 5}%`} y2="100%" stroke="#8B6340" strokeWidth="1" />
+          <line key={i} x1={`${(i * 6) - 5}%`} y1="0" x2={`${(i * 6) + 5}%`} y2="100%" stroke="#57392D" strokeWidth="1" />
         ))}
       </svg>
 
@@ -143,7 +143,7 @@ export default async function HeritageStory() {
         <div className="text-center mb-10 md:mb-14">
           <h2
             className="font-[family-name:var(--font-plus-jakarta)] text-2xl md:text-3xl font-bold mb-8 md:mb-10"
-            style={{ color: "#3b1f0a" }}
+            style={{ color: "#000000" }}
           >
             {dict.home.heritage.exploreHeritage}
           </h2>
@@ -151,12 +151,12 @@ export default async function HeritageStory() {
             {categories.map(({ label, icon }) => (
               <div key={label} className="flex flex-col items-center gap-2 cursor-pointer group w-[72px] md:w-auto">
                 <div
-                  className="w-14 h-14 md:w-20 md:h-20 rounded-full border-2 flex items-center justify-center transition-all duration-300 group-hover:bg-[#c8a97a]/30 flex-shrink-0"
-                  style={{ borderColor: "#8B6340" }}
+                  className="w-14 h-14 md:w-20 md:h-20 rounded-full border-2 flex items-center justify-center transition-all duration-300 group-hover:bg-[#FFE2C6]/30 flex-shrink-0"
+                  style={{ borderColor: "#57392D" }}
                 >
                   <div className="w-7 h-7 md:w-10 md:h-10 [&>svg]:w-full [&>svg]:h-full">{icon}</div>
                 </div>
-                <span className="text-[10px] md:text-sm font-medium text-center leading-tight" style={{ color: "#3b1f0a" }}>{label}</span>
+                <span className="text-[10px] md:text-sm font-medium text-center leading-tight" style={{ color: "#000000" }}>{label}</span>
               </div>
             ))}
           </div>
@@ -166,7 +166,7 @@ export default async function HeritageStory() {
         <div className="text-center mb-10">
           <h2
             className="font-[family-name:var(--font-plus-jakarta)] text-2xl md:text-3xl font-bold"
-            style={{ color: "#3b1f0a" }}
+            style={{ color: "#000000" }}
           >
             {dict.home.heritage.ourStory}
           </h2>
@@ -178,8 +178,8 @@ export default async function HeritageStory() {
             <div
               className="absolute inset-0 rounded-sm overflow-hidden"
               style={{
-                border: "10px solid #7B4F2E",
-                boxShadow: "4px 4px 16px rgba(0,0,0,0.35), inset 0 0 0 2px #a0784a",
+                border: "10px solid #57392D",
+                boxShadow: "4px 4px 16px rgba(0,0,0,0.35), inset 0 0 0 2px #8C6B57",
               }}
             >
               <img
@@ -196,21 +196,21 @@ export default async function HeritageStory() {
             className="absolute right-0 top-12 z-20 rounded-2xl p-5 md:p-8 flex flex-col gap-3 md:gap-5"
             style={{
               width: "64%",
-              background: "#c9a97b",
+              background: "#FFE2C6",
               boxShadow: "0 8px 32px rgba(0,0,0,0.18)",
               minHeight: 320,
             }}
           >
             <h3
               className="font-[family-name:var(--font-plus-jakarta)] text-lg md:text-2xl font-bold leading-snug"
-              style={{ color: "#3b1f0a" }}
+              style={{ color: "#000000" }}
             >
               {dict.home.heritage.storyTitle}
             </h3>
-            <p className="text-xs md:text-sm leading-relaxed" style={{ color: "#3b1f0a" }}>
+            <p className="text-xs md:text-sm leading-relaxed" style={{ color: "#000000" }}>
               {dict.home.heritage.storyP1}
             </p>
-            <p className="text-xs md:text-sm leading-relaxed" style={{ color: "#3b1f0a" }}>
+            <p className="text-xs md:text-sm leading-relaxed" style={{ color: "#000000" }}>
               {dict.home.heritage.storyP2}
             </p>
             <div className="mt-1"><CoffeeBranchSvg /></div>
@@ -218,7 +218,7 @@ export default async function HeritageStory() {
               <Link
                 href="/about"
                 className="px-5 md:px-8 py-2.5 md:py-3 rounded-xl text-xs md:text-sm font-semibold text-white transition-all hover:opacity-90"
-                style={{ background: "#8B6340" }}
+                style={{ background: "#57392D" }}
               >
                 {dict.home.heritage.readFullStory}
               </Link>

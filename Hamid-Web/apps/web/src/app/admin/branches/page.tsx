@@ -24,7 +24,9 @@ export default async function AdminBranchesPage() {
             items={rows.map((b) => ({
               id: b.id,
               name: b.name,
+              nameAr: b.nameAr,
               address: b.address,
+              addressAr: b.addressAr,
               hours: b.hours,
               mapUrl: b.mapUrl,
             }))}

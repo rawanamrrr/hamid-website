@@ -56,7 +56,7 @@ export default function ProductCard({
   }
 
   const ImageBlock = (
-    <div className="relative aspect-[4/5] overflow-hidden bg-[#f2d5ba] flex-shrink-0">
+    <div className="relative aspect-[4/5] overflow-hidden bg-[#FCE8CD] flex-shrink-0">
       {!imgError && image ? (
         <Image
           src={image}
@@ -68,20 +68,20 @@ export default function ProductCard({
         />
       ) : (
         <div className="w-full h-full flex items-center justify-center">
-          <span className="material-symbols-outlined text-[#947f78] text-5xl sm:text-6xl">local_cafe</span>
+          <span className="material-symbols-outlined text-[#8E7B6A] text-5xl sm:text-6xl">local_cafe</span>
         </div>
       )}
       {badge && (
-        <span className="absolute top-2.5 start-2.5 sm:top-4 sm:start-4 bg-[#7b5800] text-white px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs uppercase tracking-tight">
+        <span className="absolute top-2.5 start-2.5 sm:top-4 sm:start-4 bg-[#57392D] text-white px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs uppercase tracking-tight">
           {badge}
         </span>
       )}
       {rating != null && (
-        <span className="absolute bottom-2.5 end-2.5 sm:bottom-3 sm:end-3 flex items-center gap-0.5 rounded-full bg-white/90 backdrop-blur-sm px-2 py-0.5 text-[10px] sm:text-xs font-semibold text-[#271908]">
+        <span className="absolute bottom-2.5 end-2.5 sm:bottom-3 sm:end-3 flex items-center gap-0.5 rounded-full bg-white/90 backdrop-blur-sm px-2 py-0.5 text-[10px] sm:text-xs font-semibold text-[#000000]">
           <span aria-hidden="true" className="flex items-center gap-0.5">
             {rating}
             <span
-              className="material-symbols-outlined text-[12px] sm:text-[14px] text-[#7b5800]"
+              className="material-symbols-outlined text-[12px] sm:text-[14px] text-[#57392D]"
               style={{ fontVariationSettings: "'FILL' 1" }}
             >
               star
@@ -95,15 +95,15 @@ export default function ProductCard({
 
   const InfoBlock = (
     <div>
-      <p className="text-[#817570] text-[10px] sm:text-xs uppercase tracking-wider mb-1">{tag}</p>
-      <h3 className="font-[family-name:var(--font-plus-jakarta)] text-sm sm:text-lg font-semibold text-[#271908] leading-snug line-clamp-2 min-h-[2.5rem] sm:min-h-[3.25rem]">
+      <p className="text-[#8E7B6A] text-[10px] sm:text-xs uppercase tracking-wider mb-1">{tag}</p>
+      <h3 className="font-[family-name:var(--font-plus-jakarta)] text-sm sm:text-lg font-semibold text-[#000000] leading-snug line-clamp-2 min-h-[2.5rem] sm:min-h-[3.25rem]">
         {name}
       </h3>
     </div>
   );
 
   return (
-    <div className="group luxury-shadow bg-[#fff1e6] rounded-2xl sm:rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_18px_36px_-14px_rgba(39,25,8,0.3)] flex flex-col">
+    <div className="group luxury-shadow bg-[#FAECD2] rounded-2xl sm:rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_18px_36px_-14px_rgba(39,25,8,0.3)] flex flex-col">
       {slug ? (
         <Link href={`/store/${slug}`}>{ImageBlock}</Link>
       ) : (
@@ -116,11 +116,11 @@ export default function ProductCard({
           {/* Mobile: price + round icon button. Desktop: price row, then full-width CTA. */}
           <div className="flex items-center justify-between gap-2">
             <p className="flex items-baseline gap-1.5 sm:gap-2">
-              <span className="text-[#7b5800] font-[family-name:var(--font-plus-jakarta)] text-base sm:text-xl font-bold">
+              <span className="text-[#57392D] font-[family-name:var(--font-plus-jakarta)] text-base sm:text-xl font-bold">
                 {price}
               </span>
               {compareAtPrice && (
-                <span className="text-[#947f78] text-xs sm:text-sm line-through">{compareAtPrice}</span>
+                <span className="text-[#8E7B6A] text-xs sm:text-sm line-through">{compareAtPrice}</span>
               )}
             </p>
             <button
@@ -128,7 +128,7 @@ export default function ProductCard({
               onClick={handleAddToCart}
               disabled={pending || !productId}
               aria-label={added ? addedLabel : addToCartLabel}
-              className="sm:hidden flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#271908] text-white active:scale-95 transition-all disabled:opacity-60"
+              className="sm:hidden flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#000000] text-white active:scale-95 transition-all disabled:opacity-60"
             >
               <span aria-hidden="true" className="material-symbols-outlined text-[18px] select-none">
                 {added ? "check" : "add_shopping_cart"}
@@ -139,7 +139,7 @@ export default function ProductCard({
             type="button"
             onClick={handleAddToCart}
             disabled={pending || !productId}
-            className="hidden sm:flex mt-3 w-full items-center justify-center gap-2 rounded-full bg-[#271908] py-3 text-xs font-semibold uppercase tracking-widest text-white transition-colors hover:bg-[#7b5800] disabled:opacity-60"
+            className="hidden sm:flex mt-3 w-full items-center justify-center gap-2 rounded-full bg-[#000000] py-3 text-xs font-semibold uppercase tracking-widest text-white transition-colors hover:bg-[#57392D] disabled:opacity-60"
           >
             {added ? addedLabel : addToCartLabel}
             <span aria-hidden="true" className="material-symbols-outlined text-[18px] select-none">shopping_cart</span>

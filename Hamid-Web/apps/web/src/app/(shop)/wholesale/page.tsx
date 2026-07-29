@@ -24,16 +24,16 @@ export default function WholesalePage() {
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
           {PERKS.map(({ icon, title, desc }) => (
             <div key={title} className="text-center space-y-3">
-              <div className="w-14 h-14 rounded-full bg-[#7b5800] flex items-center justify-center mx-auto">
+              <div className="w-14 h-14 rounded-full bg-[#57392D] flex items-center justify-center mx-auto">
                 <span className="material-symbols-outlined text-white text-xl" aria-hidden="true">{icon}</span>
               </div>
               <h3 className="font-[family-name:var(--font-plus-jakarta)] font-semibold text-black">{title}</h3>
-              <p className="text-sm text-[#4f4541]">{desc}</p>
+              <p className="text-sm text-[#4A3026]">{desc}</p>
             </div>
           ))}
         </div>
         <div className="text-center">
-          <a href="/contact" className="inline-block rounded-full bg-black px-8 py-3.5 text-xs font-semibold uppercase tracking-widest text-white hover:bg-[#7b5800] transition-colors">
+          <a href="/contact" className="inline-block rounded-full bg-black px-8 py-3.5 text-xs font-semibold uppercase tracking-widest text-white hover:bg-[#57392D] transition-colors">
             Start a wholesale inquiry
           </a>
         </div>

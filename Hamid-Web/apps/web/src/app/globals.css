@@ -2,7 +2,7 @@
 
 /*
  * NOTE on token semantics (see docs/AUDIT.md M10): --color-primary below is
- * black, not the brand gold (#7b5800, --color-secondary) used for every
+ * black, not the brand gold (#57392D, --color-secondary) used for every
  * public-site CTA. This is intentional as-is — the admin dashboard/auth/cart/
  * checkout screens already consistently use bg-primary/text-primary for their
  * accent color (buttons, focus rings, links) and re-theming it to gold would
@@ -16,40 +16,40 @@
   --color-primary: #000000;
   --color-on-primary: #ffffff;
   --color-primary-container: #261813;
-  --color-on-primary-container: #947f78;
-  --color-secondary: #7b5800;
+  --color-on-primary-container: #8E7B6A;
+  --color-secondary: #57392D;
   --color-on-secondary: #ffffff;
-  --color-secondary-container: #fdca68;
-  --color-on-secondary-container: #765400;
+  --color-secondary-container: #FFE2C6;
+  --color-on-secondary-container: #412B22;
   --color-tertiary: #000000;
   --color-on-tertiary: #ffffff;
   --color-tertiary-container: #261909;
   --color-on-tertiary-container: #95806b;
-  --color-surface: #fff8f4;
-  --color-surface-dim: #f2d5ba;
-  --color-surface-bright: #fff8f4;
+  --color-surface: #F5F5DC;
+  --color-surface-dim: #FCE8CD;
+  --color-surface-bright: #F5F5DC;
   --color-surface-container-lowest: #ffffff;
-  --color-surface-container-low: #fff1e6;
-  --color-surface-container: #ffead8;
-  --color-surface-container-high: #ffe4c9;
-  --color-surface-container-highest: #fadec2;
-  --color-on-surface: #271908;
-  --color-on-surface-variant: #4f4541;
-  --color-outline: #817570;
+  --color-surface-container-low: #FAECD2;
+  --color-surface-container: #FFE2C6;
+  --color-surface-container-high: #FFE2C6;
+  --color-surface-container-highest: #FFE2C6;
+  --color-on-surface: #000000;
+  --color-on-surface-variant: #4A3026;
+  --color-outline: #8E7B6A;
   --color-outline-variant: #d2c3be;
   --color-inverse-surface: #3e2d1a;
   --color-inverse-on-surface: #ffeedf;
   --color-surface-tint: #6d5a53;
-  --color-surface-variant: #fadec2;
-  --color-background: #fff8f4;
-  --color-on-background: #271908;
+  --color-surface-variant: #FFE2C6;
+  --color-background: #F5F5DC;
+  --color-on-background: #000000;
   --color-paper-white: #ffffff;
-  --color-roast-black: #0D0705;
-  --color-sand-muted: #D9C1AA;
-  --color-secondary-fixed: #ffdea6;
-  --color-secondary-fixed-dim: #f1bf5e;
+  --color-roast-black: #000000;
+  --color-sand-muted: #FEE5C9;
+  --color-secondary-fixed: #FFE2C6;
+  --color-secondary-fixed-dim: #FFE2C6;
   --color-on-secondary-fixed: #271900;
-  --color-on-secondary-fixed-variant: #5d4200;
+  --color-on-secondary-fixed-variant: #412B22;
   --color-primary-fixed: #f7ddd4;
   --color-primary-fixed-dim: #dac1b8;
   --color-on-primary-fixed: #261813;
@@ -60,8 +60,9 @@
   --color-error-container: #ffdad6;
   --color-on-error-container: #93000a;
 
-  --font-display: "Plus Jakarta Sans", sans-serif;
+  --font-display: "Arsenal", sans-serif;
   --font-body: "Inter", sans-serif;
+  --font-subheading: "Anton", sans-serif;
 
   --radius-DEFAULT: 0.25rem;
   --radius-lg: 0.5rem;
@@ -80,25 +81,45 @@
 }
 
 body {
-  background-color: #fff8f4;
-  color: #271908;
-  font-family: "Inter", sans-serif;
+  background-color: #F5F5DC;
+  color: #000000;
+  font-family: var(--font-inter, "Inter"), sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
 /* Arabic (RTL): redefine the font custom properties themselves so every
    Tailwind utility that resolves through var(--font-plus-jakarta) /
-   var(--font-inter) / var(--font-display) / var(--font-body) — across every
-   component, without touching each one — picks up Cairo automatically
-   (Inter/Plus Jakarta Sans don't cover the Arabic script). */
-[dir="rtl"] {
-  --font-plus-jakarta: var(--font-cairo), "Plus Jakarta Sans", sans-serif;
-  --font-inter: var(--font-cairo), "Inter", sans-serif;
-  --font-display: var(--font-cairo), "Plus Jakarta Sans", sans-serif;
-  --font-body: var(--font-cairo), "Inter", sans-serif;
+   var(--font-inter) / var(--font-display) / var(--font-body) /
+   var(--font-subheading) — across every component, without touching each
+   one — picks up the brand's Arabic font automatically (Arsenal/Inter/Anton
+   don't cover the Arabic script). El Messiri (the brand's Arabic display-font
+   role, standing in for the licensed "Lafet") is used for EVERY Arabic role
+   — nav, headings, buttons, body text, forms — per the brand identity's
+   requirement that Arabic feel fully and consistently branded, not just on
+   headings. Cairo is kept only as a fallback for any glyph El Messiri lacks.
+
+   Selector note: next/font's `.variable` classes (arsenal.variable,
+   inter.variable, ...) declare these SAME custom properties directly on
+   <body> in layout.tsx. A plain `[dir="rtl"]` rule only sets them on <html>,
+   and body's own local declaration always wins over an inherited value
+   regardless of the ancestor rule's specificity — so the override silently
+   never took effect. `html[dir="rtl"] body` targets body itself with higher
+   specificity than next/font's single class selector, so it actually wins. */
+html[dir="rtl"] body,
+html:lang(ar) body {
+  --font-plus-jakarta: var(--font-arabic-display), var(--font-cairo), "Arsenal", sans-serif;
+  --font-inter: var(--font-arabic-display), var(--font-cairo), "Inter", sans-serif;
+  --font-display: var(--font-arabic-display), var(--font-cairo), "Arsenal", sans-serif;
+  --font-body: var(--font-arabic-display), var(--font-cairo), "Inter", sans-serif;
+  --font-subheading: var(--font-arabic-display), var(--font-cairo), "Anton", sans-serif;
 }
+/* Belt-and-suspenders: body's own font-family (above) already resolves
+   through var(--font-inter), which the [dir="rtl"] block redefines — this
+   covers any element that sets font-family to a literal string instead of
+   the variable (Tailwind's default font-sans utility, e.g., used untouched
+   in a few admin screens). */
 body.font-arabic {
-  font-family: var(--font-cairo), "Inter", sans-serif;
+  font-family: var(--font-arabic-display), var(--font-cairo), "Inter", sans-serif;
 }
 
 .material-symbols-outlined {

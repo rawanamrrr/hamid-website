@@ -26,16 +26,16 @@ export default function CareersPage() {
             <div key={title} className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#e8d5bc]/60 p-6">
               <div>
                 <h3 className="font-[family-name:var(--font-plus-jakarta)] text-lg font-semibold text-black">{title}</h3>
-                <p className="text-sm text-[#817570]">{location} · {type}</p>
+                <p className="text-sm text-[#8E7B6A]">{location} · {type}</p>
               </div>
-              <a href="/contact" className="rounded-full bg-black px-6 py-2.5 text-xs font-semibold uppercase tracking-widest text-white hover:bg-[#7b5800] transition-colors">
+              <a href="/contact" className="rounded-full bg-black px-6 py-2.5 text-xs font-semibold uppercase tracking-widest text-white hover:bg-[#57392D] transition-colors">
                 Apply
               </a>
             </div>
           ))}
         </div>
-        <p className="mt-10 text-center text-[#4f4541]">
-          Don&apos;t see a role that fits? Reach out via our <a href="/contact" className="text-[#7b5800] underline">Contact page</a> —
+        <p className="mt-10 text-center text-[#4A3026]">
+          Don&apos;t see a role that fits? Reach out via our <a href="/contact" className="text-[#57392D] underline">Contact page</a> —
           we&apos;d still love to hear from you.
         </p>
       </section>

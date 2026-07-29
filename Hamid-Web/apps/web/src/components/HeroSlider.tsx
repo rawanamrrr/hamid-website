@@ -59,19 +59,19 @@ export function HeroSlider({ slides, copy }: { slides: HeroSlideView[]; copy: He
 
       <div className={`relative z-10 mx-auto w-full max-w-[1280px] px-5 pt-24 md:px-16 md:py-0 ${many ? "pb-14" : "pb-10"} md:pb-0`}>
         <div className="max-w-2xl space-y-4 text-white md:space-y-7">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#e9c77f] md:text-xs">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#FFE2C6] md:text-xs">
             {copy.kicker}
           </p>
           <h1 className="font-[family-name:var(--font-plus-jakarta)] text-[1.9rem] font-bold leading-[1.12] tracking-tight md:text-5xl md:leading-[1.1]">
             {slide?.title || copy.title}
           </h1>
-          <p className="max-w-lg text-[15px] leading-relaxed text-[#D9C1AA] md:text-lg">
+          <p className="max-w-lg text-[15px] leading-relaxed text-[#FEE5C9] md:text-lg">
             {slide?.subtitle || copy.subtitle}
           </p>
           <div className="flex flex-col gap-2.5 pt-1 sm:flex-row md:gap-4 md:pt-0">
             <Link
               href={slide?.linkUrl || "/store"}
-              className="flex h-12 items-center justify-center rounded-full bg-[#7b5800] px-8 text-xs font-semibold uppercase tracking-widest text-white shadow-lg transition-colors hover:bg-[#765400] md:h-auto md:px-10 md:py-4"
+              className="flex h-12 items-center justify-center rounded-full bg-[#57392D] px-8 text-xs font-semibold uppercase tracking-widest text-white shadow-lg transition-colors hover:bg-[#412B22] md:h-auto md:px-10 md:py-4"
             >
               {slide?.ctaText || copy.shopCoffee}
             </Link>

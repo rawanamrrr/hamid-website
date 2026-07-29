@@ -10,8 +10,8 @@ export default function PrivacyPage() {
   return (
     <div>
       <SimplePageHero eyebrow="Legal" title="Privacy Policy" />
-      <section className="py-16 px-5 md:px-16 max-w-3xl mx-auto space-y-8 text-[#4f4541] leading-relaxed">
-        <p className="text-sm text-[#817570]">Last updated: {new Date().toLocaleDateString("en-GB", { year: "numeric", month: "long", day: "numeric" })}</p>
+      <section className="py-16 px-5 md:px-16 max-w-3xl mx-auto space-y-8 text-[#4A3026] leading-relaxed">
+        <p className="text-sm text-[#8E7B6A]">Last updated: {new Date().toLocaleDateString("en-GB", { year: "numeric", month: "long", day: "numeric" })}</p>
 
         <div className="space-y-3">
           <h2 className="font-[family-name:var(--font-plus-jakarta)] text-xl font-semibold text-black">Information we collect</h2>
@@ -49,7 +49,7 @@ export default function PrivacyPage() {
         <div className="space-y-3">
           <h2 className="font-[family-name:var(--font-plus-jakarta)] text-xl font-semibold text-black">Contact</h2>
           <p>
-            Questions about this policy can be sent to us via our <a href="/contact" className="text-[#7b5800] underline">Contact page</a>.
+            Questions about this policy can be sent to us via our <a href="/contact" className="text-[#57392D] underline">Contact page</a>.
           </p>
         </div>
       </section>

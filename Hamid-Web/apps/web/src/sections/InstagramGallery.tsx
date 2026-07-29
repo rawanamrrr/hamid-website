@@ -16,12 +16,12 @@ export default async function InstagramGallery() {
         <h2 className="font-[family-name:var(--font-plus-jakarta)] text-2xl md:text-[32px] font-semibold text-black">
           {dict.home.instagram.title}
         </h2>
-        <p className="text-[#7b5800] text-sm font-semibold">{dict.home.instagram.followUs}</p>
+        <p className="text-[#57392D] text-sm font-semibold">{dict.home.instagram.followUs}</p>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
         {photos.map((photo, i) => {
           const tile = (
-            <div className="aspect-square overflow-hidden rounded-2xl group relative bg-[#f2d5ba]">
+            <div className="aspect-square overflow-hidden rounded-2xl group relative bg-[#FCE8CD]">
               <Image
                 src={photo.imageUrl}
                 alt=""

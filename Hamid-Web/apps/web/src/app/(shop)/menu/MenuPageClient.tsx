@@ -6,10 +6,10 @@ import { ScrollToTop } from "./ScrollToTop";
 
 // ─── Badge colour mapping ──────────────────────────────────────────────────
 const BADGE_STYLES: Record<string, string> = {
-  Popular:  "bg-[#7b5800]/10 text-[#7b5800] border border-[#7b5800]/20",
+  Popular:  "bg-[#57392D]/10 text-[#57392D] border border-[#57392D]/20",
   New:      "bg-emerald-50 text-emerald-700 border border-emerald-200",
   Seasonal: "bg-sky-50 text-sky-700 border border-sky-200",
-  Heritage: "bg-[#271908]/8 text-[#271908] border border-[#271908]/15",
+  Heritage: "bg-[#000000]/8 text-[#000000] border border-[#000000]/15",
 };
 
 // ─── Category grid tile (the page's visual centrepiece) ───────────────────
@@ -17,7 +17,7 @@ function CategoryTile({ section }: { section: MenuSection }) {
   return (
     <a
       href={`#${section.id}`}
-      className="group relative aspect-square sm:aspect-[3/4] overflow-hidden rounded-2xl sm:rounded-[1.5rem] bg-[#1a1006] shadow-[0_8px_24px_-8px_rgba(39,25,8,0.35)]"
+      className="group relative aspect-square sm:aspect-[3/4] overflow-hidden rounded-2xl sm:rounded-[1.5rem] bg-[#000000] shadow-[0_8px_24px_-8px_rgba(39,25,8,0.35)]"
     >
       <CategoryVisual section={section} sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent" />
@@ -38,22 +38,22 @@ function MenuItemCard({ item }: { item: MenuItem }) {
   const singleSize = item.sizes.length === 1;
 
   return (
-    <div className="group flex flex-col justify-between rounded-2xl sm:rounded-[1.25rem] border border-[#e8d5bc]/40 bg-white p-3.5 sm:p-5 shadow-[0_2px_10px_-4px_rgba(39,25,8,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#c8a97a]/60 hover:shadow-[0_10px_24px_-8px_rgba(39,25,8,0.18)]">
+    <div className="group flex flex-col justify-between rounded-2xl sm:rounded-[1.25rem] border border-[#e8d5bc]/40 bg-white p-3.5 sm:p-5 shadow-[0_2px_10px_-4px_rgba(39,25,8,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#FFE2C6]/60 hover:shadow-[0_10px_24px_-8px_rgba(39,25,8,0.18)]">
       <div className="space-y-1 sm:space-y-1.5">
         {item.badge && (
           <span
             className={`inline-block text-[9px] sm:text-[10px] font-semibold uppercase tracking-widest px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full ${
-              BADGE_STYLES[item.badge] ?? "bg-[#7b5800]/10 text-[#7b5800]"
+              BADGE_STYLES[item.badge] ?? "bg-[#57392D]/10 text-[#57392D]"
             }`}
           >
             {item.badge}
           </span>
         )}
-        <h3 className="font-[family-name:var(--font-plus-jakarta)] text-[13px] sm:text-[15px] font-semibold text-[#271908] leading-snug">
+        <h3 className="font-[family-name:var(--font-plus-jakarta)] text-[13px] sm:text-[15px] font-semibold text-[#000000] leading-snug">
           {item.name}
         </h3>
         {item.description && (
-          <p className="text-[#4f4541] text-[11px] sm:text-xs leading-relaxed line-clamp-2">
+          <p className="text-[#4A3026] text-[11px] sm:text-xs leading-relaxed line-clamp-2">
             {item.description}
           </p>
         )}
@@ -61,15 +61,15 @@ function MenuItemCard({ item }: { item: MenuItem }) {
 
       <div className="mt-3 sm:mt-4 border-t border-[#e8d5bc]/50 pt-2.5 sm:pt-3">
         {singleSize ? (
-          <span className="font-[family-name:var(--font-plus-jakarta)] text-sm sm:text-base font-bold text-[#7b5800]">
+          <span className="font-[family-name:var(--font-plus-jakarta)] text-sm sm:text-base font-bold text-[#57392D]">
             {item.sizes[0].price}
           </span>
         ) : (
           <ul className="space-y-0.5 sm:space-y-1">
             {item.sizes.map((s) => (
               <li key={s.size} className="flex items-center justify-between gap-2 text-xs sm:text-sm">
-                <span className="text-[#4f4541] truncate">{s.size}</span>
-                <span className="font-[family-name:var(--font-plus-jakarta)] font-bold text-[#7b5800] whitespace-nowrap">{s.price}</span>
+                <span className="text-[#4A3026] truncate">{s.size}</span>
+                <span className="font-[family-name:var(--font-plus-jakarta)] font-bold text-[#57392D] whitespace-nowrap">{s.price}</span>
               </li>
             ))}
           </ul>
@@ -116,13 +116,13 @@ function MenuSectionBlock({ section }: { section: MenuSection }) {
 // one "use client" file. ────────────────────────────────────────────────
 export default function MenuPageClient({ sections, heroImages }: { sections: MenuSection[]; heroImages: string[] }) {
   return (
-    <div className="min-h-screen bg-[#fff8f4]">
+    <div className="min-h-screen bg-[#F5F5DC]">
       <ScrollToTop />
       {/* ── Compact intro ────────────────────────────────────────────────── */}
-      <div className="relative overflow-hidden bg-[#271908] px-5 py-12 text-center md:px-16 md:py-16">
+      <div className="relative overflow-hidden bg-[#000000] px-5 py-12 text-center md:px-16 md:py-16">
         <IntroHeroBackground images={heroImages} />
         <div className="relative z-10">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-[#c8a97a]">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-[#FFE2C6]">
             Hamid Afandi
           </p>
           <h1 className="font-[family-name:var(--font-plus-jakarta)] text-3xl font-bold text-white md:text-5xl">
@@ -154,8 +154,8 @@ export default function MenuPageClient({ sections, heroImages }: { sections: Men
       </div>
 
       {/* ── Footer CTA ──────────────────────────────────────────────────── */}
-      <div className="bg-[#271908] py-12 md:py-16 px-5 text-center mt-4">
-        <p className="text-[#c8a97a] text-xs font-semibold uppercase tracking-[0.2em] mb-3">
+      <div className="bg-[#000000] py-12 md:py-16 px-5 text-center mt-4">
+        <p className="text-[#FFE2C6] text-xs font-semibold uppercase tracking-[0.2em] mb-3">
           Can&apos;t decide?
         </p>
         <h2 className="font-[family-name:var(--font-plus-jakarta)] text-2xl md:text-3xl font-bold text-white mb-4">
@@ -167,7 +167,7 @@ export default function MenuPageClient({ sections, heroImages }: { sections: Men
         </p>
         <a
           href="/branches"
-          className="inline-flex items-center gap-2 bg-[#7b5800] text-white px-8 py-3 rounded-full text-xs font-semibold uppercase tracking-widest hover:bg-[#5d4200] transition-colors"
+          className="inline-flex items-center gap-2 bg-[#57392D] text-white px-8 py-3 rounded-full text-xs font-semibold uppercase tracking-widest hover:bg-[#412B22] transition-colors"
         >
           <span aria-hidden="true" className="material-symbols-outlined text-[16px] select-none">location_on</span>
           Find Our Branch

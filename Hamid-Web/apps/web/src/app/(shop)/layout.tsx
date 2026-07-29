@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import { getDict, getLocale } from "@/lib/i18n";
 import { getSessionUser } from "@/lib/auth/rbac";
 import { getCartItemCount } from "@/lib/cart/queries";
-import { getBranches } from "@/lib/branches/queries";
+import { getBranches, localizeBranch } from "@/lib/branches/queries";
 import { withDbTimeout } from "@/lib/db-timeout";
 
 export default async function ShopLayout({
@@ -21,12 +21,13 @@ export default async function ShopLayout({
     withDbTimeout(getCartItemCount()).catch(() => 0),
     withDbTimeout(getBranches()).catch(() => []),
   ]);
+  const localizedBranches = branches.map((b) => localizeBranch(b, locale));
 
   return (
     <>
       <Navbar dict={dict} locale={locale} user={user} cartCount={cartCount} />
       <main id="main-content">{children}</main>
-      <Footer dict={dict} branches={branches} />
+      <Footer dict={dict} branches={localizedBranches} />
     </>
   );
 }

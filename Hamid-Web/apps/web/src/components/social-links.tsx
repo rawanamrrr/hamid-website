@@ -27,7 +27,7 @@ export const SOCIAL_LINKS = [
 export function SocialIconLinks({
   className = "",
   iconClassName = "w-4 h-4",
-  linkClassName = "border-white/20 hover:border-[#7b5800] hover:text-[#7b5800]",
+  linkClassName = "border-white/20 hover:border-[#57392D] hover:text-[#57392D]",
 }: {
   className?: string;
   iconClassName?: string;

@@ -47,8 +47,8 @@ export default function BrewingGuidesPage() {
         {GUIDES.map(({ method, ratio, steps }) => (
           <div key={method}>
             <h2 className="font-[family-name:var(--font-plus-jakarta)] text-2xl font-semibold text-black">{method}</h2>
-            <p className="mt-1 text-sm font-semibold uppercase tracking-widest text-[#7b5800]">{ratio}</p>
-            <ol className="mt-4 space-y-2 text-[#4f4541] leading-relaxed list-decimal list-inside">
+            <p className="mt-1 text-sm font-semibold uppercase tracking-widest text-[#57392D]">{ratio}</p>
+            <ol className="mt-4 space-y-2 text-[#4A3026] leading-relaxed list-decimal list-inside">
               {steps.map((step) => (
                 <li key={step}>{step}</li>
               ))}

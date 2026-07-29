@@ -50,7 +50,7 @@ export function AddedToCartDialog({
       <div className="flex items-center justify-between gap-2 p-3.5 pb-2.5 sm:p-4 sm:pb-3">
         <div className="flex min-w-0 items-center gap-2">
           <CheckCircle2 size={18} className="shrink-0 text-[#2e7d32] sm:size-5" />
-          <p className="truncate font-[family-name:var(--font-plus-jakarta)] text-xs font-bold text-[#271908] sm:text-sm">
+          <p className="truncate font-[family-name:var(--font-plus-jakarta)] text-xs font-bold text-[#000000] sm:text-sm">
             {labels.title}
           </p>
         </div>
@@ -58,7 +58,7 @@ export function AddedToCartDialog({
           type="button"
           onClick={onClose}
           aria-label="Close"
-          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[#817570] hover:bg-[#f2d5ba]/60"
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[#8E7B6A] hover:bg-[#FCE8CD]/60"
         >
           <X size={15} />
         </button>
@@ -67,13 +67,13 @@ export function AddedToCartDialog({
       {(productImage || productName) && (
         <div className="flex items-center gap-2.5 px-3.5 pb-2.5 sm:gap-3 sm:px-4 sm:pb-3">
           {productImage && (
-            <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-lg bg-[#f2d5ba] sm:h-12 sm:w-12">
+            <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-lg bg-[#FCE8CD] sm:h-12 sm:w-12">
               <Image src={productImage} alt="" fill unoptimized className="object-cover" />
             </div>
           )}
           <div className="min-w-0">
-            {productName && <p className="truncate text-xs font-semibold text-[#271908] sm:text-sm">{productName}</p>}
-            {productMeta && <p className="truncate text-[11px] text-[#817570] sm:text-xs">{productMeta}</p>}
+            {productName && <p className="truncate text-xs font-semibold text-[#000000] sm:text-sm">{productName}</p>}
+            {productMeta && <p className="truncate text-[11px] text-[#8E7B6A] sm:text-xs">{productMeta}</p>}
           </div>
         </div>
       )}
@@ -81,7 +81,7 @@ export function AddedToCartDialog({
       <div className="flex flex-col gap-2 p-3.5 pt-1 sm:p-4 sm:pt-1">
         <Link
           href="/cart"
-          className="flex h-10 w-full items-center justify-center gap-1.5 rounded-full bg-[#271908] text-[11px] font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#7b5800]"
+          className="flex h-10 w-full items-center justify-center gap-1.5 rounded-full bg-[#000000] text-[11px] font-semibold uppercase tracking-wide text-white transition-colors hover:bg-[#57392D]"
         >
           <ShoppingCart size={14} />
           {labels.goToCart}
@@ -89,7 +89,7 @@ export function AddedToCartDialog({
         <button
           type="button"
           onClick={onClose}
-          className="flex h-10 w-full items-center justify-center rounded-full border border-[#271908]/20 text-[11px] font-semibold uppercase tracking-wide text-[#271908] transition-colors hover:bg-[#f2d5ba]/40"
+          className="flex h-10 w-full items-center justify-center rounded-full border border-[#000000]/20 text-[11px] font-semibold uppercase tracking-wide text-[#000000] transition-colors hover:bg-[#FCE8CD]/40"
         >
           {labels.continueShopping}
         </button>

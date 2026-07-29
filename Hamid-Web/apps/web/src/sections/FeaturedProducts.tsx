@@ -19,9 +19,9 @@ export default async function FeaturedProducts() {
           <h2 className="font-[family-name:var(--font-plus-jakarta)] text-2xl md:text-[32px] font-semibold text-black">
             {dict.home.featured.title}
           </h2>
-          <p className="text-[#4f4541] text-sm md:text-base mt-1 md:mt-2">{dict.home.featured.subtitle}</p>
+          <p className="text-[#4A3026] text-sm md:text-base mt-1 md:mt-2">{dict.home.featured.subtitle}</p>
         </div>
-        <Link href="/store" className="text-[#7b5800] text-sm font-semibold hover:underline">
+        <Link href="/store" className="text-[#57392D] text-sm font-semibold hover:underline">
           {dict.home.featured.viewAll}
         </Link>
       </div>
