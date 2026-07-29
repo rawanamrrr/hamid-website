@@ -82,7 +82,6 @@ export default async function AdminStoreProductsPage({
               <Td className={p.stockQty < 10 ? "font-semibold text-error" : "text-on-surface-variant"}>{p.stockQty}</Td>
               <Td className="space-x-1">
                 {p.isBestSeller && <span className="rounded-full bg-secondary-container px-2 py-0.5 text-xs">Best seller</span>}
-                {p.isFeaturedHome && <span className="rounded-full bg-primary-container px-2 py-0.5 text-xs text-on-primary-container">Featured</span>}
               </Td>
               <Td>
                 <span

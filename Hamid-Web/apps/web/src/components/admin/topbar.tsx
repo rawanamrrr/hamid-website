@@ -12,9 +12,9 @@ export function AdminTopbar({ name, email, onOpenNav }: { name: string; email: s
             <Menu size={22} />
           </button>
         )}
-        <Link href="/admin" className="flex items-center gap-2 md:hidden">
-          <Image src="/brand/logo-icon-cropped.svg" alt="Hamid Afandi" width={26} height={24} className="h-6 w-auto object-contain" priority />
-          <span className="font-display text-base font-bold text-on-surface">Hamid Afandi</span>
+        <Link href="/admin" className="flex items-center gap-2">
+          <Image src="/brand/logo-icon-crisp.png" alt="Hamid Afandi" width={26} height={24} className="h-6 w-auto object-contain" priority />
+          <span className="font-display text-sm font-bold text-on-surface">Hamid Afandi</span>
         </Link>
       </div>
       <div className="flex items-center gap-4">

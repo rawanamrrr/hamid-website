@@ -23,18 +23,41 @@ export const SITE_PAGES = [
 ];
 const CUSTOM_LINK = "__custom__";
 
+export interface LinkPickerProduct {
+  id: number;
+  slug: string;
+  name: string;
+}
+
+/** Special encoded value — recognized by HeroSlider as "add this product to the cart" instead of a navigable href. */
+export function cartActionValue(productId: number): string {
+  return `cart:${productId}`;
+}
+
 export function LinkPicker({
   id,
   label,
   value,
   onChange,
+  products,
+  allowAddToCart,
 }: {
   id: string;
   label: string;
   value: string;
   onChange: (value: string) => void;
+  /** When given, adds a "Specific product" group so the link can point straight at one product's page. */
+  products?: LinkPickerProduct[];
+  /** Adds an "Add to cart" group — picking one of these makes the click add that product to the cart instead of navigating. Only meaningful where the renderer understands the "cart:" encoding (currently: the hero slider). */
+  allowAddToCart?: boolean;
 }) {
-  const isKnownLink = value === "" || SITE_PAGES.some((p) => p.value === value);
+  const productPages = (products ?? []).map((p) => ({ value: `/store/${p.slug}`, label: p.name }));
+  const cartActions = allowAddToCart ? (products ?? []).map((p) => ({ value: cartActionValue(p.id), label: p.name })) : [];
+  const isKnownLink =
+    value === "" ||
+    SITE_PAGES.some((p) => p.value === value) ||
+    productPages.some((p) => p.value === value) ||
+    cartActions.some((p) => p.value === value);
   const selectValue = isKnownLink ? value : CUSTOM_LINK;
 
   return (
@@ -52,6 +75,24 @@ export function LinkPicker({
             {p.label}
           </option>
         ))}
+        {productPages.length > 0 && (
+          <optgroup label="Specific product">
+            {productPages.map((p) => (
+              <option key={p.value} value={p.value}>
+                {p.label}
+              </option>
+            ))}
+          </optgroup>
+        )}
+        {cartActions.length > 0 && (
+          <optgroup label="Add to cart (no navigation)">
+            {cartActions.map((p) => (
+              <option key={p.value} value={p.value}>
+                {p.label}
+              </option>
+            ))}
+          </optgroup>
+        )}
         <option value={CUSTOM_LINK}>Custom URL…</option>
       </select>
       {selectValue === CUSTOM_LINK && (

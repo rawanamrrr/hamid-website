@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { Menu, ShoppingBag, X } from "lucide-react";
+import { Menu, ShoppingCart, X } from "lucide-react";
 import { logoutAction } from "@/lib/auth/actions";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { AddedToCartDialog } from "@/components/AddedToCartDialog";
@@ -43,24 +43,38 @@ function CartBadge({ count }: { count: number }) {
  * recognition, not the name's own script/direction.
  */
 function BrandMark({ locale, height }: { locale: Locale; height: number }) {
-  // Intrinsic aspect ratios of the cropped brand assets — height is the only
+  // Intrinsic aspect ratios of the crisp brand assets — height is the only
   // thing callers choose; width follows so neither mark ever stretches.
-  const iconWidth = Math.round(height * (363 / 339));
-  const wordmarkWidth = Math.round(height * (583 / 245));
+  const iconWidth = Math.round(height * (989 / 930));
+  const wordmarkWidth = Math.round(height * (551 / 212));
 
   return (
     <Link href="/" className="flex items-center gap-2.5 md:gap-3" aria-label="Hamid Afandi — home">
-      <span className="relative shrink-0" style={{ width: iconWidth, height }}>
-        <Image src="/brand/logo-icon-cropped.svg" alt="Hamid Afandi" fill className="object-contain" priority />
+      <span className="relative shrink-0 flex items-center justify-center" style={{ width: iconWidth, height }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/brand/logo-icon-crisp.png"
+          alt="Hamid Afandi"
+          width={iconWidth * 2}
+          height={height * 2}
+          className="h-full w-full object-contain"
+        />
       </span>
       {locale === "ar" ? (
-        <span className="relative shrink-0" style={{ width: wordmarkWidth, height }}>
-          <Image src="/brand/wordmark-ar-cropped.svg" alt="حميد أفندي" fill className="object-contain" priority />
+        <span className="relative shrink-0 flex items-center justify-center" style={{ width: wordmarkWidth, height }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/brand/wordmark-ar-crisp.png"
+            alt="حميد أفندي"
+            width={wordmarkWidth * 2}
+            height={height * 2}
+            className="h-full w-full object-contain"
+          />
         </span>
       ) : (
         <span
           className="font-[family-name:var(--font-plus-jakarta)] font-bold text-[#57392D] whitespace-nowrap"
-          style={{ fontSize: Math.round(height * 0.42) }}
+          style={{ fontSize: Math.max(16, Math.round(height * 0.44)) }}
         >
           Hamid Afandi
         </span>
@@ -95,6 +109,7 @@ export default function Navbar({
       productName={addedToCart?.name}
       productImage={addedToCart?.image}
       productMeta={addedToCart?.meta}
+      locale={locale}
       labels={{
         title: dict.product.addedToCartTitle,
         continueShopping: dict.product.continueShopping,
@@ -197,7 +212,7 @@ export default function Navbar({
           </button>
 
           <div className="min-w-0" onClick={closeNav}>
-            <BrandMark locale={locale} height={40} />
+            <BrandMark locale={locale} height={42} />
           </div>
 
           {/* Shopping bag */}
@@ -207,7 +222,7 @@ export default function Navbar({
               aria-label={dict.nav.cart}
               className="relative w-11 h-11 flex items-center justify-center text-[#000000] active:text-[#57392D] transition-colors"
             >
-              <ShoppingBag size={22} strokeWidth={2} />
+              <ShoppingCart size={22} strokeWidth={2} />
               <CartBadge count={cartCount} />
             </Link>
             {addedToCartDialog}
@@ -278,7 +293,7 @@ export default function Navbar({
                 aria-label={dict.nav.cart}
                 className="relative flex h-9 w-9 items-center justify-center text-[#000000] hover:text-[#57392D] transition-colors"
               >
-                <ShoppingBag size={18} strokeWidth={2} />
+                <ShoppingCart size={18} strokeWidth={2} />
                 <CartBadge count={cartCount} />
               </Link>
               {addedToCartDialog}

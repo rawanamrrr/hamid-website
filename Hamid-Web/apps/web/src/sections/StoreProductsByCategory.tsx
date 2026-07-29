@@ -29,6 +29,7 @@ export default async function StoreProductsByCategory() {
           products={items}
           addToCartLabel={dict.product.addToCart}
           addedLabel={dict.product.added}
+          swipeHint={dict.home.bestSellers.swipeHint}
         />
       ))}
     </section>

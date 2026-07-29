@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, useTransition } from "react";
 import { addToCartAction } from "@/lib/cart/actions";
 import { notifyAddedToCart } from "@/lib/cart/added-to-cart-bus";
+import { ShoppingCart, Check } from "lucide-react";
 
 interface ProductCardProps {
   productId?: number;
@@ -130,9 +131,7 @@ export default function ProductCard({
               aria-label={added ? addedLabel : addToCartLabel}
               className="sm:hidden flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#000000] text-white active:scale-95 transition-all disabled:opacity-60"
             >
-              <span aria-hidden="true" className="material-symbols-outlined text-[18px] select-none">
-                {added ? "check" : "add_shopping_cart"}
-              </span>
+              {added ? <Check size={18} /> : <ShoppingCart size={18} />}
             </button>
           </div>
           <button
@@ -142,7 +141,7 @@ export default function ProductCard({
             className="hidden sm:flex mt-3 w-full items-center justify-center gap-2 rounded-full bg-[#000000] py-3 text-xs font-semibold uppercase tracking-widest text-white transition-colors hover:bg-[#57392D] disabled:opacity-60"
           >
             {added ? addedLabel : addToCartLabel}
-            <span aria-hidden="true" className="material-symbols-outlined text-[18px] select-none">shopping_cart</span>
+            {added ? <Check size={18} /> : <ShoppingCart size={18} />}
           </button>
           {error && (
             <p role="alert" className="mt-2 text-[11px] sm:text-xs leading-snug text-red-700">

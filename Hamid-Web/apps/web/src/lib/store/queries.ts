@@ -102,8 +102,7 @@ export const getStoreCategories = unstable_cache(getStoreCategoriesImpl, ["store
 
 export interface StoreProductFilter {
   categorySlug?: string;
-  /** Filter in SQL rather than fetching the whole catalog and filtering in JS — see getFeaturedHomeProducts/getBestSellerProducts. */
-  onlyFeaturedHome?: boolean;
+  /** Filter in SQL rather than fetching the whole catalog and filtering in JS — see getBestSellerProducts. */
   onlyBestSeller?: boolean;
   limit?: number;
   /** Matches against product name/description translations (any locale). */
@@ -112,7 +111,7 @@ export interface StoreProductFilter {
 
 async function getStoreProductsImpl(locale: Locale = "en", filter: string | StoreProductFilter = {}): Promise<StoreProductView[]> {
   // Back-compat: a bare string is still treated as categorySlug (existing callers pass a string).
-  const { categorySlug, onlyFeaturedHome, onlyBestSeller, limit, search } = typeof filter === "string" ? { categorySlug: filter } as StoreProductFilter : filter;
+  const { categorySlug, onlyBestSeller, limit, search } = typeof filter === "string" ? { categorySlug: filter } as StoreProductFilter : filter;
 
   const categoryRows = await db.select().from(storeCategories).where(eq(storeCategories.isActive, true));
   const categoryBySlug = new Map(categoryRows.map((c) => [c.slug, c]));
@@ -134,7 +133,6 @@ async function getStoreProductsImpl(locale: Locale = "en", filter: string | Stor
   if (categoryIds.length === 0) return [];
 
   const conditions = [eq(storeProducts.isActive, true), isNull(storeProducts.deletedAt), inArray(storeProducts.categoryId, categoryIds)];
-  if (onlyFeaturedHome) conditions.push(eq(storeProducts.isFeaturedHome, true));
   if (onlyBestSeller) conditions.push(eq(storeProducts.isBestSeller, true));
   if (searchProductIds) conditions.push(inArray(storeProducts.id, searchProductIds));
 
@@ -270,21 +268,10 @@ export async function getStoreHeroImages(): Promise<string[]> {
   return rows.map((r) => r.url);
 }
 
-// Previously these called getStoreProductsImpl directly — bypassing the 60s
-// unstable_cache that /store's identical query pipeline gets — so every
-// single homepage load paid for a full fresh round-trip (categories, product
-// query, then translations+media+discounts) to the remote MySQL host. That
-// was the "Featured Coffee loads noticeably slower" symptom: the rest of the
-// homepage is either static or cached, this wasn't. Store/menu admin actions
-// already call revalidatePath("/") on save, so the same up-to-60s staleness
-// trade-off already accepted for /store applies here too.
-async function getFeaturedHomeProductsImpl(locale: Locale = "en", limit = 8): Promise<StoreProductView[]> {
-  return withDbTimeout(getStoreProductsImpl(locale, { onlyFeaturedHome: true, limit }));
-}
-export const getFeaturedHomeProducts = unstable_cache(getFeaturedHomeProductsImpl, ["featured-home-products"], {
-  revalidate: CATALOG_REVALIDATE_SECONDS,
-});
-
+// Previously this called getStoreProductsImpl directly — bypassing the 60s
+// unstable_cache that /store's identical query pipeline gets. Store/menu
+// admin actions already call revalidatePath("/") on save, so the same
+// up-to-60s staleness trade-off already accepted for /store applies here too.
 async function getBestSellerProductsImpl(locale: Locale = "en", limit = 8): Promise<StoreProductView[]> {
   return withDbTimeout(getStoreProductsImpl(locale, { onlyBestSeller: true, limit }));
 }

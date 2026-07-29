@@ -9,6 +9,7 @@ interface CategoryProductRowProps {
   products: StoreProductView[];
   addToCartLabel?: string;
   addedLabel?: string;
+  swipeHint?: string;
 }
 
 export function CategoryProductRow({
@@ -16,6 +17,7 @@ export function CategoryProductRow({
   products,
   addToCartLabel,
   addedLabel,
+  swipeHint,
 }: CategoryProductRowProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -83,6 +85,11 @@ export function CategoryProductRow({
           </div>
         ))}
       </div>
+
+      {/* Swipe Hint Text */}
+      <p className="text-center text-xs md:text-sm font-bold text-[#57392D] mt-4 tracking-wide">
+        {swipeHint ?? "Swipe to see more →"}
+      </p>
     </div>
   );
 }

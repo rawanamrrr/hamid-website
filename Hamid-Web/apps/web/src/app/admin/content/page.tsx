@@ -1,6 +1,7 @@
 import { and, asc, eq } from "drizzle-orm";
 import { db, banners, bannerTranslations, media, contentBlocks } from "@hamid/db";
 import { withDbTimeout } from "@/lib/db-timeout";
+import { getStoreProducts } from "@/lib/store/queries";
 import { HeroSlidesManager } from "@/components/admin/content/hero-slides-manager";
 import { CategoryCardsManager, type CategoryCardItem } from "@/components/admin/content/category-cards-manager";
 import { InstagramPhotosManager, type InstagramPhotoItem } from "@/components/admin/content/instagram-photos-manager";
@@ -29,7 +30,7 @@ export default async function AdminContentPage() {
   // Queried directly (not through the public getHomeCategoryCards/
   // getInstagramPhotos accessors, which are cached for 60s) so the editor
   // always reflects the admin's own most recent save on refresh.
-  const [heroRows, homeBlockRows] = await Promise.all([
+  const [heroRows, homeBlockRows, storeProducts] = await Promise.all([
     withDbTimeout(
       db
         .select({ id: banners.id, url: media.url, isActive: banners.isActive, title: bannerTranslations.title })
@@ -42,7 +43,9 @@ export default async function AdminContentPage() {
     withDbTimeout(
       db.select({ blockKey: contentBlocks.blockKey, type: contentBlocks.type, payload: contentBlocks.payload }).from(contentBlocks).where(eq(contentBlocks.page, "home")),
     ).catch(() => []),
+    getStoreProducts("en").catch(() => []),
   ]);
+  const productLinkOptions = storeProducts.map((p) => ({ id: p.id, slug: p.slug, name: p.name }));
 
   const savedCategoryCards = Object.fromEntries(
     homeBlockRows.filter((r) => r.type === "category_card").map((r) => [r.blockKey, r.payload as CategoryCardPayload]),
@@ -80,7 +83,10 @@ export default async function AdminContentPage() {
             Couldn&apos;t reach the database — refresh the page to try again.
           </p>
         ) : (
-          <HeroSlidesManager items={heroRows.map((r) => ({ id: r.id, url: r.url, title: r.title, isActive: r.isActive }))} />
+          <HeroSlidesManager
+            items={heroRows.map((r) => ({ id: r.id, url: r.url, title: r.title, isActive: r.isActive }))}
+            products={productLinkOptions}
+          />
         )}
       </section>
 

@@ -152,10 +152,6 @@ export function StoreProductForm({
               <input type="checkbox" {...register("isBestSeller")} className="h-4 w-4 rounded border-outline-variant" />
               Best seller
             </label>
-            <label className="flex items-center gap-2 text-sm text-on-surface">
-              <input type="checkbox" {...register("isFeaturedHome")} className="h-4 w-4 rounded border-outline-variant" />
-              Featured on home page
-            </label>
           </div>
 
           <div className="flex gap-3">

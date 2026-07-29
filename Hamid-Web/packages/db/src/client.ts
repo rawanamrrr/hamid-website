@@ -5,7 +5,7 @@ import * as schema from "./schema";
 
 declare global {
   // eslint-disable-next-line no-var
-  var __hamidDbPoolV2: mysql.Pool | undefined;
+  var __hamidDbPoolV3: mysql.Pool | undefined;
 }
 
 // mysql2 pools don't open a socket until the first query, so it's safe to
@@ -25,15 +25,23 @@ function createPool() {
   // around hands out dead ones — the source of the intermittent "Failed
   // query" errors. connectionLimit:10 (tried previously to give headroom for
   // the homepage's several parallel queries) ended up holding too many
-  // connections against the host's tight 20-connection cap, so this is
-  // pulled back down to a small pool: connectionLimit:2 keeps well clear of
-  // that ceiling even with a second dev server or deploy running, maxIdle:1
-  // recycles idle sockets aggressively so they don't sit around and get
-  // killed server-side, and queueLimit:0 (unbounded) lets excess queries
-  // queue for a free connection rather than being rejected outright.
+  // connections against the host's tight 20-connection cap, so this was
+  // pulled down to connectionLimit:2 — but that turned out too tight: a
+  // single homepage render fires far more than 2 concurrent queries (hero
+  // slides, categories, best sellers, store products — several of which do
+  // multiple sequential round-trips internally), so most of them piled up
+  // waiting for one of 2 connections and started tripping the 12s
+  // withDbTimeout race (see db-timeout.ts) — the actual cause of renders,
+  // including a plain language switch, appearing to hang. connectionLimit:5
+  // gives enough headroom for one dev/prod process's own concurrent queries
+  // while still leaving comfortable room under the host's 20-connection cap
+  // if something else is sharing it. maxIdle:1 still recycles idle sockets
+  // aggressively so they don't sit around and get killed server-side, and
+  // queueLimit:0 (unbounded) lets excess queries queue for a free connection
+  // rather than being rejected outright.
   return mysql.createPool({
     uri: url ?? "mysql://placeholder:placeholder@localhost:3306/placeholder",
-    connectionLimit: 2,
+    connectionLimit: 5,
     maxIdle: 1,
     idleTimeout: 15_000,
     enableKeepAlive: true,
@@ -47,9 +55,9 @@ function createPool() {
 // Reuse the pool across Next.js hot-reloads in dev. (Key is versioned so a
 // config change here takes effect on hot-reload instead of reusing a pool
 // built with stale options.)
-const pool = globalThis.__hamidDbPoolV2 ?? createPool();
+const pool = globalThis.__hamidDbPoolV3 ?? createPool();
 if (process.env.NODE_ENV !== "production") {
-  globalThis.__hamidDbPoolV2 = pool;
+  globalThis.__hamidDbPoolV3 = pool;
 }
 
 export const db = drizzle(pool, { schema, mode: "default" });

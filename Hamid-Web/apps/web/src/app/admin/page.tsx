@@ -159,7 +159,7 @@ export default async function AdminOverviewPage() {
       {/* Header */}
       <div className="flex items-center gap-4">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[#e8d5bc] bg-[#FAECD2]/40 shadow-xs">
-          <Image src="/brand/logo-icon-cropped.svg" alt="Hamid Afandi" width={32} height={30} className="h-8 w-auto object-contain" priority />
+          <Image src="/brand/logo-icon-crisp.png" alt="Hamid Afandi" width={32} height={30} className="h-8 w-auto object-contain" priority />
         </div>
         <div>
           <h1 className="font-display text-2xl font-bold text-on-surface">Dashboard</h1>

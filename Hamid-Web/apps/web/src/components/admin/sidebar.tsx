@@ -23,7 +23,7 @@ export function AdminSidebar({
     <>
       <div className="flex h-16 items-center justify-between gap-2 border-b border-outline-variant/60 px-6">
         <Link href="/admin" className="flex items-center gap-2.5">
-          <Image src="/brand/logo-icon-cropped.svg" alt="Hamid Afandi" width={30} height={28} className="h-7 w-auto object-contain" priority />
+          <Image src="/brand/logo-icon-crisp.png" alt="Hamid Afandi" width={30} height={28} className="h-7 w-auto object-contain" priority />
           <span className="font-display text-lg font-bold text-on-surface">Hamid Afandi</span>
         </Link>
         {onClose && (

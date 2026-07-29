@@ -18,9 +18,13 @@ export function fromCents(cents: number): string {
 export function formatMoney(cents: number, currency = "EGP", locale = "en"): string {
   // Whole amounts render without decimals ("250 EGP"); fractional amounts keep
   // up to 2 digits ("250.5 EGP"). Currency code always trails the number.
+  // numberingSystem is forced to "latn" so Arabic locale still renders
+  // Western digits (0-9), not Arabic-Indic ones (٠-٩) — prices should read the
+  // same regardless of language.
   const amount = new Intl.NumberFormat(locale === "ar" ? "ar-EG" : "en-EG", {
     minimumFractionDigits: 0,
     maximumFractionDigits: 2,
+    numberingSystem: "latn",
   }).format(cents / 100);
   return `${amount} ${currency}`;
 }

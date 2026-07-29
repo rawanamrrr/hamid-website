@@ -32,7 +32,12 @@ export const banners = mysqlTable("banners", {
   mediaId: fk("media_id")
     .notNull()
     .references(() => media.id),
+  /** Button 1 destination. */
   linkUrl: varchar("link_url", { length: 512 }),
+  /** Button 2 destination — a slide can offer up to two CTAs. */
+  link2Url: varchar("link2_url", { length: 512 }),
+  /** Makes the slide image itself clickable (independent of the buttons). */
+  imageLinkUrl: varchar("image_link_url", { length: 512 }),
   placement: varchar("placement", { length: 50 }).notNull(), // "home_top" | "store_top" | ...
   startsAt: timestamp("starts_at"),
   endsAt: timestamp("ends_at"),
@@ -52,6 +57,7 @@ export const bannerTranslations = mysqlTable(
     title: varchar("title", { length: 191 }),
     subtitle: varchar("subtitle", { length: 255 }),
     ctaText: varchar("cta_text", { length: 100 }),
+    ctaText2: varchar("cta_text_2", { length: 100 }),
   },
   (t) => [uniqueIndex("banner_translations_unique").on(t.bannerId, t.locale)],
 );

@@ -50,9 +50,6 @@ export default async function BestSellers() {
             </div>
           ))}
         </div>
-
-        {/* Mobile scroll hint */}
-        <p className="text-center text-xs text-[#8E7B6A] mt-4 md:hidden">{dict.home.bestSellers.swipeHint}</p>
       </div>
     </section>
   );

@@ -16,14 +16,21 @@ import {
 
 export interface BannerInput {
   mediaId: number;
+  /** Button 1 destination + label. */
   linkUrl?: string;
+  ctaTextEn?: string;
+  ctaTextAr?: string;
+  /** Button 2 (optional) — a slide can offer up to two CTAs. */
+  link2Url?: string;
+  ctaText2En?: string;
+  ctaText2Ar?: string;
+  /** Makes the slide image itself clickable, independent of the buttons. */
+  imageLinkUrl?: string;
   placement: string;
   titleEn?: string;
   titleAr?: string;
   subtitleEn?: string;
   subtitleAr?: string;
-  ctaTextEn?: string;
-  ctaTextAr?: string;
   isActive: boolean;
   sortOrder: number;
 }
@@ -43,28 +50,32 @@ export async function createBannerAction(input: BannerInput): Promise<ActionResu
       .values({
         mediaId: input.mediaId,
         linkUrl: input.linkUrl || null,
+        link2Url: input.link2Url || null,
+        imageLinkUrl: input.imageLinkUrl || null,
         placement: input.placement,
         isActive: input.isActive,
         sortOrder: input.sortOrder,
       })
       .$returningId();
 
-    if (input.titleEn || input.subtitleEn || input.ctaTextEn) {
+    if (input.titleEn || input.subtitleEn || input.ctaTextEn || input.ctaText2En) {
       await tx.insert(bannerTranslations).values({
         bannerId: row.id,
         locale: "en",
         title: input.titleEn || null,
         subtitle: input.subtitleEn || null,
         ctaText: input.ctaTextEn || null,
+        ctaText2: input.ctaText2En || null,
       });
     }
-    if (input.titleAr || input.subtitleAr || input.ctaTextAr) {
+    if (input.titleAr || input.subtitleAr || input.ctaTextAr || input.ctaText2Ar) {
       await tx.insert(bannerTranslations).values({
         bannerId: row.id,
         locale: "ar",
         title: input.titleAr || null,
         subtitle: input.subtitleAr || null,
         ctaText: input.ctaTextAr || null,
+        ctaText2: input.ctaText2Ar || null,
       });
     }
     return row.id;

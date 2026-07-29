@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, FormError } from "@/components/ui/card";
 import { toast } from "@/components/ui/toast";
-import { LinkPicker } from "@/components/admin/content/link-picker";
+import { LinkPicker, type LinkPickerProduct } from "@/components/admin/content/link-picker";
 import {
   createBannerAction,
   toggleBannerActiveAction,
@@ -27,7 +27,7 @@ interface HeroSlideItem {
 
 const HERO_PLACEMENT = "home_hero";
 
-export function HeroSlidesManager({ items }: { items: HeroSlideItem[] }) {
+export function HeroSlidesManager({ items, products }: { items: HeroSlideItem[]; products?: LinkPickerProduct[] }) {
   const router = useRouter();
   const [image, setImage] = useState<PickedMedia | null>(null);
   const [titleEn, setTitleEn] = useState("");
@@ -37,6 +37,12 @@ export function HeroSlidesManager({ items }: { items: HeroSlideItem[] }) {
   const [ctaTextEn, setCtaTextEn] = useState("");
   const [ctaTextAr, setCtaTextAr] = useState("");
   const [linkUrl, setLinkUrl] = useState("");
+  const [showSecondButton, setShowSecondButton] = useState(false);
+  const [ctaText2En, setCtaText2En] = useState("");
+  const [ctaText2Ar, setCtaText2Ar] = useState("");
+  const [link2Url, setLink2Url] = useState("");
+  const [imageIsClickable, setImageIsClickable] = useState(false);
+  const [imageLinkUrl, setImageLinkUrl] = useState("");
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
@@ -56,6 +62,10 @@ export function HeroSlidesManager({ items }: { items: HeroSlideItem[] }) {
         subtitleAr,
         ctaTextEn,
         ctaTextAr,
+        ctaText2En: showSecondButton ? ctaText2En : undefined,
+        ctaText2Ar: showSecondButton ? ctaText2Ar : undefined,
+        link2Url: showSecondButton ? link2Url : undefined,
+        imageLinkUrl: imageIsClickable ? imageLinkUrl : undefined,
         isActive: true,
         sortOrder: items.length,
       });
@@ -72,6 +82,12 @@ export function HeroSlidesManager({ items }: { items: HeroSlideItem[] }) {
         setCtaTextEn("");
         setCtaTextAr("");
         setLinkUrl("");
+        setShowSecondButton(false);
+        setCtaText2En("");
+        setCtaText2Ar("");
+        setLink2Url("");
+        setImageIsClickable(false);
+        setImageLinkUrl("");
         router.refresh();
       }
     });
@@ -110,9 +126,40 @@ export function HeroSlidesManager({ items }: { items: HeroSlideItem[] }) {
           <FormError>{error}</FormError>
           <p className="text-sm text-on-surface-variant">
             Add one slide for a static hero, or several for a slider that rotates automatically. Text fields are
-            optional — empty fields fall back to the site&apos;s default hero copy.
+            optional — leave title, subtitle, and both buttons empty to show just the image, with no text overlay.
           </p>
           <MediaPicker value={image} onChange={setImage} label="Slide image" />
+
+          <div className="rounded-xl border border-outline-variant/60 p-4">
+            <label className="flex items-center gap-2 text-sm font-semibold text-on-surface">
+              <input
+                type="checkbox"
+                checked={imageIsClickable}
+                onChange={(e) => {
+                  setImageIsClickable(e.target.checked);
+                  if (!e.target.checked) setImageLinkUrl("");
+                }}
+              />
+              Make the image itself clickable
+            </label>
+            <p className="mt-1 text-xs text-on-surface-variant">
+              Instead of (or in addition to) the buttons below, tapping anywhere on the image opens a page, a
+              specific product, or adds a product straight to the cart — not a button, the whole image is the
+              action.
+            </p>
+            {imageIsClickable && (
+              <div className="mt-3">
+                <LinkPicker
+                  id="imageLinkUrl"
+                  label="Image destination"
+                  value={imageLinkUrl}
+                  onChange={setImageLinkUrl}
+                  products={products}
+                  allowAddToCart
+                />
+              </div>
+            )}
+          </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <Label htmlFor="titleEn">Title (English)</Label>
@@ -135,15 +182,51 @@ export function HeroSlidesManager({ items }: { items: HeroSlideItem[] }) {
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <Label htmlFor="ctaTextEn">Button text (English)</Label>
+              <Label htmlFor="ctaTextEn">Button 1 text (English)</Label>
               <Input id="ctaTextEn" placeholder="Shop Coffee" value={ctaTextEn} onChange={(e) => setCtaTextEn(e.target.value)} />
             </div>
             <div>
-              <Label htmlFor="ctaTextAr">Button text (Arabic)</Label>
+              <Label htmlFor="ctaTextAr">Button 1 text (Arabic)</Label>
               <Input id="ctaTextAr" dir="rtl" value={ctaTextAr} onChange={(e) => setCtaTextAr(e.target.value)} />
             </div>
           </div>
-          <LinkPicker id="linkUrl" label="Button link (optional)" value={linkUrl} onChange={setLinkUrl} />
+          <LinkPicker id="linkUrl" label="Button 1 link (optional)" value={linkUrl} onChange={setLinkUrl} products={products} allowAddToCart />
+
+          {showSecondButton ? (
+            <div className="space-y-4 rounded-xl border border-outline-variant/60 p-4">
+              <div className="flex items-center justify-between">
+                <p className="text-sm font-semibold text-on-surface">Button 2</p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowSecondButton(false);
+                    setCtaText2En("");
+                    setCtaText2Ar("");
+                    setLink2Url("");
+                  }}
+                  className="text-xs font-semibold text-error hover:opacity-70"
+                >
+                  Remove
+                </button>
+              </div>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div>
+                  <Label htmlFor="ctaText2En">Button 2 text (English)</Label>
+                  <Input id="ctaText2En" placeholder="Our Story" value={ctaText2En} onChange={(e) => setCtaText2En(e.target.value)} />
+                </div>
+                <div>
+                  <Label htmlFor="ctaText2Ar">Button 2 text (Arabic)</Label>
+                  <Input id="ctaText2Ar" dir="rtl" value={ctaText2Ar} onChange={(e) => setCtaText2Ar(e.target.value)} />
+                </div>
+              </div>
+              <LinkPicker id="link2Url" label="Button 2 link (optional)" value={link2Url} onChange={setLink2Url} products={products} allowAddToCart />
+            </div>
+          ) : (
+            <Button type="button" variant="outline" onClick={() => setShowSecondButton(true)}>
+              + Add a second button
+            </Button>
+          )}
+
           <Button type="button" onClick={addSlide} loading={pending}>
             Add hero slide
           </Button>

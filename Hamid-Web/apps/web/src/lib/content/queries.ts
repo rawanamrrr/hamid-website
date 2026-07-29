@@ -14,11 +14,17 @@ const CONTENT_REVALIDATE_SECONDS = 60;
 export interface HeroSlideView {
   id: number;
   imageUrl: string;
+  /** Button 1. */
   linkUrl: string | null;
+  ctaText: string | null;
+  /** Button 2 (optional). */
+  link2Url: string | null;
+  ctaText2: string | null;
+  /** Makes the whole slide image clickable, independent of the buttons. */
+  imageLinkUrl: string | null;
   /** Optional per-slide overrides — the dictionary copy is used when absent. */
   title: string | null;
   subtitle: string | null;
-  ctaText: string | null;
 }
 
 /**
@@ -32,9 +38,12 @@ async function getHomeHeroSlidesImpl(locale: Locale): Promise<HeroSlideView[]> {
       id: banners.id,
       imageUrl: media.url,
       linkUrl: banners.linkUrl,
+      link2Url: banners.link2Url,
+      imageLinkUrl: banners.imageLinkUrl,
       title: bannerTranslations.title,
       subtitle: bannerTranslations.subtitle,
       ctaText: bannerTranslations.ctaText,
+      ctaText2: bannerTranslations.ctaText2,
     })
     .from(banners)
     .innerJoin(media, eq(media.id, banners.mediaId))
