@@ -141,7 +141,17 @@ export default function Footer({ dict, branches = [] }: { dict: Dictionary; bran
         <p className="text-[#FEE5C9] text-xs opacity-80">
           © {new Date().getFullYear()} Hamid Afandi Coffee. {dict.footer.rights}
           <span className="mx-2">|</span>
-          <Link href="/privacy" className="hover:text-[#57392D]">{dict.footer.privacyPolicy}</Link>
+          <Link href="/privacy" className="hover:text-[#57392D] transition-colors">{dict.footer.privacyPolicy}</Link>
+          <span className="mx-2">|</span>
+          <span>Made by </span>
+          <a
+            href="https://www.digitivaa.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-white hover:text-[#57392D] transition-colors underline underline-offset-2"
+          >
+            Digitiva
+          </a>
         </p>
       </div>
     </footer>
