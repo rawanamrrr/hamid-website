@@ -1,0 +1,1081 @@
+1	over_discount	approved	{"store_discount_disabled": true}	الخصم غير مسموح به في إعدادات المتجر لهذا الكاشير		2026-08-08 19:05:12.395202+03	2026-08-08 19:05:12.393801+03	1	1
+2	over_discount	approved	{"store_discount_disabled": true}	الخصم غير مسموح به في إعدادات المتجر لهذا الكاشير		2026-08-08 19:13:53.848786+03	2026-08-08 19:13:53.847722+03	1	2
+3	over_discount	approved	{"store_discount_disabled": true}	الخصم غير مسموح به في إعدادات المتجر لهذا الكاشير		2026-08-09 13:53:12.652311+03	2026-08-09 13:53:12.650345+03	1	1
+4	over_discount	approved	{"store_discount_disabled": true}	الخصم غير مسموح به في إعدادات المتجر لهذا الكاشير		2026-08-09 13:59:44.383564+03	2026-08-09 13:59:44.38318+03	1	1
+\.
+
+
+
+\.
+
+
+
+7	ويتر	waiter	{"crm": ["view", "create", "edit", "delete"], "waiter": ["view", "create", "edit", "void", "add_customer"]}	2026-08-27 20:59:24.660659+03	["dine_in", "takeaway", "delivery"]
+8	كاشير	Cashier	{"crm": ["view", "create", "edit"], "pos": ["view", "create", "edit"], "sales": ["view_all", "edit", "delete", "manage", "expenses"], "waiter": ["view", "create", "edit", "void", "add_customer"], "kitchen": ["view", "edit"], "delivery": ["view", "edit"], "products": ["view", "create", "edit", "delete"], "shipping": ["view", "edit"], "financial": ["view", "create", "edit", "manage", "salaries", "advances"], "categories": ["view", "create", "edit", "delete"]}	2026-08-27 21:10:33.872409+03	["dine_in", "takeaway", "delivery"]
+\.
+
+
+
+1	https://erp.hamidafandi.com/	JS Uncaught Error	Script error.	at :0:0	\N	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1	2026-08-09 21:16:14.747951+03	f	1	FRONTEND
+2	https://erp.hamidafandi.com/	JS Uncaught Error	Script error.	at :0:0	\N	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1	2026-08-09 21:17:06.768203+03	f	1	FRONTEND
+3	https://erp.hamidafandi.com/products/sales/list/	JS Uncaught Error	Uncaught NotAllowedError: Failed to execute 'showPicker' on 'HTMLInputElement': HTMLInputElement::showPicker() requires a user gesture.	NotAllowedError: Failed to execute 'showPicker' on 'HTMLInputElement': HTMLInputElement::showPicker() requires a user gesture.\n    at HTMLDivElement.onclick (https://erp.hamidafandi.com/products/sales/list/:1299:139)	\N	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36	2026-08-09 23:21:38.518493+03	f	1	FRONTEND
+4	/financial/salaries/	OperationalError	no such table: financial_attendancerecord	Traceback (most recent call last):\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute\n    return self.cursor.execute(sql, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute\n    return super().execute(query, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nsqlite3.OperationalError: no such table: financial_attendancerecord\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 577, in thread_handler\n    raise exc_info[1]\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 255, in _get_response_async\n    response = await wrapped_callback(\n               ^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 526, in __call__\n    ret = await asyncio.shield(exec_coro)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/current_thread_executor.py", line 35, in run\n    result = self.fn(*self.args, **self.kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 581, in thread_handler\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 508, in func\n    return context.run(run_child)\n           ^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 506, in run_child\n    return child()\n           ^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/accounts/permissions.py", line 163, in _wrapped_view\n    return view_func(request, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/financial/views.py", line 1258, in salary_list\n    days_absent, late_minutes = _attendance_totals_for_period(sal.employee, period)\n                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/financial/views.py", line 1376, in _attendance_totals_for_period\n    days_absent = qs.exclude(status=AttendanceRecord.STATUS_PRESENT).filter(deduct_salary=True).count()\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/query.py", line 654, in count\n    return self.query.get_count(using=self.db)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 656, in get_count\n    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 638, in get_aggregation\n    result = compiler.execute_sql(SINGLE)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql\n    cursor.execute(sql, params)\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 79, in execute\n    return self._execute_with_wrappers(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers\n    return executor(sql, params, many, context)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 100, in _execute\n    with self.db.wrap_database_errors:\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/utils.py", line 94, in __exit__\n    raise dj_exc_value.with_traceback(traceback) from exc_value\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute\n    return self.cursor.execute(sql, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute\n    return super().execute(query, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ndjango.db.utils.OperationalError: no such table: financial_attendancerecord\n	\N	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36	2026-08-09 23:22:34.171332+03	f	1	BACKEND
+5	/financial/salaries/	OperationalError	no such table: financial_attendancerecord	Traceback (most recent call last):\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute\n    return self.cursor.execute(sql, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute\n    return super().execute(query, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nsqlite3.OperationalError: no such table: financial_attendancerecord\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 577, in thread_handler\n    raise exc_info[1]\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 255, in _get_response_async\n    response = await wrapped_callback(\n               ^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 526, in __call__\n    ret = await asyncio.shield(exec_coro)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/current_thread_executor.py", line 35, in run\n    result = self.fn(*self.args, **self.kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 581, in thread_handler\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 508, in func\n    return context.run(run_child)\n           ^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 506, in run_child\n    return child()\n           ^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/accounts/permissions.py", line 163, in _wrapped_view\n    return view_func(request, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/financial/views.py", line 1258, in salary_list\n    days_absent, late_minutes = _attendance_totals_for_period(sal.employee, period)\n                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/financial/views.py", line 1376, in _attendance_totals_for_period\n    days_absent = qs.exclude(status=AttendanceRecord.STATUS_PRESENT).filter(deduct_salary=True).count()\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/query.py", line 654, in count\n    return self.query.get_count(using=self.db)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 656, in get_count\n    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 638, in get_aggregation\n    result = compiler.execute_sql(SINGLE)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql\n    cursor.execute(sql, params)\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 79, in execute\n    return self._execute_with_wrappers(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers\n    return executor(sql, params, many, context)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 100, in _execute\n    with self.db.wrap_database_errors:\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/utils.py", line 94, in __exit__\n    raise dj_exc_value.with_traceback(traceback) from exc_value\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute\n    return self.cursor.execute(sql, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute\n    return super().execute(query, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ndjango.db.utils.OperationalError: no such table: financial_attendancerecord\n	\N	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36	2026-08-09 23:22:52.071636+03	f	1	BACKEND
+6	/financial/salaries/	OperationalError	no such table: financial_attendancerecord	Traceback (most recent call last):\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute\n    return self.cursor.execute(sql, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute\n    return super().execute(query, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nsqlite3.OperationalError: no such table: financial_attendancerecord\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 577, in thread_handler\n    raise exc_info[1]\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 255, in _get_response_async\n    response = await wrapped_callback(\n               ^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 526, in __call__\n    ret = await asyncio.shield(exec_coro)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/current_thread_executor.py", line 35, in run\n    result = self.fn(*self.args, **self.kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 581, in thread_handler\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 508, in func\n    return context.run(run_child)\n           ^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 506, in run_child\n    return child()\n           ^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/accounts/permissions.py", line 163, in _wrapped_view\n    return view_func(request, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/financial/views.py", line 1258, in salary_list\n    days_absent, late_minutes = _attendance_totals_for_period(sal.employee, period)\n                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/financial/views.py", line 1376, in _attendance_totals_for_period\n    days_absent = qs.exclude(status=AttendanceRecord.STATUS_PRESENT).filter(deduct_salary=True).count()\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/query.py", line 654, in count\n    return self.query.get_count(using=self.db)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 656, in get_count\n    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 638, in get_aggregation\n    result = compiler.execute_sql(SINGLE)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql\n    cursor.execute(sql, params)\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 79, in execute\n    return self._execute_with_wrappers(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers\n    return executor(sql, params, many, context)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 100, in _execute\n    with self.db.wrap_database_errors:\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/utils.py", line 94, in __exit__\n    raise dj_exc_value.with_traceback(traceback) from exc_value\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute\n    return self.cursor.execute(sql, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute\n    return super().execute(query, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ndjango.db.utils.OperationalError: no such table: financial_attendancerecord\n	\N	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36	2026-08-09 23:22:54.830202+03	f	1	BACKEND
+7	/financial/salaries/	OperationalError	no such table: financial_attendancerecord	Traceback (most recent call last):\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute\n    return self.cursor.execute(sql, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute\n    return super().execute(query, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nsqlite3.OperationalError: no such table: financial_attendancerecord\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 577, in thread_handler\n    raise exc_info[1]\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 255, in _get_response_async\n    response = await wrapped_callback(\n               ^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 526, in __call__\n    ret = await asyncio.shield(exec_coro)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/current_thread_executor.py", line 35, in run\n    result = self.fn(*self.args, **self.kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 581, in thread_handler\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 508, in func\n    return context.run(run_child)\n           ^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 506, in run_child\n    return child()\n           ^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/accounts/permissions.py", line 163, in _wrapped_view\n    return view_func(request, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/financial/views.py", line 1258, in salary_list\n    days_absent, late_minutes = _attendance_totals_for_period(sal.employee, period)\n                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/financial/views.py", line 1376, in _attendance_totals_for_period\n    days_absent = qs.exclude(status=AttendanceRecord.STATUS_PRESENT).filter(deduct_salary=True).count()\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/query.py", line 654, in count\n    return self.query.get_count(using=self.db)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 656, in get_count\n    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 638, in get_aggregation\n    result = compiler.execute_sql(SINGLE)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql\n    cursor.execute(sql, params)\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 79, in execute\n    return self._execute_with_wrappers(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers\n    return executor(sql, params, many, context)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 100, in _execute\n    with self.db.wrap_database_errors:\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/utils.py", line 94, in __exit__\n    raise dj_exc_value.with_traceback(traceback) from exc_value\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute\n    return self.cursor.execute(sql, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute\n    return super().execute(query, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ndjango.db.utils.OperationalError: no such table: financial_attendancerecord\n	\N	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36	2026-08-09 23:23:53.757098+03	f	1	BACKEND
+8	/financial/salaries/	OperationalError	no such table: financial_attendancerecord	Traceback (most recent call last):\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute\n    return self.cursor.execute(sql, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute\n    return super().execute(query, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nsqlite3.OperationalError: no such table: financial_attendancerecord\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 577, in thread_handler\n    raise exc_info[1]\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 255, in _get_response_async\n    response = await wrapped_callback(\n               ^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 526, in __call__\n    ret = await asyncio.shield(exec_coro)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/current_thread_executor.py", line 35, in run\n    result = self.fn(*self.args, **self.kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 581, in thread_handler\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 508, in func\n    return context.run(run_child)\n           ^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 506, in run_child\n    return child()\n           ^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/accounts/permissions.py", line 163, in _wrapped_view\n    return view_func(request, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/financial/views.py", line 1258, in salary_list\n    days_absent, late_minutes = _attendance_totals_for_period(sal.employee, period)\n                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/financial/views.py", line 1376, in _attendance_totals_for_period\n    days_absent = qs.exclude(status=AttendanceRecord.STATUS_PRESENT).filter(deduct_salary=True).count()\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/query.py", line 654, in count\n    return self.query.get_count(using=self.db)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 656, in get_count\n    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 638, in get_aggregation\n    result = compiler.execute_sql(SINGLE)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql\n    cursor.execute(sql, params)\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 79, in execute\n    return self._execute_with_wrappers(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers\n    return executor(sql, params, many, context)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 100, in _execute\n    with self.db.wrap_database_errors:\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/utils.py", line 94, in __exit__\n    raise dj_exc_value.with_traceback(traceback) from exc_value\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute\n    return self.cursor.execute(sql, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute\n    return super().execute(query, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ndjango.db.utils.OperationalError: no such table: financial_attendancerecord\n	\N	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36	2026-08-09 23:24:16.120914+03	f	1	BACKEND
+9	/financial/salaries/	OperationalError	no such table: financial_attendancerecord	Traceback (most recent call last):\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute\n    return self.cursor.execute(sql, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute\n    return super().execute(query, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nsqlite3.OperationalError: no such table: financial_attendancerecord\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 577, in thread_handler\n    raise exc_info[1]\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 255, in _get_response_async\n    response = await wrapped_callback(\n               ^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 526, in __call__\n    ret = await asyncio.shield(exec_coro)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/current_thread_executor.py", line 35, in run\n    result = self.fn(*self.args, **self.kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 581, in thread_handler\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 508, in func\n    return context.run(run_child)\n           ^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 506, in run_child\n    return child()\n           ^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/accounts/permissions.py", line 163, in _wrapped_view\n    return view_func(request, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/financial/views.py", line 1258, in salary_list\n    days_absent, late_minutes = _attendance_totals_for_period(sal.employee, period)\n                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/financial/views.py", line 1376, in _attendance_totals_for_period\n    days_absent = qs.exclude(status=AttendanceRecord.STATUS_PRESENT).filter(deduct_salary=True).count()\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/query.py", line 654, in count\n    return self.query.get_count(using=self.db)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 656, in get_count\n    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 638, in get_aggregation\n    result = compiler.execute_sql(SINGLE)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql\n    cursor.execute(sql, params)\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 79, in execute\n    return self._execute_with_wrappers(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers\n    return executor(sql, params, many, context)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 100, in _execute\n    with self.db.wrap_database_errors:\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/utils.py", line 94, in __exit__\n    raise dj_exc_value.with_traceback(traceback) from exc_value\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute\n    return self.cursor.execute(sql, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute\n    return super().execute(query, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ndjango.db.utils.OperationalError: no such table: financial_attendancerecord\n	\N	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36	2026-08-09 23:25:10.101796+03	f	1	BACKEND
+10	/financial/salaries/	OperationalError	no such table: financial_attendancerecord	Traceback (most recent call last):\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute\n    return self.cursor.execute(sql, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute\n    return super().execute(query, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nsqlite3.OperationalError: no such table: financial_attendancerecord\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 577, in thread_handler\n    raise exc_info[1]\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 255, in _get_response_async\n    response = await wrapped_callback(\n               ^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 526, in __call__\n    ret = await asyncio.shield(exec_coro)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/current_thread_executor.py", line 35, in run\n    result = self.fn(*self.args, **self.kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 581, in thread_handler\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 508, in func\n    return context.run(run_child)\n           ^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 506, in run_child\n    return child()\n           ^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/accounts/permissions.py", line 163, in _wrapped_view\n    return view_func(request, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/financial/views.py", line 1258, in salary_list\n    days_absent, late_minutes = _attendance_totals_for_period(sal.employee, period)\n                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/financial/views.py", line 1376, in _attendance_totals_for_period\n    days_absent = qs.exclude(status=AttendanceRecord.STATUS_PRESENT).filter(deduct_salary=True).count()\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/query.py", line 654, in count\n    return self.query.get_count(using=self.db)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 656, in get_count\n    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 638, in get_aggregation\n    result = compiler.execute_sql(SINGLE)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql\n    cursor.execute(sql, params)\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 79, in execute\n    return self._execute_with_wrappers(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers\n    return executor(sql, params, many, context)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 100, in _execute\n    with self.db.wrap_database_errors:\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/utils.py", line 94, in __exit__\n    raise dj_exc_value.with_traceback(traceback) from exc_value\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute\n    return self.cursor.execute(sql, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute\n    return super().execute(query, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ndjango.db.utils.OperationalError: no such table: financial_attendancerecord\n	\N	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36	2026-08-09 23:25:25.257381+03	f	1	BACKEND
+11	/financial/salaries/	OperationalError	no such table: financial_attendancerecord	Traceback (most recent call last):\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute\n    return self.cursor.execute(sql, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute\n    return super().execute(query, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nsqlite3.OperationalError: no such table: financial_attendancerecord\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 577, in thread_handler\n    raise exc_info[1]\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 255, in _get_response_async\n    response = await wrapped_callback(\n               ^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 526, in __call__\n    ret = await asyncio.shield(exec_coro)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/current_thread_executor.py", line 35, in run\n    result = self.fn(*self.args, **self.kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 581, in thread_handler\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 508, in func\n    return context.run(run_child)\n           ^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 506, in run_child\n    return child()\n           ^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/accounts/permissions.py", line 163, in _wrapped_view\n    return view_func(request, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/financial/views.py", line 1258, in salary_list\n    days_absent, late_minutes = _attendance_totals_for_period(sal.employee, period)\n                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/financial/views.py", line 1376, in _attendance_totals_for_period\n    days_absent = qs.exclude(status=AttendanceRecord.STATUS_PRESENT).filter(deduct_salary=True).count()\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/query.py", line 654, in count\n    return self.query.get_count(using=self.db)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 656, in get_count\n    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 638, in get_aggregation\n    result = compiler.execute_sql(SINGLE)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql\n    cursor.execute(sql, params)\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 79, in execute\n    return self._execute_with_wrappers(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers\n    return executor(sql, params, many, context)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 100, in _execute\n    with self.db.wrap_database_errors:\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/utils.py", line 94, in __exit__\n    raise dj_exc_value.with_traceback(traceback) from exc_value\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute\n    return self.cursor.execute(sql, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute\n    return super().execute(query, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ndjango.db.utils.OperationalError: no such table: financial_attendancerecord\n	\N	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36	2026-08-09 23:25:35.030759+03	f	1	BACKEND
+21	/sales/api/submit-order/	UnicodeEncodeError	'charmap' codec can't encode characters in position 12-17: character maps to <undefined>	Traceback (most recent call last):\n  File "sales\\views.py", line 1256, in submit_order_ajax\n  File "sales\\services.py", line 243, in issue_cart_items\n  File "products\\inventory_services.py", line 96, in issue_stock\nValueError: الكمية غير متوفرة في 'المخزن الرئيسي' للصنف: جوافة ليمون (المطلوب: 1, المتاح: 0.00)\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "logging\\__init__.py", line 1101, in emit\nAttributeError: 'NoneType' object has no attribute 'write'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "asgiref\\sync.py", line 557, in thread_handler\n  File "django\\core\\handlers\\base.py", line 253, in _get_response_async\n    response = await wrapped_callback(\n  File "asgiref\\sync.py", line 506, in __call__\n  File "asgiref\\current_thread_executor.py", line 40, in run\n  File "asgiref\\sync.py", line 561, in thread_handler\n  File "django\\contrib\\auth\\decorators.py", line 59, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n  File "accounts\\permissions.py", line 329, in _wrapped_view\n  File "sales\\views.py", line 1423, in submit_order_ajax\n  File "logging\\__init__.py", line 1497, in error\n  File "logging\\__init__.py", line 1615, in _log\n  File "logging\\__init__.py", line 1625, in handle\n  File "logging\\__init__.py", line 1687, in callHandlers\n  File "logging\\__init__.py", line 967, in handle\n  File "logging\\__init__.py", line 1106, in emit\n  File "logging\\__init__.py", line 1020, in handleError\n  File "traceback.py", line 121, in print_exception\n  File "encodings\\cp1252.py", line 19, in encode\nUnicodeEncodeError: 'charmap' codec can't encode characters in position 12-17: character maps to <undefined>\n	192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	2026-08-27 21:03:19.501687+03	f	4	BACKEND
+12	/financial/salaries/	OperationalError	no such table: financial_attendancerecord	Traceback (most recent call last):\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute\n    return self.cursor.execute(sql, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute\n    return super().execute(query, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nsqlite3.OperationalError: no such table: financial_attendancerecord\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 577, in thread_handler\n    raise exc_info[1]\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 255, in _get_response_async\n    response = await wrapped_callback(\n               ^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 526, in __call__\n    ret = await asyncio.shield(exec_coro)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/current_thread_executor.py", line 35, in run\n    result = self.fn(*self.args, **self.kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 581, in thread_handler\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 508, in func\n    return context.run(run_child)\n           ^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 506, in run_child\n    return child()\n           ^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/accounts/permissions.py", line 163, in _wrapped_view\n    return view_func(request, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/financial/views.py", line 1258, in salary_list\n    days_absent, late_minutes = _attendance_totals_for_period(sal.employee, period)\n                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/financial/views.py", line 1376, in _attendance_totals_for_period\n    days_absent = qs.exclude(status=AttendanceRecord.STATUS_PRESENT).filter(deduct_salary=True).count()\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/query.py", line 654, in count\n    return self.query.get_count(using=self.db)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 656, in get_count\n    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 638, in get_aggregation\n    result = compiler.execute_sql(SINGLE)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql\n    cursor.execute(sql, params)\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 79, in execute\n    return self._execute_with_wrappers(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers\n    return executor(sql, params, many, context)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 100, in _execute\n    with self.db.wrap_database_errors:\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/utils.py", line 94, in __exit__\n    raise dj_exc_value.with_traceback(traceback) from exc_value\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute\n    return self.cursor.execute(sql, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute\n    return super().execute(query, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ndjango.db.utils.OperationalError: no such table: financial_attendancerecord\n	\N	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36	2026-08-09 23:27:15.478128+03	f	1	BACKEND
+13	/financial/salaries/	OperationalError	no such table: financial_attendancerecord	Traceback (most recent call last):\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute\n    return self.cursor.execute(sql, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute\n    return super().execute(query, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nsqlite3.OperationalError: no such table: financial_attendancerecord\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 577, in thread_handler\n    raise exc_info[1]\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 255, in _get_response_async\n    response = await wrapped_callback(\n               ^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 526, in __call__\n    ret = await asyncio.shield(exec_coro)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/current_thread_executor.py", line 35, in run\n    result = self.fn(*self.args, **self.kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 581, in thread_handler\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 508, in func\n    return context.run(run_child)\n           ^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/asgiref/sync.py", line 506, in run_child\n    return child()\n           ^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/accounts/permissions.py", line 163, in _wrapped_view\n    return view_func(request, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/financial/views.py", line 1258, in salary_list\n    days_absent, late_minutes = _attendance_totals_for_period(sal.employee, period)\n                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/financial/views.py", line 1376, in _attendance_totals_for_period\n    days_absent = qs.exclude(status=AttendanceRecord.STATUS_PRESENT).filter(deduct_salary=True).count()\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/query.py", line 654, in count\n    return self.query.get_count(using=self.db)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 656, in get_count\n    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 638, in get_aggregation\n    result = compiler.execute_sql(SINGLE)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql\n    cursor.execute(sql, params)\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 79, in execute\n    return self._execute_with_wrappers(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers\n    return executor(sql, params, many, context)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 100, in _execute\n    with self.db.wrap_database_errors:\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/utils.py", line 94, in __exit__\n    raise dj_exc_value.with_traceback(traceback) from exc_value\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute\n    return self.cursor.execute(sql, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/home/erp-hamid/hamid-erp/venv/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute\n    return super().execute(query, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ndjango.db.utils.OperationalError: no such table: financial_attendancerecord\n	\N	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36	2026-08-09 23:27:17.098478+03	f	1	BACKEND
+14	http://192.168.1.107:8085/restaurant/waiter/tables/1/	JS Unhandled Rejection	The string did not match the expected pattern.		192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	2026-08-27 20:40:23.160274+03	f	2	FRONTEND
+15	http://192.168.1.107:8085/restaurant/waiter/tables/1/	JS Unhandled Rejection	The string did not match the expected pattern.		192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	2026-08-27 20:41:05.714157+03	f	2	FRONTEND
+16	http://192.168.1.107:8085/restaurant/waiter/tables/2/	JS Unhandled Rejection	The string did not match the expected pattern.		192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	2026-08-27 20:54:10.154783+03	f	2	FRONTEND
+17	/sales/api/submit-order/	UnicodeEncodeError	'charmap' codec can't encode characters in position 12-17: character maps to <undefined>	Traceback (most recent call last):\n  File "sales\\views.py", line 1256, in submit_order_ajax\n  File "sales\\services.py", line 243, in issue_cart_items\n  File "products\\inventory_services.py", line 96, in issue_stock\nValueError: الكمية غير متوفرة في 'المخزن الرئيسي' للصنف: جوافة ليمون (المطلوب: 1, المتاح: 0.00)\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "logging\\__init__.py", line 1101, in emit\nAttributeError: 'NoneType' object has no attribute 'write'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "asgiref\\sync.py", line 557, in thread_handler\n  File "django\\core\\handlers\\base.py", line 253, in _get_response_async\n    response = await wrapped_callback(\n  File "asgiref\\sync.py", line 506, in __call__\n  File "asgiref\\current_thread_executor.py", line 40, in run\n  File "asgiref\\sync.py", line 561, in thread_handler\n  File "django\\contrib\\auth\\decorators.py", line 59, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n  File "accounts\\permissions.py", line 329, in _wrapped_view\n  File "sales\\views.py", line 1423, in submit_order_ajax\n  File "logging\\__init__.py", line 1497, in error\n  File "logging\\__init__.py", line 1615, in _log\n  File "logging\\__init__.py", line 1625, in handle\n  File "logging\\__init__.py", line 1687, in callHandlers\n  File "logging\\__init__.py", line 967, in handle\n  File "logging\\__init__.py", line 1106, in emit\n  File "logging\\__init__.py", line 1020, in handleError\n  File "traceback.py", line 121, in print_exception\n  File "encodings\\cp1252.py", line 19, in encode\nUnicodeEncodeError: 'charmap' codec can't encode characters in position 12-17: character maps to <undefined>\n	192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	2026-08-27 21:03:00.162762+03	f	4	BACKEND
+18	http://192.168.1.107:8085/sales/pos/	JS Unhandled Rejection	The string did not match the expected pattern.		192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	2026-08-27 21:03:01.126146+03	f	4	FRONTEND
+19	/sales/api/submit-order/	UnicodeEncodeError	'charmap' codec can't encode characters in position 12-17: character maps to <undefined>	Traceback (most recent call last):\n  File "sales\\views.py", line 1256, in submit_order_ajax\n  File "sales\\services.py", line 243, in issue_cart_items\n  File "products\\inventory_services.py", line 96, in issue_stock\nValueError: الكمية غير متوفرة في 'المخزن الرئيسي' للصنف: جوافة ليمون (المطلوب: 1, المتاح: 0.00)\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "logging\\__init__.py", line 1101, in emit\nAttributeError: 'NoneType' object has no attribute 'write'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "asgiref\\sync.py", line 557, in thread_handler\n  File "django\\core\\handlers\\base.py", line 253, in _get_response_async\n    response = await wrapped_callback(\n  File "asgiref\\sync.py", line 506, in __call__\n  File "asgiref\\current_thread_executor.py", line 40, in run\n  File "asgiref\\sync.py", line 561, in thread_handler\n  File "django\\contrib\\auth\\decorators.py", line 59, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n  File "accounts\\permissions.py", line 329, in _wrapped_view\n  File "sales\\views.py", line 1423, in submit_order_ajax\n  File "logging\\__init__.py", line 1497, in error\n  File "logging\\__init__.py", line 1615, in _log\n  File "logging\\__init__.py", line 1625, in handle\n  File "logging\\__init__.py", line 1687, in callHandlers\n  File "logging\\__init__.py", line 967, in handle\n  File "logging\\__init__.py", line 1106, in emit\n  File "logging\\__init__.py", line 1020, in handleError\n  File "traceback.py", line 121, in print_exception\n  File "encodings\\cp1252.py", line 19, in encode\nUnicodeEncodeError: 'charmap' codec can't encode characters in position 12-17: character maps to <undefined>\n	192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	2026-08-27 21:03:12.913368+03	f	4	BACKEND
+20	http://192.168.1.107:8085/sales/pos/	JS Unhandled Rejection	The string did not match the expected pattern.		192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	2026-08-27 21:03:14.256252+03	f	4	FRONTEND
+22	http://192.168.1.107:8085/sales/pos/	JS Unhandled Rejection	The string did not match the expected pattern.	json@[native code]\n@http://192.168.1.107:8085/sales/pos/:16018:34	192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	2026-08-27 21:03:20.581118+03	f	4	FRONTEND
+23	/sales/api/submit-order/	UnicodeEncodeError	'charmap' codec can't encode characters in position 12-17: character maps to <undefined>	Traceback (most recent call last):\n  File "sales\\views.py", line 1256, in submit_order_ajax\n  File "sales\\services.py", line 243, in issue_cart_items\n  File "products\\inventory_services.py", line 96, in issue_stock\nValueError: الكمية غير متوفرة في 'المخزن الرئيسي' للصنف: افتكاسة حميد (المطلوب: 1, المتاح: 0.00)\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "logging\\__init__.py", line 1101, in emit\nAttributeError: 'NoneType' object has no attribute 'write'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "asgiref\\sync.py", line 557, in thread_handler\n  File "django\\core\\handlers\\base.py", line 253, in _get_response_async\n    response = await wrapped_callback(\n  File "asgiref\\sync.py", line 506, in __call__\n  File "asgiref\\current_thread_executor.py", line 40, in run\n  File "asgiref\\sync.py", line 561, in thread_handler\n  File "django\\contrib\\auth\\decorators.py", line 59, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n  File "accounts\\permissions.py", line 329, in _wrapped_view\n  File "sales\\views.py", line 1423, in submit_order_ajax\n  File "logging\\__init__.py", line 1497, in error\n  File "logging\\__init__.py", line 1615, in _log\n  File "logging\\__init__.py", line 1625, in handle\n  File "logging\\__init__.py", line 1687, in callHandlers\n  File "logging\\__init__.py", line 967, in handle\n  File "logging\\__init__.py", line 1106, in emit\n  File "logging\\__init__.py", line 1020, in handleError\n  File "traceback.py", line 121, in print_exception\n  File "encodings\\cp1252.py", line 19, in encode\nUnicodeEncodeError: 'charmap' codec can't encode characters in position 12-17: character maps to <undefined>\n	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0	2026-08-27 21:03:44.272731+03	f	4	BACKEND
+24	/sales/api/submit-order/	UnicodeEncodeError	'charmap' codec can't encode characters in position 12-17: character maps to <undefined>	Traceback (most recent call last):\n  File "sales\\views.py", line 1256, in submit_order_ajax\n  File "sales\\services.py", line 243, in issue_cart_items\n  File "products\\inventory_services.py", line 96, in issue_stock\nValueError: الكمية غير متوفرة في 'المخزن الرئيسي' للصنف: افتكاسة حميد (المطلوب: 1, المتاح: 0.00)\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "logging\\__init__.py", line 1101, in emit\nAttributeError: 'NoneType' object has no attribute 'write'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "asgiref\\sync.py", line 557, in thread_handler\n  File "django\\core\\handlers\\base.py", line 253, in _get_response_async\n    response = await wrapped_callback(\n  File "asgiref\\sync.py", line 506, in __call__\n  File "asgiref\\current_thread_executor.py", line 40, in run\n  File "asgiref\\sync.py", line 561, in thread_handler\n  File "django\\contrib\\auth\\decorators.py", line 59, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n  File "accounts\\permissions.py", line 329, in _wrapped_view\n  File "sales\\views.py", line 1423, in submit_order_ajax\n  File "logging\\__init__.py", line 1497, in error\n  File "logging\\__init__.py", line 1615, in _log\n  File "logging\\__init__.py", line 1625, in handle\n  File "logging\\__init__.py", line 1687, in callHandlers\n  File "logging\\__init__.py", line 967, in handle\n  File "logging\\__init__.py", line 1106, in emit\n  File "logging\\__init__.py", line 1020, in handleError\n  File "traceback.py", line 121, in print_exception\n  File "encodings\\cp1252.py", line 19, in encode\nUnicodeEncodeError: 'charmap' codec can't encode characters in position 12-17: character maps to <undefined>\n	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0	2026-08-27 21:04:00.28751+03	f	4	BACKEND
+25	/sales/api/submit-order/	UnicodeEncodeError	'charmap' codec can't encode characters in position 12-17: character maps to <undefined>	Traceback (most recent call last):\n  File "sales\\views.py", line 1256, in submit_order_ajax\n  File "sales\\services.py", line 243, in issue_cart_items\n  File "products\\inventory_services.py", line 96, in issue_stock\nValueError: الكمية غير متوفرة في 'المخزن الرئيسي' للصنف: جوافة (المطلوب: 1, المتاح: 0.00)\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "logging\\__init__.py", line 1101, in emit\nAttributeError: 'NoneType' object has no attribute 'write'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "asgiref\\sync.py", line 557, in thread_handler\n  File "django\\core\\handlers\\base.py", line 253, in _get_response_async\n    response = await wrapped_callback(\n  File "asgiref\\sync.py", line 506, in __call__\n  File "asgiref\\current_thread_executor.py", line 40, in run\n  File "asgiref\\sync.py", line 561, in thread_handler\n  File "django\\contrib\\auth\\decorators.py", line 59, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n  File "accounts\\permissions.py", line 329, in _wrapped_view\n  File "sales\\views.py", line 1423, in submit_order_ajax\n  File "logging\\__init__.py", line 1497, in error\n  File "logging\\__init__.py", line 1615, in _log\n  File "logging\\__init__.py", line 1625, in handle\n  File "logging\\__init__.py", line 1687, in callHandlers\n  File "logging\\__init__.py", line 967, in handle\n  File "logging\\__init__.py", line 1106, in emit\n  File "logging\\__init__.py", line 1020, in handleError\n  File "traceback.py", line 121, in print_exception\n  File "encodings\\cp1252.py", line 19, in encode\nUnicodeEncodeError: 'charmap' codec can't encode characters in position 12-17: character maps to <undefined>\n	192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	2026-08-27 21:15:41.847586+03	f	4	BACKEND
+26	http://192.168.1.107:8085/sales/pos/	JS Unhandled Rejection	The string did not match the expected pattern.		192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	2026-08-27 21:15:42.70891+03	f	4	FRONTEND
+27	/sales/api/submit-order/	UnicodeEncodeError	'charmap' codec can't encode characters in position 12-17: character maps to <undefined>	Traceback (most recent call last):\n  File "sales\\views.py", line 1256, in submit_order_ajax\n  File "sales\\services.py", line 243, in issue_cart_items\n  File "products\\inventory_services.py", line 96, in issue_stock\nValueError: الكمية غير متوفرة في 'المخزن الرئيسي' للصنف: جوافة (المطلوب: 1, المتاح: 0.00)\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "logging\\__init__.py", line 1101, in emit\nAttributeError: 'NoneType' object has no attribute 'write'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "asgiref\\sync.py", line 557, in thread_handler\n  File "django\\core\\handlers\\base.py", line 253, in _get_response_async\n    response = await wrapped_callback(\n  File "asgiref\\sync.py", line 506, in __call__\n  File "asgiref\\current_thread_executor.py", line 40, in run\n  File "asgiref\\sync.py", line 561, in thread_handler\n  File "django\\contrib\\auth\\decorators.py", line 59, in _view_wrapper\n    return view_func(request, *args, **kwargs)\n  File "accounts\\permissions.py", line 329, in _wrapped_view\n  File "sales\\views.py", line 1423, in submit_order_ajax\n  File "logging\\__init__.py", line 1497, in error\n  File "logging\\__init__.py", line 1615, in _log\n  File "logging\\__init__.py", line 1625, in handle\n  File "logging\\__init__.py", line 1687, in callHandlers\n  File "logging\\__init__.py", line 967, in handle\n  File "logging\\__init__.py", line 1106, in emit\n  File "logging\\__init__.py", line 1020, in handleError\n  File "traceback.py", line 121, in print_exception\n  File "encodings\\cp1252.py", line 19, in encode\nUnicodeEncodeError: 'charmap' codec can't encode characters in position 12-17: character maps to <undefined>\n	192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	2026-08-27 21:15:49.16945+03	f	4	BACKEND
+28	http://192.168.1.107:8085/sales/pos/	JS Unhandled Rejection	The string did not match the expected pattern.	json@[native code]\n@http://192.168.1.107:8085/sales/pos/:16212:34	192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	2026-08-27 21:15:49.779108+03	f	4	FRONTEND
+\.
+
+
+
+1	LOGIN	system	تسجيل دخول للنظام	197.165.161.32	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36	\N	\N	2026-08-08 17:12:48.79929+03	1
+2	LOGIN	system	تسجيل دخول للنظام	197.165.161.32	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36	\N	\N	2026-08-08 17:14:37.933681+03	1
+3	UPDATE	profile	تعديل بياناته الشخصية	\N	\N	\N	\N	2026-08-08 17:16:00.494554+03	1
+4	UPDATE	roles	تعديل الدور: كاشير	\N	\N	\N	\N	2026-08-08 18:00:18.365885+03	1
+5	CREATE	users	إنشاء مستخدم جديد: ahmed	\N	\N	\N	\N	2026-08-08 18:05:21.017505+03	1
+6	LOGIN	system	تسجيل دخول للنظام	196.134.27.185	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0	\N	\N	2026-08-08 18:25:35.507648+03	1
+7	LOGOUT	system	تسجيل خروج من النظام	197.165.161.32	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36	\N	\N	2026-08-08 19:10:28.428657+03	1
+8	LOGIN	system	تسجيل دخول للنظام	197.165.161.32	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36	\N	\N	2026-08-08 19:10:55.115535+03	2
+9	LOGOUT	system	تسجيل خروج من النظام	197.165.161.32	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36	\N	\N	2026-08-08 19:16:41.962343+03	2
+10	LOGIN	system	تسجيل دخول للنظام	197.165.161.32	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36	\N	\N	2026-08-08 19:17:06.122326+03	1
+11	LOGIN	system	تسجيل دخول للنظام	196.137.21.42	Mozilla/5.0 (iPhone; CPU iPhone OS 26_6_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/151.0.7922.57 Mobile/15E148 Safari/604.1	\N	\N	2026-08-08 22:10:03.25107+03	1
+12	LOGOUT	system	تسجيل خروج من النظام	156.197.192.215	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36	\N	\N	2026-08-08 22:41:03.869046+03	1
+13	LOGIN	system	تسجيل دخول للنظام	156.197.192.215	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36	\N	\N	2026-08-08 22:41:13.966915+03	1
+14	LOGIN	system	تسجيل دخول للنظام	41.35.209.250	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3 Mobile/15E148 Safari/604.1	\N	\N	2026-08-09 00:00:45.640907+03	1
+15	LOGIN	system	تسجيل دخول للنظام	156.197.192.215	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3 Mobile/15E148 Safari/604.1	\N	\N	2026-08-09 13:20:58.554688+03	1
+16	LOGOUT	system	تسجيل خروج من النظام	156.197.192.215	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3 Mobile/15E148 Safari/604.1	\N	\N	2026-08-09 13:21:32.981767+03	1
+17	LOGIN	system	تسجيل دخول للنظام	156.197.192.215	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3 Mobile/15E148 Safari/604.1	\N	\N	2026-08-09 13:21:42.776554+03	2
+18	LOGOUT	system	تسجيل خروج من النظام	156.197.192.215	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3 Mobile/15E148 Safari/604.1	\N	\N	2026-08-09 13:22:24.228796+03	2
+19	LOGOUT	system	تسجيل خروج من النظام	156.197.192.215	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36	\N	\N	2026-08-09 15:20:41.807049+03	1
+20	LOGIN	system	تسجيل دخول للنظام	156.197.192.215	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36	\N	\N	2026-08-09 15:20:59.449935+03	2
+21	LOGOUT	system	تسجيل خروج من النظام	156.197.192.215	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36	\N	\N	2026-08-09 15:41:56.013323+03	2
+22	LOGIN	system	تسجيل دخول للنظام	156.197.192.215	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36	\N	\N	2026-08-09 16:07:22.493478+03	1
+23	CREATE	roles	إنشاء دور جديد: مؤسس	\N	\N	\N	\N	2026-08-09 16:19:48.417942+03	1
+24	LOGIN	system	تسجيل دخول للنظام	197.165.161.32	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1	\N	\N	2026-08-09 16:37:12.497656+03	1
+25	LOGIN	system	تسجيل دخول للنظام	196.159.149.81	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3 Mobile/15E148 Safari/604.1	\N	\N	2026-08-09 18:09:49.421994+03	1
+26	LOGIN	system	تسجيل دخول للنظام	41.35.209.250	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36	\N	\N	2026-08-09 21:03:30.77459+03	1
+27	UPDATE	profile	قام بتغيير كلمة المرور	\N	\N	\N	\N	2026-08-09 21:08:37.964753+03	1
+28	LOGOUT	system	تسجيل خروج من النظام	196.159.147.245	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3 Mobile/15E148 Safari/604.1	\N	\N	2026-08-09 21:08:54.664167+03	1
+29	LOGIN	system	تسجيل دخول للنظام	196.159.147.245	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3 Mobile/15E148 Safari/604.1	\N	\N	2026-08-09 21:09:07.189967+03	1
+30	LOGIN	system	تسجيل دخول للنظام	197.165.161.32	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1	\N	\N	2026-08-09 21:15:19.520633+03	1
+31	LOGIN	system	تسجيل دخول للنظام	196.134.177.46	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1	\N	\N	2026-08-09 22:08:17.00009+03	1
+32	LOGIN	system	تسجيل دخول للنظام	196.134.177.46	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1	\N	\N	2026-08-09 22:08:22.630663+03	1
+33	LOGIN	system	تسجيل دخول للنظام	156.197.192.215	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36	\N	\N	2026-08-09 22:19:19.942991+03	1
+34	LOGIN	system	تسجيل دخول للنظام	196.134.113.195	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36	\N	\N	2026-08-09 22:54:12.312185+03	1
+35	LOGIN	system	تسجيل دخول للنظام	196.134.177.46	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1	\N	\N	2026-08-09 23:02:33.490146+03	1
+36	LOGIN	system	تسجيل دخول للنظام	196.134.177.46	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1	\N	\N	2026-08-09 23:06:59.146422+03	1
+37	LOGIN	system	تسجيل دخول للنظام	196.134.177.46	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1	\N	\N	2026-08-09 23:06:59.915941+03	1
+38	LOGIN	system	تسجيل دخول للنظام	196.134.113.195	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36	\N	\N	2026-08-09 23:12:53.570406+03	2
+39	UPDATE	users	تعديل صلاحيات القائمة الجانبية للمستخدم: ahmed	\N	\N	\N	\N	2026-08-09 23:14:03.308141+03	1
+40	LOGIN	system	تسجيل دخول للنظام	156.197.192.215	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3 Mobile/15E148 Safari/604.1	\N	\N	2026-08-10 15:03:33.217028+03	1
+41	LOGIN	system	تسجيل دخول للنظام	156.197.192.215	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3 Mobile/15E148 Safari/604.1	\N	\N	2026-08-10 15:03:33.632942+03	1
+42	LOGIN	system	تسجيل دخول للنظام	197.165.161.32	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1	\N	\N	2026-08-10 15:03:49.337495+03	1
+43	LOGIN	system	تسجيل دخول للنظام	197.165.161.32	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1	\N	\N	2026-08-10 15:03:49.979398+03	1
+44	LOGIN	system	تسجيل دخول للنظام	197.165.161.32	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1	\N	\N	2026-08-10 15:03:50.502577+03	1
+45	LOGIN	system	تسجيل دخول للنظام	197.165.161.32	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36	\N	\N	2026-08-14 19:52:46.788454+03	1
+46	LOGIN	system	تسجيل دخول للنظام	156.197.192.215	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36	\N	\N	2026-08-14 20:06:52.825675+03	1
+47	LOGIN	system	تسجيل دخول للنظام	196.134.150.12	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	\N	\N	2026-08-14 20:15:15.619572+03	1
+48	LOGIN	system	تسجيل دخول للنظام	196.134.150.12	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	\N	\N	2026-08-14 20:15:16.206379+03	1
+49	LOGIN	system	تسجيل دخول للنظام	197.165.161.32	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36	\N	\N	2026-08-22 13:39:15.840647+03	1
+50	LOGIN	system	تسجيل دخول للنظام	197.165.161.32	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36	\N	\N	2026-08-22 13:52:44.246397+03	1
+51	LOGIN	system	تسجيل دخول للنظام	196.155.192.162	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3 Mobile/15E148 Safari/604.1	\N	\N	2026-08-23 19:36:40.878791+03	1
+52	LOGIN	system	تسجيل دخول للنظام	196.155.192.162	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3 Mobile/15E148 Safari/604.1	\N	\N	2026-08-23 19:36:41.014447+03	1
+53	LOGIN	system	تسجيل دخول للنظام	196.155.192.162	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3 Mobile/15E148 Safari/604.1	\N	\N	2026-08-23 19:36:42.089974+03	1
+54	LOGIN	system	تسجيل دخول للنظام	156.197.178.71	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36	\N	\N	2026-08-26 19:21:45.561331+03	1
+55	LOGIN	system	تسجيل دخول للنظام	197.165.161.32	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36	\N	\N	2026-08-26 19:26:37.736601+03	1
+56	LOGIN	system	تسجيل دخول للنظام	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0	\N	\N	2026-08-26 22:45:29.467404+03	1
+57	LOGIN	system	تسجيل دخول للنظام	192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	\N	\N	2026-08-27 00:13:02.560524+03	1
+58	LOGIN	system	تسجيل دخول للنظام	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0	\N	\N	2026-08-27 03:00:41.982635+03	1
+59	LOGIN	system	تسجيل دخول للنظام	192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	\N	\N	2026-08-27 03:03:49.755581+03	1
+60	LOGIN	system	تسجيل دخول للنظام	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0	\N	\N	2026-08-27 20:36:11.881451+03	1
+61	LOGIN	system	تسجيل دخول للنظام	192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	\N	\N	2026-08-27 20:39:18.775574+03	2
+62	LOGOUT	system	تسجيل خروج من النظام	192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	\N	\N	2026-08-27 20:47:04.88317+03	2
+63	LOGIN	system	تسجيل دخول للنظام	192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	\N	\N	2026-08-27 20:47:11.190713+03	1
+64	UPDATE	roles	تعديل الدور: ويتر	\N	\N	\N	\N	2026-08-27 20:49:52.383803+03	1
+65	LOGOUT	system	تسجيل خروج من النظام	192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	\N	\N	2026-08-27 20:50:38.090531+03	1
+66	LOGIN	system	تسجيل دخول للنظام	192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	\N	\N	2026-08-27 20:50:53.094122+03	2
+67	LOGOUT	system	تسجيل خروج من النظام	192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	\N	\N	2026-08-27 20:51:32.931068+03	2
+68	UPDATE	roles	تعديل الدور: كاشير	\N	\N	\N	\N	2026-08-27 20:52:32.711173+03	1
+69	LOGIN	system	تسجيل دخول للنظام	192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	\N	\N	2026-08-27 20:52:41.959711+03	1
+70	LOGOUT	system	تسجيل خروج من النظام	192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	\N	\N	2026-08-27 20:53:30.688297+03	1
+71	LOGIN	system	تسجيل دخول للنظام	192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	\N	\N	2026-08-27 20:53:45.077744+03	2
+72	LOGOUT	system	تسجيل خروج من النظام	192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	\N	\N	2026-08-27 20:54:34.380995+03	2
+73	LOGIN	system	تسجيل دخول للنظام	192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	\N	\N	2026-08-27 20:55:46.19692+03	1
+74	CREATE	roles	إنشاء دور جديد: Waiter	\N	\N	\N	\N	2026-08-27 20:59:24.667256+03	1
+75	CREATE	users	إنشاء مستخدم جديد: mana	\N	\N	\N	\N	2026-08-27 21:00:32.414629+03	1
+76	LOGOUT	system	تسجيل خروج من النظام	192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	\N	\N	2026-08-27 21:00:49.591553+03	1
+77	LOGIN	system	تسجيل دخول للنظام	192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	\N	\N	2026-08-27 21:01:02.817091+03	4
+78	LOGOUT	system	تسجيل خروج من النظام	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0	\N	\N	2026-08-27 21:03:22.58613+03	1
+79	LOGIN	system	تسجيل دخول للنظام	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0	\N	\N	2026-08-27 21:03:32.037493+03	4
+80	LOGOUT	system	تسجيل خروج من النظام	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0	\N	\N	2026-08-27 21:04:08.189919+03	4
+81	LOGIN	system	تسجيل دخول للنظام	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0	\N	\N	2026-08-27 21:04:28.737539+03	1
+82	UPDATE	roles	تعديل الدور: Waiter	\N	\N	\N	\N	2026-08-27 21:05:39.758091+03	1
+83	DELETE	roles	حذف الدور: ويتر (كان مرتبطاً بـ 0 مستخدم)	\N	\N	\N	\N	2026-08-27 21:06:07.80605+03	1
+84	UPDATE	roles	تعديل الدور: ويتر	\N	\N	\N	\N	2026-08-27 21:06:26.834027+03	1
+85	DELETE	roles	حذف الدور: كاشير (كان مرتبطاً بـ 1 مستخدم)	\N	\N	\N	\N	2026-08-27 21:06:53.504278+03	1
+86	DELETE	roles	حذف الدور: مؤسس (كان مرتبطاً بـ 0 مستخدم)	\N	\N	\N	\N	2026-08-27 21:07:01.252515+03	1
+87	DELETE	roles	حذف الدور: مدير (كان مرتبطاً بـ 0 مستخدم)	\N	\N	\N	\N	2026-08-27 21:07:04.159872+03	1
+88	DELETE	roles	حذف الدور: طيار (كان مرتبطاً بـ 0 مستخدم)	\N	\N	\N	\N	2026-08-27 21:07:07.656329+03	1
+89	DELETE	roles	حذف الدور: مطبخ (كان مرتبطاً بـ 0 مستخدم)	\N	\N	\N	\N	2026-08-27 21:07:10.132419+03	1
+90	LOGOUT	system	تسجيل خروج من النظام	192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	\N	\N	2026-08-27 21:07:32.184819+03	4
+91	LOGIN	system	تسجيل دخول للنظام	192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	\N	\N	2026-08-27 21:07:40.446086+03	1
+92	LOGIN	system	تسجيل دخول للنظام	192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	\N	\N	2026-08-27 21:07:41.349345+03	1
+93	CREATE	roles	إنشاء دور جديد: كاشير	\N	\N	\N	\N	2026-08-27 21:10:33.876395+03	1
+94	UPDATE	users	تعديل بيانات المستخدم: ahmed	\N	\N	\N	\N	2026-08-27 21:11:07.342336+03	1
+95	UPDATE	users	تعديل صلاحيات القائمة الجانبية للمستخدم: ahmed	\N	\N	\N	\N	2026-08-27 21:12:28.736576+03	1
+96	UPDATE	users	تعديل بيانات المستخدم: mana	\N	\N	\N	\N	2026-08-27 21:12:55.611663+03	1
+97	UPDATE	users	تعديل صلاحيات القائمة الجانبية للمستخدم: mana	\N	\N	\N	\N	2026-08-27 21:15:08.257966+03	1
+98	LOGOUT	system	تسجيل خروج من النظام	192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	\N	\N	2026-08-27 21:15:14.387364+03	1
+99	LOGIN	system	تسجيل دخول للنظام	192.168.1.110	Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1	\N	\N	2026-08-27 21:15:26.755688+03	4
+100	LOGIN	system	تسجيل دخول للنظام	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0	\N	\N	2026-08-28 22:29:51.810234+03	1
+101	LOGIN	system	تسجيل دخول للنظام	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36	\N	\N	2026-08-28 22:40:04.561852+03	1
+102	LOGOUT	system	تسجيل خروج من النظام	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0	\N	\N	2026-08-28 22:48:30.766328+03	1
+103	LOGIN	system	تسجيل دخول للنظام	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0	\N	\N	2026-08-28 22:48:45.636877+03	4
+104	LOGOUT	system	تسجيل خروج من النظام	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0	\N	\N	2026-08-28 23:04:52.704841+03	4
+105	LOGIN	system	تسجيل دخول للنظام	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0	\N	\N	2026-08-28 23:05:24.809825+03	1
+106	LOGOUT	system	تسجيل خروج من النظام	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0	\N	\N	2026-08-28 23:28:14.727607+03	1
+107	LOGIN	system	تسجيل دخول للنظام	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0	\N	\N	2026-08-28 23:29:04.438225+03	1
+108	LOGIN	system	تسجيل دخول للنظام	127.0.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0	\N	\N	2026-08-28 23:33:19.520265+03	1
+\.
+
+
+
+1	197.165.161.32	f	f	f	2026-08-08 17:12:48.790635+03	2026-08-26 19:26:37.728577+03	1
+2	196.134.27.185	f	f	f	2026-08-08 18:25:35.496075+03	2026-08-08 18:25:35.496458+03	1
+3	197.165.161.32	f	f	f	2026-08-08 19:10:55.105333+03	2026-08-08 19:10:55.105704+03	2
+4	196.137.21.42	f	f	f	2026-08-08 22:10:03.222647+03	2026-08-08 22:10:03.229109+03	1
+5	156.197.192.215	f	f	f	2026-08-08 22:41:13.948256+03	2026-08-14 20:06:52.81704+03	1
+6	41.35.209.250	f	f	f	2026-08-09 00:00:45.626606+03	2026-08-09 21:03:30.757596+03	1
+7	156.197.192.215	f	f	f	2026-08-09 13:21:42.767532+03	2026-08-09 15:20:59.433796+03	2
+8	196.159.149.81	f	f	f	2026-08-09 18:09:49.41253+03	2026-08-09 18:09:49.413777+03	1
+9	196.159.147.245	f	f	f	2026-08-09 21:09:07.180506+03	2026-08-09 21:09:07.18085+03	1
+10	196.134.177.46	f	f	f	2026-08-09 22:08:16.991002+03	2026-08-09 23:06:59.907613+03	1
+11	196.134.113.195	f	f	f	2026-08-09 22:54:12.301327+03	2026-08-09 22:54:12.301654+03	1
+12	196.134.113.195	f	f	f	2026-08-09 23:12:53.559155+03	2026-08-09 23:12:53.55943+03	2
+13	196.134.150.12	f	f	f	2026-08-14 20:15:15.60802+03	2026-08-14 20:15:16.197151+03	1
+14	196.155.192.162	f	f	f	2026-08-23 19:36:40.865226+03	2026-08-23 19:36:42.085214+03	1
+15	156.197.178.71	f	f	f	2026-08-26 19:21:45.550947+03	2026-08-26 19:21:45.551983+03	1
+18	192.168.1.110	f	f	f	2026-08-27 20:39:18.772739+03	2026-08-27 20:53:45.074697+03	2
+17	192.168.1.110	f	f	f	2026-08-27 00:13:02.555975+03	2026-08-27 21:07:41.348175+03	1
+19	192.168.1.110	f	f	f	2026-08-27 21:01:02.815022+03	2026-08-27 21:15:26.754858+03	4
+20	127.0.0.1	f	f	f	2026-08-27 21:03:32.035254+03	2026-08-28 22:48:45.63588+03	4
+16	127.0.0.1	f	f	f	2026-08-26 22:45:29.467404+03	2026-08-28 23:33:19.517751+03	1
+\.
+
+
+
+3	\N	\N	\N	\N		ar	Africa/Cairo	f	\N	3	{}	t	t	f	100.00	[]	t	t	f	f	0.00	auto	[]
+4	\N	\N	\N	\N		ar	Africa/Cairo	f	127.0.0.1	4	{"crm": ["create", "edit", "view", "list"], "pos": ["create", "edit", "view", "mobile", "cashier_inbound", "transfer", "custody", "desktop"], "sales": ["view", "expenses"], "users": ["__denied__"], "waiter": ["add_customer", "create", "edit", "view", "void"], "kitchen": ["edit", "view"], "delivery": ["edit", "view"], "products": ["create", "delete", "edit", "view", "bulk_add"], "settings": ["__denied__"], "shipping": ["edit", "view", "companies", "dashboard"], "dashboard": ["__denied__"], "financial": ["advances", "create", "edit", "manage", "salaries", "view", "withdraw"], "inventory": ["__denied__"], "master_data": ["__denied__"]}	f	f	f	100.00	[]	t	f	f	f	0.00	auto	[]
+1	\N	\N	\N	\N		ar	Africa/Cairo	f	127.0.0.1	1	{}	f	t	f	100.00	[]	t	t	f	f	0.00	auto	[]
+2	01063250852	\N	\N	\N		ar	Africa/Cairo	f	192.168.1.110	2	{"crm": ["create", "delete", "edit", "view"], "pos": ["view", "custody", "desktop", "mobile", "cashier_inbound", "transfer"], "sales": ["__denied__"], "users": ["__denied__"], "waiter": ["add_customer", "create", "edit", "view", "void"], "kitchen": ["view"], "delivery": ["__denied__"], "products": ["__denied__"], "settings": ["__denied__"], "shipping": ["__denied__"], "dashboard": ["__denied__"], "financial": ["__denied__"], "inventory": ["__denied__"], "master_data": ["__denied__"]}	f	f	f	100.00	[]	t	f	f	f	0.00	auto	[]
+\.
+
+
+
+\.
+
+
+
+3	2	7
+4	4	8
+\.
+
+
+
+1	1			zkteco_tcp	192.168.1.107	4370				t	f	\N	error	جهاز 1: can't reach device (ping 192.168.1.107)	2026-08-26 23:32:25.202846+03	2026-08-27 00:28:07.933185+03	2	5	10	Africa/Cairo
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+1	2026-08-26 23:34:36.310111+03	2026-08-26 23:34:50.591705+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	1
+2	2026-08-26 23:35:22.780232+03	2026-08-26 23:35:37.121001+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	1
+3	2026-08-26 23:37:19.529841+03	2026-08-26 23:37:33.779425+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+4	2026-08-26 23:41:51.735508+03	2026-08-26 23:42:06.092886+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	1
+5	2026-08-26 23:42:33.830817+03	2026-08-26 23:42:48.132906+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+6	2026-08-26 23:47:48.148983+03	2026-08-26 23:48:02.451842+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+7	2026-08-26 23:53:02.483928+03	2026-08-26 23:53:17.425335+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+8	2026-08-26 23:58:17.453108+03	2026-08-26 23:58:31.773746+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+9	2026-08-27 00:03:31.818566+03	2026-08-27 00:04:04.918862+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+10	2026-08-27 00:09:04.956288+03	2026-08-27 00:09:38.42568+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+11	2026-08-27 00:14:38.470544+03	2026-08-27 00:15:10.421509+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+12	2026-08-27 00:20:10.46493+03	2026-08-27 00:20:42.422211+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+13	2026-08-27 00:25:42.469828+03	2026-08-27 00:26:13.911557+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+14	2026-08-27 00:25:57.45405+03	2026-08-27 00:26:29.924628+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	1
+15	2026-08-27 00:31:13.92964+03	2026-08-27 00:31:28.451976+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+16	2026-08-27 00:36:28.480318+03	2026-08-27 00:36:42.93755+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+17	2026-08-27 00:41:42.972725+03	2026-08-27 00:41:57.740491+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+18	2026-08-27 00:46:57.758885+03	2026-08-27 00:47:12.684317+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+19	2026-08-27 00:52:12.741326+03	2026-08-27 00:52:27.473758+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+20	2026-08-27 00:57:27.506774+03	2026-08-27 00:57:42.097409+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+21	2026-08-27 01:02:42.15408+03	2026-08-27 01:02:57.070762+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+22	2026-08-27 01:07:57.116751+03	2026-08-27 01:08:11.739329+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+23	2026-08-27 01:13:11.771501+03	2026-08-27 01:13:27.087486+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+24	2026-08-27 01:18:27.121603+03	2026-08-27 01:18:42.348695+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+25	2026-08-27 01:23:42.383051+03	2026-08-27 01:23:57.819856+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+26	2026-08-27 01:28:57.842931+03	2026-08-27 01:29:12.914818+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+27	2026-08-27 01:34:12.956755+03	2026-08-27 01:34:28.102792+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+28	2026-08-27 01:39:28.160993+03	2026-08-27 01:39:43.527247+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+29	2026-08-27 01:44:44.309173+03	2026-08-27 01:45:21.686049+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+30	2026-08-27 01:50:21.922263+03	2026-08-27 01:50:38.875643+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+31	2026-08-27 01:55:39.094033+03	2026-08-27 01:55:54.365697+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+32	2026-08-27 02:00:54.477211+03	2026-08-27 02:01:14.856201+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+33	2026-08-27 02:06:15.017136+03	2026-08-27 02:06:32.33995+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+34	2026-08-27 02:11:32.413448+03	2026-08-27 02:11:48.719122+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+35	2026-08-27 02:16:49.19179+03	2026-08-27 02:17:31.602364+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+36	2026-08-27 02:22:32.383645+03	2026-08-27 02:23:19.265505+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+37	2026-08-27 02:28:19.658136+03	2026-08-27 02:28:35.41526+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+38	2026-08-27 02:33:35.461876+03	2026-08-27 02:33:51.919628+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+39	2026-08-27 02:38:51.998477+03	2026-08-27 02:39:07.61685+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+40	2026-08-27 02:44:07.65647+03	2026-08-27 02:44:23.120913+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+41	2026-08-27 02:49:23.141585+03	2026-08-27 02:49:39.217865+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+42	2026-08-27 02:54:39.233641+03	2026-08-27 02:54:54.96266+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+43	2026-08-27 03:00:18.810466+03	2026-08-27 03:00:34.95844+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+44	2026-08-27 03:05:34.99332+03	2026-08-27 03:05:49.609981+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+45	2026-08-27 03:10:49.620613+03	2026-08-27 03:11:04.24835+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+46	2026-08-27 19:48:06.380529+03	2026-08-27 19:48:21.908564+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+47	2026-08-27 19:53:21.936624+03	2026-08-27 19:53:36.995365+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+48	2026-08-27 19:58:37.036679+03	2026-08-27 19:58:53.052209+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+49	2026-08-27 20:03:53.078322+03	2026-08-27 20:04:08.218124+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+50	2026-08-27 20:09:08.226644+03	2026-08-27 20:09:23.669863+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+51	2026-08-27 20:14:23.669021+03	2026-08-27 20:14:46.006872+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+52	2026-08-27 20:19:46.178418+03	\N	running	0	0	0	0		1	\N
+53	2026-08-27 20:34:21.53+03	2026-08-27 20:34:36.893264+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+54	2026-08-27 20:39:36.956352+03	2026-08-27 20:39:51.993736+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+55	2026-08-27 20:44:52.01625+03	2026-08-27 20:45:06.945503+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+56	2026-08-27 20:50:06.964699+03	2026-08-27 20:50:22.034838+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+57	2026-08-27 20:55:22.04829+03	2026-08-27 20:55:37.250346+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+58	2026-08-27 21:00:37.273711+03	2026-08-27 21:00:52.468475+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+59	2026-08-27 21:05:52.498964+03	2026-08-27 21:06:07.38559+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+60	2026-08-27 21:11:07.394127+03	2026-08-27 21:11:22.5439+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+61	2026-08-27 21:16:22.575789+03	2026-08-27 21:16:37.469694+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+62	2026-08-27 21:21:37.486477+03	2026-08-27 21:21:52.502165+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+63	2026-08-27 21:26:52.533355+03	2026-08-27 21:27:07.555068+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+64	2026-08-27 21:32:07.589998+03	2026-08-27 21:32:22.819245+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+65	2026-08-27 21:37:22.860897+03	2026-08-27 21:37:38.221987+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+66	2026-08-27 21:42:38.236917+03	2026-08-27 21:42:53.623152+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+67	2026-08-27 21:47:53.658649+03	2026-08-27 21:48:08.872254+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+68	2026-08-27 21:53:08.906849+03	2026-08-27 21:53:23.529185+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+69	2026-08-27 21:58:23.55176+03	2026-08-27 21:58:38.608662+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+70	2026-08-27 22:03:38.617472+03	2026-08-27 22:03:53.335298+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+71	2026-08-27 22:08:53.36945+03	2026-08-27 22:09:08.191575+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+72	2026-08-27 22:14:08.231029+03	2026-08-27 22:14:23.141517+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+73	2026-08-27 22:19:23.173761+03	2026-08-27 22:19:38.060013+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+74	2026-08-27 22:24:38.096653+03	2026-08-27 22:24:52.724498+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+75	2026-08-27 22:29:52.756826+03	2026-08-27 22:30:07.711872+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+76	2026-08-27 22:35:07.736738+03	2026-08-27 22:35:22.571865+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+77	2026-08-27 22:40:22.602989+03	2026-08-27 22:40:37.351532+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+78	2026-08-27 22:45:37.36355+03	2026-08-27 22:45:52.328363+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+79	2026-08-27 22:50:53.514011+03	2026-08-27 22:51:14.635032+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+80	2026-08-27 22:56:14.659593+03	2026-08-27 22:56:29.576122+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+81	2026-08-27 23:01:29.589078+03	2026-08-27 23:01:44.177318+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+82	2026-08-27 23:06:44.323227+03	2026-08-27 23:07:11.52482+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+83	2026-08-27 23:12:11.617008+03	2026-08-27 23:12:26.517035+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+84	2026-08-27 23:17:26.530862+03	2026-08-27 23:17:41.193882+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+85	2026-08-27 23:22:41.211562+03	2026-08-27 23:22:55.914992+03	failed	0	0	0	0	خطأ غير متوقع: 'charmap' codec can't encode characters in position 56-59: character maps to <undefined>	1	\N
+86	2026-08-28 22:30:27.157421+03	2026-08-28 22:32:16.900279+03	failed	0	0	0	0	جهاز 1: timed out	1	\N
+87	2026-08-28 22:37:16.95062+03	2026-08-28 22:38:39.929251+03	failed	0	0	0	0	جهاز 1: timed out	1	\N
+88	2026-08-28 22:43:39.959203+03	2026-08-28 22:45:00.407229+03	failed	0	0	0	0	جهاز 1: timed out	1	\N
+89	2026-08-28 22:50:00.456532+03	2026-08-28 22:50:49.42493+03	failed	0	0	0	0	جهاز 1: timed out	1	\N
+90	2026-08-28 22:55:49.473356+03	2026-08-28 22:57:10.395804+03	failed	0	0	0	0	جهاز 1: can't reach device (ping 192.168.1.107)	1	\N
+91	2026-08-28 23:02:10.435717+03	2026-08-28 23:03:59.91797+03	failed	0	0	0	0	جهاز 1: timed out	1	\N
+92	2026-08-28 23:08:59.926766+03	2026-08-28 23:10:48.915639+03	failed	0	0	0	0	جهاز 1: timed out	1	\N
+93	2026-08-28 23:15:48.95467+03	2026-08-28 23:17:37.909531+03	failed	0	0	0	0	جهاز 1: timed out	1	\N
+94	2026-08-28 23:22:37.932147+03	2026-08-28 23:23:25.501598+03	failed	0	0	0	0	جهاز 1: can't reach device (ping 192.168.1.107)	1	\N
+95	2026-08-28 23:28:26.049209+03	\N	running	0	0	0	0		1	\N
+96	2026-08-28 23:34:30.042678+03	\N	running	0	0	0	0		1	\N
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+3	pbkdf2_sha256$1000000$H1ijTUuxn9i76y3dXtuZIT$8fHFrMcWYy9Mx7g2mQtsIroDWJNkBOV1wQ7vzEs5PUo=	\N	t	zeyad				t	t	2026-08-26 22:44:23.6519+03
+2	pbkdf2_sha256$1000000$tXavIY9iTRS7KUWHipuM0F$9AFUKpUsBdClRJ3etgHOz5zMgSctkB30jvYygdgcCLI=	2026-08-27 20:53:45.052945+03	f	ahmed	احمد	الديب	ahmed@hamid.com	f	t	2026-08-08 18:05:19.979434+03
+4	pbkdf2_sha256$1000000$u0ylDwzf4vVFHbxwGSNhOX$8a/C/BZVpoHvgRgKE+gvx/beJxsVOKnYTwWIhlb5H3c=	2026-08-28 22:48:45.600048+03	f	mana	Mana			f	t	2026-08-27 21:00:31.887121+03
+1	pbkdf2_sha256$1000000$R3nw8Sn3yuNzY7lc08iE81$gXPl9nUGEY0WUlAmYWicCNKx5GW3sBhjxXqaqR/e7SI=	2026-08-28 23:33:19.50909+03	t	erp-hamid				t	t	2026-08-08 16:54:28.158598+03
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+1	zeyad		01024285771	uuyu	2026-08-08 19:15:51.662906+03	retail	0.00	0.00	f		
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+1	admin	logentry
+2	auth	group
+3	auth	permission
+4	auth	user
+5	contenttypes	contenttype
+6	sessions	session
+7	products	category
+8	products	kind
+9	products	product
+10	products	productcosting
+11	products	productimage
+12	products	productpricebreak
+13	products	productvariant
+14	products	purchaseinvoice
+15	products	purchaseinvoiceitem
+16	products	purchaseorder
+17	products	purchaseorderitem
+18	products	purchasereturn
+19	products	purchasereturnitem
+20	products	size
+21	products	stockbatch
+22	products	stockcount
+23	products	stockcountitem
+24	products	stocktransaction
+25	products	supplier
+26	products	supplierpayment
+27	products	supplierproduct
+28	products	unitofmeasure
+29	products	warehouse
+30	products	warehousestock
+31	crm	customer
+32	crm	customerpayment
+33	crm	paymentallocation
+34	accounts	approvalrequest
+35	accounts	passwordresetcode
+36	accounts	role
+37	accounts	systemerror
+38	accounts	useractivitylog
+39	accounts	useriphistory
+40	accounts	userprofile
+41	sales	cashsettlement
+42	sales	documentsequence
+43	sales	draft
+44	sales	expense
+45	sales	order
+46	sales	orderitem
+47	sales	orderrevision
+48	sales	otherincome
+49	sales	quotation
+50	sales	quotationitem
+51	sales	reservation
+52	sales	reservationitem
+53	sales	returninvoice
+54	sales	returnitem
+55	sales	savedorder
+56	sales	savedorderitem
+57	settings	systempolicy
+58	settings	systemsetting
+59	camera_view	camera
+60	shipping	shipment
+61	shipping	shipmentlog
+62	shipping	shippingcompany
+63	financial	account
+64	financial	dailyshift
+65	financial	dealdiscount
+66	financial	employeeadvance
+67	financial	employeesalary
+68	financial	journalentry
+69	financial	journalline
+70	financial	payslip
+71	financial	payslipadjustment
+72	financial	periodlock
+73	financial	shiftemaillog
+74	financial	transaction
+75	notifications	notification
+76	licensing	developeraccount
+77	licensing	device
+78	licensing	masterstore
+79	licensing	systemlicense
+80	licensing	tokenlog
+81	restaurant	cashcustody
+82	restaurant	driver
+83	restaurant	kitchenstation
+84	restaurant	menumodifier
+85	restaurant	menumodifiergroup
+86	restaurant	recipe
+87	restaurant	recipeitem
+88	restaurant	section
+89	restaurant	subrecipe
+90	restaurant	subrecipeitem
+91	restaurant	table
+92	financial	attendancerecord
+93	attendance_devices	attendancedevice
+94	attendance_devices	attendancedevicecredential
+95	attendance_devices	devicesynclog
+96	attendance_devices	deviceemployeemapping
+97	attendance_devices	devicepunch
+\.
+
+
+
+fi2orlj6h7vwvfx44m06z6999lqvted4	.eJxVjEEOwiAQRe8ya0OAlnbapXvPQAYYLGrAlDbRGO-uTbrp9r_3_gds5VpTyZZfzzS_YZQnsLQuk10rzzYFGEHBYXPk75w3EG6Ur0X4kpc5ObEpYqdVXErgx3l3DwcT1elfozdBOgyu8-2AGE3jlWQVJRN6HDppYu91q5QOA-pedrHRWhpSLUfDTPD9AQhbPuA:1wslz2:Svf_JIgOEOUMD1Z0jJBYTbkvON6cwPV87tvn4H5RdYg	2026-08-09 18:41:24.526697+03
+fyh1cg3znuzrivlfk64t44ymzi505idd	.eJxVjEEOwiAQRe8ya0OAlnbapXvPQAYYLGrAlDbRGO-uTbrp9r_3_gds5VpTyZZfzzS_YZQnsLQuk10rzzYFGEHBYXPk75w3EG6Ur0X4kpc5ObEpYqdVXErgx3l3DwcT1elfozdBOgyu8-2AGE3jlWQVJRN6HDppYu91q5QOA-pedrHRWhpSLUfDTPD9AQhbPuA:1wsmqB:4BOl8ny4-cVN-yQzThQPd_1eX-0c-pc_kKA4VFcMRx0	2026-08-09 19:36:19.82809+03
+dx2met2nsudhtpwx493n5lu7i9miv0qq	.eJxVjEEOwiAQRe8ya0OAlnbapXvPQAYYLGrAlDbRGO-uTbrp9r_3_gds5VpTyZZfzzS_YZQnsLQuk10rzzYFGEHBYXPk75w3EG6Ur0X4kpc5ObEpYqdVXErgx3l3DwcT1elfozdBOgyu8-2AGE3jlWQVJRN6HDppYu91q5QOA-pedrHRWhpSLUfDTPD9AQhbPuA:1wspLz:J16C2S-7tcIkMgADW9gRlCu13HCoJZHDY1EmfwwwTpo	2026-08-09 22:17:19.824562+03
+26iy32comejyjkesyc7lq8egzu1smra1	.eJxVjEEOwiAQRe8ya0OAlnbapXvPQAYYLGrAlDbRGO-uTbrp9r_3_gds5VpTyZZfzzS_YZQnsLQuk10rzzYFGEHBYXPk75w3EG6Ur0X4kpc5ObEpYqdVXErgx3l3DwcT1elfozdBOgyu8-2AGE3jlWQVJRN6HDppYu91q5QOA-pedrHRWhpSLUfDTPD9AQhbPuA:1wsqzv:BgF1rw3UE19xloa5EvlJl0AGxHNwh5sE2B3SVw6VzFQ	2026-08-10 00:02:39.051202+03
+qfwytfay2hnz5ycy8r1epqyvpjo19gwl	.eJxVjEEOwiAQRe8ya0OAlnbapXvPQAYYLGrAlDbRGO-uTbrp9r_3_gds5VpTyZZfzzS_YZQnsLQuk10rzzYFGEHBYXPk75w3EG6Ur0X4kpc5ObEpYqdVXErgx3l3DwcT1elfozdBOgyu8-2AGE3jlWQVJRN6HDppYu91q5QOA-pedrHRWhpSLUfDTPD9AQhbPuA:1wt6Xt:J0j0pDb5bO-K8QYQxnC5bolb4Ws2Vtl8tEGtuMO99Uo	2026-08-10 16:38:45.121314+03
+78fk56z9jy4nz6lmbpf67ujb0gr52yvi	.eJxVjEEOwiAQRe_C2jQMRBi6dO8ZCDCDRQ2Y0iYa493VpJtu_3vvv4Xv3Htp1fPzUeaXGOVB-LAuk187z76QGAWI3RZDunH9A7qGemlDanWZSxz-yrDRPpwb8f20ubuDKfTpV0dAUiEgoOVjZnRKQU5SO4nShKhQJ9DAZHU2CM4Q2kSWOIN2bEwUny8A-D7y:1wtBHl:69xgYeBvhcEue5-snD7aKkLRwEbZnQ02fgauMwRornM	2026-08-10 21:42:25.364458+03
+x27b0zfxv70fonv3u76y1sm6f38vbknh	.eJxVjEEOwiAQRe_C2jQMRBi6dO8ZCDCDRQ2Y0iYa493VpJtu_3vvv4Xv3Htp1fPzUeaXGOVB-LAuk187z76QGAWI3RZDunH9A7qGemlDanWZSxz-yrDRPpwb8f20ubuDKfTpV0dAUiEgoOVjZnRKQU5SO4nShKhQJ9DAZHU2CM4Q2kSWOIN2bEwUny8A-D7y:1wtBJb:yecxj-iOQ8uG0yNVAed2l5CdkCGFqhCVfQllAMykKSs	2026-08-10 21:44:19.662603+03
+f908so3xb0z3ad98q155ecrrno2xrra0	.eJxVjEEOwiAQRe_C2jQMRBi6dO8ZCDCDRQ2Y0iYa493VpJtu_3vvv4Xv3Htp1fPzUeaXGOVB-LAuk187z76QGAWI3RZDunH9A7qGemlDanWZSxz-yrDRPpwb8f20ubuDKfTpV0dAUiEgoOVjZnRKQU5SO4nShKhQJ9DAZHU2CM4Q2kSWOIN2bEwUny8A-D7y:1wtBgn:TDVLG9UbqR2umjcj0spk-snIcJVM-kFnx7TuZHui_Qg	2026-08-10 22:08:17.031531+03
+hd3m6bxbo4ke6xr6v4n85tssdvr4vfgy	.eJxVjEEOwiAQRe_C2jQMRBi6dO8ZCDCDRQ2Y0iYa493VpJtu_3vvv4Xv3Htp1fPzUeaXGOVB-LAuk187z76QGAWI3RZDunH9A7qGemlDanWZSxz-yrDRPpwb8f20ubuDKfTpV0dAUiEgoOVjZnRKQU5SO4nShKhQJ9DAZHU2CM4Q2kSWOIN2bEwUny8A-D7y:1wtBl9:UojCe44VRyczE6NprO0henVXZADOt9zrYvU_oMc5K-E	2026-08-10 22:12:47.612321+03
+4kytv9vkflfywatblb2nqze6wyvxlysb	.eJxVjEEOwiAQRe_C2jQMRBi6dO8ZCDCDRQ2Y0iYa493VpJtu_3vvv4Xv3Htp1fPzUeaXGOVB-LAuk187z76QGAWI3RZDunH9A7qGemlDanWZSxz-yrDRPpwb8f20ubuDKfTpV0dAUiEgoOVjZnRKQU5SO4nShKhQJ9DAZHU2CM4Q2kSWOIN2bEwUny8A-D7y:1wta4B:tDrINb-1ewDYRrv5XjwbN0NgOK5pCTaNa8ExSDsmLRo	2026-08-12 00:10:03.281049+03
+cnvfu7fi1erxhcjnn1z4o39aqq93xto8	.eJxVjEEOwiAQRe_C2jQMRBi6dO8ZCDCDRQ2Y0iYa493VpJtu_3vvv4Xv3Htp1fPzUeaXGOVB-LAuk187z76QGAWI3RZDunH9A7qGemlDanWZSxz-yrDRPpwb8f20ubuDKfTpV0dAUiEgoOVjZnRKQU5SO4nShKhQJ9DAZHU2CM4Q2kSWOIN2bEwUny8A-D7y:1wtEAy:ODJFxM4U4fR7kbsbRT6whVRTeSqLDpPXUwkiTC9N49U	2026-08-11 00:47:36.107288+03
+7tn2u3c1izu8iaq1ct72bi7yagkczus3	.eJxVjEEOwiAQRe_C2jQMRBi6dO8ZCDCDRQ2Y0iYa493VpJtu_3vvv4Xv3Htp1fPzUeaXGOVB-LAuk187z76QGAWI3RZDunH9A7qGemlDanWZSxz-yrDRPpwb8f20ubuDKfTpV0dAUiEgoOVjZnRKQU5SO4nShKhQJ9DAZHU2CM4Q2kSWOIN2bEwUny8A-D7y:1wtDJw:4cgVu8c58pHJlQsWqCrnJf687JqXZ9ebxCkg3-Sy2Is	2026-08-10 23:52:48.972086+03
+imewho08oka304c9uac2omei1c79magq	eyJfc2Vzc2lvbl9leHBpcnkiOjB9:1wtCbb:_0f6Oc_E7IEva_4KBetZ_PF8Px6IL6sqiJMzk1v7oQk	2026-08-10 23:06:59.119139+03
+i2z011gv4vlynmddt8jhof2xtkukaquy	.eJxVjEEOwiAQRe_C2jQMRBi6dO8ZCDCDRQ2Y0iYa493VpJtu_3vvv4Xv3Htp1fPzUeaXGOVB-LAuk187z76QGAWI3RZDunH9A7qGemlDanWZSxz-yrDRPpwb8f20ubuDKfTpV0dAUiEgoOVjZnRKQU5SO4nShKhQJ9DAZHU2CM4Q2kSWOIN2bEwUny8A-D7y:1wtDJm:6IWfK6aD79aRlGimHwKsx8kA7Tdz6WZB7SMaopGjBQI	2026-08-10 23:52:38.478082+03
+qbpa5d6v2udp4oqjeg5se2oel7zishgs	.eJxVjEEOwiAQRe8ya0OAKaXt0r1nIFMGLGrAlDbRGO-uTbrp9r_3_gdcDbWmkl14PdP8hkGewNG6TG6tYXaJYQANh20kfw95A3yjfC3Cl7zMaRSbInZaxaVweJx393AwUZ3-NWqOpmFkz0brVrIha6VtfeOpV0jdqDD2qKzSjFGRN9zFLlipUMs-EHx_BDg-zw:1wtEA7:h-YEyI6Fqe8pS9i2ahYZ3S6AP5ZIoQb0hRPEFjaEBKs	2026-08-11 00:46:43.809748+03
+olji2l7lmriyr2eqa8wuen5lp2d862c5	eyJfc2Vzc2lvbl9leHBpcnkiOjB9:1wtRXJ:7OefEd04T_6OfuHbhTG4l4vAJ9dCz_Nt7QzVT8P8mNA	2026-08-11 15:03:33.049726+03
+t6kazcw3veegkyg25wvdeb3n8xlqbarj	.eJxVjEEOwiAQRe_C2jQMRBi6dO8ZCDCDRQ2Y0iYa493VpJtu_3vvv4Xv3Htp1fPzUeaXGOVB-LAuk187z76QGAWI3RZDunH9A7qGemlDanWZSxz-yrDRPpwb8f20ubuDKfTpV0dAUiEgoOVjZnRKQU5SO4nShKhQJ9DAZHU2CM4Q2kSWOIN2bEwUny8A-D7y:1wtRYi:BBcm5ODdOIESvaKwmw8gLW6Q3H-MjuzmelGN0U9xq7U	2026-08-11 15:05:00.070656+03
+pzihgff15ai0lrt5c3tg73qpyx1bgsek	eyJfc2Vzc2lvbl9leHBpcnkiOjB9:1wtRXZ:OapyG9F3fz1M2yPwHcCxCK_p2M_WK8Je5_eSiKF_mhY	2026-08-11 15:03:49.280354+03
+ryop8ozw8pxseflq67k89b6pjq2mjkrp	eyJfc2Vzc2lvbl9leHBpcnkiOjB9:1wtRXZ:OapyG9F3fz1M2yPwHcCxCK_p2M_WK8Je5_eSiKF_mhY	2026-08-11 15:03:49.919196+03
+r34axqbie6n8sla0arbinbn1cjz1j59g	.eJxVjEEOwiAQRe_C2jQMRBi6dO8ZCDCDRQ2Y0iYa493VpJtu_3vvv4Xv3Htp1fPzUeaXGOVB-LAuk187z76QGAWI3RZDunH9A7qGemlDanWZSxz-yrDRPpwb8f20ubuDKfTpV0dAUiEgoOVjZnRKQU5SO4nShKhQJ9DAZHU2CM4Q2kSWOIN2bEwUny8A-D7y:1wtRYl:A4Ld3FSYyOsyA-rxkKnFIxauEpBAq1dvjpWjLXOpmhs	2026-08-11 15:05:03.767444+03
+zshnefjvzhs0ugf9ru3cy7qetytok0rw	.eJxVjEEOwiAQRe_C2jQMRBi6dO8ZCDCDRQ2Y0iYa493VpJtu_3vvv4Xv3Htp1fPzUeaXGOVB-LAuk187z76QGAWI3RZDunH9A7qGemlDanWZSxz-yrDRPpwb8f20ubuDKfTpV0dAUiEgoOVjZnRKQU5SO4nShKhQJ9DAZHU2CM4Q2kSWOIN2bEwUny8A-D7y:1wv1ss:XJUDe1uBx4E7y6HvhYNnk3lFPgEA0UZ8Q1fwDBfW_pU	2026-08-16 00:04:22.092576+03
+8xuq0mglpzyzo8mwibytkr429vnws74o	.eJxVjEEOwiAQRe_C2jQMRBi6dO8ZCDCDRQ2Y0iYa493VpJtu_3vvv4Xv3Htp1fPzUeaXGOVB-LAuk187z76QGAWI3RZDunH9A7qGemlDanWZSxz-yrDRPpwb8f20ubuDKfTpV0dAUiEgoOVjZnRKQU5SO4nShKhQJ9DAZHU2CM4Q2kSWOIN2bEwUny8A-D7y:1wv8VN:btwrJvZDYWm81iLT5vTMCs5GqQpR-Onkd00KBM0rqSU	2026-08-16 07:08:33.796491+03
+vzruf8fk7npemb9vt8oxhkcz7nvlk07x	eyJfc2Vzc2lvbl9leHBpcnkiOjB9:1wuyJ9:vVPRMG2e3ZU5q1CmC6WS9bqgoSSEqfyudjECphJN2Mc	2026-08-15 20:15:15.55252+03
+qitndsi9bd2cyf0wgqcicgbtbjbk8mpw	.eJxVjEEOwiAQRe_C2jQMRBi6dO8ZCDCDRQ2Y0iYa493VpJtu_3vvv4Xv3Htp1fPzUeaXGOVB-LAuk187z76QGAWI3RZDunH9A7qGemlDanWZSxz-yrDRPpwb8f20ubuDKfTpV0dAUiEgoOVjZnRKQU5SO4nShKhQJ9DAZHU2CM4Q2kSWOIN2bEwUny8A-D7y:1wuyJh:dfaEdy-R5mluDA5mz-U0qu_Wuu6MY_GoRyPdUzZM0Eo	2026-08-15 20:15:49.997322+03
+eweo5xoa9ohsesr4b2skyyh2l1z0gmti	.eJxVjEEOwiAQRe_C2jQMRBi6dO8ZCDCDRQ2Y0iYa493VpJtu_3vvv4Xv3Htp1fPzUeaXGOVB-LAuk187z76QGAWI3RZDunH9A7qGemlDanWZSxz-yrDRPpwb8f20ubuDKfTpV0dAUiEgoOVjZnRKQU5SO4nShKhQJ9DAZHU2CM4Q2kSWOIN2bEwUny8A-D7y:1wxm32:WHi6y27jP3CvZspDPinPa0NtEczCj2pSEvFqVhNxveY	2026-08-23 13:46:12.322899+03
+nm37k809s4oai6m1q0640d2oktamujso	.eJxVjEEOwiAQRe_C2jQMRBi6dO8ZCDCDRQ2Y0iYa493VpJtu_3vvv4Xv3Htp1fPzUeaXGOVB-LAuk187z76QGAWI3RZDunH9A7qGemlDanWZSxz-yrDRPpwb8f20ubuDKfTpV0dAUiEgoOVjZnRKQU5SO4nShKhQJ9DAZHU2CM4Q2kSWOIN2bEwUny8A-D7y:1wxmH1:WBYnEPuHyBkVcojV2A_BdL6kKdVxmDDWphaerVgbrmE	2026-08-23 14:00:39.195566+03
+dviksunfcc7h9bk3v2argeqhs4rq9est	eyJfc2Vzc2lvbl9leHBpcnkiOjB9:1wyDzk:ki4XaDO_wFxNEdRZ0EnFHTIDSL7CcdwEVQFDaieArXM	2026-08-24 19:36:40.799177+03
+6s7my8b21bovvb7mas2n1n2505wk5gjs	.eJxVjEEOwiAQRe_C2jQMRBi6dO8ZCDCDRQ2Y0iYa493VpJtu_3vvv4Xv3Htp1fPzUeaXGOVB-LAuk187z76QGAWI3RZDunH9A7qGemlDanWZSxz-yrDRPpwb8f20ubuDKfTpV0dAUiEgoOVjZnRKQU5SO4nShKhQJ9DAZHU2CM4Q2kSWOIN2bEwUny8A-D7y:1wyDzl:USnx7SLJGx7SwNbaDCC6GWbSXw8S5XPCRiKJqUW_cPw	2026-08-24 19:36:41.022285+03
+aq3rlpnzlytiwlr4vqgenei5es63ihcs	.eJxVjEEOwiAQRe_C2jQMRBi6dO8ZCDCDRQ2Y0iYa493VpJtu_3vvv4Xv3Htp1fPzUeaXGOVB-LAuk187z76QGAWI3RZDunH9A7qGemlDanWZSxz-yrDRPpwb8f20ubuDKfTpV0dAUiEgoOVjZnRKQU5SO4nShKhQJ9DAZHU2CM4Q2kSWOIN2bEwUny8A-D7y:1wyE1a:Ian9GQIF51LYVCqHgL4rxXydm74A4qrbNai5E4wEu6I	2026-08-24 19:38:34.798319+03
+864ibsngoqf8jqpg7gj9gstu68ahkcpp	.eJxVjEEOwiAQRe_C2jQMRBi6dO8ZCDCDRQ2Y0iYa493VpJtu_3vvv4Xv3Htp1fPzUeaXGOVB-LAuk187z76QGAWI3RZDunH9A7qGemlDanWZSxz-yrDRPpwb8f20ubuDKfTpV0dAUiEgoOVjZnRKQU5SO4nShKhQJ9DAZHU2CM4Q2kSWOIN2bEwUny8A-D7y:1wzJGt:RO1w3brnVfMwPSLGoAFTZATd6q5dLq8OmLvAYMPXbbU	2026-08-27 19:26:51.419265+03
+1dimkt41uaaxe4mkx0fic69lmstr6f5e	.eJxVjEEOwiAQRe_C2jQMRBi6dO8ZCDCDRQ2Y0iYa493VpJtu_3vvv4Xv3Htp1fPzUeaXGOVB-LAuk187z76QGAWI3RZDunH9A7qGemlDanWZSxz-yrDRPpwb8f20ubuDKfTpV0dAUiEgoOVjZnRKQU5SO4nShKhQJ9DAZHU2CM4Q2kSWOIN2bEwUny8A-D7y:1wzJH1:SshoY55Hgbt_Yw1F4wHYvjQhJU7tiT03n8LF6Bwnz40	2026-08-27 19:26:59.310696+03
+xbv1vlz7d9x7gmq7ng58d4e7b85wdan6	.eJxVjEEOwiAQRe_C2pDSTgt06d4zkIEZLGrAlDbRGO-uTbrp9r_3_ke4yrWmkh2_nml-i7E5CYfrMrm18uwSiVEocdg8hjvnDdAN87XIUPIyJy83Re60ykshfpx393AwYZ3-dVTR274LQ992ZCkyR6-iBtRoLYD2DKoZjNbeMLSAxkZia1EbggDUiO8PJCc_mQ:1x03Cn:8676xuQv-ApeADAwrxTLatXxzDNO0zEGPpR_E2008Tw	2026-08-29 23:29:41.749943+03
+4jkdgis8wekzxa9qxhsfkodo5hfi6zpw	.eJxVjEEOwiAQRe_C2pDSTgt06d4zkIEZLGrAlDbRGO-uTbrp9r_3_ke4yrWmkh2_nml-i7E5CYfrMrm18uwSiVEocdg8hjvnDdAN87XIUPIyJy83Re60ykshfpx393AwYZ3-dVTR274LQ992ZCkyR6-iBtRoLYD2DKoZjNbeMLSAxkZia1EbggDUiO8PJCc_mQ:1wzdlM:2d6Gofbjk8lfsH-jtvFcNi0mxfBJHNIgQnX2pnTIBgc	2026-08-28 20:19:40.66565+03
+2wxt541t9rrkwxq8qum15e0qdx14f8vp	.eJxVjEEOwiAQRe_C2pDSTgt06d4zkIEZLGrAlDbRGO-uTbrp9r_3_ke4yrWmkh2_nml-i7E5CYfrMrm18uwSiVEocdg8hjvnDdAN87XIUPIyJy83Re60ykshfpx393AwYZ3-dVTR274LQ992ZCkyR6-iBtRoLYD2DKoZjNbeMLSAxkZia1EbggDUiO8PJCc_mQ:1wzLAz:0iqV0mCRYdVxfkDgSl2uMkjf8fNXUzmjwRCG_obkNjU	2026-08-28 00:28:53.275969+03
+li5e5aaaab36j4e092y7brql9ikbpg86	.eJxVjEEOgjAQRe_StWlaGZCydO8ZmpnOVKqmNRQSjfHuSsKG7X_v_Y_yVWpNJXt5PdP0VoM5KI_LPPqlyuQTq0GB2m2E4S55BXzDfC06lDxPifSq6I1WfSksj_Pm7g5GrOO_RnEcybhAPTYdmhbQ9tG2HceIIC5yL9CewIQAhmJw0VggbtA6tnwk9f0BPuNAVg:1wzemA:GzVNwWYi3DsYZfR7wgAhMhyefzJ-VOHfzzO9hQBtk7Q	2026-08-28 21:24:34.293745+03
+y6cbsv2urczp3e38edlat3ksgyeuwq3i	.eJxVjEEOwiAQRe_C2pDSTgt06d4zkIEZLGrAlDbRGO-uTbrp9r_3_ke4yrWmkh2_nml-i7E5CYfrMrm18uwSiVEocdg8hjvnDdAN87XIUPIyJy83Re60ykshfpx393AwYZ3-dVTR274LQ992ZCkyR6-iBtRoLYD2DKoZjNbeMLSAxkZia1EbggDUiO8PJCc_mQ:1wzNUM:UZKki6fuW4ECIQnGQVlBPgZeWtowyChc-jT_OvxLqkA	2026-08-28 02:57:02.613308+03
+11ogutycg5tn4uwzcu39xalgrvslp3in	.eJxVjEEOwiAQRe_C2pDSTgt06d4zkIEZLGrAlDbRGO-uTbrp9r_3_ke4yrWmkh2_nml-i7E5CYfrMrm18uwSiVEocdg8hjvnDdAN87XIUPIyJy83Re60ykshfpx393AwYZ3-dVTR274LQ992ZCkyR6-iBtRoLYD2DKoZjNbeMLSAxkZia1EbggDUiO8PJCc_mQ:1x03IJ:Gcojgv7Ys1WU8reIk_OkEa8q5bHT9FSfzG-JsUiMaMA	2026-08-29 23:35:23.366322+03
+i42ufurbt283crgcwerj4f7mu9rlsz9p	eyJfc2Vzc2lvbl9leHBpcnkiOjB9:1wzeVo:KoxUGKLYd94XXMZLleafN5uEDzkG3bPYu_N2ewvxqvo	2026-08-28 21:07:40.41134+03
+vlmvcu5rqr2tn4gxnjso0053tp2tcx2l	.eJxVjEEOwiAQRe_C2pDSTgt06d4zkIEZLGrAlDbRGO-uTbrp9r_3_ke4yrWmkh2_nml-i7E5CYfrMrm18uwSiVEocdg8hjvnDdAN87XIUPIyJy83Re60ykshfpx393AwYZ3-dVTR274LQ992ZCkyR6-iBtRoLYD2DKoZjNbeMLSAxkZia1EbggDUiO8PJCc_mQ:1wzgfd:zyujKrBXqE-09g2e_aZ1rLokVhHlBmHtZIS97-V56F8	2026-08-28 23:25:57.119356+03
+80fi55fwz9znskw3fsgl6atkryf5mfde	.eJxVjEEOwiAQRe_C2pDSTgt06d4zkIEZLGrAlDbRGO-uTbrp9r_3_ke4yrWmkh2_nml-i7E5CYfrMrm18uwSiVEocdg8hjvnDdAN87XIUPIyJy83Re60ykshfpx393AwYZ3-dVTR274LQ992ZCkyR6-iBtRoLYD2DKoZjNbeMLSAxkZia1EbggDUiO8PJCc_mQ:1wzNj6:KsLCaqAZsiG4evLQD2i17xZau4lW7TQ3foXm725SgvE	2026-08-28 03:12:16.110424+03
+5cyzzoflam074um16lifcztq0g4ues0b	.eJxVjEEOwiAQRe_C2pDSTgt06d4zkIEZLGrAlDbRGO-uTbrp9r_3_ke4yrWmkh2_nml-i7E5CYfrMrm18uwSiVEocdg8hjvnDdAN87XIUPIyJy83Re60ykshfpx393AwYZ3-dVTR274LQ992ZCkyR6-iBtRoLYD2DKoZjNbeMLSAxkZia1EbggDUiO8PJCc_mQ:1x03CS:7PcF762-VJDD5AykprkzaeVs7MSvr0cjz26KSbrjrQ0	2026-08-29 23:29:20.29668+03
+\.
+
+
+
+1	الأصول	ASSET	0.00	t	1000	\N
+2	الخصوم	LIABILITY	0.00	t	2000	\N
+3	حقوق الملكية	EQUITY	0.00	t	3000	\N
+4	الإيرادات	REVENUE	0.00	t	4000	\N
+5	المصروفات	EXPENSE	0.00	t	5000	\N
+6	النقدية وما في حكمها	ASSET	0.00	t	1100	1
+7	درج الكاشير	ASSET	0.00	t	1110	6
+8	الخزنة الرئيسية	ASSET	0.00	t	1120	6
+9	حساب بنكي	ASSET	0.00	t	1130	6
+10	فودافون كاش	ASSET	0.00	t	1140	6
+11	إنستا باي	ASSET	0.00	t	1150	6
+12	العملاء / ذمم مدينة	ASSET	0.00	t	1200	1
+13	تقييم المخزون	ASSET	0.00	t	1300	1
+14	الموردين / ذمم دائنة	LIABILITY	0.00	t	2100	2
+15	إيرادات المبيعات	REVENUE	0.00	t	4100	4
+16	تكلفة البضاعة المباعة - COGS	EXPENSE	0.00	t	5100	5
+17	مصروفات تشغيلية	EXPENSE	0.00	t	5200	5
+18	درج الكاشير	CASH_DRAWER	0.00	t	\N	\N
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+STORE-1D085348	general	2027-02-04 17:09:42.944409+02	t	\N	2026-08-08 17:09:42.955931+03	7268f85f-dc95-4f95-aaf6-cf8a1f5f919d	f	[]	f	b7a1fc7f9fa7d3834e0e6a6373dfa421506f6b7b4e5b43cd089b8ced96da7aa89fbd3c0d12b076e4ae576873aeee839f89de6d0bae8bba7370b849bad558e111	\N	f	8dcc16584f16288e72162316a07559a984002aceb901e4e5995bd38e50617364	[]
+STORE-0A15B57F	general	2027-08-21 22:44:24.043191+03	t	ACT-eyJwYXlsb2FkIjogeyJzdG9yZV9pZCI6ICJTVE9SRS0wQTE1QjU3RiIsICJhY3Rpb24iOiAiQ1JFQVRFX01BU1RFUl9VU0VSIiwgInZhbHVlIjogInpleWFkfDEyMzQ1Njc4fHwzNjAiLCAiZXhwaXJlc19hdCI6ICIyMDI2LTA4LTI2VDIwOjE5OjQ4LjI0NjAxMyswMDowMCJ9LCAic2lnbmF0dXJlIjogImIwZGIxOThmOTNhN2YyZmY5ODIwNzU0NDAzNzAzZTA4MDAxOGRlMjdlY2IwZTU0YTVlYzU1Mjc1OTU3ODA4NjAwMjA2NmViZGNiNTk4NTI5YjM2MzEzZjkxZmM5ZTQ4MWM2OTk2YTRmYjg2MGQ2ODQxYmU1MzhiMTQ5ODhiYjY4In0	2026-08-26 22:44:24.044889+03	1719b429-5525-4fa2-90e8-d24d9328ca45	f	[]	f	6fffa31b16f490b5b5225e43c3fc9ec9bec1c4ff728c43358243fb934f041d7ec4ae735b416d756382c7004d3fdb09b0e46b8490461340da6bea93a0b08f8dea	\N	f	2cfb350b2a382d60c3ca942083052becdcf378665ed201214166ade6cc860dc2	["555df81f5a22dd6db4f53831d8cd840b6640e1b0d4eebc35e6a42ee9bc885e09"]
+\.
+
+
+
+\.
+
+
+
+1	فاتورة جديدة #2	تم إنشاء فاتورة بقيمة 25 ج.م بواسطة 	/sales/invoice/2/	f	2026-08-08 19:05:12.531793+03	1	2
+2	فاتورة جديدة #3	تم إنشاء فاتورة بقيمة 45 ج.م بواسطة 	/sales/invoice/3/	f	2026-08-08 19:07:45.520923+03	1	2
+3	فاتورة جديدة #4	تم إنشاء فاتورة بقيمة 25.0 ج.م بواسطة احمد	/sales/invoice/4/	f	2026-08-08 19:13:53.915596+03	2	1
+4	فاتورة جديدة #5	تم إنشاء فاتورة بقيمة 45 ج.م بواسطة 	/sales/invoice/5/	f	2026-08-08 19:18:10.785717+03	1	2
+5	فاتورة جديدة #6	تم إنشاء فاتورة بقيمة 20 ج.م بواسطة 	/sales/invoice/6/	f	2026-08-08 19:18:18.823594+03	1	2
+6	فاتورة جديدة #7	تم إنشاء فاتورة بقيمة 20 ج.م بواسطة 	/sales/invoice/7/	f	2026-08-08 19:18:24.292087+03	1	2
+7	فاتورة جديدة #8	تم إنشاء فاتورة بقيمة 40 ج.م بواسطة 	/sales/invoice/8/	f	2026-08-08 19:18:31.6237+03	1	2
+8	فاتورة جديدة #9	تم إنشاء فاتورة بقيمة 35 ج.م بواسطة 	/sales/invoice/9/	f	2026-08-08 19:18:48.718936+03	1	2
+9	فاتورة جديدة #10	تم إنشاء فاتورة بقيمة 20 ج.م بواسطة 	/sales/invoice/10/	f	2026-08-08 19:18:54.904695+03	1	2
+10	فاتورة جديدة #11	تم إنشاء فاتورة بقيمة 20 ج.م بواسطة 	/sales/invoice/11/	f	2026-08-08 19:19:01.350772+03	1	2
+11	فاتورة جديدة #12	تم إنشاء فاتورة بقيمة 55 ج.م بواسطة 	/sales/invoice/12/	f	2026-08-08 19:23:33.076544+03	1	2
+12	فاتورة جديدة #15	تم إنشاء فاتورة بقيمة 35 ج.م بواسطة 	/sales/invoice/15/	f	2026-08-09 13:53:12.770289+03	1	2
+13	فاتورة جديدة #16	تم إنشاء فاتورة بقيمة 60 ج.م بواسطة 	/sales/invoice/16/	f	2026-08-09 13:59:44.445855+03	1	2
+14	⚠️ خطأ في النظام: OperationalError	المسار: /financial/salaries/ — no such table: financial_attendancerecord	/admin/accounts/systemerror/	f	2026-08-09 23:22:34.193866+03	\N	1
+15	فاتورة جديدة #20	تم إنشاء فاتورة بقيمة 20 ج.م بواسطة 	/sales/invoice/20/	f	2026-08-10 00:10:16.458163+03	1	2
+16	فاتورة جديدة #21	تم إنشاء فاتورة بقيمة 145 ج.م بواسطة 	/sales/invoice/21/	f	2026-08-14 19:58:40.21678+03	1	2
+17	فاتورة جديدة #22	تم إنشاء فاتورة بقيمة 120 ج.م بواسطة 	/sales/invoice/22/	f	2026-08-14 20:03:45.565585+03	1	2
+18	فاتورة جديدة #23	تم إنشاء فاتورة بقيمة 50 ج.م بواسطة 	/sales/invoice/23/	f	2026-08-23 19:38:03.477899+03	1	2
+19	فاتورة جديدة #24	تم إنشاء فاتورة بقيمة 190 ج.م بواسطة 	/sales/invoice/24/	f	2026-08-26 22:50:06.573457+03	1	2
+20	فاتورة جديدة #24	تم إنشاء فاتورة بقيمة 190 ج.م بواسطة 	/sales/invoice/24/	f	2026-08-26 22:50:06.573457+03	1	3
+21	فاتورة جديدة #29	تم إنشاء فاتورة بقيمة 30 ج.م بواسطة 	/sales/invoice/29/	f	2026-08-26 23:04:32.73158+03	1	2
+22	فاتورة جديدة #29	تم إنشاء فاتورة بقيمة 30 ج.م بواسطة 	/sales/invoice/29/	f	2026-08-26 23:04:32.73158+03	1	3
+23	فاتورة جديدة #30	تم إنشاء فاتورة بقيمة 85 ج.م بواسطة 	/sales/invoice/30/	f	2026-08-26 23:10:33.617904+03	1	2
+24	فاتورة جديدة #30	تم إنشاء فاتورة بقيمة 85 ج.م بواسطة 	/sales/invoice/30/	f	2026-08-26 23:10:33.617904+03	1	3
+25	فاتورة جديدة #31	تم إنشاء فاتورة بقيمة 50 ج.م بواسطة 	/sales/invoice/31/	f	2026-08-26 23:12:10.976027+03	1	2
+26	فاتورة جديدة #31	تم إنشاء فاتورة بقيمة 50 ج.م بواسطة 	/sales/invoice/31/	f	2026-08-26 23:12:10.976027+03	1	3
+27	فاتورة جديدة #32	تم إنشاء فاتورة بقيمة 85 ج.م بواسطة 	/sales/invoice/32/	f	2026-08-26 23:13:08.979558+03	1	2
+28	فاتورة جديدة #32	تم إنشاء فاتورة بقيمة 85 ج.م بواسطة 	/sales/invoice/32/	f	2026-08-26 23:13:08.979558+03	1	3
+29	فاتورة جديدة #42	تم إنشاء فاتورة بقيمة 100 ج.م بواسطة 	/sales/invoice/42/	f	2026-08-27 03:07:38.542993+03	1	2
+30	فاتورة جديدة #42	تم إنشاء فاتورة بقيمة 100 ج.م بواسطة 	/sales/invoice/42/	f	2026-08-27 03:07:38.542993+03	1	3
+31	فاتورة جديدة #43	تم إنشاء فاتورة بقيمة 100 ج.م بواسطة 	/sales/invoice/43/	f	2026-08-27 03:08:26.570116+03	1	2
+32	فاتورة جديدة #43	تم إنشاء فاتورة بقيمة 100 ج.م بواسطة 	/sales/invoice/43/	f	2026-08-27 03:08:26.570116+03	1	3
+33	فاتورة جديدة #46	تم إنشاء فاتورة بقيمة 20 ج.م بواسطة 	/sales/invoice/46/	f	2026-08-27 03:10:57.983078+03	1	2
+34	فاتورة جديدة #46	تم إنشاء فاتورة بقيمة 20 ج.م بواسطة 	/sales/invoice/46/	f	2026-08-27 03:10:57.983078+03	1	3
+35	فاتورة جديدة #47	تم إنشاء فاتورة بقيمة 85 ج.م بواسطة 	/sales/invoice/47/	f	2026-08-27 03:13:21.562211+03	1	2
+36	فاتورة جديدة #47	تم إنشاء فاتورة بقيمة 85 ج.م بواسطة 	/sales/invoice/47/	f	2026-08-27 03:13:21.562211+03	1	3
+37	فاتورة جديدة #50	تم إنشاء فاتورة بقيمة 100 ج.م بواسطة 	/sales/invoice/50/	f	2026-08-27 20:45:08.027395+03	1	3
+38	فاتورة جديدة #50	تم إنشاء فاتورة بقيمة 100 ج.م بواسطة 	/sales/invoice/50/	f	2026-08-27 20:45:08.02839+03	1	2
+39	⚠️ خطأ في النظام: UnicodeEncodeError	المسار: /sales/api/submit-order/ — 'charmap' codec can't encode characters in position 12-17: character maps to <undefined>	/admin/accounts/systemerror/	f	2026-08-27 21:03:00.17951+03	\N	3
+40	⚠️ خطأ في النظام: UnicodeEncodeError	المسار: /sales/api/submit-order/ — 'charmap' codec can't encode characters in position 12-17: character maps to <undefined>	/admin/accounts/systemerror/	f	2026-08-27 21:03:00.17951+03	\N	1
+41	فاتورة جديدة #59	تم إنشاء فاتورة بقيمة 75 ج.م بواسطة 	/sales/invoice/59/	f	2026-08-27 21:04:42.205394+03	1	3
+42	فاتورة جديدة #59	تم إنشاء فاتورة بقيمة 75 ج.م بواسطة 	/sales/invoice/59/	f	2026-08-27 21:04:42.205394+03	1	2
+43	فاتورة جديدة #59	تم إنشاء فاتورة بقيمة 75 ج.م بواسطة 	/sales/invoice/59/	f	2026-08-27 21:04:42.205394+03	1	4
+44	⚠️ خطأ في النظام: UnicodeEncodeError	المسار: /sales/api/submit-order/ — 'charmap' codec can't encode characters in position 12-17: character maps to <undefined>	/admin/accounts/systemerror/	f	2026-08-27 21:15:41.875045+03	\N	3
+45	⚠️ خطأ في النظام: UnicodeEncodeError	المسار: /sales/api/submit-order/ — 'charmap' codec can't encode characters in position 12-17: character maps to <undefined>	/admin/accounts/systemerror/	f	2026-08-27 21:15:41.875045+03	\N	1
+46	فاتورة جديدة #64	تم إنشاء فاتورة بقيمة 110 ج.م بواسطة 	/sales/invoice/64/	f	2026-08-28 22:30:07.144838+03	1	3
+47	فاتورة جديدة #64	تم إنشاء فاتورة بقيمة 110 ج.م بواسطة 	/sales/invoice/64/	f	2026-08-28 22:30:07.144838+03	1	2
+48	فاتورة جديدة #64	تم إنشاء فاتورة بقيمة 110 ج.م بواسطة 	/sales/invoice/64/	f	2026-08-28 22:30:07.144838+03	1	4
+49	فاتورة جديدة #65	تم إنشاء فاتورة بقيمة 80 ج.م بواسطة 	/sales/invoice/65/	f	2026-08-28 22:32:25.433661+03	1	3
+50	فاتورة جديدة #65	تم إنشاء فاتورة بقيمة 80 ج.م بواسطة 	/sales/invoice/65/	f	2026-08-28 22:32:25.433661+03	1	2
+51	فاتورة جديدة #65	تم إنشاء فاتورة بقيمة 80 ج.م بواسطة 	/sales/invoice/65/	f	2026-08-28 22:32:25.433661+03	1	4
+52	فاتورة جديدة #66	تم إنشاء فاتورة بقيمة 140 ج.م بواسطة 	/sales/invoice/66/	f	2026-08-28 22:40:23.731722+03	1	3
+53	فاتورة جديدة #66	تم إنشاء فاتورة بقيمة 140 ج.م بواسطة 	/sales/invoice/66/	f	2026-08-28 22:40:23.731722+03	1	2
+54	فاتورة جديدة #66	تم إنشاء فاتورة بقيمة 140 ج.م بواسطة 	/sales/invoice/66/	f	2026-08-28 22:40:23.732722+03	1	4
+55	فاتورة جديدة #67	تم إنشاء فاتورة بقيمة 100.0 ج.م بواسطة Mana	/sales/invoice/67/	f	2026-08-28 22:49:07.212288+03	4	3
+56	فاتورة جديدة #67	تم إنشاء فاتورة بقيمة 100.0 ج.م بواسطة Mana	/sales/invoice/67/	f	2026-08-28 22:49:07.212288+03	4	2
+57	فاتورة جديدة #67	تم إنشاء فاتورة بقيمة 100.0 ج.م بواسطة Mana	/sales/invoice/67/	f	2026-08-28 22:49:07.212288+03	4	1
+\.
+
+
+
+8	اسبريسو وقهوة	\N	2026-08-09 21:01:23.052363+03	t	\N	\N	\N	t
+9	مشروبات ساخنة	\N	2026-08-09 21:01:23.052949+03	t	\N	\N	\N	t
+10	قهوة تركي	\N	2026-08-09 21:01:23.053354+03	t	\N	\N	\N	t
+11	قهوة باردة	\N	2026-08-09 21:01:23.053715+03	t	\N	\N	\N	t
+12	عصائر طازجة	\N	2026-08-09 21:01:23.054141+03	t	\N	\N	\N	t
+13	كوكتيلات	\N	2026-08-09 21:01:23.054487+03	t	\N	\N	\N	t
+14	كوكتيل حميد	\N	2026-08-09 21:01:23.054794+03	t	\N	\N	\N	t
+15	ميلك شيك	\N	2026-08-09 21:01:23.055202+03	t	\N	\N	\N	t
+16	سموذي	\N	2026-08-09 21:01:23.055549+03	t	\N	\N	\N	t
+17	مشروبات غازية	\N	2026-08-09 21:01:23.055898+03	t	\N	\N	\N	t
+18	إضافات	\N	2026-08-09 21:01:23.056179+03	t	\N	\N	\N	t
+19	حبوب القهوة	\N	2026-08-09 21:01:23.056407+03	t	\N	\N	\N	f
+20	حلويات	\N	2026-08-09 21:01:23.056661+03	t	\N	\N	\N	t
+21	وافل	\N	2026-08-09 21:01:23.056967+03	t	\N	\N	\N	t
+\.
+
+
+
+\.
+
+
+
+15	شاي لاتيه	1012				0.00	35.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.072495+03	2026-08-09 21:01:23.072517+03	9	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+17	شوكولاتة ساخنة	1014				0.00	35.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.073903+03	2026-08-09 21:01:23.073925+03	9	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+35	افتكاسة حميد	1032				0.00	60.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.094438+03	2026-08-09 21:01:23.094461+03	11	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+36	مانجو	1033				0.00	50.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.09519+03	2026-08-09 21:01:23.095214+03	12	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+53	شيري كولا	1050				0.00	75.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.109597+03	2026-08-09 21:01:23.109621+03	13	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+54	باور موخيتو	1051				0.00	100.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.110548+03	2026-08-09 21:01:23.110573+03	13	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+102	موز	1099				0.00	80.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.153727+03	2026-08-09 21:01:23.153757+03	21	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+103	فواكه	1100				0.00	100.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.15463+03	2026-08-09 21:01:23.154652+03	21	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+104	ايس كريم (4 أنواع)	1101				0.00	85.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.15542+03	2026-08-09 21:01:23.155441+03	21	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+105	حميد (4 حشوات + 4 صوص)	1102				0.00	120.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.156232+03	2026-08-09 21:01:23.156253+03	21	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+106	لوتس	1103				0.00	80.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.157088+03	2026-08-09 21:01:23.157111+03	21	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+107	وايت شوكليت	1104				0.00	75.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.157908+03	2026-08-09 21:01:23.157928+03	21	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+90	لبن	1087				0.00	10.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.143493+03	2026-08-09 21:01:23.143512+03	18	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+98	بان كيك 12 قطعة	1095				0.00	55.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.15032+03	2026-08-09 21:01:23.150342+03	20	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+37	فراولة	1034				0.00	50.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.096118+03	2026-08-09 21:01:23.096148+03	12	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+39	موز باللبن	1036				0.00	50.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.097765+03	2026-08-09 21:01:23.097788+03	12	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+40	بطيخ	1037				0.00	50.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.098594+03	2026-08-09 21:01:23.098612+03	12	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+43	ليمون نعناع	1040				0.00	35.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.101256+03	2026-08-09 21:01:23.101287+03	12	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+44	برتقال	1041				0.00	45.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.102192+03	2026-08-09 21:01:23.102218+03	12	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+45	زبادي مانجا	1042				0.00	65.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.103054+03	2026-08-09 21:01:23.103072+03	12	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+46	زبادي خوخ	1043				0.00	65.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.103773+03	2026-08-09 21:01:23.103798+03	12	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+47	زبادي فراولة	1044				0.00	65.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.104568+03	2026-08-09 21:01:23.10459+03	12	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+48	زبادي توت	1045				0.00	65.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.105245+03	2026-08-09 21:01:23.10526+03	12	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+49	زبادي موز	1046				0.00	65.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.106094+03	2026-08-09 21:01:23.106118+03	12	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+50	فلوريدا	1047				0.00	75.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.107078+03	2026-08-09 21:01:23.107109+03	13	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+51	هاواي	1048				0.00	75.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.107949+03	2026-08-09 21:01:23.107975+03	13	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+52	صن شاين	1049				0.00	75.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.108745+03	2026-08-09 21:01:23.108761+03	13	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+4	اسبريسو	1001				0.00	35.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.058068+03	2026-08-09 21:01:23.058097+03	8	\N	48		\N			1	t	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+9	موكا كراميل	1006				0.00	50.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.06492+03	2026-08-09 21:01:23.064942+03	8	\N	48		\N			1	t	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+14	شاي بنكهة	1011				0.00	30.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.071854+03	2026-08-09 21:01:23.071871+03	9	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+8	اميريكان كوفي	1005				0.00	40.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.06343+03	2026-08-09 21:01:23.063448+03	8	\N	48		\N			1	t	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+29	آيس كوفي	1026				0.00	50.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.08737+03	2026-08-09 21:01:23.087393+03	11	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+20	أوريو ساخن	1017				0.00	45.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.076056+03	2026-08-09 21:01:23.07608+03	9	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+24	قهوة حميد محوج	1021				0.00	30.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.07946+03	2026-08-09 21:01:23.079481+03	10	\N	48		\N			1	t	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+19	كراميل ساخن	1016				0.00	40.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.075422+03	2026-08-09 21:01:23.075438+03	9	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+38	جوافة	1035				0.00	50.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.09694+03	2026-08-09 21:01:23.096958+03	12	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+5	نسكافيه	1002				0.00	40.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.061085+03	2026-08-09 21:01:23.061109+03	8	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+10	كافي لاتيه	1007				0.00	50.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.066559+03	2026-08-09 21:01:23.066577+03	8	\N	48		\N			1	t	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+6	كابتشينو	1003				0.00	50.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.061928+03	2026-08-09 21:01:23.061946+03	8	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+12	شاي	1009				0.00	20.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.069986+03	2026-08-09 21:01:23.070072+03	9	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+16	حليب بالقرفة	1013				0.00	35.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.073163+03	2026-08-09 21:01:23.073179+03	9	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+13	أعشاب	1010				0.00	20.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.070913+03	2026-08-09 21:01:23.070936+03	9	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+28	قهوة فرنسي مكسرات	1025				0.00	45.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.085597+03	2026-08-09 21:01:23.085616+03	10	\N	48		\N			1	t	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+11	ميكاتو	1008				0.00	45.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.068193+03	2026-08-09 21:01:23.068216+03	8	\N	48		\N			1	t	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+7	كابتشينو نكهات	1004				0.00	55.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.062616+03	2026-08-09 21:01:23.062633+03	8	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+22	سحلب بالفواكه	1019				0.00	50.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.077409+03	2026-08-09 21:01:23.077426+03	9	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+26	قهوة فرنسي كلاسيك	1023				0.00	35.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.082062+03	2026-08-09 21:01:23.082085+03	10	\N	48		\N			1	t	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+21	سحلب بالمكسرات	1018				0.00	35.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.076665+03	2026-08-09 21:01:23.076682+03	9	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+27	قهوة فرنسي بندق	1024				0.00	40.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.083497+03	2026-08-09 21:01:23.083523+03	10	\N	48		\N			1	t	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+31	آيس كابتشينو	1028				0.00	65.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.08923+03	2026-08-09 21:01:23.089256+03	11	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+30	آيس لاتيه	1027				0.00	60.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.088305+03	2026-08-09 21:01:23.088329+03	11	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+18	سايدر ساخن	1015				0.00	35.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.07459+03	2026-08-09 21:01:23.074612+03	9	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+41	كنتالوب	1038				0.00	50.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.099393+03	2026-08-09 21:01:23.099417+03	12	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+25	قهوة كولومبي بيور سادة	1022				0.00	40.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.080802+03	2026-08-09 21:01:23.080848+03	10	\N	48		\N			1	t	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+42	ليمون	1039				0.00	30.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.100311+03	2026-08-09 21:01:23.100336+03	12	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+33	آيس موكا كراميل	1030				0.00	75.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.090804+03	2026-08-09 21:01:23.090857+03	11	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+34	فرابتشينو	1031				0.00	75.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.093454+03	2026-08-09 21:01:23.093493+03	11	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+32	آيس موكا	1029				0.00	65.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.090059+03	2026-08-09 21:01:23.09008+03	11	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+23	قهوة حميد سادة	1020				0.00	25.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.078049+03	2026-08-09 21:01:23.078067+03	10	\N	48		\N			1	t	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+55	موخيتو	1052				0.00	55.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.111418+03	2026-08-09 21:01:23.111443+03	13	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+56	توتي فروتي	1053				0.00	90.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.112264+03	2026-08-09 21:01:23.112281+03	13	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+57	كوكتيل صودا	1054				0.00	90.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.112988+03	2026-08-09 21:01:23.113032+03	13	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+58	كوكتيل حميد	1055				0.00	100.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.113852+03	2026-08-09 21:01:23.113877+03	13	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+59	سوبيا مانجو	1056				0.00	60.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.114902+03	2026-08-09 21:01:23.114926+03	14	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+60	سوبيا فراولة	1057				0.00	60.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.115716+03	2026-08-09 21:01:23.115738+03	14	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+61	جوافة ليمون	1058				0.00	55.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.116546+03	2026-08-09 21:01:23.116568+03	14	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+62	مانجو موز	1059				0.00	65.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.117392+03	2026-08-09 21:01:23.117416+03	14	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+63	مانجو فراولة	1060				0.00	65.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.118261+03	2026-08-09 21:01:23.118285+03	14	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+64	موز فراولة	1061				0.00	60.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.119205+03	2026-08-09 21:01:23.119231+03	14	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+65	فانيليا	1062				0.00	70.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.120071+03	2026-08-09 21:01:23.120095+03	15	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+66	شوكليت	1063				0.00	70.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.12094+03	2026-08-09 21:01:23.120967+03	15	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+67	فراولة	1064				0.00	70.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.1218+03	2026-08-09 21:01:23.121859+03	15	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+68	مانجو	1065				0.00	70.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.122702+03	2026-08-09 21:01:23.122725+03	15	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+69	اوريو	1066				0.00	70.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.123557+03	2026-08-09 21:01:23.123578+03	15	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+70	توت	1067				0.00	70.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.12445+03	2026-08-09 21:01:23.124474+03	15	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+71	كراميل	1068				0.00	70.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.125372+03	2026-08-09 21:01:23.125395+03	15	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+72	لوتس	1069				0.00	80.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.126258+03	2026-08-09 21:01:23.126281+03	15	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+73	نوتيلا	1070				0.00	80.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.127159+03	2026-08-09 21:01:23.127182+03	15	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+74	فراولة	1071				0.00	50.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.128031+03	2026-08-09 21:01:23.128058+03	16	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+75	مانجو	1072				0.00	60.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.128964+03	2026-08-09 21:01:23.128989+03	16	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+76	بطيخ	1073				0.00	55.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.130459+03	2026-08-09 21:01:23.130498+03	16	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+77	ليمون	1074				0.00	45.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.131558+03	2026-08-09 21:01:23.131585+03	16	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+78	ليمون نعناع	1075				0.00	50.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.132478+03	2026-08-09 21:01:23.132501+03	16	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+79	باشن فروت	1076				0.00	60.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.133404+03	2026-08-09 21:01:23.133429+03	16	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+80	بلوبيري	1077				0.00	60.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.134309+03	2026-08-09 21:01:23.134331+03	16	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+81	V7 (كولا+رمان+بينا كولادا+جوز هند)	1078				0.00	30.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.135244+03	2026-08-09 21:01:23.135265+03	17	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+82	بريل	1079				0.00	35.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.136121+03	2026-08-09 21:01:23.136144+03	17	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+83	فيروز	1080				0.00	35.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.137048+03	2026-08-09 21:01:23.137074+03	17	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+84	فولت تراست	1081				0.00	30.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.137901+03	2026-08-09 21:01:23.137924+03	17	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+85	ريدبول	1082				0.00	90.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.138774+03	2026-08-09 21:01:23.138795+03	17	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+86	مياه معدنية	1083				0.00	10.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.139682+03	2026-08-09 21:01:23.139709+03	17	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+87	بولة آيس كريم	1084				0.00	15.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.140654+03	2026-08-09 21:01:23.140683+03	18	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+88	صوص	1085				0.00	10.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.141697+03	2026-08-09 21:01:23.141731+03	18	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+89	مكسرات	1086				0.00	15.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.142633+03	2026-08-09 21:01:23.142657+03	18	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+91	لوتس	1088				0.00	15.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.144316+03	2026-08-09 21:01:23.144339+03	18	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+92	بن حميد سادة	1089				0.00	599.00	0.00	0.00	0.00	KG	10.00	t	2026-08-09 21:01:23.145198+03	2026-08-09 21:01:23.145226+03	19	\N	48		\N			1	f	t	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+93	بن حميد محوج	1090				0.00	700.00	0.00	0.00	0.00	KG	10.00	t	2026-08-09 21:01:23.146026+03	2026-08-09 21:01:23.146048+03	19	\N	48		\N			1	f	t	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+96	بن كولومبي ORGANIC	1093				0.00	1099.00	0.00	0.00	0.00	KG	10.00	t	2026-08-09 21:01:23.148568+03	2026-08-09 21:01:23.148589+03	19	\N	48		\N			1	f	t	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+97	بان كيك 6 قطع	1094				0.00	30.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.149453+03	2026-08-09 21:01:23.149476+03	20	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+99	بان كيك 25 قطعة	1096				0.00	100.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.15115+03	2026-08-09 21:01:23.151171+03	20	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+100	نوتيلا	1097				0.00	65.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.152063+03	2026-08-09 21:01:23.152088+03	21	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+101	اوريو	1098				0.00	80.00	0.00	0.00	0.00	PCS	10.00	t	2026-08-09 21:01:23.152869+03	2026-08-09 21:01:23.152893+03	21	\N	48		\N			1	f	f	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+94	بن حميد غامق سادة	1091				0.00	699.00	0.00	0.00	0.00	KG	10.00	t	2026-08-09 21:01:23.146742+03	2026-08-09 21:01:23.14677+03	19	\N	48		\N			1	f	t	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+95	بن حميد غامق محوج	1092				0.00	899.00	0.00	0.00	0.00	KG	10.00	t	2026-08-09 21:01:23.147647+03	2026-08-09 21:01:23.147674+03	19	\N	48		\N			1	f	t	\N	f	\N		\N			f				\N	f	\N	0.00	1.000			f	f		\N		f
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+3			35.00	0.00	t	2026-08-09 21:01:23.059845+03	4	14
+4			45.00	0.00	t	2026-08-09 21:01:23.060345+03	4	15
+5			40.00	0.00	t	2026-08-09 21:01:23.064037+03	8	16
+7			50.00	0.00	t	2026-08-09 21:01:23.065566+03	9	16
+8			60.00	0.00	t	2026-08-09 21:01:23.065928+03	9	17
+10			60.00	0.00	t	2026-08-09 21:01:23.067515+03	10	17
+11			45.00	0.00	t	2026-08-09 21:01:23.068877+03	11	14
+12			55.00	0.00	t	2026-08-09 21:01:23.069327+03	11	15
+13			25.00	0.00	t	2026-08-09 21:01:23.078552+03	23	16
+16			35.00	0.00	t	2026-08-09 21:01:23.080274+03	24	17
+17			40.00	0.00	t	2026-08-09 21:01:23.081304+03	25	16
+20			40.00	0.00	t	2026-08-09 21:01:23.082978+03	26	17
+22			45.00	0.00	t	2026-08-09 21:01:23.085052+03	27	17
+23			45.00	0.00	t	2026-08-09 21:01:23.08629+03	28	16
+9			50.00	0.00	t	2026-08-09 21:01:23.06716+03	10	16
+15			30.00	0.00	t	2026-08-09 21:01:23.07997+03	24	16
+6			50.00	0.00	t	2026-08-09 21:01:23.064408+03	8	17
+24			50.00	0.00	t	2026-08-09 21:01:23.086675+03	28	17
+19			35.00	0.00	t	2026-08-09 21:01:23.08263+03	26	16
+21			40.00	0.00	t	2026-08-09 21:01:23.084604+03	27	16
+18			50.00	0.00	t	2026-08-09 21:01:23.081595+03	25	17
+14			30.00	0.00	t	2026-08-09 21:01:23.078893+03	23	17
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+1	S	alpha	0	t
+3	L	alpha	2	t
+11	Single	alpha	3	t
+12	Double	alpha	4	t
+13	M	alpha	4	t
+14	سنجل	custom	1	t
+15	دبل	custom	2	t
+16	ص	custom	1	t
+17	ك	custom	2	t
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+1	مشتريات يومية		01014924924			t	FINISHED	0.00		0.00
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+1	متر	MTR	t
+2	ياردة	YRD	t
+3	رول / توب	ROLL	t
+4	قطعة	PCS	t
+5	كيلوجرام	KG	t
+\.
+
+
+
+1	المخزن الرئيسي	الفرع الرئيسي	t	t	2026-08-08 16:53:18.863233+03	BOTH
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+1	احمد	01063250852	t	2026-08-08 17:52:25.283488+03	1	\N
+\.
+
+
+
+\.
+
+
+
+1	سادة	0.00	t	0	1
+2	على الريحة	0.00	t	1	1
+3	مظبوط	0.00	t	2	1
+4	زيادة	0.00	t	3	1
+\.
+
+
+
+1	سكر	t	0	1	0	t
+\.
+
+
+
+1	1	9
+2	1	10
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+1	حميد	t	1
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+3	3	4	free	t	1	1			\N		\N
+2	2	5	free	t	1	1			\N		\N
+1	1	4	busy	t	1	1			\N		\N
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+1	{"tax.vat_rate": "0.00", "backups.folder": "C:\\\\Users\\\\zeyad\\\\OneDrive\\\\Desktop\\\\Digitiva\\\\Hamid\\\\ss", "tax.vat_number": "", "backups.daily_time": "02:00", "backups.keep_count": 30, "backups.daily_enabled": true, "cashier.allow_discount": false, "kitchen.orders_per_page": "8", "inventory.warn_low_stock": true, "sales.default_price_tier": "retail", "kitchen.auto_print_ticket": true, "tax.vat_included_in_price": true, "sales.allow_negative_stock": false, "tax.service_charge_percent": "0.00", "expenses.approval_threshold": "200", "receipts.auto_print_invoice": true, "receipts.show_salesman_name": true, "receipts.show_tax_breakdown": false, "sales.delivery_price_options": "20,30,50", "sales.show_profit_on_invoice": false, "kitchen.print_ticket_on_order": true, "shifts.cashier_can_open_shift": true, "customers.enforce_credit_limit": true, "shifts.cashier_can_close_shift": true, "cashier.confirm_before_checkout": true, "purchases.update_cost_on_receipt": true, "sales.require_customer_on_credit": false, "payroll.absence_deduction_percent": "3.33", "tax.service_charge_included_in_price": false, "inventory.block_sale_when_out_of_stock": false, "purchases.update_sale_price_on_receipt": false, "shifts.require_open_shift_before_sales": true}	2026-08-27 20:38:51.268749+03
+\.
+
+
+
+\.
+
+
+
+\.
+
+
+
+\.
+
+

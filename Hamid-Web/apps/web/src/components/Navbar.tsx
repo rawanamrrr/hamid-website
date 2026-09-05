@@ -8,6 +8,7 @@ import { logoutAction } from "@/lib/auth/actions";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { AddedToCartDialog } from "@/components/AddedToCartDialog";
 import { subscribeAddedToCart, type AddedToCartPayload } from "@/lib/cart/added-to-cart-bus";
+import { stripLocalePrefix } from "@/lib/i18n/client";
 import type { Dictionary, Locale } from "@/lib/i18n";
 
 interface NavUser {
@@ -94,7 +95,7 @@ export default function Navbar({
   user: NavUser | null;
   cartCount: number;
 }) {
-  const pathname = usePathname();
+  const pathname = stripLocalePrefix(usePathname());
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [navOpen, setNavOpen] = useState(false);

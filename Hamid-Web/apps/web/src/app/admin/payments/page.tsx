@@ -1,33 +1,47 @@
 import Link from "next/link";
 import NextImage from "next/image";
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, count } from "drizzle-orm";
 import { db, payments, orders, paymentMethods, media } from "@hamid/db";
 import { formatMoney, toCents } from "@hamid/core";
 import { authenticatedDeliveryUrl } from "@/lib/media/cloudinary";
 import { Table, Thead, Th, Tr, Td, EmptyRow } from "@/components/admin/table";
 import { PaymentReviewActions } from "@/components/admin/payments/review-actions";
+import { Pagination, PAGE_SIZE } from "@/components/admin/pagination";
 
-export default async function AdminPaymentsPage() {
-  const rows = await db
-    .select({
-      id: payments.id,
-      status: payments.status,
-      amount: payments.amount,
-      orderId: payments.orderId,
-      orderNumber: orders.orderNumber,
-      methodCode: paymentMethods.code,
-      methodName: paymentMethods.name,
-      proofObjectKey: media.objectKey,
-    })
-    .from(payments)
-    .innerJoin(orders, eq(orders.id, payments.orderId))
-    .innerJoin(paymentMethods, eq(paymentMethods.id, payments.methodId))
-    .leftJoin(media, eq(media.id, payments.proofMediaId))
-    // This page exists to review InstaPay screenshot proofs — Cash on
-    // Delivery doesn't have a proof to approve/reject, so it doesn't belong here.
-    .where(eq(paymentMethods.code, "instapay"))
-    .orderBy(desc(payments.createdAt))
-    .limit(100);
+export default async function AdminPaymentsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
+  const { page: pageParam } = await searchParams;
+  const page = Math.max(1, Number(pageParam) || 1);
+  const offset = (page - 1) * PAGE_SIZE;
+  // This page exists to review InstaPay screenshot proofs — Cash on
+  // Delivery doesn't have a proof to approve/reject, so it doesn't belong here.
+  const whereClause = eq(paymentMethods.code, "instapay");
+
+  const [rows, [{ total }]] = await Promise.all([
+    db
+      .select({
+        id: payments.id,
+        status: payments.status,
+        amount: payments.amount,
+        orderId: payments.orderId,
+        orderNumber: orders.orderNumber,
+        methodCode: paymentMethods.code,
+        methodName: paymentMethods.name,
+        proofObjectKey: media.objectKey,
+      })
+      .from(payments)
+      .innerJoin(orders, eq(orders.id, payments.orderId))
+      .innerJoin(paymentMethods, eq(paymentMethods.id, payments.methodId))
+      .leftJoin(media, eq(media.id, payments.proofMediaId))
+      .where(whereClause)
+      .orderBy(desc(payments.createdAt))
+      .limit(PAGE_SIZE)
+      .offset(offset),
+    db.select({ total: count() }).from(payments).innerJoin(paymentMethods, eq(paymentMethods.id, payments.methodId)).where(whereClause),
+  ]);
 
   const rowsWithProof = rows.map((r) => ({
     ...r,
@@ -64,7 +78,7 @@ export default async function AdminPaymentsPage() {
                 <Td>
                   {p.proofUrl ? (
                     <a href={p.proofUrl} target="_blank" rel="noreferrer" className="relative block h-12 w-12 overflow-hidden rounded-lg">
-                      <NextImage src={p.proofUrl} alt="Payment proof" fill unoptimized className="object-cover" />
+                      <NextImage src={p.proofUrl} alt="Payment proof" fill className="object-cover" />
                     </a>
                   ) : (
                     <span className="text-xs text-on-surface-variant">—</span>
@@ -83,6 +97,7 @@ export default async function AdminPaymentsPage() {
             {rowsWithProof.length === 0 && <EmptyRow colSpan={6}>No payments yet.</EmptyRow>}
           </tbody>
         </Table>
+        <Pagination basePath="/admin/payments" page={page} total={total} />
       </div>
     </div>
   );

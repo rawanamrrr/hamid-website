@@ -16,14 +16,13 @@ export const metadata: Metadata = {
 // a no-op, so it's intentionally omitted. See docs/SETUP.md caching notes.
 
 export default async function MenuPage() {
-  const locale = await getLocale();
+  const [locale, dict] = await Promise.all([getLocale(), getDict()]);
   const [sections, heroImages] = await Promise.all([
     withDbTimeout(getMenuSections(locale)).catch(() => null),
     withDbTimeout(getMenuHeroImages()).catch(() => []),
   ]);
   if (sections === null) {
-    const dict = await getDict();
     return <LoadErrorBand message={dict.common.loadError} retryLabel={dict.common.retry} href="/menu" />;
   }
-  return <MenuPageClient sections={sections} heroImages={heroImages} />;
+  return <MenuPageClient sections={sections} heroImages={heroImages} dict={dict.menuPage} />;
 }

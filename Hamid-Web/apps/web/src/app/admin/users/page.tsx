@@ -1,13 +1,22 @@
 import Link from "next/link";
-import { desc, eq, ne, notInArray, sql } from "drizzle-orm";
+import { desc, eq, ne, notInArray, sql, count } from "drizzle-orm";
 import { db, users, userRoles, roles } from "@hamid/db";
 import { Table, Thead, Th, EmptyRow } from "@/components/admin/table";
 import { Button } from "@/components/ui/button";
 import { UserRow } from "@/components/admin/users/user-row";
 import { NewStaffForm } from "@/components/admin/users/new-staff-form";
 import { getAllRoles } from "@/lib/roles/queries";
+import { Pagination, PAGE_SIZE } from "@/components/admin/pagination";
 
-export default async function AdminUsersPage() {
+export default async function AdminUsersPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
+  const { page: pageParam } = await searchParams;
+  const page = Math.max(1, Number(pageParam) || 1);
+  const offset = (page - 1) * PAGE_SIZE;
+
   const [staffRows, allRoles, [{ total }]] = await Promise.all([
     db
       .select({ userId: users.id, fullName: users.fullName, email: users.email, status: users.status, roleSlug: roles.slug })
@@ -30,19 +39,24 @@ export default async function AdminUsersPage() {
   // Everyone who is not staff is a customer — including any user with no
   // role row at all, so nobody can be invisible to this screen.
   const staffIds = staffRows.map((r) => r.userId);
-  const customerRows = await db
-    .select({
-      userId: users.id,
-      fullName: users.fullName,
-      email: users.email,
-      phone: users.phone,
-      status: users.status,
-      createdAt: users.createdAt,
-    })
-    .from(users)
-    .where(staffIds.length > 0 ? notInArray(users.id, staffIds) : undefined)
-    .orderBy(desc(users.createdAt))
-    .limit(100);
+  const customerWhere = staffIds.length > 0 ? notInArray(users.id, staffIds) : undefined;
+  const [customerRows, [{ total: customerTotal }]] = await Promise.all([
+    db
+      .select({
+        userId: users.id,
+        fullName: users.fullName,
+        email: users.email,
+        phone: users.phone,
+        status: users.status,
+        createdAt: users.createdAt,
+      })
+      .from(users)
+      .where(customerWhere)
+      .orderBy(desc(users.createdAt))
+      .limit(PAGE_SIZE)
+      .offset(offset),
+    db.select({ total: count() }).from(users).where(customerWhere),
+  ]);
 
   return (
     <div>
@@ -90,7 +104,7 @@ export default async function AdminUsersPage() {
           <section>
             <h2 className="mb-1 font-display text-lg font-bold text-on-surface">Customers</h2>
             <p className="mb-3 text-sm text-on-surface-variant">
-              Latest {customerRows.length} customer accounts. Promote one to give it dashboard access.
+              {customerTotal} customer accounts. Promote one to give it dashboard access.
             </p>
             <Table>
               <Thead>
@@ -117,6 +131,7 @@ export default async function AdminUsersPage() {
                 {customerRows.length === 0 && <EmptyRow colSpan={5}>No customer accounts yet.</EmptyRow>}
               </tbody>
             </Table>
+            <Pagination basePath="/admin/users" page={page} total={customerTotal} />
           </section>
         </div>
 

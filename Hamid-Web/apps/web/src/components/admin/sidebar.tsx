@@ -5,26 +5,30 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { X } from "lucide-react";
 import { ADMIN_NAV, UNRESTRICTED_ADMIN_PATHS } from "@/lib/admin/nav";
+import { stripLocalePrefix } from "@/lib/i18n/client";
 import { ICON_MAP } from "./icon-map";
 import { cn } from "@/lib/utils";
+import type { Dictionary } from "@/lib/i18n";
 
 export function AdminSidebar({
   permissions,
+  dict,
   mobileOpen = false,
   onClose,
 }: {
   permissions: string[];
+  dict: Dictionary["admin"];
   mobileOpen?: boolean;
   onClose?: () => void;
 }) {
-  const pathname = usePathname();
+  const pathname = stripLocalePrefix(usePathname());
 
   const nav = (
     <>
       <div className="flex h-16 items-center justify-between gap-2 border-b border-outline-variant/60 px-6">
         <Link href="/admin" className="flex items-center gap-2.5">
           <Image src="/brand/logo-icon-crisp.png" alt="Hamid Afandi" width={30} height={28} className="h-7 w-auto object-contain" priority />
-          <span className="font-display text-lg font-bold text-on-surface">Hamid Afandi</span>
+          <span className="font-display text-lg font-bold text-on-surface">{dict.brandName}</span>
         </Link>
         {onClose && (
           <button type="button" onClick={onClose} className="text-on-surface-variant md:hidden" aria-label="Close menu">
@@ -41,7 +45,7 @@ export function AdminSidebar({
           return (
             <div key={group.label} className="mb-6">
               <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-wide text-on-surface-variant">
-                {group.label}
+                {dict.groups[group.label as keyof typeof dict.groups] ?? group.label}
               </p>
               <div className="space-y-1">
                 {items.map((item) => {
@@ -60,7 +64,7 @@ export function AdminSidebar({
                       )}
                     >
                       {Icon && <Icon size={18} />}
-                      {item.label}
+                      {dict.nav[item.label as keyof typeof dict.nav] ?? item.label}
                     </Link>
                   );
                 })}

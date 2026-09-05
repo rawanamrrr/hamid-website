@@ -105,7 +105,7 @@ export function MediaGalleryPicker({
       <div className="flex flex-wrap gap-3">
         {value.map((img, i) => (
           <div key={img.id} className="group relative h-20 w-20 overflow-hidden rounded-xl border border-outline-variant/60 bg-surface-container">
-            <NextImage src={img.url} alt="" width={80} height={80} unoptimized className="h-full w-full object-cover" />
+            <NextImage src={img.url} alt="" width={80} height={80} className="h-full w-full object-cover" />
             {i === 0 && (
               <span className="absolute start-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-secondary-container text-secondary" title="Primary image">
                 <Star size={12} fill="currentColor" />
@@ -174,7 +174,7 @@ export function MediaGalleryPicker({
                       onClick={() => toggle(item)}
                       className={`relative aspect-square overflow-hidden rounded-lg border ${selected ? "border-primary ring-2 ring-primary" : "border-outline-variant/60"}`}
                     >
-                      <NextImage src={item.url} alt={item.alt ?? ""} width={120} height={120} unoptimized className="h-full w-full object-cover" />
+                      <NextImage src={item.url} alt={item.alt ?? ""} width={120} height={120} className="h-full w-full object-cover" />
                       {selected && <div className="absolute inset-0 bg-primary/20" />}
                     </button>
                   );

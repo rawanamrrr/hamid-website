@@ -17,7 +17,6 @@ export default async function ImmersiveExperience() {
           alt="Master roaster at work"
           fill
           className="object-cover"
-          unoptimized
         />
         <div className="absolute inset-0 bg-[#000000]/60" />
       </div>

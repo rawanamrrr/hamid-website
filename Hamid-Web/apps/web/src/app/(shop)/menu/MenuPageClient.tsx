@@ -1,8 +1,15 @@
 import type { MenuSectionView as MenuSection, MenuItemView as MenuItem } from "@/lib/menu/queries";
+import type { Dictionary } from "@/lib/i18n";
 import { CategoryVisual } from "./CategoryVisual";
 import { IntroHeroBackground } from "./IntroHeroBackground";
 import { MenuStickyNav } from "./MenuStickyNav";
 import { ScrollToTop } from "./ScrollToTop";
+
+type MenuDict = Dictionary["menuPage"];
+
+function itemCountLabel(count: number, dict: MenuDict) {
+  return `${count} ${count === 1 ? dict.itemSingular : dict.itemPlural}`;
+}
 
 // ─── Badge colour mapping ──────────────────────────────────────────────────
 const BADGE_STYLES: Record<string, string> = {
@@ -13,7 +20,7 @@ const BADGE_STYLES: Record<string, string> = {
 };
 
 // ─── Category grid tile (the page's visual centrepiece) ───────────────────
-function CategoryTile({ section }: { section: MenuSection }) {
+function CategoryTile({ section, dict }: { section: MenuSection; dict: MenuDict }) {
   return (
     <a
       href={`#${section.id}`}
@@ -25,9 +32,7 @@ function CategoryTile({ section }: { section: MenuSection }) {
         <p className="font-[family-name:var(--font-plus-jakarta)] text-[15px] md:text-lg font-bold leading-tight text-white">
           {section.title}
         </p>
-        <p className="mt-0.5 text-[11px] font-medium text-white/70">
-          {section.items.length} {section.items.length === 1 ? "item" : "items"}
-        </p>
+        <p className="mt-0.5 text-[11px] font-medium text-white/70">{itemCountLabel(section.items.length, dict)}</p>
       </div>
     </a>
   );
@@ -90,7 +95,7 @@ function MenuItemCard({ item }: { item: MenuItem }) {
 }
 
 // ─── One full category section: panoramic banner + item grid ──────────────
-function MenuSectionBlock({ section }: { section: MenuSection }) {
+function MenuSectionBlock({ section, dict }: { section: MenuSection; dict: MenuDict }) {
   return (
     <section id={section.id} className="scroll-mt-32">
       {/* Panoramic banner — the "instant recognition" moment as you scroll */}
@@ -102,7 +107,7 @@ function MenuSectionBlock({ section }: { section: MenuSection }) {
             {section.title}
           </h2>
           <span className="hidden shrink-0 rounded-full bg-white/15 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-sm sm:inline-block">
-            {section.items.length} {section.items.length === 1 ? "item" : "items"}
+            {itemCountLabel(section.items.length, dict)}
           </span>
         </div>
       </div>
@@ -124,7 +129,15 @@ function MenuSectionBlock({ section }: { section: MenuSection }) {
 // category tile, all the copy — is static and was previously being shipped
 // and hydrated as client JS for no reason because the whole page lived in
 // one "use client" file. ────────────────────────────────────────────────
-export default function MenuPageClient({ sections, heroImages }: { sections: MenuSection[]; heroImages: string[] }) {
+export default function MenuPageClient({
+  sections,
+  heroImages,
+  dict,
+}: {
+  sections: MenuSection[];
+  heroImages: string[];
+  dict: MenuDict;
+}) {
   return (
     <div className="min-h-screen bg-[#F5F5DC]">
       <ScrollToTop />
@@ -132,15 +145,11 @@ export default function MenuPageClient({ sections, heroImages }: { sections: Men
       <div className="relative overflow-hidden bg-[#000000] px-5 py-12 text-center md:px-16 md:py-16">
         <IntroHeroBackground images={heroImages} />
         <div className="relative z-10">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-[#FFE2C6]">
-            Hamid Afandi
-          </p>
+          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-[#FFE2C6]">{dict.kicker}</p>
           <h1 className="font-[family-name:var(--font-plus-jakarta)] text-3xl font-bold text-white md:text-5xl">
-            Our Menu
+            {dict.title}
           </h1>
-          <p className="mx-auto mt-3 max-w-md text-sm text-white/70 md:text-base">
-            Every category has its own story — browse by what catches your eye.
-          </p>
+          <p className="mx-auto mt-3 max-w-md text-sm text-white/70 md:text-base">{dict.subtitle}</p>
         </div>
       </div>
 
@@ -148,7 +157,7 @@ export default function MenuPageClient({ sections, heroImages }: { sections: Men
       <div className="mx-auto max-w-[1280px] px-4 sm:px-5 py-6 sm:py-8 md:px-16 md:py-10">
         <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3 md:gap-4 lg:grid-cols-4">
           {sections.map((section) => (
-            <CategoryTile key={section.id} section={section} />
+            <CategoryTile key={section.id} section={section} dict={dict} />
           ))}
         </div>
       </div>
@@ -159,28 +168,23 @@ export default function MenuPageClient({ sections, heroImages }: { sections: Men
       {/* ── Menu Content ────────────────────────────────────────────────── */}
       <div className="max-w-[1280px] mx-auto px-4 sm:px-5 md:px-16 py-8 md:py-14 space-y-10 sm:space-y-14 md:space-y-20">
         {sections.map((section) => (
-          <MenuSectionBlock key={section.id} section={section} />
+          <MenuSectionBlock key={section.id} section={section} dict={dict} />
         ))}
       </div>
 
       {/* ── Footer CTA ──────────────────────────────────────────────────── */}
       <div className="bg-[#000000] py-12 md:py-16 px-5 text-center mt-4">
-        <p className="text-[#FFE2C6] text-xs font-semibold uppercase tracking-[0.2em] mb-3">
-          Can&apos;t decide?
-        </p>
+        <p className="text-[#FFE2C6] text-xs font-semibold uppercase tracking-[0.2em] mb-3">{dict.footerKicker}</p>
         <h2 className="font-[family-name:var(--font-plus-jakarta)] text-2xl md:text-3xl font-bold text-white mb-4">
-          Visit Us In Person
+          {dict.footerTitle}
         </h2>
-        <p className="text-white/80 text-sm max-w-sm mx-auto mb-6">
-          Come experience the aromas, the warmth, and the heritage — in our
-          Mansoura branch.
-        </p>
+        <p className="text-white/80 text-sm max-w-sm mx-auto mb-6">{dict.footerBody}</p>
         <a
           href="/branches"
           className="inline-flex items-center gap-2 bg-[#57392D] text-white px-8 py-3 rounded-full text-xs font-semibold uppercase tracking-widest hover:bg-[#412B22] transition-colors"
         >
           <span aria-hidden="true" className="material-symbols-outlined text-[16px] select-none">location_on</span>
-          Find Our Branch
+          {dict.findBranch}
         </a>
       </div>
     </div>

@@ -46,7 +46,7 @@ export function HeroImagesManager({ items, nextSortOrder }: { items: HeroItem[];
         {items.map((item) => (
           <div key={item.id} className="overflow-hidden rounded-xl border border-outline-variant/60 bg-surface-container-lowest">
             <div className="relative aspect-video">
-              <NextImage src={item.url} alt="" fill unoptimized className="object-cover" />
+              <NextImage src={item.url} alt="" fill className="object-cover" />
             </div>
             <div className="flex items-center justify-between p-3">
               <label className="flex items-center gap-2 text-xs text-on-surface">

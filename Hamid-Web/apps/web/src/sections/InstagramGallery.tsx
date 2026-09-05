@@ -27,7 +27,6 @@ export default async function InstagramGallery() {
                 alt=""
                 fill
                 className="object-cover transition-all duration-500 group-hover:scale-110"
-                unoptimized
               />
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
                 <span aria-hidden="true" className="material-symbols-outlined text-white text-4xl" style={{ fontVariationSettings: "'FILL' 1" }}>

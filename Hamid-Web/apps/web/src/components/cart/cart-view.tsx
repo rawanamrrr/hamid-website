@@ -45,7 +45,7 @@ export function CartView({ lines, subtotalCents, dict }: { lines: CartLineView[]
         {lines.map((line) => (
           <div key={line.id} className="flex gap-3 sm:gap-4 rounded-2xl border border-outline-variant/60 bg-surface-container-lowest p-3 sm:p-4">
             <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-surface-container">
-              {line.image && <Image src={line.image} alt={line.name} fill unoptimized className="object-cover" />}
+              {line.image && <Image src={line.image} alt={line.name} fill className="object-cover" />}
             </div>
             <div className="flex min-w-0 flex-1 flex-col">
               <div className="flex items-start justify-between gap-2">
