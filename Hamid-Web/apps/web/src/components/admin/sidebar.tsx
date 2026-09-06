@@ -73,6 +73,17 @@ export function AdminSidebar({
           );
         })}
       </div>
+      <div className="border-t border-outline-variant/60 px-6 py-3 text-center text-[11px] text-on-surface-variant">
+        <span>Made by </span>
+        <a
+          href="https://www.digitivaa.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-semibold hover:text-primary transition-colors underline underline-offset-2"
+        >
+          Digitiva
+        </a>
+      </div>
     </>
   );
 
