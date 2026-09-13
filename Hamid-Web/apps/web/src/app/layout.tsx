@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { headers } from "next/headers";
 import { Inter, Arsenal, Anton, Cairo, El_Messiri } from "next/font/google";
 import "./globals.css";
 import { getLocale, dir } from "@/lib/i18n";
@@ -68,7 +69,19 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const locale = await getLocale();
-  const direction = dir(locale);
+  // The admin dashboard's page content (tables, forms, buttons on individual
+  // pages) isn't translated yet — only its chrome (sidebar/topbar) is — so
+  // `dir` stays forced to ltr under /admin even for the Arabic locale,
+  // otherwise the still-English page bodies would render mirrored
+  // right-to-left. `lang`, however, follows the REAL locale regardless of
+  // route: it doesn't affect layout/mirroring (only `dir` does), and it's
+  // what the `html:lang(ar) body` rule in globals.css keys off to apply the
+  // brand's Arabic font stack — forcing lang="en" here would leave the
+  // admin sidebar's Arabic labels rendering in a system fallback font
+  // instead of El Messiri/Cairo.
+  const headersList = await headers();
+  const isAdminRoute = (headersList.get("x-effective-pathname") ?? "").startsWith("/admin");
+  const direction = isAdminRoute ? "ltr" : dir(locale);
 
   return (
     <html lang={locale} dir={direction} className="scroll-smooth" data-scroll-behavior="smooth">
@@ -79,7 +92,7 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} ${arsenal.variable} ${anton.variable} ${cairo.variable} ${elMessiri.variable} ${direction === "rtl" ? "font-arabic" : ""}`}
+        className={`${inter.variable} ${arsenal.variable} ${anton.variable} ${cairo.variable} ${elMessiri.variable} ${locale === "ar" ? "font-arabic" : ""}`}
       >
         <a
           href="#main-content"

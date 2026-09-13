@@ -53,7 +53,7 @@ export function AddedToCartDialog({
         <div className="flex items-center gap-2.5 pb-3 sm:gap-3">
           {productImage && (
             <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-[#FCE8CD] sm:h-14 sm:w-14 border border-[#e8d5bc]/60">
-              <Image src={productImage} alt="" fill unoptimized className="object-cover" />
+              <Image src={productImage} alt="" fill className="object-cover" />
             </div>
           )}
           <div className="min-w-0 flex-1">

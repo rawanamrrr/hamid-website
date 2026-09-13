@@ -2,6 +2,10 @@
   "name": "@hamid/web",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "Digitiva",
+    "url": "https://www.digitivaa.com/"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

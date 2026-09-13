@@ -79,7 +79,7 @@ export function MediaPicker({
       <div className="flex items-center gap-3">
         <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-xl border border-outline-variant/60 bg-surface-container">
           {value ? (
-            <NextImage src={value.url} alt="" width={80} height={80} unoptimized className="h-full w-full object-cover" />
+            <NextImage src={value.url} alt="" width={80} height={80} className="h-full w-full object-cover" />
           ) : (
             <ImageOff size={20} className="text-on-surface-variant" />
           )}
@@ -140,7 +140,6 @@ export function MediaPicker({
                       alt={item.alt ?? ""}
                       width={120}
                       height={120}
-                      unoptimized
                       className="h-full w-full object-cover"
                     />
                   </button>

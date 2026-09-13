@@ -198,6 +198,17 @@
     "yemenDesc": "Wild, complex, wine-like with a distinctive earthy depth.",
     "shopCoffee": "Shop Coffee"
   },
+  "menuPage": {
+    "kicker": "Hamid Afandi",
+    "title": "Our Menu",
+    "subtitle": "Every category has its own story — browse by what catches your eye.",
+    "itemSingular": "item",
+    "itemPlural": "items",
+    "footerKicker": "Can't decide?",
+    "footerTitle": "Visit Us In Person",
+    "footerBody": "Come experience the aromas, the warmth, and the heritage — in our Mansoura branch.",
+    "findBranch": "Find Our Branch"
+  },
   "aboutPage": {
     "since": "Since 1952",
     "title": "Our Story",
@@ -244,6 +255,36 @@
     "ctaTitle": "We'd Love to See You",
     "ctaBody": "Come experience the tradition in person. No reservation needed — just follow the scent of freshly roasted coffee.",
     "findUsOnMap": "Find Us on the Map"
+  },
+  "admin": {
+    "brandName": "Hamid Afandi",
+    "myAccount": "My account",
+    "logout": "Log out",
+    "groups": {
+      "Overview": "Overview",
+      "Catalog": "Catalog",
+      "Sales": "Sales",
+      "Content": "Content",
+      "System": "System"
+    },
+    "nav": {
+      "Dashboard": "Dashboard",
+      "Menu": "Menu",
+      "Store": "Store",
+      "Discounts": "Discounts",
+      "Orders": "Orders",
+      "Payments": "Payments",
+      "Customers": "Customers",
+      "Home Page": "Home Page",
+      "About Page": "About Page",
+      "Media Library": "Media Library",
+      "Users & Roles": "Users & Roles",
+      "Roles": "Roles",
+      "Branches": "Branches",
+      "Settings": "Settings",
+      "Activity Logs": "Activity Logs",
+      "My Account": "My Account"
+    }
   },
   "common": {
     "loadError": "We couldn't load this right now. Please try again in a moment.",

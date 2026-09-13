@@ -1,9 +1,21 @@
-import { desc } from "drizzle-orm";
+import { desc, count } from "drizzle-orm";
 import { db, media } from "@hamid/db";
 import { MediaLibrary } from "@/components/admin/media/media-library";
+import { Pagination, PAGE_SIZE } from "@/components/admin/pagination";
 
-export default async function AdminMediaPage() {
-  const rows = await db.select().from(media).orderBy(desc(media.createdAt)).limit(100);
+export default async function AdminMediaPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
+  const { page: pageParam } = await searchParams;
+  const page = Math.max(1, Number(pageParam) || 1);
+  const offset = (page - 1) * PAGE_SIZE;
+
+  const [rows, [{ total }]] = await Promise.all([
+    db.select().from(media).orderBy(desc(media.createdAt)).limit(PAGE_SIZE).offset(offset),
+    db.select({ total: count() }).from(media),
+  ]);
 
   return (
     <div>
@@ -23,6 +35,7 @@ export default async function AdminMediaPage() {
             mime: r.mime,
           }))}
         />
+        <Pagination basePath="/admin/media" page={page} total={total} />
       </div>
     </div>
   );

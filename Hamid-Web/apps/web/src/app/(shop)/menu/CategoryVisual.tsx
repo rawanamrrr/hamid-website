@@ -13,7 +13,6 @@ export function CategoryVisual({ section, sizes }: { section: MenuSection; sizes
         src={section.image}
         alt=""
         fill
-        unoptimized
         sizes={sizes}
         className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
         onError={() => setImgError(true)}

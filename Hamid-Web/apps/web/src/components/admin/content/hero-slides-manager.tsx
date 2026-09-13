@@ -247,7 +247,7 @@ export function HeroSlidesManager({ items, products }: { items: HeroSlideItem[];
             >
               <span className="w-6 shrink-0 text-center text-sm font-semibold text-on-surface-variant">{i + 1}</span>
               <div className="relative h-16 w-28 shrink-0 overflow-hidden rounded-lg">
-                <NextImage src={slide.url} alt={slide.title ?? ""} fill unoptimized className="object-cover" />
+                <NextImage src={slide.url} alt={slide.title ?? ""} fill className="object-cover" />
               </div>
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-semibold text-on-surface">{slide.title ?? "Default hero copy"}</p>

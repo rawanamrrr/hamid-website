@@ -176,129 +176,9 @@ line(settingsData.map((s, i) => `(${i + 1}, ${str(s.group)}, ${str(s.key)}, ${js
 line();
 rowCounts.settings = settingsData.length;
 
-// ── Menu catalog (identical literal data to seed.ts) ──────────────────────
-const menuCategoryDefs: {
-  slug: string;
-  icon: string;
-  nameEn: string;
-  nameAr: string;
-  image: string;
-  imageAlt: string;
-  items: { slug: string; nameEn: string; descEn: string; price: string; badge?: string }[];
-}[] = [
-  {
-    slug: "coffee", icon: "coffee", nameEn: "Coffee", nameAr: "القهوة",
-    image: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=1200&q=80", imageAlt: "Freshly roasted coffee beans",
-    items: [
-      { slug: "espresso", nameEn: "Espresso", descEn: "A concentrated shot of rich, dark Egyptian-blend espresso.", price: "45.00", badge: "Popular" },
-      { slug: "double-espresso", nameEn: "Double Espresso", descEn: "Two concentrated shots for a deeper, bolder experience.", price: "60.00" },
-      { slug: "americano", nameEn: "Americano", descEn: "Espresso diluted with hot water for a clean, smooth cup.", price: "55.00" },
-      { slug: "cappuccino", nameEn: "Cappuccino", descEn: "Equal parts espresso, steamed milk, and thick velvety foam.", price: "75.00", badge: "Popular" },
-      { slug: "latte", nameEn: "Café Latte", descEn: "Smooth espresso with generous steamed milk and a light foam crown.", price: "80.00" },
-      { slug: "flat-white", nameEn: "Flat White", descEn: "Ristretto shots with microfoam milk — intense and silky.", price: "85.00" },
-      { slug: "turkish-coffee", nameEn: "Turkish Coffee", descEn: "Traditional Egyptian-style coffee simmered in a cezve, served with cardamom.", price: "50.00", badge: "Heritage" },
-      { slug: "arabic-coffee", nameEn: "Arabic Coffee", descEn: "Unfiltered, lightly roasted coffee with saffron and cardamom notes.", price: "55.00" },
-    ],
-  },
-  {
-    slug: "hot-drinks", icon: "local_cafe", nameEn: "Hot Drinks", nameAr: "المشروبات الساخنة",
-    image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1200&q=80", imageAlt: "Latte art in a warm cup",
-    items: [
-      { slug: "hot-chocolate", nameEn: "Hot Chocolate", descEn: "Rich dark chocolate melted into steamed whole milk.", price: "75.00" },
-      { slug: "matcha-latte", nameEn: "Matcha Latte", descEn: "Ceremonial-grade matcha whisked with oat milk.", price: "90.00", badge: "New" },
-      { slug: "chai-latte", nameEn: "Masala Chai Latte", descEn: "Black tea with ginger, cinnamon, cardamom, and steamed milk.", price: "70.00" },
-      { slug: "mint-tea", nameEn: "Fresh Mint Tea", descEn: "A pot of boiling water with fresh Nile Valley spearmint.", price: "40.00" },
-      { slug: "hibiscus", nameEn: "Karkadeh (Hibiscus)", descEn: "Hot-brewed hibiscus flowers — tart, floral, deeply Egyptian.", price: "45.00", badge: "Heritage" },
-      { slug: "anise-tea", nameEn: "Anise Tea", descEn: "Warming anise seeds brewed to a fragrant, comforting tisane.", price: "40.00" },
-    ],
-  },
-  {
-    slug: "iced-coffee", icon: "ac_unit", nameEn: "Iced Coffee", nameAr: "القهوة المثلجة",
-    image: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=1200&q=80", imageAlt: "Iced coffee with condensation",
-    items: [
-      { slug: "cold-brew", nameEn: "Cold Brew", descEn: "12-hour cold-steeped coffee — smooth, low-acidity, naturally sweet.", price: "85.00", badge: "Popular" },
-      { slug: "iced-latte", nameEn: "Iced Latte", descEn: "Double espresso over ice with chilled whole milk.", price: "80.00" },
-      { slug: "iced-americano", nameEn: "Iced Americano", descEn: "Espresso shots over ice with cold water. Clean and bold.", price: "65.00" },
-      { slug: "iced-matcha", nameEn: "Iced Matcha Latte", descEn: "Ceremonial matcha shaken with oat milk over ice.", price: "95.00", badge: "New" },
-      { slug: "dalgona", nameEn: "Dalgona Coffee", descEn: "Whipped instant coffee cloud over iced milk. Silky and indulgent.", price: "90.00" },
-      { slug: "espresso-tonic", nameEn: "Espresso Tonic", descEn: "Chilled tonic water topped with a ristretto shot. Unexpectedly refreshing.", price: "95.00", badge: "Seasonal" },
-    ],
-  },
-  {
-    slug: "fresh-juice", icon: "local_bar", nameEn: "Fresh Juice", nameAr: "عصير طازج",
-    image: "https://images.unsplash.com/photo-1613478223719-2ab802602423?w=1200&q=80", imageAlt: "Fresh fruit juices",
-    items: [
-      { slug: "orange-juice", nameEn: "Fresh Orange Juice", descEn: "Cold-pressed Valencia oranges. Nothing else.", price: "65.00", badge: "Popular" },
-      { slug: "mango-juice", nameEn: "Mango Juice", descEn: "Egyptian Alphonso mangoes blended fresh to order.", price: "70.00", badge: "Seasonal" },
-      { slug: "sugarcane", nameEn: "Sugarcane Juice", descEn: "Fresh-pressed sugarcane with a squeeze of lime.", price: "55.00", badge: "Heritage" },
-      { slug: "guava-juice", nameEn: "Guava Juice", descEn: "Ripe Egyptian guava blended with a pinch of salt and lime.", price: "60.00" },
-      { slug: "pomegranate", nameEn: "Pomegranate Juice", descEn: "Cold-pressed ruby pomegranates — antioxidant-rich and vibrant.", price: "80.00" },
-      { slug: "green-detox", nameEn: "Green Detox", descEn: "Cucumber, green apple, ginger, spinach, and mint.", price: "85.00", badge: "New" },
-    ],
-  },
-  {
-    slug: "cocktails", icon: "wine_bar", nameEn: "Cocktails", nameAr: "الموكتيلات",
-    image: "https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=1200&q=80", imageAlt: "Craft cocktail",
-    items: [
-      { slug: "virgin-mojito", nameEn: "Virgin Mojito", descEn: "Fresh mint, lime, brown sugar, soda water and a mountain of crushed ice.", price: "75.00", badge: "Popular" },
-      { slug: "passion-fruit-fizz", nameEn: "Passion Fruit Fizz", descEn: "Passion fruit purée, vanilla syrup, tonic water, and lime.", price: "85.00" },
-      { slug: "watermelon-basil", nameEn: "Watermelon Basil Smash", descEn: "Muddled basil, fresh watermelon juice, lemon, and soda.", price: "80.00", badge: "Seasonal" },
-      { slug: "hibiscus-spritz", nameEn: "Hibiscus Spritz", descEn: "Karkadeh concentrate, elderflower, sparkling water, fresh mint.", price: "90.00", badge: "New" },
-      { slug: "mango-chili", nameEn: "Mango Chili Cooler", descEn: "Fresh mango, a pinch of chili, lime juice, and ginger beer.", price: "85.00" },
-      { slug: "blue-lagoon", nameEn: "Blue Lagoon", descEn: "Blue curaçao syrup, lemon juice, and lemonade. Striking and refreshing.", price: "80.00" },
-    ],
-  },
-  {
-    slug: "milkshakes", icon: "bakery_dining", nameEn: "Milkshakes", nameAr: "ميلك شيك",
-    image: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=1200&q=80", imageAlt: "Creamy milkshake",
-    items: [
-      { slug: "classic-vanilla", nameEn: "Classic Vanilla", descEn: "Madagascar vanilla bean ice cream blended to velvet perfection.", price: "85.00" },
-      { slug: "dark-chocolate-shake", nameEn: "Dark Chocolate", descEn: "70% dark chocolate ice cream with a dash of espresso.", price: "95.00", badge: "Popular" },
-      { slug: "salted-caramel-shake", nameEn: "Salted Caramel", descEn: "House-made caramel swirled with sea salt and vanilla ice cream.", price: "95.00" },
-      { slug: "lotus-shake", nameEn: "Lotus Biscoff", descEn: "Creamy Biscoff spread blended with ice cream and topped with a cookie.", price: "105.00", badge: "Popular" },
-      { slug: "strawberry-shake", nameEn: "Fresh Strawberry", descEn: "Real strawberries blended with ice cream — no artificial flavour.", price: "90.00" },
-      { slug: "nutella-shake", nameEn: "Nutella Dream", descEn: "Nutella, hazelnut ice cream, and a swirl of whipped cream.", price: "105.00" },
-    ],
-  },
-  {
-    slug: "smoothies", icon: "blender", nameEn: "Smoothies", nameAr: "سموذي",
-    image: "https://images.unsplash.com/photo-1638176066666-ffb2f013c7dd?w=1200&q=80", imageAlt: "Fresh fruit smoothie",
-    items: [
-      { slug: "tropical-blend", nameEn: "Tropical Blend", descEn: "Mango, pineapple, passion fruit, and coconut milk.", price: "90.00", badge: "Popular" },
-      { slug: "berry-blast", nameEn: "Mixed Berry Blast", descEn: "Strawberry, blueberry, raspberry, and Greek yoghurt.", price: "90.00" },
-      { slug: "banana-peanut", nameEn: "Banana Peanut Butter", descEn: "Frozen banana, natural peanut butter, oat milk, and honey.", price: "95.00", badge: "New" },
-      { slug: "avocado-banana", nameEn: "Avocado Banana", descEn: "Creamy avocado, banana, honey, and almond milk.", price: "100.00" },
-      { slug: "spinach-apple", nameEn: "Spinach Apple Detox", descEn: "Baby spinach, green apple, cucumber, lemon, and ginger.", price: "85.00" },
-    ],
-  },
-  {
-    slug: "soft-drinks", icon: "sports_bar", nameEn: "Soft Drinks", nameAr: "المشروبات الغازية",
-    image: "https://images.unsplash.com/photo-1554866585-cd94860890b7?w=1200&q=80", imageAlt: "Chilled soft drinks",
-    items: [
-      { slug: "cola", nameEn: "Coca-Cola", descEn: "330 ml chilled can.", price: "35.00" },
-      { slug: "diet-cola", nameEn: "Diet Coke", descEn: "330 ml chilled can.", price: "35.00" },
-      { slug: "sparkling-water", nameEn: "Sparkling Water", descEn: "330 ml chilled can.", price: "30.00" },
-      { slug: "still-water", nameEn: "Still Water", descEn: "500 ml chilled bottle.", price: "20.00" },
-      { slug: "lemon-soda", nameEn: "Lemon Mint Soda", descEn: "Fresh lemon juice, mint leaves, and sparkling water over ice.", price: "50.00", badge: "Popular" },
-      { slug: "ginger-beer", nameEn: "Ginger Beer", descEn: "330 ml of spicy, natural ginger beer.", price: "55.00" },
-      { slug: "energy", nameEn: "Energy Drink", descEn: "250 ml chilled can.", price: "65.00" },
-    ],
-  },
-  {
-    slug: "desserts", icon: "cake", nameEn: "Desserts", nameAr: "الحلويات",
-    image: "https://images.unsplash.com/photo-1551024506-0bccd828d307?w=1200&q=80", imageAlt: "Decadent dessert",
-    items: [
-      { slug: "umm-ali", nameEn: "Umm Ali", descEn: "Egypt's beloved bread pudding with cream, nuts, and raisins, served warm.", price: "85.00", badge: "Heritage" },
-      { slug: "kunafa", nameEn: "Kunafa Slice", descEn: "Shredded pastry with sweet cream cheese and rose-water syrup.", price: "75.00", badge: "Popular" },
-      { slug: "chocolate-fondant", nameEn: "Chocolate Fondant", descEn: "Warm dark chocolate cake with a molten centre, served with vanilla ice cream.", price: "120.00" },
-      { slug: "lotus-cheesecake", nameEn: "Lotus Cheesecake", descEn: "New York-style cheesecake with a Biscoff crust and caramel drizzle.", price: "110.00", badge: "Popular" },
-      { slug: "tiramisu", nameEn: "Tiramisu", descEn: "Espresso-soaked ladyfingers with mascarpone cream and cocoa dust.", price: "115.00" },
-      { slug: "basbousa", nameEn: "Basbousa", descEn: "Traditional Egyptian semolina cake soaked in rose-water syrup.", price: "55.00", badge: "Heritage" },
-      { slug: "creme-brulee", nameEn: "Crème Brûlée", descEn: "Vanilla custard with a perfectly caramelized sugar crust.", price: "110.00" },
-    ],
-  },
-];
+import { menuCategoryDefs } from "./menu-catalog";
 
+// ── Menu catalog (identical literal data to seed.ts) ──────────────────────
 line("-- menu category images / menu_categories / menu_category_translations / menu_items / menu_item_translations / menu_item_sizes");
 const menuCatImageRows: string[] = [];
 const menuCatRows: string[] = [];
@@ -329,9 +209,16 @@ for (const cat of menuCategoryDefs) {
       `(${menuItemId}, ${menuCatId}, ${str(item.slug)}, ${str("EGP")}, ${str(item.badge)}, ${bool(item.badge === "New")}, ${itemSort++}, 1)`,
     );
     menuItemTransRows.push(`(${menuItemId}, ${str("en")}, ${str(item.nameEn)}, ${str(item.descEn)})`);
-    // Pricing lives in menu_item_sizes, not menu_items.price (deprecated,
-    // nullable) — every seeded item gets a single "Regular" size.
-    menuItemSizeRows.push(`(${menuItemId}, ${str("Regular")}, ${str(item.price)}, 0)`);
+    menuItemTransRows.push(`(${menuItemId}, ${str("ar")}, ${str(item.nameAr)}, ${str(item.descAr)})`);
+    
+    if (item.sizes && item.sizes.length > 0) {
+      let szSort = 0;
+      for (const s of item.sizes) {
+        menuItemSizeRows.push(`(${menuItemId}, ${str(s.sizeEn)}, ${str(s.price)}, ${szSort++})`);
+      }
+    } else {
+      menuItemSizeRows.push(`(${menuItemId}, ${str("Regular")}, ${str(item.price)}, 0)`);
+    }
   }
 }
 line(`INSERT INTO ${col("media")} (${col("id")}, ${col("disk")}, ${col("bucket")}, ${col("object_key")}, ${col("url")}, ${col("mime")}, ${col("alt")}, ${col("folder")}) VALUES`);

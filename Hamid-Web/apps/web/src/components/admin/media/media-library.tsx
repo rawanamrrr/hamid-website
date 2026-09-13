@@ -119,7 +119,7 @@ export function MediaLibrary({ initialItems }: { initialItems: MediaItem[] }) {
                 <Lock size={20} />
               </div>
             ) : item.url ? (
-              <NextImage src={item.url} alt={item.alt ?? ""} fill unoptimized className="object-cover" />
+              <NextImage src={item.url} alt={item.alt ?? ""} fill className="object-cover" />
             ) : null}
             <button
               type="button"

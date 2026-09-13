@@ -1,0 +1,1672 @@
+[
+  {
+    "slug": "espresso-coffee",
+    "icon": "coffee",
+    "nameEn": "Espresso & Coffee",
+    "nameAr": "اسبريسو وقهوة",
+    "image": "https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=1200&q=80",
+    "imageAlt": "Espresso and coffee drinks",
+    "items": [
+      {
+        "slug": "espresso",
+        "nameAr": "اسبريسو",
+        "nameEn": "Espresso",
+        "descEn": "Rich concentrated shot of dark espresso.",
+        "descAr": "اسبريسو",
+        "price": "35.00",
+        "sizes": [
+          {
+            "sizeEn": "Single",
+            "sizeAr": "سنجل",
+            "price": "35.00"
+          },
+          {
+            "sizeEn": "Double",
+            "sizeAr": "دبل",
+            "price": "45.00"
+          }
+        ]
+      },
+      {
+        "slug": "caramel-mocha",
+        "nameAr": "موكا كراميل",
+        "nameEn": "Caramel Mocha",
+        "descEn": "Espresso blended with rich chocolate and caramel syrup.",
+        "descAr": "موكا كراميل",
+        "price": "50.00",
+        "sizes": [
+          {
+            "sizeEn": "Small",
+            "sizeAr": "ص",
+            "price": "50.00"
+          },
+          {
+            "sizeEn": "Large",
+            "sizeAr": "ك",
+            "price": "60.00"
+          }
+        ]
+      },
+      {
+        "slug": "american-coffee",
+        "nameAr": "اميريكان كوفي",
+        "nameEn": "American Coffee",
+        "descEn": "Espresso diluted with hot water for a smooth brew.",
+        "descAr": "اميريكان كوفي",
+        "price": "40.00",
+        "sizes": [
+          {
+            "sizeEn": "Small",
+            "sizeAr": "ص",
+            "price": "40.00"
+          },
+          {
+            "sizeEn": "Large",
+            "sizeAr": "ك",
+            "price": "50.00"
+          }
+        ]
+      },
+      {
+        "slug": "nescafe",
+        "nameAr": "نسكافيه",
+        "nameEn": "Nescafe",
+        "descEn": "Classic instant coffee brewed to warmth.",
+        "descAr": "نسكافيه",
+        "price": "40.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "40.00"
+          }
+        ]
+      },
+      {
+        "slug": "café-latte",
+        "nameAr": "كافي لاتيه",
+        "nameEn": "Café Latte",
+        "descEn": "Smooth espresso with velvety steamed milk crown.",
+        "descAr": "كافي لاتيه",
+        "price": "60.00",
+        "sizes": [
+          {
+            "sizeEn": "Large",
+            "sizeAr": "ك",
+            "price": "60.00"
+          },
+          {
+            "sizeEn": "Small",
+            "sizeAr": "ص",
+            "price": "50.00"
+          }
+        ]
+      },
+      {
+        "slug": "cappuccino",
+        "nameAr": "كابتشينو",
+        "nameEn": "Cappuccino",
+        "descEn": "Equal parts espresso, steamed milk, and velvety foam.",
+        "descAr": "كابتشينو",
+        "price": "50.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "50.00"
+          }
+        ]
+      },
+      {
+        "slug": "macchiato",
+        "nameAr": "ميكاتو",
+        "nameEn": "Macchiato",
+        "descEn": "Espresso stained with a dollop of milk foam.",
+        "descAr": "ميكاتو",
+        "price": "45.00",
+        "sizes": [
+          {
+            "sizeEn": "Single",
+            "sizeAr": "سنجل",
+            "price": "45.00"
+          },
+          {
+            "sizeEn": "Double",
+            "sizeAr": "دبل",
+            "price": "55.00"
+          }
+        ]
+      },
+      {
+        "slug": "flavored-cappuccino",
+        "nameAr": "كابتشينو نكهات",
+        "nameEn": "Flavored Cappuccino",
+        "descEn": "Rich cappuccino infused with your choice of flavor.",
+        "descAr": "كابتشينو نكهات",
+        "price": "55.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "55.00"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "hot-drinks",
+    "icon": "local_cafe",
+    "nameEn": "Hot Drinks",
+    "nameAr": "مشروبات ساخنة",
+    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1200&q=80",
+    "imageAlt": "Warming hot beverages",
+    "items": [
+      {
+        "slug": "tea-latte",
+        "nameAr": "شاي لاتيه",
+        "nameEn": "Tea Latte",
+        "descEn": "Steamed spiced tea with creamy milk.",
+        "descAr": "شاي لاتيه",
+        "price": "35.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "35.00"
+          }
+        ]
+      },
+      {
+        "slug": "hot-chocolate",
+        "nameAr": "شوكولاتة ساخنة",
+        "nameEn": "Hot Chocolate",
+        "descEn": "Melted dark cocoa with creamy warm milk.",
+        "descAr": "شوكولاتة ساخنة",
+        "price": "35.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "35.00"
+          }
+        ]
+      },
+      {
+        "slug": "flavored-tea",
+        "nameAr": "شاي بنكهة",
+        "nameEn": "Flavored Tea",
+        "descEn": "Fragrant black tea with custom fruit/mint flavor.",
+        "descAr": "شاي بنكهة",
+        "price": "30.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "30.00"
+          }
+        ]
+      },
+      {
+        "slug": "hot-oreo",
+        "nameAr": "أوريو ساخن",
+        "nameEn": "Hot Oreo",
+        "descEn": "Decadent crushed Oreo cookies melted in hot milk.",
+        "descAr": "أوريو ساخن",
+        "price": "45.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "45.00"
+          }
+        ]
+      },
+      {
+        "slug": "hot-caramel",
+        "nameAr": "كراميل ساخن",
+        "nameEn": "Hot Caramel",
+        "descEn": "Warm sweet milk swirled with buttery caramel.",
+        "descAr": "كراميل ساخن",
+        "price": "40.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "40.00"
+          }
+        ]
+      },
+      {
+        "slug": "tea",
+        "nameAr": "شاي",
+        "nameEn": "Tea",
+        "descEn": "Freshly brewed black Egyptian tea.",
+        "descAr": "شاي",
+        "price": "20.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "20.00"
+          }
+        ]
+      },
+      {
+        "slug": "cinnamon-milk",
+        "nameAr": "حليب بالقرفة",
+        "nameEn": "Cinnamon Milk",
+        "descEn": "Warm whole milk infused with fragrant cinnamon.",
+        "descAr": "حليب بالقرفة",
+        "price": "35.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "35.00"
+          }
+        ]
+      },
+      {
+        "slug": "herbal-tea",
+        "nameAr": "أعشاب",
+        "nameEn": "Herbal Tea",
+        "descEn": "Soothing selection of natural herbs.",
+        "descAr": "أعشاب",
+        "price": "20.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "20.00"
+          }
+        ]
+      },
+      {
+        "slug": "sahlab-with-fruits",
+        "nameAr": "سحلب بالفواكه",
+        "nameEn": "Sahlab with Fruits",
+        "descEn": "Rich creamy Sahlab garnished with fresh seasonal fruits.",
+        "descAr": "سحلب بالفواكه",
+        "price": "50.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "50.00"
+          }
+        ]
+      },
+      {
+        "slug": "sahlab-with-nuts",
+        "nameAr": "سحلب بالمكسرات",
+        "nameEn": "Sahlab with Nuts",
+        "descEn": "Traditional Egyptian warm Sahlab topped with toasted nuts.",
+        "descAr": "سحلب بالمكسرات",
+        "price": "35.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "35.00"
+          }
+        ]
+      },
+      {
+        "slug": "hot-cider",
+        "nameAr": "سايدر ساخن",
+        "nameEn": "Hot Cider",
+        "descEn": "Warming spiced apple cider served piping hot.",
+        "descAr": "سايدر ساخن",
+        "price": "35.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "35.00"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "turkish-coffee",
+    "icon": "local_cafe",
+    "nameEn": "Turkish Coffee",
+    "nameAr": "قهوة تركي",
+    "image": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=1200&q=80",
+    "imageAlt": "Traditional Turkish coffee",
+    "items": [
+      {
+        "slug": "hamid-spiced-turkish-coffee",
+        "nameAr": "قهوة حميد محوج",
+        "nameEn": "Hamid Spiced Turkish Coffee",
+        "descEn": "Traditional Turkish coffee infused with cardamom and spices.",
+        "descAr": "قهوة حميد محوج",
+        "price": "35.00",
+        "sizes": [
+          {
+            "sizeEn": "Large",
+            "sizeAr": "ك",
+            "price": "35.00"
+          },
+          {
+            "sizeEn": "Small",
+            "sizeAr": "ص",
+            "price": "30.00"
+          }
+        ]
+      },
+      {
+        "slug": "nuts-french-coffee",
+        "nameAr": "قهوة فرنسي مكسرات",
+        "nameEn": "Nuts French Coffee",
+        "descEn": "French coffee blended with fine roasted nuts.",
+        "descAr": "قهوة فرنسي مكسرات",
+        "price": "45.00",
+        "sizes": [
+          {
+            "sizeEn": "Small",
+            "sizeAr": "ص",
+            "price": "45.00"
+          },
+          {
+            "sizeEn": "Large",
+            "sizeAr": "ك",
+            "price": "50.00"
+          }
+        ]
+      },
+      {
+        "slug": "classic-french-coffee",
+        "nameAr": "قهوة فرنسي كلاسيك",
+        "nameEn": "Classic French Coffee",
+        "descEn": "Creamy French coffee brewed with whole milk.",
+        "descAr": "قهوة فرنسي كلاسيك",
+        "price": "40.00",
+        "sizes": [
+          {
+            "sizeEn": "Large",
+            "sizeAr": "ك",
+            "price": "40.00"
+          },
+          {
+            "sizeEn": "Small",
+            "sizeAr": "ص",
+            "price": "35.00"
+          }
+        ]
+      },
+      {
+        "slug": "hazelnut-french-coffee",
+        "nameAr": "قهوة فرنسي بندق",
+        "nameEn": "Hazelnut French Coffee",
+        "descEn": "French coffee infused with rich hazelnut flavor.",
+        "descAr": "قهوة فرنسي بندق",
+        "price": "45.00",
+        "sizes": [
+          {
+            "sizeEn": "Large",
+            "sizeAr": "ك",
+            "price": "45.00"
+          },
+          {
+            "sizeEn": "Small",
+            "sizeAr": "ص",
+            "price": "40.00"
+          }
+        ]
+      },
+      {
+        "slug": "pure-plain-colombian-coffee",
+        "nameAr": "قهوة كولومبي بيور سادة",
+        "nameEn": "Pure Plain Colombian Coffee",
+        "descEn": "Premium Colombian dark roasted coffee, pure and smooth.",
+        "descAr": "قهوة كولومبي بيور سادة",
+        "price": "40.00",
+        "sizes": [
+          {
+            "sizeEn": "Small",
+            "sizeAr": "ص",
+            "price": "40.00"
+          },
+          {
+            "sizeEn": "Large",
+            "sizeAr": "ك",
+            "price": "50.00"
+          }
+        ]
+      },
+      {
+        "slug": "hamid-plain-turkish-coffee",
+        "nameAr": "قهوة حميد سادة",
+        "nameEn": "Hamid Plain Turkish Coffee",
+        "descEn": "Authentic Egyptian-style plain Turkish coffee simmered in cezve.",
+        "descAr": "قهوة حميد سادة",
+        "price": "25.00",
+        "sizes": [
+          {
+            "sizeEn": "Small",
+            "sizeAr": "ص",
+            "price": "25.00"
+          },
+          {
+            "sizeEn": "Large",
+            "sizeAr": "ك",
+            "price": "30.00"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "iced-coffee",
+    "icon": "ac_unit",
+    "nameEn": "Iced Coffee",
+    "nameAr": "قهوة باردة",
+    "image": "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=1200&q=80",
+    "imageAlt": "Refreshing iced coffee",
+    "items": [
+      {
+        "slug": "hamid-special-iced-mix",
+        "nameAr": "افتكاسة حميد",
+        "nameEn": "Hamid Special Iced Mix",
+        "descEn": "Hamid afandi exclusive secret cold coffee creation.",
+        "descAr": "افتكاسة حميد",
+        "price": "60.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "60.00"
+          }
+        ]
+      },
+      {
+        "slug": "iced-coffee",
+        "nameAr": "آيس كوفي",
+        "nameEn": "Iced Coffee",
+        "descEn": "Chilled espresso poured over cold water and ice.",
+        "descAr": "آيس كوفي",
+        "price": "50.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "50.00"
+          }
+        ]
+      },
+      {
+        "slug": "iced-cappuccino",
+        "nameAr": "آيس كابتشينو",
+        "nameEn": "Iced Cappuccino",
+        "descEn": "Iced espresso topped with cold frothy milk foam.",
+        "descAr": "آيس كابتشينو",
+        "price": "65.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "65.00"
+          }
+        ]
+      },
+      {
+        "slug": "iced-latte",
+        "nameAr": "آيس لاتيه",
+        "nameEn": "Iced Latte",
+        "descEn": "Double espresso with chilled whole milk over ice.",
+        "descAr": "آيس لاتيه",
+        "price": "60.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "60.00"
+          }
+        ]
+      },
+      {
+        "slug": "iced-caramel-mocha",
+        "nameAr": "آيس موكا كراميل",
+        "nameEn": "Iced Caramel Mocha",
+        "descEn": "Espresso, chocolate, and caramel sauce served over ice.",
+        "descAr": "آيس موكا كراميل",
+        "price": "75.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "75.00"
+          }
+        ]
+      },
+      {
+        "slug": "frappuccino",
+        "nameAr": "فرابتشينو",
+        "nameEn": "Frappuccino",
+        "descEn": "Blended icy coffee shake crowned with whipped cream.",
+        "descAr": "فرابتشينو",
+        "price": "75.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "75.00"
+          }
+        ]
+      },
+      {
+        "slug": "iced-mocha",
+        "nameAr": "آيس موكا",
+        "nameEn": "Iced Mocha",
+        "descEn": "Espresso, dark chocolate, and cold milk over ice.",
+        "descAr": "آيس موكا",
+        "price": "65.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "65.00"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "fresh-juice",
+    "icon": "local_bar",
+    "nameEn": "Fresh Juice",
+    "nameAr": "عصائر طازجة",
+    "image": "https://images.unsplash.com/photo-1613478223719-2ab802602423?w=1200&q=80",
+    "imageAlt": "Fresh fruit juices",
+    "items": [
+      {
+        "slug": "mango-juice",
+        "nameAr": "مانجو",
+        "nameEn": "Mango Juice",
+        "descEn": "Freshly squeezed Egyptian Alphonso mango juice.",
+        "descAr": "مانجو",
+        "price": "50.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "50.00"
+          }
+        ]
+      },
+      {
+        "slug": "strawberry-juice",
+        "nameAr": "فراولة",
+        "nameEn": "Strawberry Juice",
+        "descEn": "Freshly blended sweet strawberry juice.",
+        "descAr": "فراولة",
+        "price": "50.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "50.00"
+          }
+        ]
+      },
+      {
+        "slug": "banana-milkshake-juice",
+        "nameAr": "موز باللبن",
+        "nameEn": "Banana Milkshake Juice",
+        "descEn": "Fresh bananas blended smooth with cold milk.",
+        "descAr": "موز باللبن",
+        "price": "50.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "50.00"
+          }
+        ]
+      },
+      {
+        "slug": "watermelon-juice",
+        "nameAr": "بطيخ",
+        "nameEn": "Watermelon Juice",
+        "descEn": "Refreshing cold pressed watermelon juice.",
+        "descAr": "بطيخ",
+        "price": "50.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "50.00"
+          }
+        ]
+      },
+      {
+        "slug": "lemon-mint",
+        "nameAr": "ليمون نعناع",
+        "nameEn": "Lemon Mint",
+        "descEn": "Fresh lemonade crushed with garden spearmint.",
+        "descAr": "ليمون نعناع",
+        "price": "35.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "35.00"
+          }
+        ]
+      },
+      {
+        "slug": "fresh-orange-juice",
+        "nameAr": "برتقال",
+        "nameEn": "Fresh Orange Juice",
+        "descEn": "100% natural cold-pressed orange juice.",
+        "descAr": "برتقال",
+        "price": "45.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "45.00"
+          }
+        ]
+      },
+      {
+        "slug": "mango-yogurt-smoothie",
+        "nameAr": "زبادي مانجا",
+        "nameEn": "Mango Yogurt Smoothie",
+        "descEn": "Creamy yogurt blended with fresh mango.",
+        "descAr": "زبادي مانجا",
+        "price": "65.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "65.00"
+          }
+        ]
+      },
+      {
+        "slug": "peach-yogurt-smoothie",
+        "nameAr": "زبادي خوخ",
+        "nameEn": "Peach Yogurt Smoothie",
+        "descEn": "Refreshing yogurt blended with sweet peach.",
+        "descAr": "زبادي خوخ",
+        "price": "65.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "65.00"
+          }
+        ]
+      },
+      {
+        "slug": "strawberry-yogurt-smoothie",
+        "nameAr": "زبادي فراولة",
+        "nameEn": "Strawberry Yogurt Smoothie",
+        "descEn": "Creamy yogurt blended with ripe strawberries.",
+        "descAr": "زبادي فراولة",
+        "price": "65.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "65.00"
+          }
+        ]
+      },
+      {
+        "slug": "berry-yogurt-smoothie",
+        "nameAr": "زبادي توت",
+        "nameEn": "Berry Yogurt Smoothie",
+        "descEn": "Yogurt blended with rich wild berries.",
+        "descAr": "زبادي توت",
+        "price": "65.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "65.00"
+          }
+        ]
+      },
+      {
+        "slug": "banana-yogurt-smoothie",
+        "nameAr": "زبادي موز",
+        "nameEn": "Banana Yogurt Smoothie",
+        "descEn": "Creamy yogurt blended with fresh banana.",
+        "descAr": "زبادي موز",
+        "price": "65.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "65.00"
+          }
+        ]
+      },
+      {
+        "slug": "guava-juice",
+        "nameAr": "جوافة",
+        "nameEn": "Guava Juice",
+        "descEn": "Ripe Egyptian guava juice with a hint of lime.",
+        "descAr": "جوافة",
+        "price": "50.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "50.00"
+          }
+        ]
+      },
+      {
+        "slug": "cantaloupe-juice",
+        "nameAr": "كنتالوب",
+        "nameEn": "Cantaloupe Juice",
+        "descEn": "Sweet cantaloupe melon juice served chilled.",
+        "descAr": "كنتالوب",
+        "price": "50.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "50.00"
+          }
+        ]
+      },
+      {
+        "slug": "fresh-lemonade",
+        "nameAr": "ليمون",
+        "nameEn": "Fresh Lemonade",
+        "descEn": "Zesty fresh-squeezed Egyptian lemonade.",
+        "descAr": "ليمون",
+        "price": "30.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "30.00"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "cocktails",
+    "icon": "wine_bar",
+    "nameEn": "Cocktails",
+    "nameAr": "كوكتيلات",
+    "image": "https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=1200&q=80",
+    "imageAlt": "Signature mocktails & cocktails",
+    "items": [
+      {
+        "slug": "cherry-cola-mocktail",
+        "nameAr": "شيري كولا",
+        "nameEn": "Cherry Cola Mocktail",
+        "descEn": "Classic fizzy cola infused with sweet cherry syrup.",
+        "descAr": "شيري كولا",
+        "price": "75.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "75.00"
+          }
+        ]
+      },
+      {
+        "slug": "power-mojito",
+        "nameAr": "باور موخيتو",
+        "nameEn": "Power Mojito",
+        "descEn": "Energy boosting mint, lime, and crushed ice mojito.",
+        "descAr": "باور موخيتو",
+        "price": "100.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "100.00"
+          }
+        ]
+      },
+      {
+        "slug": "florida-mocktail",
+        "nameAr": "فلوريدا",
+        "nameEn": "Florida Mocktail",
+        "descEn": "Vibrant tropical fruit cocktail with soda.",
+        "descAr": "فلوريدا",
+        "price": "75.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "75.00"
+          }
+        ]
+      },
+      {
+        "slug": "hawaii-mocktail",
+        "nameAr": "هاواي",
+        "nameEn": "Hawaii Mocktail",
+        "descEn": "Exotic pineapple and coconut tropical fizz.",
+        "descAr": "هاواي",
+        "price": "75.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "75.00"
+          }
+        ]
+      },
+      {
+        "slug": "sunshine-mocktail",
+        "nameAr": "صن شاين",
+        "nameEn": "Sunshine Mocktail",
+        "descEn": "Bright orange, passionfruit, and grenadine spritz.",
+        "descAr": "صن شاين",
+        "price": "75.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "75.00"
+          }
+        ]
+      },
+      {
+        "slug": "classic-mojito",
+        "nameAr": "موخيتو",
+        "nameEn": "Classic Mojito",
+        "descEn": "Refreshing spearmint, lime, and sparkling soda.",
+        "descAr": "موخيتو",
+        "price": "55.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "55.00"
+          }
+        ]
+      },
+      {
+        "slug": "tutti-frutti",
+        "nameAr": "توتي فروتي",
+        "nameEn": "Tutti Frutti",
+        "descEn": "Extravagant mixed fruit cocktail with crushed ice.",
+        "descAr": "توتي فروتي",
+        "price": "90.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "90.00"
+          }
+        ]
+      },
+      {
+        "slug": "soda-cocktail",
+        "nameAr": "كوكتيل صودا",
+        "nameEn": "Soda Cocktail",
+        "descEn": "Sparkling fruit soda with ice and citrus.",
+        "descAr": "كوكتيل صودا",
+        "price": "90.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "90.00"
+          }
+        ]
+      },
+      {
+        "slug": "hamid-special-cocktail",
+        "nameAr": "كوكتيل حميد",
+        "nameEn": "Hamid Special Cocktail",
+        "descEn": "Hamid Afandi flagship ultimate fruit blend.",
+        "descAr": "كوكتيل حميد",
+        "price": "100.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "100.00"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "hamid-cocktails",
+    "icon": "auto_awesome",
+    "nameEn": "Hamid Cocktails",
+    "nameAr": "كوكتيل حميد",
+    "image": "https://images.unsplash.com/photo-1536935338788-846bb9981813?w=1200&q=80",
+    "imageAlt": "Hamid special fruit blends",
+    "items": [
+      {
+        "slug": "sobia-mango",
+        "nameAr": "سوبيا مانجو",
+        "nameEn": "Sobia Mango",
+        "descEn": "Traditional Egyptian Sobia coconut milk blended with mango.",
+        "descAr": "سوبيا مانجو",
+        "price": "60.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "60.00"
+          }
+        ]
+      },
+      {
+        "slug": "sobia-strawberry",
+        "nameAr": "سوبيا فراولة",
+        "nameEn": "Sobia Strawberry",
+        "descEn": "Sweet Sobia coconut drink swirled with fresh strawberry.",
+        "descAr": "سوبيا فراولة",
+        "price": "60.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "60.00"
+          }
+        ]
+      },
+      {
+        "slug": "guava-lemon",
+        "nameAr": "جوافة ليمون",
+        "nameEn": "Guava Lemon",
+        "descEn": "Zesty lemon combined with creamy Egyptian guava.",
+        "descAr": "جوافة ليمون",
+        "price": "55.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "55.00"
+          }
+        ]
+      },
+      {
+        "slug": "mango-banana",
+        "nameAr": "مانجو موز",
+        "nameEn": "Mango Banana",
+        "descEn": "Rich mango puree blended with ripe banana.",
+        "descAr": "مانجو موز",
+        "price": "65.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "65.00"
+          }
+        ]
+      },
+      {
+        "slug": "mango-strawberry",
+        "nameAr": "مانجو فراولة",
+        "nameEn": "Mango Strawberry",
+        "descEn": "Layered fresh mango and strawberry juice.",
+        "descAr": "مانجو فراولة",
+        "price": "65.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "65.00"
+          }
+        ]
+      },
+      {
+        "slug": "banana-strawberry",
+        "nameAr": "موز فراولة",
+        "nameEn": "Banana Strawberry",
+        "descEn": "Classic sweet banana and strawberry blend.",
+        "descAr": "موز فراولة",
+        "price": "60.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "60.00"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "milkshakes",
+    "icon": "bakery_dining",
+    "nameEn": "Milkshakes",
+    "nameAr": "ميلك شيك",
+    "image": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=1200&q=80",
+    "imageAlt": "Creamy rich milkshakes",
+    "items": [
+      {
+        "slug": "vanilla-milkshake",
+        "nameAr": "فانيليا",
+        "nameEn": "Vanilla Milkshake",
+        "descEn": "Creamy Madagascar vanilla bean ice cream shake.",
+        "descAr": "فانيليا",
+        "price": "70.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "70.00"
+          }
+        ]
+      },
+      {
+        "slug": "chocolate-milkshake",
+        "nameAr": "شوكليت",
+        "nameEn": "Chocolate Milkshake",
+        "descEn": "Rich dark chocolate ice cream milkshake.",
+        "descAr": "شوكليت",
+        "price": "70.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "70.00"
+          }
+        ]
+      },
+      {
+        "slug": "strawberry-juice",
+        "nameAr": "فراولة",
+        "nameEn": "Strawberry Juice",
+        "descEn": "Freshly blended sweet strawberry juice.",
+        "descAr": "فراولة",
+        "price": "70.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "70.00"
+          }
+        ]
+      },
+      {
+        "slug": "mango-juice",
+        "nameAr": "مانجو",
+        "nameEn": "Mango Juice",
+        "descEn": "Freshly squeezed Egyptian Alphonso mango juice.",
+        "descAr": "مانجو",
+        "price": "70.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "70.00"
+          }
+        ]
+      },
+      {
+        "slug": "oreo-milkshake",
+        "nameAr": "اوريو",
+        "nameEn": "Oreo Milkshake",
+        "descEn": "Crushed Oreo cookies blended with vanilla ice cream.",
+        "descAr": "اوريو",
+        "price": "70.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "70.00"
+          }
+        ]
+      },
+      {
+        "slug": "berry-milkshake",
+        "nameAr": "توت",
+        "nameEn": "Berry Milkshake",
+        "descEn": "Wild berry preserve blended with rich cream.",
+        "descAr": "توت",
+        "price": "70.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "70.00"
+          }
+        ]
+      },
+      {
+        "slug": "caramel-milkshake",
+        "nameAr": "كراميل",
+        "nameEn": "Caramel Milkshake",
+        "descEn": "Creamy ice cream blended with golden caramel.",
+        "descAr": "كراميل",
+        "price": "70.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "70.00"
+          }
+        ]
+      },
+      {
+        "slug": "lotus-biscoff-milkshake",
+        "nameAr": "لوتس",
+        "nameEn": "Lotus Biscoff Milkshake",
+        "descEn": "Biscoff cookie spread blended into thick milkshake.",
+        "descAr": "لوتس",
+        "price": "80.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "80.00"
+          }
+        ]
+      },
+      {
+        "slug": "nutella-milkshake",
+        "nameAr": "نوتيلا",
+        "nameEn": "Nutella Milkshake",
+        "descEn": "Authentic Nutella hazelnut cocoa cream shake.",
+        "descAr": "نوتيلا",
+        "price": "80.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "80.00"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "smoothies",
+    "icon": "blender",
+    "nameEn": "Smoothies",
+    "nameAr": "سموذي",
+    "image": "https://images.unsplash.com/photo-1638176066666-ffb2f013c7dd?w=1200&q=80",
+    "imageAlt": "Blended fruit smoothies",
+    "items": [
+      {
+        "slug": "strawberry-juice",
+        "nameAr": "فراولة",
+        "nameEn": "Strawberry Juice",
+        "descEn": "Freshly blended sweet strawberry juice.",
+        "descAr": "فراولة",
+        "price": "50.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "50.00"
+          }
+        ]
+      },
+      {
+        "slug": "mango-juice",
+        "nameAr": "مانجو",
+        "nameEn": "Mango Juice",
+        "descEn": "Freshly squeezed Egyptian Alphonso mango juice.",
+        "descAr": "مانجو",
+        "price": "60.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "60.00"
+          }
+        ]
+      },
+      {
+        "slug": "watermelon-juice",
+        "nameAr": "بطيخ",
+        "nameEn": "Watermelon Juice",
+        "descEn": "Refreshing cold pressed watermelon juice.",
+        "descAr": "بطيخ",
+        "price": "55.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "55.00"
+          }
+        ]
+      },
+      {
+        "slug": "fresh-lemonade",
+        "nameAr": "ليمون",
+        "nameEn": "Fresh Lemonade",
+        "descEn": "Zesty fresh-squeezed Egyptian lemonade.",
+        "descAr": "ليمون",
+        "price": "45.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "45.00"
+          }
+        ]
+      },
+      {
+        "slug": "lemon-mint",
+        "nameAr": "ليمون نعناع",
+        "nameEn": "Lemon Mint",
+        "descEn": "Fresh lemonade crushed with garden spearmint.",
+        "descAr": "ليمون نعناع",
+        "price": "50.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "50.00"
+          }
+        ]
+      },
+      {
+        "slug": "passion-fruit-smoothie",
+        "nameAr": "باشن فروت",
+        "nameEn": "Passion Fruit Smoothie",
+        "descEn": "Exotic passion fruit blended with crushed ice.",
+        "descAr": "باشن فروت",
+        "price": "60.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "60.00"
+          }
+        ]
+      },
+      {
+        "slug": "blueberry-smoothie",
+        "nameAr": "بلوبيري",
+        "nameEn": "Blueberry Smoothie",
+        "descEn": "Antioxidant-rich wild blueberry icy smoothie.",
+        "descAr": "بلوبيري",
+        "price": "60.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "60.00"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "soft-drinks",
+    "icon": "sports_bar",
+    "nameEn": "Soft Drinks",
+    "nameAr": "مشروبات غازية",
+    "image": "https://images.unsplash.com/photo-1554866585-cd94860890b7?w=1200&q=80",
+    "imageAlt": "Chilled carbonated soft drinks",
+    "items": [
+      {
+        "slug": "v7-flavored-soda",
+        "nameAr": "V7 (كولا+رمان+بينا كولادا+جوز هند)",
+        "nameEn": "V7 Flavored Soda",
+        "descEn": "V7 sparkling drink with cola, pomegranate & pina colada flavor.",
+        "descAr": "V7 (كولا+رمان+بينا كولادا+جوز هند)",
+        "price": "30.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "30.00"
+          }
+        ]
+      },
+      {
+        "slug": "birell-malt-drink",
+        "nameAr": "بريل",
+        "nameEn": "Birell Malt Drink",
+        "descEn": "Non-alcoholic barley malt beverage 330ml.",
+        "descAr": "بريل",
+        "price": "35.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "35.00"
+          }
+        ]
+      },
+      {
+        "slug": "fayrouz-malt-drink",
+        "nameAr": "فيروز",
+        "nameEn": "Fayrouz Malt Drink",
+        "descEn": "Sparkling flavored malt beverage 330ml.",
+        "descAr": "فيروز",
+        "price": "35.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "35.00"
+          }
+        ]
+      },
+      {
+        "slug": "volt-trust-energy-drink",
+        "nameAr": "فولت تراست",
+        "nameEn": "Volt Trust Energy Drink",
+        "descEn": "Energizing carbonated drink 250ml.",
+        "descAr": "فولت تراست",
+        "price": "30.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "30.00"
+          }
+        ]
+      },
+      {
+        "slug": "red-bull",
+        "nameAr": "ريدبول",
+        "nameEn": "Red Bull",
+        "descEn": "Original Red Bull energy drink 250ml.",
+        "descAr": "ريدبول",
+        "price": "90.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "90.00"
+          }
+        ]
+      },
+      {
+        "slug": "mineral-water",
+        "nameAr": "مياه معدنية",
+        "nameEn": "Mineral Water",
+        "descEn": "Pure bottled natural spring water 500ml.",
+        "descAr": "مياه معدنية",
+        "price": "10.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "10.00"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "extras",
+    "icon": "add_circle",
+    "nameEn": "Extras & Additions",
+    "nameAr": "إضافات",
+    "image": "https://images.unsplash.com/photo-1541658016709-82535e94bc69?w=1200&q=80",
+    "imageAlt": "Extra toppings and additions",
+    "items": [
+      {
+        "slug": "extra-milk",
+        "nameAr": "لبن",
+        "nameEn": "Extra Milk",
+        "descEn": "Side shot of cold or steamed whole milk.",
+        "descAr": "لبن",
+        "price": "10.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "10.00"
+          }
+        ]
+      },
+      {
+        "slug": "ice-cream-scoop",
+        "nameAr": "بولة آيس كريم",
+        "nameEn": "Ice Cream Scoop",
+        "descEn": "Scoop of premium vanilla ice cream.",
+        "descAr": "بولة آيس كريم",
+        "price": "15.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "15.00"
+          }
+        ]
+      },
+      {
+        "slug": "extra-sauce",
+        "nameAr": "صوص",
+        "nameEn": "Extra Sauce",
+        "descEn": "Drizzle of caramel, chocolate, or Lotus sauce.",
+        "descAr": "صوص",
+        "price": "10.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "10.00"
+          }
+        ]
+      },
+      {
+        "slug": "extra-nuts",
+        "nameAr": "مكسرات",
+        "nameEn": "Extra Nuts",
+        "descEn": "Toasted crushed almonds and hazelnut topping.",
+        "descAr": "مكسرات",
+        "price": "15.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "15.00"
+          }
+        ]
+      },
+      {
+        "slug": "lotus-biscoff-milkshake",
+        "nameAr": "لوتس",
+        "nameEn": "Lotus Biscoff Milkshake",
+        "descEn": "Biscoff cookie spread blended into thick milkshake.",
+        "descAr": "لوتس",
+        "price": "15.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "15.00"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "desserts",
+    "icon": "cake",
+    "nameEn": "Desserts & Pancakes",
+    "nameAr": "حلويات",
+    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?w=1200&q=80",
+    "imageAlt": "Fresh pancakes and desserts",
+    "items": [
+      {
+        "slug": "pancakes-12-pcs",
+        "nameAr": "بان كيك 12 قطعة",
+        "nameEn": "Pancakes 12 Pcs",
+        "descEn": "12 mini fluffy pancakes with your choice of topping.",
+        "descAr": "بان كيك 12 قطعة",
+        "price": "55.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "55.00"
+          }
+        ]
+      },
+      {
+        "slug": "pancakes-6-pcs",
+        "nameAr": "بان كيك 6 قطع",
+        "nameEn": "Pancakes 6 Pcs",
+        "descEn": "6 mini fluffy pancakes served with syrup.",
+        "descAr": "بان كيك 6 قطع",
+        "price": "30.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "30.00"
+          }
+        ]
+      },
+      {
+        "slug": "pancakes-25-pcs",
+        "nameAr": "بان كيك 25 قطعة",
+        "nameEn": "Pancakes 25 Pcs",
+        "descEn": "25 mini fluffy pancakes tower for sharing.",
+        "descAr": "بان كيك 25 قطعة",
+        "price": "100.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "100.00"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "waffles",
+    "icon": "cake",
+    "nameEn": "Waffles",
+    "nameAr": "وافل",
+    "image": "https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=1200&q=80",
+    "imageAlt": "Crispy Belgian waffles with toppings",
+    "items": [
+      {
+        "slug": "banana-waffle",
+        "nameAr": "موز",
+        "nameEn": "Banana Waffle",
+        "descEn": "Crispy waffle topped with sliced fresh banana and syrup.",
+        "descAr": "موز",
+        "price": "80.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "80.00"
+          }
+        ]
+      },
+      {
+        "slug": "fruit-waffle",
+        "nameAr": "فواكه",
+        "nameEn": "Fruit Waffle",
+        "descEn": "Waffle garnished with fresh seasonal fruit selection.",
+        "descAr": "فواكه",
+        "price": "100.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "100.00"
+          }
+        ]
+      },
+      {
+        "slug": "ice-cream-waffle-4-flavors",
+        "nameAr": "ايس كريم (4 أنواع)",
+        "nameEn": "Ice Cream Waffle (4 Flavors)",
+        "descEn": "Waffle loaded with 4 scoops of different ice creams.",
+        "descAr": "ايس كريم (4 أنواع)",
+        "price": "85.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "85.00"
+          }
+        ]
+      },
+      {
+        "slug": "hamid-special-waffle",
+        "nameAr": "حميد (4 حشوات + 4 صوص)",
+        "nameEn": "Hamid Special Waffle",
+        "descEn": "Signature waffle with 4 fillings & 4 dessert sauces.",
+        "descAr": "حميد (4 حشوات + 4 صوص)",
+        "price": "120.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "120.00"
+          }
+        ]
+      },
+      {
+        "slug": "lotus-biscoff-milkshake",
+        "nameAr": "لوتس",
+        "nameEn": "Lotus Biscoff Milkshake",
+        "descEn": "Biscoff cookie spread blended into thick milkshake.",
+        "descAr": "لوتس",
+        "price": "80.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "80.00"
+          }
+        ]
+      },
+      {
+        "slug": "white-chocolate-waffle",
+        "nameAr": "وايت شوكليت",
+        "nameEn": "White Chocolate Waffle",
+        "descEn": "Belgian waffle topped with melted white chocolate.",
+        "descAr": "وايت شوكليت",
+        "price": "75.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "75.00"
+          }
+        ]
+      },
+      {
+        "slug": "nutella-milkshake",
+        "nameAr": "نوتيلا",
+        "nameEn": "Nutella Milkshake",
+        "descEn": "Authentic Nutella hazelnut cocoa cream shake.",
+        "descAr": "نوتيلا",
+        "price": "65.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "65.00"
+          }
+        ]
+      },
+      {
+        "slug": "oreo-milkshake",
+        "nameAr": "اوريو",
+        "nameEn": "Oreo Milkshake",
+        "descEn": "Crushed Oreo cookies blended with vanilla ice cream.",
+        "descAr": "اوريو",
+        "price": "80.00",
+        "sizes": [
+          {
+            "sizeEn": "Regular",
+            "sizeAr": "عادي",
+            "price": "80.00"
+          }
+        ]
+      }
+    ]
+  }
+]

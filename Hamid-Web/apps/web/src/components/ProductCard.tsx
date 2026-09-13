@@ -64,7 +64,6 @@ export default function ProductCard({
           alt={alt}
           fill
           className="object-cover transition-transform duration-700 group-hover:scale-105"
-          unoptimized
           onError={() => setImgError(true)}
         />
       ) : (

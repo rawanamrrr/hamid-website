@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { stripLocalePrefix } from "@/lib/i18n/client";
 import { cn } from "@/lib/utils";
 
 export function SectionTabs({ tabs }: { tabs: { label: string; href: string }[] }) {
-  const pathname = usePathname();
+  const pathname = stripLocalePrefix(usePathname());
   return (
     <div className="mb-6 flex gap-1 border-b border-outline-variant/60">
       {tabs.map((tab) => {

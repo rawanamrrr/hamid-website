@@ -52,7 +52,6 @@ export function ProductDetail({
               alt={currentImg.alt || ""}
               fill
               className="object-cover"
-              unoptimized
               onError={() => setImgError(true)}
             />
           ) : (
@@ -80,7 +79,7 @@ export function ProductDetail({
                   }}
                   className={`h-16 w-16 overflow-hidden rounded-xl border-2 ${i === activeImage ? "border-[#57392D]" : "border-transparent"}`}
                 >
-                  <Image src={img.url} alt={img.alt || ""} width={64} height={64} unoptimized className="h-full w-full object-cover" />
+                  <Image src={img.url} alt={img.alt || ""} width={64} height={64} className="h-full w-full object-cover" />
                 </button>
               );
             })}

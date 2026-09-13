@@ -15,7 +15,6 @@ export default async function About() {
               alt="Historic Cairo coffee house"
               fill
               className="object-cover grayscale hover:grayscale-0 transition-all duration-1000"
-              unoptimized
             />
           </div>
           {/* Corner accents — desktop only */}

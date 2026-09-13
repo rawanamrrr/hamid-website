@@ -43,7 +43,7 @@ export default async function Testimonials() {
               <div className="p-5 flex gap-4 items-start">
                 {/* Avatar */}
                 <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#57392D] relative flex-shrink-0 bg-[#FFE2C6] flex items-center justify-center">
-                  <Image src={image} alt={name} fill className="object-cover" unoptimized />
+                  <Image src={image} alt={name} fill className="object-cover" />
                   <span className="absolute text-xs font-bold text-[#57392D]">{initials}</span>
                 </div>
                 <div className="flex-1 min-w-0">
@@ -70,7 +70,7 @@ export default async function Testimonials() {
               className="bg-white p-10 rounded-[1.75rem] luxury-shadow flex flex-col items-center space-y-6"
             >
               <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-[#57392D] relative flex-shrink-0">
-                <Image src={image} alt={name} fill className="object-cover" unoptimized />
+                <Image src={image} alt={name} fill className="object-cover" />
               </div>
               <div className="flex gap-1 text-[#57392D]" role="img" aria-label="5 out of 5 stars">
                 {[...Array(5)].map((_, i) => (
