@@ -118,8 +118,8 @@ export function MenuItemForm({
               </select>
             </div>
             <div>
-              <Label htmlFor="slug">Slug</Label>
-              <Input id="slug" placeholder="turkish-coffee" {...register("slug")} />
+              <Label htmlFor="slug">Slug (optional)</Label>
+              <Input id="slug" placeholder="Auto-generated from the name if left blank" {...register("slug")} />
               {errors.slug && <p className="mt-1 text-xs text-error">{errors.slug.message}</p>}
             </div>
             <div>

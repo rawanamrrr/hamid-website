@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { eq } from "drizzle-orm";
+import { and, eq, ne } from "drizzle-orm";
 import {
   db,
   storeCategories,
@@ -15,6 +15,7 @@ import {
   storeCategorySchema,
   storeProductSchema,
   storeHeroImageSchema,
+  slugify,
   type StoreCategoryInput,
   type StoreProductInput,
   type StoreHeroImageInput,
@@ -30,6 +31,20 @@ function revalidateStore() {
   // Featured/best-seller toggles render on the homepage, not just /store —
   // without this the home page keeps serving a stale render after a toggle.
   revalidatePath("/");
+}
+
+/** Slugify `base` and, if that collides, append -2, -3, ... until free. Used
+ * when the admin leaves the slug field blank — the column is still NOT
+ * NULL/unique, so something has to be persisted. */
+async function generateUniqueProductSlug(base: string, excludeId?: number): Promise<string> {
+  const root = slugify(base) || "product";
+  let candidate = root;
+  for (let n = 2; ; n++) {
+    const conditions = excludeId ? and(eq(storeProducts.slug, candidate), ne(storeProducts.id, excludeId)) : eq(storeProducts.slug, candidate);
+    const [existing] = await db.select({ id: storeProducts.id }).from(storeProducts).where(conditions).limit(1);
+    if (!existing) return candidate;
+    candidate = `${root}-${n}`;
+  }
 }
 
 // ── Categories ────────────────────────────────────────────────────────────
@@ -135,8 +150,13 @@ export async function createStoreProductAction(input: StoreProductInput): Promis
   if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? "Invalid input." };
   const data = parsed.data;
 
-  const [existing] = await db.select({ id: storeProducts.id }).from(storeProducts).where(eq(storeProducts.slug, data.slug)).limit(1);
-  if (existing) return { error: "A product with this slug already exists." };
+  let slug = data.slug || "";
+  if (slug) {
+    const [existing] = await db.select({ id: storeProducts.id }).from(storeProducts).where(eq(storeProducts.slug, slug)).limit(1);
+    if (existing) return { error: "A product with this slug already exists." };
+  } else {
+    slug = await generateUniqueProductSlug(data.name.en);
+  }
 
   const currency = await getSiteCurrency();
 
@@ -145,7 +165,7 @@ export async function createStoreProductAction(input: StoreProductInput): Promis
       .insert(storeProducts)
       .values({
         categoryId: data.categoryId,
-        slug: data.slug,
+        slug,
         sku: data.sku || null,
         price: data.price,
         currency,
@@ -184,12 +204,27 @@ export async function updateStoreProductAction(id: number, input: StoreProductIn
   if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? "Invalid input." };
   const data = parsed.data;
 
+  let slug = data.slug || "";
+  if (slug) {
+    const [existing] = await db
+      .select({ id: storeProducts.id })
+      .from(storeProducts)
+      .where(and(eq(storeProducts.slug, slug), ne(storeProducts.id, id)))
+      .limit(1);
+    if (existing) return { error: "A product with this slug already exists." };
+  } else {
+    // Left blank on edit: keep the current slug rather than silently
+    // generating a new one and changing the product's URL.
+    const [current] = await db.select({ slug: storeProducts.slug }).from(storeProducts).where(eq(storeProducts.id, id)).limit(1);
+    slug = current?.slug || (await generateUniqueProductSlug(data.name.en, id));
+  }
+
   await db.transaction(async (tx) => {
     await tx
       .update(storeProducts)
       .set({
         categoryId: data.categoryId,
-        slug: data.slug,
+        slug,
         sku: data.sku || null,
         price: data.price,
         compareAtPrice: data.compareAtPrice ?? null,

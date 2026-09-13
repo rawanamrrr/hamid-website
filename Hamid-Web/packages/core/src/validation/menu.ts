@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { slugSchema, decimalString, requiredLocalizedText, optionalLocalizedText } from "./shared";
+import { slugSchema, optionalSlugSchema, decimalString, requiredLocalizedText, optionalLocalizedText } from "./shared";
 
 export const menuCategorySchema = z.object({
   slug: slugSchema,
@@ -25,7 +25,9 @@ export type MenuItemSizeInput = z.infer<typeof menuItemSizeSchema>;
 
 export const menuItemSchema = z.object({
   categoryId: z.number().int().positive(),
-  slug: slugSchema,
+  /** Optional in the form — auto-generated from the English name at create
+   * time when left blank (see slugify() + the uniqueness dedup in actions.ts). */
+  slug: optionalSlugSchema,
   sizes: z.array(menuItemSizeSchema).min(1, "Add at least one size and price"),
   imageMediaId: z.number().int().positive().nullable().optional(),
   badge: z.string().max(50).optional(),

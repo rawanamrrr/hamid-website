@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { slugSchema, decimalString, nullableDecimalString, requiredLocalizedText, optionalLocalizedText } from "./shared";
+import { slugSchema, optionalSlugSchema, decimalString, nullableDecimalString, requiredLocalizedText, optionalLocalizedText } from "./shared";
 
 export const storeHeroImageSchema = z.object({
   mediaId: z.number().int().positive(),
@@ -20,7 +20,9 @@ export type StoreCategoryInput = z.infer<typeof storeCategorySchema>;
 
 export const storeProductSchema = z.object({
   categoryId: z.number().int().positive(),
-  slug: slugSchema,
+  /** Optional in the form — auto-generated from the English name at create
+   * time when left blank (see slugify() + the uniqueness dedup in actions.ts). */
+  slug: optionalSlugSchema,
   sku: z.string().max(64).optional(),
   price: decimalString,
   compareAtPrice: nullableDecimalString.optional(),

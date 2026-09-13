@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { eq } from "drizzle-orm";
+import { and, eq, ne } from "drizzle-orm";
 import {
   db,
   menuCategories,
@@ -11,7 +11,15 @@ import {
   menuItemSizes,
   menuHeroImages,
 } from "@hamid/db";
-import { menuCategorySchema, menuItemSchema, menuHeroImageSchema, type MenuCategoryInput, type MenuItemInput, type MenuHeroImageInput } from "@hamid/core";
+import {
+  menuCategorySchema,
+  menuItemSchema,
+  menuHeroImageSchema,
+  slugify,
+  type MenuCategoryInput,
+  type MenuItemInput,
+  type MenuHeroImageInput,
+} from "@hamid/core";
 import { guardPermission } from "@/lib/auth/rbac";
 import type { ActionResult } from "@/lib/auth/rbac";
 import { logActivity } from "@/lib/activity/log";
@@ -21,6 +29,20 @@ function revalidateMenu() {
   revalidatePath("/admin/menu/items");
   revalidatePath("/admin/menu/hero");
   revalidatePath("/menu");
+}
+
+/** Slugify `base` and, if that collides, append -2, -3, ... until free. Used
+ * when the admin leaves the slug field blank — the column is still NOT
+ * NULL/unique, so something has to be persisted. */
+async function generateUniqueMenuItemSlug(base: string, excludeId?: number): Promise<string> {
+  const root = slugify(base) || "item";
+  let candidate = root;
+  for (let n = 2; ; n++) {
+    const conditions = excludeId ? and(eq(menuItems.slug, candidate), ne(menuItems.id, excludeId)) : eq(menuItems.slug, candidate);
+    const [existing] = await db.select({ id: menuItems.id }).from(menuItems).where(conditions).limit(1);
+    if (!existing) return candidate;
+    candidate = `${root}-${n}`;
+  }
 }
 
 // ── Categories ────────────────────────────────────────────────────────────
@@ -126,15 +148,20 @@ export async function createMenuItemAction(input: MenuItemInput): Promise<Action
   if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? "Invalid input." };
   const data = parsed.data;
 
-  const [existing] = await db.select({ id: menuItems.id }).from(menuItems).where(eq(menuItems.slug, data.slug)).limit(1);
-  if (existing) return { error: "An item with this slug already exists." };
+  let slug = data.slug || "";
+  if (slug) {
+    const [existing] = await db.select({ id: menuItems.id }).from(menuItems).where(eq(menuItems.slug, slug)).limit(1);
+    if (existing) return { error: "An item with this slug already exists." };
+  } else {
+    slug = await generateUniqueMenuItemSlug(data.name.en);
+  }
 
   const id = await db.transaction(async (tx) => {
     const [row] = await tx
       .insert(menuItems)
       .values({
         categoryId: data.categoryId,
-        slug: data.slug,
+        slug,
         imageMediaId: data.imageMediaId ?? null,
         badge: data.badge,
         isFeatured: data.isFeatured,
@@ -168,12 +195,27 @@ export async function updateMenuItemAction(id: number, input: MenuItemInput): Pr
   if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? "Invalid input." };
   const data = parsed.data;
 
+  let slug = data.slug || "";
+  if (slug) {
+    const [existing] = await db
+      .select({ id: menuItems.id })
+      .from(menuItems)
+      .where(and(eq(menuItems.slug, slug), ne(menuItems.id, id)))
+      .limit(1);
+    if (existing) return { error: "An item with this slug already exists." };
+  } else {
+    // Left blank on edit: keep the current slug rather than silently
+    // generating a new one and changing the item's URL.
+    const [current] = await db.select({ slug: menuItems.slug }).from(menuItems).where(eq(menuItems.id, id)).limit(1);
+    slug = current?.slug || (await generateUniqueMenuItemSlug(data.name.en, id));
+  }
+
   await db.transaction(async (tx) => {
     await tx
       .update(menuItems)
       .set({
         categoryId: data.categoryId,
-        slug: data.slug,
+        slug,
         imageMediaId: data.imageMediaId ?? null,
         badge: data.badge,
         isFeatured: data.isFeatured,

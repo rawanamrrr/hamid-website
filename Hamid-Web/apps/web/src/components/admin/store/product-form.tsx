@@ -129,8 +129,8 @@ export function StoreProductForm({
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div>
-              <Label htmlFor="slug">Slug</Label>
-              <Input id="slug" placeholder="afandi-signature" {...register("slug")} />
+              <Label htmlFor="slug">Slug (optional)</Label>
+              <Input id="slug" placeholder="Auto-generated from the name if left blank" {...register("slug")} />
               {errors.slug && <p className="mt-1 text-xs text-error">{errors.slug.message}</p>}
             </div>
             <div>
