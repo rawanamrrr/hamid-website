@@ -1,4 +1,4 @@
-import type { MenuSectionView as MenuSection, MenuItemView as MenuItem } from "@/lib/menu/queries";
+import type { MenuSectionView as MenuSection, MenuItemView as MenuItem, MenuHeroImageView } from "@/lib/menu/queries";
 import type { Dictionary } from "@/lib/i18n";
 import { CategoryVisual } from "./CategoryVisual";
 import { IntroHeroBackground } from "./IntroHeroBackground";
@@ -135,7 +135,7 @@ export default function MenuPageClient({
   dict,
 }: {
   sections: MenuSection[];
-  heroImages: string[];
+  heroImages: MenuHeroImageView[];
   dict: MenuDict;
 }) {
   return (

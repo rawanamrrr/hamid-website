@@ -47,10 +47,23 @@ export function MediaLibrary({ initialItems }: { initialItems: MediaItem[] }) {
       form.append("signature", presign.signature);
       form.append("folder", presign.folder);
       form.append("type", presign.type);
-      const uploadRes = await fetch(presign.uploadUrl, { method: "POST", body: form });
-      const uploaded = await uploadRes.json();
-      if (!uploadRes.ok) {
-        setError(`Upload failed for ${file.name}.`);
+      let uploaded: any;
+      try {
+        const uploadRes = await fetch(presign.uploadUrl, { method: "POST", body: form });
+        uploaded = await uploadRes.json().catch(() => null);
+        if (!uploadRes.ok) {
+          // Cloudinary's error responses are {error: {message}} — surface the
+          // real reason (bad signature, unsupported format, oversized file,
+          // wrong cloud name, ...) instead of a useless generic message.
+          const reason = uploaded?.error?.message ?? `HTTP ${uploadRes.status}`;
+          setError(`Upload failed for ${file.name}: ${reason}`);
+          continue;
+        }
+      } catch (err) {
+        // A network/CORS-level failure never reaches the .ok check above —
+        // fetch() itself rejects, most often because the request never left
+        // the browser (e.g. blocked by a network policy or ad blocker).
+        setError(`Upload failed for ${file.name}: ${err instanceof Error ? err.message : "network error"}.`);
         continue;
       }
 

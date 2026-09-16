@@ -28,6 +28,7 @@ export function MediaGalleryPicker({
   const [items, setItems] = useState<{ id: number; url: string; alt: string | null; title: string | null }[]>([]);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   async function openAndLoad() {
     setOpen(true);
@@ -48,6 +49,7 @@ export function MediaGalleryPicker({
 
   async function handleUpload(file: File) {
     setUploading(true);
+    setError(null);
     const presign = await presignMediaUploadAction({
       filename: file.name,
       mime: file.type,
@@ -55,31 +57,51 @@ export function MediaGalleryPicker({
       folder: "library",
       isPrivate: false,
     });
-    if ("uploadUrl" in presign) {
-      const form = new FormData();
-      form.append("file", file);
-      form.append("api_key", presign.apiKey);
-      form.append("timestamp", String(presign.timestamp));
-      form.append("signature", presign.signature);
-      form.append("folder", presign.folder);
-      form.append("type", presign.type);
+    if (!("uploadUrl" in presign)) {
+      setError("error" in presign ? presign.error : "Could not start the upload.");
+      setUploading(false);
+      return;
+    }
+
+    const form = new FormData();
+    form.append("file", file);
+    form.append("api_key", presign.apiKey);
+    form.append("timestamp", String(presign.timestamp));
+    form.append("signature", presign.signature);
+    form.append("folder", presign.folder);
+    form.append("type", presign.type);
+
+    let uploaded: any;
+    try {
       const upload = await fetch(presign.uploadUrl, { method: "POST", body: form });
-      const uploaded = await upload.json();
-      if (upload.ok) {
-        const confirmed = await confirmMediaUploadAction({
-          publicId: uploaded.public_id,
-          format: uploaded.format,
-          width: uploaded.width,
-          height: uploaded.height,
-          bytes: uploaded.bytes,
-          title: file.name,
-          folder: "library",
-          isPrivate: false,
-        });
-        if ("id" in confirmed && value.length < max) {
-          onChange([...value, { id: confirmed.id, url: confirmed.url }]);
-        }
+      uploaded = await upload.json().catch(() => null);
+      if (!upload.ok) {
+        // Cloudinary's error responses are {error: {message}} — surface the
+        // real reason instead of failing silently.
+        setError(uploaded?.error?.message ?? `Upload failed (HTTP ${upload.status}).`);
+        setUploading(false);
+        return;
       }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Upload failed — network error.");
+      setUploading(false);
+      return;
+    }
+
+    const confirmed = await confirmMediaUploadAction({
+      publicId: uploaded.public_id,
+      format: uploaded.format,
+      width: uploaded.width,
+      height: uploaded.height,
+      bytes: uploaded.bytes,
+      title: file.name,
+      folder: "library",
+      isPrivate: false,
+    });
+    if ("id" in confirmed) {
+      if (value.length < max) onChange([...value, { id: confirmed.id, url: confirmed.url }]);
+    } else {
+      setError(confirmed.error);
     }
     setUploading(false);
   }
@@ -160,6 +182,7 @@ export function MediaGalleryPicker({
                 onChange={(e) => e.target.files?.[0] && handleUpload(e.target.files[0])}
               />
             </label>
+            {error && <p className="mb-4 text-sm text-error">{error}</p>}
 
             {loading ? (
               <p className="text-sm text-on-surface-variant">Loading…</p>

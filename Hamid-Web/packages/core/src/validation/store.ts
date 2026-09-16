@@ -3,6 +3,8 @@ import { slugSchema, optionalSlugSchema, decimalString, nullableDecimalString, r
 
 export const storeHeroImageSchema = z.object({
   mediaId: z.number().int().positive(),
+  /** Optional separate image shown on small viewports; falls back to `mediaId` when unset. */
+  mobileMediaId: z.number().int().positive().nullable().optional(),
   sortOrder: z.coerce.number().int().default(0),
   isActive: z.boolean().default(true),
 });

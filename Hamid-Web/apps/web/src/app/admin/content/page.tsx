@@ -1,4 +1,5 @@
 import { and, asc, eq } from "drizzle-orm";
+import { alias } from "drizzle-orm/mysql-core";
 import { db, banners, bannerTranslations, media, contentBlocks } from "@hamid/db";
 import { withDbTimeout } from "@/lib/db-timeout";
 import { getStoreProducts } from "@/lib/store/queries";
@@ -30,12 +31,20 @@ export default async function AdminContentPage() {
   // Queried directly (not through the public getHomeCategoryCards/
   // getInstagramPhotos accessors, which are cached for 60s) so the editor
   // always reflects the admin's own most recent save on refresh.
+  const mobileMedia = alias(media, "mobile_media");
   const [heroRows, homeBlockRows, storeProducts] = await Promise.all([
     withDbTimeout(
       db
-        .select({ id: banners.id, url: media.url, isActive: banners.isActive, title: bannerTranslations.title })
+        .select({
+          id: banners.id,
+          url: media.url,
+          mobileUrl: mobileMedia.url,
+          isActive: banners.isActive,
+          title: bannerTranslations.title,
+        })
         .from(banners)
         .innerJoin(media, eq(media.id, banners.mediaId))
+        .leftJoin(mobileMedia, eq(mobileMedia.id, banners.mobileMediaId))
         .leftJoin(bannerTranslations, and(eq(bannerTranslations.bannerId, banners.id), eq(bannerTranslations.locale, "en")))
         .where(eq(banners.placement, "home_hero"))
         .orderBy(asc(banners.sortOrder)),
@@ -84,7 +93,7 @@ export default async function AdminContentPage() {
           </p>
         ) : (
           <HeroSlidesManager
-            items={heroRows.map((r) => ({ id: r.id, url: r.url, title: r.title, isActive: r.isActive }))}
+            items={heroRows.map((r) => ({ id: r.id, url: r.url, mobileUrl: r.mobileUrl, title: r.title, isActive: r.isActive }))}
             products={productLinkOptions}
           />
         )}

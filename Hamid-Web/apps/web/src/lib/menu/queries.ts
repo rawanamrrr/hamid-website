@@ -1,6 +1,7 @@
 import "server-only";
 import { unstable_cache } from "next/cache";
 import { asc, eq, inArray } from "drizzle-orm";
+import { alias } from "drizzle-orm/mysql-core";
 import { db, menuCategories, menuCategoryTranslations, menuItems, menuItemTranslations, menuItemSizes, menuHeroImages, media } from "@hamid/db";
 import { formatMoney, toCents, type Locale } from "@hamid/core";
 
@@ -109,12 +110,20 @@ export const getMenuSections = unstable_cache(getMenuSectionsImpl, ["menu-sectio
 // outside this one banner, so the cost of hitting the DB on every load is
 // negligible — and it means admin changes appear immediately via the
 // existing revalidatePath("/menu") instead of waiting out the 60s window.
-export async function getMenuHeroImages(): Promise<string[]> {
+export interface MenuHeroImageView {
+  desktopUrl: string;
+  /** Falls back to desktopUrl on the frontend when unset. */
+  mobileUrl: string | null;
+}
+
+export async function getMenuHeroImages(): Promise<MenuHeroImageView[]> {
+  const mobileMedia = alias(media, "mobile_media");
   const rows = await db
-    .select({ url: media.url })
+    .select({ desktopUrl: media.url, mobileUrl: mobileMedia.url })
     .from(menuHeroImages)
     .innerJoin(media, eq(media.id, menuHeroImages.mediaId))
+    .leftJoin(mobileMedia, eq(mobileMedia.id, menuHeroImages.mobileMediaId))
     .where(eq(menuHeroImages.isActive, true))
     .orderBy(asc(menuHeroImages.sortOrder));
-  return rows.map((r) => r.url);
+  return rows.map((r) => ({ desktopUrl: r.desktopUrl, mobileUrl: r.mobileUrl ?? null }));
 }

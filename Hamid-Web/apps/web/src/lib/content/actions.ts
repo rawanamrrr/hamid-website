@@ -16,6 +16,8 @@ import {
 
 export interface BannerInput {
   mediaId: number;
+  /** Optional separate image shown on small viewports; falls back to `mediaId` when unset. */
+  mobileMediaId?: number;
   /** Button 1 destination + label. */
   linkUrl?: string;
   ctaTextEn?: string;
@@ -49,6 +51,7 @@ export async function createBannerAction(input: BannerInput): Promise<ActionResu
       .insert(banners)
       .values({
         mediaId: input.mediaId,
+        mobileMediaId: input.mobileMediaId || null,
         linkUrl: input.linkUrl || null,
         link2Url: input.link2Url || null,
         imageLinkUrl: input.imageLinkUrl || null,

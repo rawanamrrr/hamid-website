@@ -50,6 +50,13 @@
       "when": 1785358418208,
       "tag": "0006_dashing_toad_men",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1789545474335,
+      "tag": "0007_familiar_moon_knight",
+      "breakpoints": true
     }
   ]
 }

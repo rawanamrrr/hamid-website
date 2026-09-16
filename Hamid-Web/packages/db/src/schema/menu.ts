@@ -9,9 +9,12 @@ import { media } from "./media";
 export const menuHeroImages = mysqlTable("menu_hero_images", {
   id: id(),
   uuid: uuid(),
+  /** Desktop/default image — always required. */
   mediaId: fk("media_id")
     .notNull()
     .references(() => media.id),
+  /** Optional separate crop/image shown on small viewports; falls back to `mediaId` when unset. */
+  mobileMediaId: fk("mobile_media_id").references(() => media.id),
   sortOrder: int("sort_order").notNull().default(0),
   isActive: boolean("is_active").notNull().default(true),
   ...timestamps,

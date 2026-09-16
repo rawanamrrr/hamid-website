@@ -8,6 +8,7 @@ const FALLBACK_SLIDE: HeroSlideView = {
   id: 0,
   imageUrl:
     "https://lh3.googleusercontent.com/aida-public/AB6AXuDpHYKaDbPH4GDNtKVPFXtZA_RQayLx4Q7gQKg0H16FobXpLQeOsPLnO_u-vIfevbrfB9xCRnrTZFV7qiE0DvxCvIT0Q5UnEcAFzGwlrrLx1o0INue903Sge4CRIO9Y14O4Dq1pWkVdFiy-96OgrmCI0NhfTNLSYZzpJEAm3VroFQszH7TgqQdh8gRKH0-iTxNNydoDmu9H7rvCQ5GH68F3kuErH43q_tLimva8ReDWnUnrtboLxylOnXzvpoG0OAXJK7FcM3qK1RCi",
+  mobileImageUrl: null,
   linkUrl: null,
   ctaText: null,
   link2Url: null,

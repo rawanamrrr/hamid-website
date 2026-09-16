@@ -44,10 +44,16 @@ export default async function AboutPage() {
 
       {/* Story */}
       <section className="py-12 md:py-20 px-5 md:px-16 max-w-[1280px] mx-auto">
-        <div className="max-w-3xl mx-auto space-y-5 md:space-y-6 text-[#4A3026] text-base md:text-lg leading-relaxed text-center">
-          <p>{dict.aboutPage.storyP1}</p>
-          <p>{dict.aboutPage.storyP2}</p>
-          <p>{dict.aboutPage.storyP3}</p>
+        <div className="max-w-3xl mx-auto space-y-5 md:space-y-6 text-[#4A3026] text-base md:text-lg leading-relaxed text-start">
+          {dict.aboutPage.storyParagraphs.map((paragraph, i) => (
+            <p key={i}>{paragraph}</p>
+          ))}
+          <div className="pt-6 md:pt-8">
+            <p className="font-[family-name:var(--font-plus-jakarta)] text-xl md:text-2xl font-bold text-black">
+              {dict.aboutPage.storySignatureName}
+            </p>
+            <p className="mt-2 italic text-[#57392D]">{dict.aboutPage.storySignatureTagline}</p>
+          </div>
         </div>
       </section>
 

@@ -1,6 +1,7 @@
 import "server-only";
 import { unstable_cache } from "next/cache";
 import { and, asc, eq } from "drizzle-orm";
+import { alias } from "drizzle-orm/mysql-core";
 import { db, banners, bannerTranslations, media, contentBlocks } from "@hamid/db";
 import type { Locale } from "@hamid/core";
 import { withDbTimeout } from "@/lib/db-timeout";
@@ -14,6 +15,8 @@ const CONTENT_REVALIDATE_SECONDS = 60;
 export interface HeroSlideView {
   id: number;
   imageUrl: string;
+  /** Falls back to imageUrl on the frontend when unset. */
+  mobileImageUrl: string | null;
   /** Button 1. */
   linkUrl: string | null;
   ctaText: string | null;
@@ -33,10 +36,12 @@ export interface HeroSlideView {
  * active slides exist: 0 → built-in fallback, 1 → static hero, 2+ → slider.
  */
 async function getHomeHeroSlidesImpl(locale: Locale): Promise<HeroSlideView[]> {
+  const mobileMedia = alias(media, "mobile_media");
   const rows = await withDbTimeout(db
     .select({
       id: banners.id,
       imageUrl: media.url,
+      mobileImageUrl: mobileMedia.url,
       linkUrl: banners.linkUrl,
       link2Url: banners.link2Url,
       imageLinkUrl: banners.imageLinkUrl,
@@ -47,6 +52,7 @@ async function getHomeHeroSlidesImpl(locale: Locale): Promise<HeroSlideView[]> {
     })
     .from(banners)
     .innerJoin(media, eq(media.id, banners.mediaId))
+    .leftJoin(mobileMedia, eq(mobileMedia.id, banners.mobileMediaId))
     .leftJoin(bannerTranslations, and(eq(bannerTranslations.bannerId, banners.id), eq(bannerTranslations.locale, locale)))
     .where(and(eq(banners.isActive, true), eq(banners.placement, "home_hero")))
     .orderBy(asc(banners.sortOrder)))

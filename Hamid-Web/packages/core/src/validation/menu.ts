@@ -43,6 +43,8 @@ export type MenuItemInput = z.infer<typeof menuItemSchema>;
 
 export const menuHeroImageSchema = z.object({
   mediaId: z.number().int().positive(),
+  /** Optional separate image shown on small viewports; falls back to `mediaId` when unset. */
+  mobileMediaId: z.number().int().positive().nullable().optional(),
   sortOrder: z.coerce.number().int().default(0),
   isActive: z.boolean().default(true),
 });

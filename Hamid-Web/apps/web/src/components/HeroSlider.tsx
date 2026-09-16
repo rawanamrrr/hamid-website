@@ -129,14 +129,22 @@ export function HeroSlider({
           Ken Burns drift on the active slide */}
       <div className="absolute inset-0 z-0">
         {slides.map((s, i) => {
+          const fadeClass = `absolute inset-0 bg-cover bg-center transition-[opacity,transform] duration-1000 ease-in-out ${
+            i === active ? "opacity-100 scale-[1.06] [transition-duration:1000ms,7000ms]" : "opacity-0 scale-100"
+          }`;
           const bg = (
-            <div
-              className={`absolute inset-0 bg-cover bg-center transition-[opacity,transform] duration-1000 ease-in-out ${
-                i === active ? "opacity-100 scale-[1.06] [transition-duration:1000ms,7000ms]" : "opacity-0 scale-100"
-              }`}
-              style={{ backgroundImage: `url('${s.imageUrl}')` }}
-              aria-hidden={i !== active}
-            />
+            <>
+              <div
+                className={`${fadeClass} md:hidden`}
+                style={{ backgroundImage: `url('${s.mobileImageUrl || s.imageUrl}')` }}
+                aria-hidden={i !== active}
+              />
+              <div
+                className={`${fadeClass} hidden md:block`}
+                style={{ backgroundImage: `url('${s.imageUrl}')` }}
+                aria-hidden={i !== active}
+              />
+            </>
           );
           // Every slide's background stays mounted (cross-fade relies on
           // opacity), so inactive ones must be non-interactive — otherwise

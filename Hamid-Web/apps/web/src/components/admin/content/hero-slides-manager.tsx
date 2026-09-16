@@ -21,6 +21,7 @@ import {
 interface HeroSlideItem {
   id: number;
   url: string;
+  mobileUrl: string | null;
   title: string | null;
   isActive: boolean;
 }
@@ -30,6 +31,7 @@ const HERO_PLACEMENT = "home_hero";
 export function HeroSlidesManager({ items, products }: { items: HeroSlideItem[]; products?: LinkPickerProduct[] }) {
   const router = useRouter();
   const [image, setImage] = useState<PickedMedia | null>(null);
+  const [mobileImage, setMobileImage] = useState<PickedMedia | null>(null);
   const [titleEn, setTitleEn] = useState("");
   const [titleAr, setTitleAr] = useState("");
   const [subtitleEn, setSubtitleEn] = useState("");
@@ -54,6 +56,7 @@ export function HeroSlidesManager({ items, products }: { items: HeroSlideItem[];
     startTransition(async () => {
       const res = await createBannerAction({
         mediaId: image.id,
+        mobileMediaId: mobileImage?.id,
         linkUrl,
         placement: HERO_PLACEMENT,
         titleEn,
@@ -75,6 +78,7 @@ export function HeroSlidesManager({ items, products }: { items: HeroSlideItem[];
       } else {
         toast("Hero slide added.");
         setImage(null);
+        setMobileImage(null);
         setTitleEn("");
         setTitleAr("");
         setSubtitleEn("");
@@ -128,7 +132,13 @@ export function HeroSlidesManager({ items, products }: { items: HeroSlideItem[];
             Add one slide for a static hero, or several for a slider that rotates automatically. Text fields are
             optional — leave title, subtitle, and both buttons empty to show just the image, with no text overlay.
           </p>
-          <MediaPicker value={image} onChange={setImage} label="Slide image" />
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <MediaPicker value={image} onChange={setImage} label="Slide image (desktop)" />
+            <div>
+              <MediaPicker value={mobileImage} onChange={setMobileImage} label="Slide image (mobile, optional)" />
+              <p className="mt-1 text-xs text-on-surface-variant">Shown on small screens instead of the desktop image — leave blank to reuse it.</p>
+            </div>
+          </div>
 
           <div className="rounded-xl border border-outline-variant/60 p-4">
             <label className="flex items-center gap-2 text-sm font-semibold text-on-surface">
@@ -246,12 +256,22 @@ export function HeroSlidesManager({ items, products }: { items: HeroSlideItem[];
               className="flex items-center gap-3 rounded-xl border border-outline-variant/60 bg-surface-container-lowest p-3"
             >
               <span className="w-6 shrink-0 text-center text-sm font-semibold text-on-surface-variant">{i + 1}</span>
-              <div className="relative h-16 w-28 shrink-0 overflow-hidden rounded-lg">
-                <NextImage src={slide.url} alt={slide.title ?? ""} fill className="object-cover" />
+              <div className="flex shrink-0 gap-1.5">
+                <div className="relative h-16 w-28 overflow-hidden rounded-lg">
+                  <NextImage src={slide.url} alt={slide.title ?? ""} fill className="object-cover" />
+                </div>
+                {slide.mobileUrl && (
+                  <div className="relative h-16 w-10 overflow-hidden rounded-lg ring-2 ring-primary/40" title="Mobile image">
+                    <NextImage src={slide.mobileUrl} alt="" fill className="object-cover" />
+                  </div>
+                )}
               </div>
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-semibold text-on-surface">{slide.title ?? "Default hero copy"}</p>
-                <p className="text-xs text-on-surface-variant">{slide.isActive ? "Visible" : "Hidden"}</p>
+                <p className="text-xs text-on-surface-variant">
+                  {slide.isActive ? "Visible" : "Hidden"}
+                  {slide.mobileUrl ? " · Has a mobile image" : ""}
+                </p>
               </div>
               <div className="flex shrink-0 items-center gap-1.5">
                 <button

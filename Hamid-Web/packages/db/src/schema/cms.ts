@@ -29,9 +29,12 @@ export const contentBlocks = mysqlTable(
 export const banners = mysqlTable("banners", {
   id: id(),
   uuid: uuid(),
+  /** Desktop/default image — always required. */
   mediaId: fk("media_id")
     .notNull()
     .references(() => media.id),
+  /** Optional separate crop/image shown on small viewports; falls back to `mediaId` when unset. */
+  mobileMediaId: fk("mobile_media_id").references(() => media.id),
   /** Button 1 destination. */
   linkUrl: varchar("link_url", { length: 512 }),
   /** Button 2 destination — a slide can offer up to two CTAs. */

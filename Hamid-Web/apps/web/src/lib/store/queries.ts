@@ -1,6 +1,7 @@
 import "server-only";
 import { unstable_cache } from "next/cache";
 import { and, asc, eq, inArray, isNull, like } from "drizzle-orm";
+import { alias } from "drizzle-orm/mysql-core";
 import {
   db,
   storeCategories,
@@ -255,17 +256,25 @@ export const getStoreProductBySlug = unstable_cache(getStoreProductBySlugImpl, [
   revalidate: CATALOG_REVALIDATE_SECONDS,
 });
 
+export interface StoreHeroImageView {
+  desktopUrl: string;
+  /** Falls back to desktopUrl on the frontend when unset. */
+  mobileUrl: string | null;
+}
+
 // Not cached: same rationale as getMenuHeroImages — this table is tiny and
 // rarely queried, so admin changes should appear immediately rather than
 // waiting out the 60s catalog cache window.
-export async function getStoreHeroImages(): Promise<string[]> {
+export async function getStoreHeroImages(): Promise<StoreHeroImageView[]> {
+  const mobileMedia = alias(media, "mobile_media");
   const rows = await db
-    .select({ url: media.url })
+    .select({ desktopUrl: media.url, mobileUrl: mobileMedia.url })
     .from(storeHeroImages)
     .innerJoin(media, eq(media.id, storeHeroImages.mediaId))
+    .leftJoin(mobileMedia, eq(mobileMedia.id, storeHeroImages.mobileMediaId))
     .where(eq(storeHeroImages.isActive, true))
     .orderBy(asc(storeHeroImages.sortOrder));
-  return rows.map((r) => r.url);
+  return rows.map((r) => ({ desktopUrl: r.desktopUrl, mobileUrl: r.mobileUrl ?? null }));
 }
 
 // Previously this called getStoreProductsImpl directly — bypassing the 60s
