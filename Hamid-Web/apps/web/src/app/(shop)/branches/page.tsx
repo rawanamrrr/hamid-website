@@ -167,30 +167,40 @@ export default async function BranchesPage() {
       </section>
 
       {/* Ambiance strip */}
-      <section className="bg-[#000000] py-12 md:py-20 px-5 md:px-16">
-        <div className="max-w-[1280px] mx-auto flex flex-col md:flex-row items-center gap-8 md:gap-12">
-          <div className="md:w-1/2 space-y-4 md:space-y-6">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FFE2C6]">{dict.branchesPage.experienceKicker}</span>
-            <h2 className="font-[family-name:var(--font-plus-jakarta)] text-2xl md:text-4xl font-bold text-white leading-snug">
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#3A261E] via-[#2A1B15] to-[#1C120E] py-16 md:py-24 px-5 md:px-16">
+        <div
+          aria-hidden="true"
+          className="absolute -top-24 -end-24 h-80 w-80 rounded-full bg-[#FFE2C6]/10 blur-3xl"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute -bottom-32 -start-24 h-96 w-96 rounded-full bg-[#57392D]/40 blur-3xl"
+        />
+        <div className="relative max-w-[1280px] mx-auto grid md:grid-cols-2 items-center gap-10 md:gap-16">
+          <div className="space-y-5 md:space-y-6">
+            <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#FFE2C6]">
+              <span className="h-px w-8 bg-[#FFE2C6]/60" />
+              {dict.branchesPage.experienceKicker}
+            </span>
+            <h2 className="font-[family-name:var(--font-plus-jakarta)] text-3xl md:text-5xl font-bold text-white leading-tight">
               {dict.branchesPage.experienceTitle}
             </h2>
-            <p className="text-[#FEE5C9] leading-relaxed">{dict.branchesPage.experienceBody}</p>
+            <p className="text-[#EEE5D4]/80 text-base md:text-lg leading-relaxed">{dict.branchesPage.experienceBody}</p>
             <div className="flex flex-wrap gap-3 pt-2">
               {tags.map((tag) => (
-                <span key={tag} className="bg-[#FFE2C6]/20 text-[#FFE2C6] border border-[#FFE2C6]/30 px-4 py-1.5 rounded-full text-xs font-semibold">
+                <span key={tag} className="bg-white/5 text-[#FFE2C6] border border-[#FFE2C6]/25 px-4 py-2 rounded-full text-xs font-semibold backdrop-blur-sm">
                   {tag}
                 </span>
               ))}
             </div>
           </div>
-          <div
-            className="md:w-1/2 h-72 md:h-96 w-full rounded-3xl overflow-hidden"
-            style={{
-              backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuAtHJO0P8lnQRgLkZnHiguKhs_L21LPF-xDZvzmr2trJ7KmpFR_hwwIf1zcxrNys4ORwC0tdjlJR4T7U_7d6Appl-R2awVjPZxpR81qcuTx8HhgMdz7tio5QUxPSMycuQ6HxZkVwBiu5jp8H9sTR6edkTYOTlujLoop-J4WUshVgHSjETPfi9TB8ffq3_VG-JCyYcR2SvJB1KSlIvqRar7kagI0IWN1-oruYe-iwd7kdM4LKVEdcKa4QfLCasHCj_IYgYoaATeIJtxq')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          />
+          <div className="relative">
+            <div aria-hidden="true" className="absolute inset-0 translate-x-4 translate-y-4 rounded-3xl border border-[#FFE2C6]/30" />
+            <div
+              className="relative h-72 md:h-[420px] w-full rounded-3xl overflow-hidden shadow-2xl"
+              style={{ backgroundImage: "url('/photos/branch-experience.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}
+            />
+          </div>
         </div>
       </section>
 
