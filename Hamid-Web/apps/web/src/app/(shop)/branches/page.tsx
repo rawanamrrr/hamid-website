@@ -34,7 +34,7 @@ export default async function BranchesPage() {
         className="relative h-[320px] md:h-[420px] flex items-end overflow-hidden"
         style={{
           backgroundImage:
-            "url('https://lh3.googleusercontent.com/aida-public/AB6AXuDQwUW2-Nl99Fd61IHy372RbhsPzdro6dQMmnL8hfvAx3NN86mzWCtw9WNxR_o8IHRBJzTeFboF-QdCcaIDrE-e2UM-lSzKq8ohYF6NaTS72PeZX2mU4d5zt0bsmkwW00cV31Y_A06xscg83zg9MNZnHp7pTUvthrI0qiQXqATOXeIUHzjPL3qMrCFzqejlmZ1qjFUoPlZGIgHSu05uIeKZg1wO17r6s3eVRn7QwgVa8dRyE_CFHaggMcLredAc_hms4P6b2rxUB9h1')",
+            "url('/photos/branches-hero.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -55,7 +55,7 @@ export default async function BranchesPage() {
         <div className={`relative -mt-8 z-10 grid gap-4 md:gap-6 ${single ? "" : "md:grid-cols-2"}`}>
           {list.map((b) =>
             single ? (
-              <div key={b.id} className="rounded-3xl p-6 md:p-8 luxury-shadow" style={{ background: "#F5F5DC" }}>
+              <div key={b.id} className="rounded-3xl p-6 md:p-8 luxury-shadow" style={{ background: "#EEE5D4" }}>
                 <div className="flex flex-col gap-5 md:flex-row md:items-center md:gap-10">
                   <div className="flex items-start gap-4 flex-1">
                     <div className="w-11 h-11 md:w-12 md:h-12 rounded-full bg-[#57392D] flex items-center justify-center flex-shrink-0">
@@ -98,7 +98,7 @@ export default async function BranchesPage() {
               <div
                 key={b.id}
                 className="flex flex-col rounded-3xl p-6 md:p-8 luxury-shadow"
-                style={{ background: "#F5F5DC" }}
+                style={{ background: "#EEE5D4" }}
               >
                 <h2 className="font-[family-name:var(--font-plus-jakarta)] text-xl font-bold text-black mb-5">{b.name}</h2>
 

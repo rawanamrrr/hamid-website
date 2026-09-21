@@ -183,7 +183,7 @@
       "exploreHeritage": "Explore Our Heritage",
       "ourStory": "Our Story",
       "storyTitle": "From Mansoura to the World",
-      "storyP1": "Since 1920, Hamid Afandi has been a beacon of Egyptian coffee culture. Our journey began in the bustling heart of Mansoura, bringing together the finest ethically sourced beans with time-honored roasting techniques, crafting a legacy of rich, aromatic blends.",
+      "storyP1": "Since 1975, Hamid Afandi has been a beacon of Egyptian coffee culture. Our journey began in the bustling heart of Mansoura, bringing together the finest ethically sourced beans with time-honored roasting techniques, crafting a legacy of rich, aromatic blends.",
       "storyP2": "We invite you to experience the tradition.",
       "readFullStory": "Read Full Story",
       "coffeeBeans": "Coffee Beans",
@@ -223,44 +223,39 @@
     "since": "Our Heritage",
     "title": "A Legacy Crafted Since 1975",
     "subtitle": "Some stories are written with words. Ours has always been written with coffee.",
-    "storyParagraphs": [
-      "Since 1975, Hamid Afandi has stood for something far greater than serving a cup of coffee. It has represented a commitment to craftsmanship, authenticity, and the belief that remarkable coffee is never created by chance. It is the result of patience, knowledge, and an unwavering dedication to doing things the right way.",
-      "Our journey began with a simple vision: to create coffee that people could trust, enjoy, and proudly return to every single day. While trends have changed and generations have come and gone, that vision has remained unchanged.",
-      "From the very beginning, we chose a different path.",
-      "Rather than depending on others, we believed that true quality could only be achieved by taking responsibility for every stage of the process ourselves. Every coffee bean that carries the Hamid Afandi name is carefully selected, roasted in our own roastery, and ground with precision to preserve its natural aroma, balanced body, and distinctive character.",
-      "This commitment is more than a process.",
-      "It is our philosophy.",
-      "Because we understand that behind every memorable cup lies a thousand small details—details that many may never notice, but that define the difference between ordinary coffee and coffee crafted with purpose.",
-      "For nearly five decades, our roasting rooms have been filled with the unmistakable aroma of freshly roasted beans. Every batch has been treated with patience. Every roast has been refined through experience. Every blend has been developed to achieve harmony, consistency, and a flavor that remains true to our identity.",
-      "To us, coffee has never been simply a beverage.",
-      "It is part of everyday life.",
-      "It marks the beginning of a new morning, accompanies meaningful conversations, brings families together, and creates moments that stay in memory long after the cup is empty.",
-      "It is present in celebrations, in quiet reflections, in busy workdays, and in the small pauses that remind us to slow down and appreciate the present.",
-      "That is why every cup we prepare carries more than coffee.",
-      "It carries decades of experience.",
-      "It carries respect for tradition.",
-      "It carries the pride of a craft that has been carefully preserved since 1975.",
-      "As the coffee industry evolved, so did we.",
-      "We embraced new techniques, improved our roasting methods, and refined every detail of our work while remaining faithful to the principles that built our reputation. Innovation has always been part of our journey, but never at the expense of authenticity.",
-      "Today, Hamid Afandi continues to honor its heritage while looking confidently toward the future.",
-      "Our commitment remains exactly as it was from the very first day:",
-      "To select every bean with care.",
-      "To roast every batch with precision.",
-      "To grind every blend ourselves.",
-      "And to serve coffee that reflects the values upon which our name was built.",
-      "We believe that true craftsmanship is timeless.",
-      "It cannot be rushed.",
-      "It cannot be imitated.",
-      "It can only be earned through years of dedication, consistency, and respect for every step of the journey.",
-      "Every cup we serve is a continuation of the story that began in 1975.",
-      "A story shaped by passion.",
-      "Guided by experience.",
-      "Strengthened by tradition.",
-      "And inspired by every person who has chosen Hamid Afandi to be part of their daily moments.",
-      "As we continue our journey, one promise remains unchanged:",
-      "To preserve our heritage.",
-      "To perfect our craft.",
-      "And to continue creating coffee worthy of the trust that generations have placed in our name."
+    "chapters": [
+      {
+        "kicker": "1975",
+        "title": "Where It All Began",
+        "body": "Hamid Afandi started with one simple promise: coffee people can trust, enjoy, and come back to every single day. Nearly five decades later, that promise hasn't changed."
+      },
+      {
+        "kicker": "The Roastery",
+        "title": "Every Step, In Our Hands",
+        "body": "We never outsourced quality. Every bean is hand-selected, roasted in our own roastery, and ground by us — to keep its natural aroma, balanced body, and true character."
+      },
+      {
+        "kicker": "The Craft",
+        "title": "A Thousand Small Details",
+        "body": "Behind every great cup are details most people never notice. Patience in every batch, experience in every roast — that's the difference between ordinary coffee and coffee made with purpose."
+      },
+      {
+        "kicker": "The Moments",
+        "title": "More Than a Drink",
+        "body": "A new morning, a long talk with friends, a quiet pause in a busy day. Coffee is part of life's moments — and we're proud to be in yours."
+      },
+      {
+        "kicker": "Today",
+        "title": "Heritage Meets Tomorrow",
+        "body": "We've refined our methods and embraced new techniques, without ever trading away authenticity. Select with care, roast with precision, grind it ourselves — same as day one."
+      }
+    ],
+    "quote": "Coffee has never been simply a beverage. It is part of everyday life.",
+    "promiseTitle": "Our Promise",
+    "promises": [
+      "Select every bean with care",
+      "Roast every batch with precision",
+      "Grind every blend ourselves"
     ],
     "storySignatureName": "Hamid Afandi",
     "storySignatureTagline": "From Our Roastery to Your Cup... A Tradition Perfected Since 1975.",

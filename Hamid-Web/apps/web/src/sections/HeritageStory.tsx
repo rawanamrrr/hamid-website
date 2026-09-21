@@ -111,7 +111,7 @@ export default async function HeritageStory() {
   return (
     <section
       className="relative overflow-hidden py-20"
-      style={{ background: "linear-gradient(135deg, #F5F5DC 0%, #FCE8CD 50%, #F5F5DC 100%)" }}
+      style={{ background: "linear-gradient(135deg, #EEE5D4 0%, #FCE8CD 50%, #EEE5D4 100%)" }}
     >
       {/* Subtle wood-grain lines */}
       <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-10" preserveAspectRatio="none">
@@ -183,7 +183,7 @@ export default async function HeritageStory() {
               }}
             >
               <img
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkH61wZIeWDQVG7XwTYY-UgMR2izAozhpZN5O6mWPcOyaus5yRNk_4n4oibOL05Z6PrWnyq76Jyy5DN9vmYgILrOgkzm4Oy6FC5dw0xb0xW4srS8s4ZEY0_T6tGzyD5JRX6LfFNSUN3PK8-cDZEYEsfbXz3eK4r7CtXVCbbkzsTPCN-Wfxd-atfgg_0HdgsC5ePQxQ_jLN7ql_uko3b4gM2z1UkjdrnsC4QwCnNZVmQGX_y9Xy9DUhIB9X7Mkg6Tz7G9v1tSlk37s6"
+                src="/photos/story.jpg"
                 alt="Historic Cairo street"
                 className="w-full h-full object-cover"
                 style={{ filter: "sepia(0.7) contrast(1.05) brightness(0.95)" }}

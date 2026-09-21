@@ -35,7 +35,7 @@ export default function Newsletter({ dict }: { dict: Dictionary }) {
     <section className="py-10 px-4 md:py-16 md:px-16 max-w-[1280px] mx-auto">
       <div
         className="relative overflow-hidden rounded-3xl"
-        style={{ background: "#F5F5DC", border: "2px solid #000000" }}
+        style={{ background: "#57392D" }}
       >
         {/* Desktop layout */}
         <div className="hidden md:flex items-stretch min-h-[220px]">
@@ -50,27 +50,27 @@ export default function Newsletter({ dict }: { dict: Dictionary }) {
           <div className="flex flex-col justify-center py-12 pr-12 flex-1">
             <h2
               className="font-[family-name:var(--font-plus-jakarta)] text-3xl font-bold mb-2"
-              style={{ color: "#000000" }}
+              style={{ color: "#FFFFFF" }}
             >
               {dict.home.newsletter.title}
             </h2>
-            <p className="text-base mb-6" style={{ color: "#57392D" }}>
+            <p className="text-base mb-6" style={{ color: "#FFE2C6" }}>
               {dict.home.newsletter.subtitle}
             </p>
             <form
               className="flex rounded-xl overflow-hidden max-w-md"
-              style={{ border: "1.5px solid #FFE2C6", background: "#F5F5DC" }}
+              style={{ border: "1.5px solid #FFE2C6", background: "rgba(255,255,255,0.08)" }}
               onSubmit={(e) => e.preventDefault()}
             >
               <input
                 type="email"
                 placeholder={dict.home.newsletter.placeholder}
-                className="flex-grow px-5 py-3.5 bg-transparent outline-none text-sm"
-                style={{ color: "#000000" }}
+                className="flex-grow px-5 py-3.5 bg-transparent outline-none text-sm placeholder:text-[#FFE2C6]/60"
+                style={{ color: "#FFFFFF" }}
               />
               <button
                 type="submit"
-                className="px-7 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 flex-shrink-0"
+                className="px-7 py-3.5 text-sm font-semibold text-black transition-opacity hover:opacity-90 flex-shrink-0"
                 style={{ background: "#FFE2C6" }}
               >
                 {dict.home.newsletter.subscribe}
@@ -94,11 +94,11 @@ export default function Newsletter({ dict }: { dict: Dictionary }) {
 
           <h2
             className="font-[family-name:var(--font-plus-jakarta)] text-2xl font-bold mb-2 leading-snug"
-            style={{ color: "#000000" }}
+            style={{ color: "#FFFFFF" }}
           >
             {dict.home.newsletter.title}
           </h2>
-          <p className="text-sm mb-6 leading-relaxed" style={{ color: "#57392D" }}>
+          <p className="text-sm mb-6 leading-relaxed" style={{ color: "#FFE2C6" }}>
             {dict.home.newsletter.subtitle}
           </p>
 
@@ -110,16 +110,16 @@ export default function Newsletter({ dict }: { dict: Dictionary }) {
             <input
               type="email"
               placeholder={dict.home.newsletter.placeholder}
-              className="w-full px-5 py-4 rounded-xl text-sm outline-none"
+              className="w-full px-5 py-4 rounded-xl text-sm outline-none placeholder:text-[#FFE2C6]/60"
               style={{
-                background: "#F5F5DC",
+                background: "rgba(255,255,255,0.08)",
                 border: "1.5px solid #FFE2C6",
-                color: "#000000",
+                color: "#FFFFFF",
               }}
             />
             <button
               type="submit"
-              className="w-full py-4 rounded-xl text-sm font-semibold text-white transition-opacity hover:opacity-90"
+              className="w-full py-4 rounded-xl text-sm font-semibold text-black transition-opacity hover:opacity-90"
               style={{ background: "#FFE2C6" }}
             >
               {dict.home.newsletter.subscribe}

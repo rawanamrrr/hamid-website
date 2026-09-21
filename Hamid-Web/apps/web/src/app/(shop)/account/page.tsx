@@ -38,7 +38,7 @@ export default async function AccountPage() {
   const memberSince = dbUser?.createdAt ? new Date(dbUser.createdAt).getFullYear() : null;
 
   return (
-    <div className="min-h-screen bg-[#F5F5DC]">
+    <div className="min-h-screen bg-[#EEE5D4]">
       {/* ── Profile header ── */}
       <div className="bg-[#000000] px-5 py-10 md:px-16 md:py-14">
         <div className="mx-auto flex max-w-3xl items-center gap-5">

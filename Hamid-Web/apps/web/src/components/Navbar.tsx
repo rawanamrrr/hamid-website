@@ -176,10 +176,10 @@ export default function Navbar({
   const closeNav = () => setNavOpen(false);
 
   const navBg = navOpen
-    ? "bg-[#F5F5DC] border-b border-[#e8d5bc]/60"
+    ? "bg-[#EEE5D4] border-b border-[#e8d5bc]/60"
     : scrolled
-    ? "bg-[#F5F5DC]/85 backdrop-blur-md shadow-sm border-b border-[#e8d5bc]/40"
-    : "bg-[#F5F5DC]/95 border-b border-[#e8d5bc]/10";
+    ? "bg-[#EEE5D4]/85 backdrop-blur-md shadow-sm border-b border-[#e8d5bc]/40"
+    : "bg-[#EEE5D4]/95 border-b border-[#e8d5bc]/10";
 
   const navPy = scrolled ? "py-1 md:py-1.5" : "py-2 md:py-2.5";
   // Any granted admin permission is enough to show the link — dashboard.view
@@ -319,7 +319,7 @@ export default function Navbar({
             onClick={closeNav}
             aria-hidden="true"
           />
-          <div className="lg:hidden absolute top-full left-0 right-0 bg-[#F5F5DC] border-t border-[#e8d5bc]/60 px-5 py-5 space-y-1 shadow-[0_16px_32px_-16px_rgba(39,25,8,0.25)] max-h-[calc(100dvh-var(--nav-offset,60px))] overflow-y-auto">
+          <div className="lg:hidden absolute top-full left-0 right-0 bg-[#EEE5D4] border-t border-[#e8d5bc]/60 px-5 py-5 space-y-1 shadow-[0_16px_32px_-16px_rgba(39,25,8,0.25)] max-h-[calc(100dvh-var(--nav-offset,60px))] overflow-y-auto">
             {links.map(({ href, label }) => (
               <Link
                 key={href}

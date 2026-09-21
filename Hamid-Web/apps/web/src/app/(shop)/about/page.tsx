@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { getAboutHero } from "@/lib/content/queries";
 import { getDict } from "@/lib/i18n";
 import { SocialIconLinks } from "@/components/social-links";
@@ -14,7 +15,15 @@ export const metadata: Metadata = {
 
 /** Shown until an image is set in Admin → About Page (or the DB is briefly unreachable). */
 const FALLBACK_HERO_IMAGE =
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuAkH61wZIeWDQVG7XwTYY-UgMR2izAozhpZN5O6mWPcOyaus5yRNk_4n4oibOL05Z6PrWnyq76Jyy5DN9vmYgILrOgkzm4Oy6FC5dw0xb0xW4srS8s4ZEY0_T6tGzyD5JRX6LfFNSUN3PK8-cDZEYEsfbXz3eK4r7CtXVCbbkzsTPCN-Wfxd-atfgg_0HdgsC5ePQxQ_jLN7ql_uko3b4gM2z1UkjdrnsC4QwCnNZVmQGX_y9Xy9DUhIB9X7Mkg6Tz7G9v1tSlk37s6";
+  "/photos/story.jpg";
+
+const STORY_IMAGES = [
+  "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=1200&q=80",
+  "https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=1200&q=80",
+  "https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=1200&q=80",
+  "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200&q=80",
+  "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1200&q=80",
+];
 
 export default async function AboutPage() {
   const [heroImage, dict] = await Promise.all([
@@ -36,29 +45,74 @@ export default async function AboutPage() {
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${heroImage}')` }} />
         <div className="absolute inset-0 bg-black/55" />
         <div className="relative z-10 text-center text-white space-y-4 px-5">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#57392D]">{dict.aboutPage.since}</span>
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FFE2C6]">{dict.aboutPage.since}</span>
           <h1 className="font-[family-name:var(--font-plus-jakarta)] text-3xl md:text-5xl font-bold">{dict.aboutPage.title}</h1>
           <p className="text-[#FEE5C9] text-base md:text-lg max-w-xl mx-auto">{dict.aboutPage.subtitle}</p>
         </div>
       </section>
 
-      {/* Story */}
-      <section className="py-12 md:py-20 px-5 md:px-16 max-w-[1280px] mx-auto">
-        <div className="max-w-3xl mx-auto space-y-5 md:space-y-6 text-[#4A3026] text-base md:text-lg leading-relaxed text-start">
-          {dict.aboutPage.storyParagraphs.map((paragraph, i) => (
-            <p key={i}>{paragraph}</p>
-          ))}
-          <div className="pt-6 md:pt-8">
-            <p className="font-[family-name:var(--font-plus-jakarta)] text-xl md:text-2xl font-bold text-black">
-              {dict.aboutPage.storySignatureName}
-            </p>
-            <p className="mt-2 italic text-[#57392D]">{dict.aboutPage.storySignatureTagline}</p>
+      {/* Story — alternating image / text chapters */}
+      <section className="py-14 md:py-24 px-5 md:px-16 max-w-[1280px] mx-auto space-y-16 md:space-y-28">
+        {dict.aboutPage.chapters.map((chapter, i) => (
+          <div key={chapter.title} className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+            <div className={`relative ${i % 2 === 1 ? "md:order-2" : ""}`}>
+              <div className="relative aspect-[4/3] rounded-3xl overflow-hidden luxury-shadow">
+                <Image
+                  src={STORY_IMAGES[i % STORY_IMAGES.length]}
+                  alt={chapter.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover transition-transform duration-700 hover:scale-105"
+                />
+              </div>
+              <span
+                aria-hidden="true"
+                className={`hidden md:flex absolute -bottom-6 ${i % 2 === 1 ? "-start-6" : "-end-6"} h-20 w-20 items-center justify-center rounded-full bg-[#57392D] text-[#FFE2C6] font-[family-name:var(--font-plus-jakarta)] text-2xl font-bold shadow-lg`}
+              >
+                {String(i + 1).padStart(2, "0")}
+              </span>
+            </div>
+            <div className="space-y-4">
+              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#57392D]">{chapter.kicker}</span>
+              <h2 className="font-[family-name:var(--font-plus-jakarta)] text-2xl md:text-4xl font-bold text-black leading-tight">
+                {chapter.title}
+              </h2>
+              <div className="h-0.5 w-14 bg-[#57392D]" />
+              <p className="text-[#4A3026] text-base md:text-lg leading-relaxed">{chapter.body}</p>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      {/* Quote + promise */}
+      <section className="relative overflow-hidden bg-[#57392D] py-16 md:py-24 px-5 md:px-16">
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-15"
+          style={{ backgroundImage: `url('${STORY_IMAGES[0]}')` }}
+        />
+        <div className="relative max-w-3xl mx-auto text-center text-white space-y-10">
+          <p className="font-[family-name:var(--font-plus-jakarta)] text-2xl md:text-4xl font-bold leading-snug">
+            &ldquo;{dict.aboutPage.quote}&rdquo;
+          </p>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FFE2C6] mb-5">{dict.aboutPage.promiseTitle}</p>
+            <div className="grid sm:grid-cols-3 gap-4">
+              {dict.aboutPage.promises.map((promise) => (
+                <div key={promise} className="rounded-2xl border border-[#FFE2C6]/30 bg-white/5 px-4 py-5 text-sm md:text-base">
+                  {promise}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div>
+            <p className="font-[family-name:var(--font-plus-jakarta)] text-xl md:text-2xl font-bold">{dict.aboutPage.storySignatureName}</p>
+            <p className="mt-2 italic text-[#FFE2C6]">{dict.aboutPage.storySignatureTagline}</p>
           </div>
         </div>
       </section>
 
       {/* Heritage in Every Single Detail Section */}
-      <About />
+      <About showCta={false} />
 
       {/* Values */}
       <section className="py-12 md:py-20 bg-[#FFE2C6]">

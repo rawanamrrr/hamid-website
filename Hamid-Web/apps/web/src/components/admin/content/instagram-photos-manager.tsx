@@ -6,7 +6,8 @@ import { MediaPicker, type PickedMedia } from "@/components/admin/media-picker";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, FormError } from "@/components/ui/card";
 import { toast } from "@/components/ui/toast";
-import { LinkPicker } from "@/components/admin/content/link-picker";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { saveInstagramPhotoAction } from "@/lib/content/actions";
 import type { InstagramPhotoKey, InstagramPhotoPayload } from "@/lib/content/queries";
 
@@ -29,9 +30,13 @@ function PhotoEditor({ item }: { item: InstagramPhotoItem }) {
       setError("Choose an image first.");
       return;
     }
+    if (linkUrl.trim() && !/^https?:\/\/\S+$/i.test(linkUrl.trim())) {
+      setError("Enter a full URL starting with https://");
+      return;
+    }
     setError(null);
     startTransition(async () => {
-      const res = await saveInstagramPhotoAction(item.key, { mediaId: image.id, imageUrl: image.url, linkUrl });
+      const res = await saveInstagramPhotoAction(item.key, { mediaId: image.id, imageUrl: image.url, linkUrl: linkUrl.trim() });
       if ("error" in res) {
         setError(res.error);
         toast(res.error, "error");
@@ -50,7 +55,17 @@ function PhotoEditor({ item }: { item: InstagramPhotoItem }) {
       <CardContent className="space-y-4">
         <FormError>{error}</FormError>
         <MediaPicker value={image} onChange={setImage} label="Photo" />
-        <LinkPicker id={`${item.key}-link`} label="Opens (optional)" value={linkUrl} onChange={setLinkUrl} />
+        <div className="space-y-1.5">
+          <Label htmlFor={`${item.key}-link`}>Opens (optional)</Label>
+          <Input
+            id={`${item.key}-link`}
+            type="url"
+            dir="ltr"
+            placeholder="https://www.instagram.com/p/..."
+            value={linkUrl}
+            onChange={(e) => setLinkUrl(e.target.value)}
+          />
+        </div>
         <Button type="button" onClick={save} loading={pending}>
           Save
         </Button>

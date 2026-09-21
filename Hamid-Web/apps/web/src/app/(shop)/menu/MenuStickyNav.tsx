@@ -38,7 +38,7 @@ export function MenuStickyNav({ sections }: { sections: { id: string; title: str
   }, [activeId]);
 
   return (
-    <div className="sticky z-30 border-b border-[#e8d5bc]/50 bg-[#F5F5DC]/90 backdrop-blur-md transition-[top] duration-300"
+    <div className="sticky z-30 border-b border-[#e8d5bc]/50 bg-[#EEE5D4]/90 backdrop-blur-md transition-[top] duration-300"
       style={{ top: "var(--nav-offset, 52px)" }}>
       {/* dir="ltr": scrollLeft sign conventions for RTL differ across
           browsers, which would break the offsetLeft-based auto-centering

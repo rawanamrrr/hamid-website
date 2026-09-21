@@ -139,7 +139,7 @@ export default function MenuPageClient({
   dict: MenuDict;
 }) {
   return (
-    <div className="min-h-screen bg-[#F5F5DC]">
+    <div className="min-h-screen bg-[#EEE5D4]">
       <ScrollToTop />
       {/* ── Compact intro ────────────────────────────────────────────────── */}
       <div className="relative overflow-hidden bg-[#000000] px-5 py-12 text-center md:px-16 md:py-16">

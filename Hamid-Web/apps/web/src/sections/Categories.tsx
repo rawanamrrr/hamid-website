@@ -50,10 +50,11 @@ export default async function Categories() {
                 <h3 className="font-[family-name:var(--font-plus-jakarta)] text-base font-bold">{card2.title}</h3>
               </div>
             </Link>
-            <Link href={raw3.linkUrl || "#"} className="group relative overflow-hidden rounded-3xl luxury-shadow bg-[#57392D] h-40 block">
-              <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: `url('${raw3.imageUrl}')` }} />
+            <Link href={raw3.linkUrl || "#"} className="group relative overflow-hidden rounded-3xl luxury-shadow bg-black h-40 block">
+              <div className="absolute inset-0 bg-cover bg-center opacity-60" style={{ backgroundImage: `url('${raw3.imageUrl}')` }} />
+              <div className="absolute inset-0 bg-black/30" />
               <div className="absolute inset-0 flex flex-col justify-end p-4 text-white">
-                <h3 className="font-[family-name:var(--font-plus-jakarta)] text-base font-semibold">{card3.title}</h3>
+                <h3 className="font-[family-name:var(--font-plus-jakarta)] text-base font-bold">{card3.title}</h3>
               </div>
             </Link>
           </div>
@@ -92,16 +93,16 @@ export default async function Categories() {
               </span>
             </div>
           </Link>
-          <Link
-            href={raw3.linkUrl || "#"}
-            className="col-span-3 row-span-1 group relative overflow-hidden rounded-[1.75rem] luxury-shadow bg-[#57392D] block"
-          >
+          <Link href={raw3.linkUrl || "#"} className="col-span-3 row-span-1 group relative overflow-hidden rounded-[1.75rem] luxury-shadow bg-black block">
             <div
-              className="absolute inset-0 bg-cover bg-center opacity-40 transition-transform duration-700 group-hover:scale-105"
+              className="absolute inset-0 bg-cover bg-center opacity-60 transition-transform duration-700 group-hover:scale-105"
               style={{ backgroundImage: `url('${raw3.imageUrl}')` }}
             />
-            <div className="absolute inset-0 flex flex-col justify-end p-6 text-white">
-              <h3 className="font-[family-name:var(--font-plus-jakarta)] text-2xl font-semibold mb-1">{card3.title}</h3>
+            <div className="absolute inset-0 flex flex-col justify-end p-8 text-white">
+              <h3 className="font-[family-name:var(--font-plus-jakarta)] text-2xl font-bold mb-1">{card3.title}</h3>
+              <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[#FFE2C6]">
+                {dict.home.categories.viewMore} <span aria-hidden="true" className="material-symbols-outlined">arrow_forward</span>
+              </span>
             </div>
           </Link>
         </div>

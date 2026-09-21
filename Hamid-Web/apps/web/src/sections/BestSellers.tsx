@@ -12,7 +12,7 @@ export default async function BestSellers() {
   if (bestSellers.length === 0) return null;
 
   return (
-    <section className="py-12 md:py-20 bg-[#F5F5DC]">
+    <section className="py-12 md:py-20 bg-[#EEE5D4]">
       <div className="px-5 md:px-16 max-w-[1280px] mx-auto">
         <div className="flex justify-between items-center mb-8 md:mb-12">
           <h2 className="font-[family-name:var(--font-plus-jakarta)] text-2xl md:text-[32px] font-semibold text-black">

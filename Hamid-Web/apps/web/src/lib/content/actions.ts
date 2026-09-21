@@ -152,6 +152,7 @@ export async function saveCategoryCardAction(key: CategoryCardKey, input: Catego
   await upsertContentBlock("home", key, "category_card", { ...input });
   revalidatePath("/admin/content");
   revalidatePath("/");
+  revalidatePath("/about");
   return { success: true };
 }
 
@@ -160,9 +161,12 @@ export async function saveInstagramPhotoAction(key: InstagramPhotoKey, input: In
   if ("error" in guard) return guard;
   if (!INSTAGRAM_PHOTO_KEYS.includes(key)) return { error: "Invalid photo slot." };
   if (!input.imageUrl?.trim()) return { error: "Choose an image first." };
+  const linkUrl = input.linkUrl?.trim() ?? "";
+  if (linkUrl && !/^https?:\/\/\S+$/i.test(linkUrl)) return { error: "Enter a full URL starting with https://" };
 
-  await upsertContentBlock("home", key, "instagram_photo", { ...input });
+  await upsertContentBlock("home", key, "instagram_photo", { ...input, linkUrl });
   revalidatePath("/admin/content");
   revalidatePath("/");
+  revalidatePath("/about");
   return { success: true };
 }

@@ -13,8 +13,8 @@ export default async function ImmersiveExperience() {
     <section className="relative min-h-[480px] md:h-[640px] flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
         <Image
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQwUW2-Nl99Fd61IHy372RbhsPzdro6dQMmnL8hfvAx3NN86mzWCtw9WNxR_o8IHRBJzTeFboF-QdCcaIDrE-e2UM-lSzKq8ohYF6NaTS72PeZX2mU4d5zt0bsmkwW00cV31Y_A06xscg83zg9MNZnHp7pTUvthrI0qiQXqATOXeIUHzjPL3qMrCFzqejlmZ1qjFUoPlZGIgHSu05uIeKZg1wO17r6s3eVRn7QwgVa8dRyE_CFHaggMcLredAc_hms4P6b2rxUB9h1"
-          alt="Master roaster at work"
+          src="/photos/coffee-experience.jpg"
+          alt="Roasted coffee beans"
           fill
           className="object-cover"
         />
@@ -33,9 +33,9 @@ export default async function ImmersiveExperience() {
               key={label}
               className="flex items-center gap-4 rounded-2xl bg-white/5 p-4 text-start md:flex-col md:items-center md:gap-0 md:bg-transparent md:p-0 md:text-center md:space-y-2"
             >
-              <span aria-hidden="true" className="material-symbols-outlined text-[#57392D] text-3xl md:text-2xl shrink-0">{icon}</span>
+              <span aria-hidden="true" className="material-symbols-outlined text-[#FFE2C6] text-3xl md:text-2xl shrink-0">{icon}</span>
               <div className="md:contents">
-                <span className="font-[family-name:var(--font-plus-jakarta)] text-base md:text-2xl font-bold text-[#FFE2C6] md:text-[#57392D] block">
+                <span className="font-[family-name:var(--font-plus-jakarta)] text-base md:text-2xl font-bold text-[#FFE2C6] block">
                   {label}
                 </span>
                 <p className="text-xs text-[#FEE5C9] md:opacity-70 leading-relaxed">{sub}</p>
